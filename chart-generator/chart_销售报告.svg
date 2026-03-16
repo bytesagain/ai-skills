@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="440" viewBox="0 0 480 440">
+<rect width="100%" height="100%" fill="#fafafa"/>
+<text x="240.0" y="35" text-anchor="middle" font-family="system-ui,sans-serif" font-size="20" font-weight="bold" fill="#333">销售报告</text>
+<line x1="120" y1="360.0" x2="420" y2="360.0" stroke="#ddd" stroke-width="1"/>
+<text x="112" y="364.0" text-anchor="end" font-family="system-ui,sans-serif" font-size="12" fill="#666">0</text>
+<line x1="120" y1="300.0" x2="420" y2="300.0" stroke="#ddd" stroke-width="1"/>
+<text x="112" y="304.0" text-anchor="end" font-family="system-ui,sans-serif" font-size="12" fill="#666">42</text>
+<line x1="120" y1="240.0" x2="420" y2="240.0" stroke="#ddd" stroke-width="1"/>
+<text x="112" y="244.0" text-anchor="end" font-family="system-ui,sans-serif" font-size="12" fill="#666">84</text>
+<line x1="120" y1="180.0" x2="420" y2="180.0" stroke="#ddd" stroke-width="1"/>
+<text x="112" y="184.0" text-anchor="end" font-family="system-ui,sans-serif" font-size="12" fill="#666">126</text>
+<line x1="120" y1="120.0" x2="420" y2="120.0" stroke="#ddd" stroke-width="1"/>
+<text x="112" y="124.0" text-anchor="end" font-family="system-ui,sans-serif" font-size="12" fill="#666">168</text>
+<line x1="120" y1="60.0" x2="420" y2="60.0" stroke="#ddd" stroke-width="1"/>
+<text x="112" y="64.0" text-anchor="end" font-family="system-ui,sans-serif" font-size="12" fill="#666">210</text>
+<line x1="120" y1="60" x2="120" y2="360" stroke="#999" stroke-width="1.5"/>
+<line x1="120" y1="360" x2="420" y2="360" stroke="#999" stroke-width="1.5"/>
+<rect x="140" y="188.57142857142858" width="50" height="171.42857142857142" fill="#e53935" rx="3"/>
+<text x="165.0" y="182.57142857142858" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#333">120</text>
+<text x="165.0" y="380" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#555">Q1</text>
+<rect x="210" y="102.85714285714289" width="50" height="257.1428571428571" fill="#fb8c00" rx="3"/>
+<text x="235.0" y="96.85714285714289" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#333">180</text>
+<text x="235.0" y="380" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#555">Q2</text>
+<rect x="280" y="224.28571428571428" width="50" height="135.71428571428572" fill="#fdd835" rx="3"/>
+<text x="305.0" y="218.28571428571428" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#333">95</text>
+<text x="305.0" y="380" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#555">Q3</text>
+<rect x="350" y="60.0" width="50" height="300.0" fill="#43a047" rx="3"/>
+<text x="375.0" y="54.0" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#333">210</text>
+<text x="375.0" y="380" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#555">Q4</text>
+</svg>
