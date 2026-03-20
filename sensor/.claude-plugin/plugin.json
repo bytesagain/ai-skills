@@ -1,0 +1,9 @@
+{
+  "name": "sensor",
+  "description": "Read and manage IoT sensor data from the terminal. Use when polling readings, checking device connectivity, converting units, analyzing telemetry trends.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

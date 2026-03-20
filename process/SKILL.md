@@ -1,89 +1,112 @@
 ---
-name: process
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [process, tool, utility]
-description: "Process - command-line tool for everyday use"
+name: "process"
+version: "1.0.0"
+description: "List, filter, and manage system processes. Use when scanning running tasks, monitoring CPU usage, reporting memory hogs, alerting on runaway processes."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [process, general, cli, tool]
+category: "general"
 ---
 
-# Process
+# process
 
-Process manager — list, filter, kill, monitor, and log system processes.
+List, filter, and manage system processes. Use when scanning running tasks, monitoring CPU usage, reporting memory hogs, alerting on runaway processes.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `process help` | Show usage info |
-| `process run` | Run main task |
-| `process status` | Check state |
-| `process list` | List items |
-| `process add <item>` | Add item |
-| `process export <fmt>` | Export data |
-
-## Usage
+### `status`
 
 ```bash
-process help
-process run
-process status
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-process help
-process run
-process export json
+scripts/script.sh add
 ```
 
-## Output
+Add new entry
 
-Results go to stdout. Save with `process run > output.txt`.
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `PROCESS_DIR` to change data directory. Default: `~/.local/share/process/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `PROCESS_DIR` | No | Data directory (default: ~/.process/) |
+
+## Data Storage
+
+All data stored in `~/.process/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
 
-
-## Features
-
-- Simple command-line interface for quick access
-- Local data storage with JSON/CSV export
-- History tracking and activity logs
-- Search across all entries
-- Status monitoring and health checks
-- No external dependencies required
-
-## Quick Start
-
-```bash
-# Check status
-process status
-
-# View help and available commands
-process help
-
-# View statistics
-process stats
-
-# Export your data
-process export json
-```
-
-## How It Works
-
-Process stores all data locally in `~/.local/share/process/`. Each command logs activity with timestamps for full traceability. Use `stats` to see a summary, or `export` to back up your data in JSON, CSV, or plain text format.
-
-## Support
-
-- Feedback: https://bytesagain.com/feedback/
-- Website: https://bytesagain.com
-- Email: hello@bytesagain.com
-
-Powered by BytesAgain | bytesagain.com
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

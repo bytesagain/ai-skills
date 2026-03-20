@@ -1,314 +1,168 @@
 #!/usr/bin/env bash
-# Deadline — content tool
+# deadline -- Draft and schedule content with editing and hashtag suggestions. Use when drafting posts, scheduling publishing, optimizing headlines.
 # Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-DATA_DIR="${HOME}/.local/share/deadline"
-mkdir -p "$DATA_DIR"
+VERSION="1.0.0"
+DATA_DIR="${DEADLINE_DIR:-$HOME/.deadline}"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-_version() { echo "deadline v2.0.0"; }
+_ensure_dirs() { mkdir -p "$DATA_DIR"; }
 
-_help() {
-    echo "Deadline v2.0.0 — content toolkit"
-    echo ""
-    echo "Usage: deadline <command> [args]"
-    echo ""
-    echo "Commands:"
-    echo "  draft              Draft"
-    echo "  edit               Edit"
-    echo "  optimize           Optimize"
-    echo "  schedule           Schedule"
-    echo "  hashtags           Hashtags"
-    echo "  hooks              Hooks"
-    echo "  cta                Cta"
-    echo "  rewrite            Rewrite"
-    echo "  translate          Translate"
-    echo "  tone               Tone"
-    echo "  headline           Headline"
-    echo "  outline            Outline"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  search <term>      Search entries"
-    echo "  recent             Recent activity"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
+_save_entry() {
+    _ensure_dirs
+    local cmd="$1" val="$2"
+    local ts=$(date '+%Y-%m-%d %H:%M:%S')
+    printf '{"ts":"%s","cmd":"%s","val":"%s"}\n' "$ts" "$cmd" "$val" >> "$DATA_DIR/data.jsonl"
 }
 
-_stats() {
-    echo "=== Deadline Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
+show_help() {
+    cat << EOF
+deadline v$VERSION -- Draft and schedule content with editing and hashtag suggestions. Use when drafting posts, scheduling publishing, optimizing headlines.
+
+Usage: deadline <command> [args]
+
+Commands:
+  status          Show current status
+  add             Add new entry
+  list            List all entries
+  search          Search entries
+  remove          Remove entry by number
+  export          Export data to file
+  stats           Show statistics
+  config          View or set config
+  help              Show this help
+  version           Show version
+
+Data: $DATA_DIR
+Powered by BytesAgain | bytesagain.com
+EOF
 }
 
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "\n]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do echo "$name,$ts,$val" >> "$out"; done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Deadline Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
-    esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
-}
-
-_status() {
-    echo "=== Deadline Status ==="
-    echo "  Version: v2.0.0"
+cmd_status() {
+    echo "=== deadline Status ==="
+    echo "  Version: $VERSION"
     echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Last: $(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo never)"
-    echo "  Status: OK"
+    local entries=$(cat "$DATA_DIR"/*.jsonl 2>/dev/null | wc -l || echo 0)
+    echo "  Entries: $entries"
+    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1 || echo empty)"
 }
 
-_search() {
+cmd_add() {
+    local value="${1:?Usage: deadline add <entry>}"
+    shift || true
+    _save_entry "add" "$value $*"
+    local count=$(wc -l < "$DATA_DIR/data.jsonl" 2>/dev/null || echo 0)
+    echo "Added: $value (entry #$count)"
+}
+
+cmd_list() {
+    echo "=== Deadline Entries ==="
+    if [ -f "$DATA_DIR/data.jsonl" ]; then
+        local count=$(wc -l < "$DATA_DIR/data.jsonl")
+        echo "Total: $count"
+        echo "---"
+        tail -20 "$DATA_DIR/data.jsonl" | while IFS= read -r line; do
+            local ts=$(echo "$line" | grep -o '"ts":"[^"]*' | cut -d'"' -f4)
+            local cmd=$(echo "$line" | grep -o '"cmd":"[^"]*' | cut -d'"' -f4)
+            local val=$(echo "$line" | grep -o '"val":"[^"]*' | cut -d'"' -f4)
+            echo "  [$ts] $cmd: $val"
+        done
+    else
+        echo "No entries yet."
+    fi
+}
+
+cmd_search() {
     local term="${1:?Usage: deadline search <term>}"
-    echo "Searching for: $term"
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local m=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$m" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$m" | sed 's/^/    /'
-        fi
-    done
+    if [ -f "$DATA_DIR/data.jsonl" ]; then
+        local matches=$(grep -ic "$term" "$DATA_DIR/data.jsonl" 2>/dev/null || echo 0)
+        echo "Found: $matches matches"
+        grep -i "$term" "$DATA_DIR/data.jsonl" 2>/dev/null | head -20 | while IFS= read -r line; do
+            local val=$(echo "$line" | grep -o '"val":"[^"]*' | cut -d'"' -f4)
+            local ts=$(echo "$line" | grep -o '"ts":"[^"]*' | cut -d'"' -f4)
+            echo "  [$ts] $val"
+        done
+    else
+        echo "No data to search."
+    fi
 }
 
-_recent() {
-    echo "=== Recent Activity ==="
-    tail -20 "$DATA_DIR/history.log" 2>/dev/null | sed 's/^/  /' || echo "  No activity yet."
+cmd_remove() {
+    local num="${1:?Usage: deadline remove <line-number>}"
+    if [ -f "$DATA_DIR/data.jsonl" ]; then
+        local total=$(wc -l < "$DATA_DIR/data.jsonl")
+        if [ "$num" -ge 1 ] 2>/dev/null && [ "$num" -le "$total" ] 2>/dev/null; then
+            sed -i "${num}d" "$DATA_DIR/data.jsonl"
+            echo "Removed #$num ($((total-1)) remaining)"
+        else echo "Invalid: $num (total: $total)"; fi
+    else echo "No data."; fi
 }
 
-case "${1:-help}" in
-    draft)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent draft entries:"
-            tail -20 "$DATA_DIR/draft.log" 2>/dev/null || echo "  No entries yet. Use: deadline draft <input>"
+cmd_export() {
+    local fmt="${1:-json}"
+    local out="deadline-export.$fmt"
+    if [ ! -f "$DATA_DIR/data.jsonl" ]; then echo "No data."; return 0; fi
+    case "$fmt" in
+        json) cp "$DATA_DIR/data.jsonl" "$out" ;;
+        csv)
+            echo "timestamp,command,value" > "$out"
+            while IFS= read -r line; do
+                ts=$(echo "$line" | grep -o '"ts":"[^"]*' | cut -d'"' -f4)
+                c2=$(echo "$line" | grep -o '"cmd":"[^"]*' | cut -d'"' -f4)
+                vl=$(echo "$line" | grep -o '"val":"[^"]*' | cut -d'"' -f4)
+                echo "$ts,$c2,$vl" >> "$out"
+            done < "$DATA_DIR/data.jsonl"
+            ;;
+        *) echo "Formats: json, csv"; return 1 ;;
+    esac
+    echo "Exported: $out ($(wc -c < "$out") bytes)"
+}
+
+cmd_stats() {
+    echo "=== Deadline Stats ==="
+    if [ -f "$DATA_DIR/data.jsonl" ]; then
+        local total=$(wc -l < "$DATA_DIR/data.jsonl")
+        local bytes=$(wc -c < "$DATA_DIR/data.jsonl")
+        echo "  Entries: $total"
+        echo "  Size: $bytes bytes"
+        echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
+    else echo "  No data yet."; fi
+}
+
+cmd_config() {
+    local key="${1:-}" val="${2:-}"
+    local cfg="$DATA_DIR/config.txt"
+    if [ -z "$key" ]; then
+        echo "=== Config ==="
+        if [ -f "$cfg" ]; then
+            while IFS="=" read -r k v; do echo "  $k=$v"; done < "$cfg"
+        else echo "  (empty — use config <key> <value>)"; fi
+    elif [ -z "$val" ]; then
+        grep "^${key}=" "$cfg" 2>/dev/null | cut -d= -f2- || echo "(not set)"
+    else
+        if [ -f "$cfg" ] && grep -q "^${key}=" "$cfg" 2>/dev/null; then
+            sed -i "s|^${key}=.*|${key}=${val}|" "$cfg"
         else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/draft.log"
-            local total=$(wc -l < "$DATA_DIR/draft.log")
-            echo "  [Deadline] draft: $input"
-            echo "  Saved. Total draft entries: $total"
-            _log "draft" "$input"
+            echo "${key}=${val}" >> "$cfg"
         fi
-        ;;
-    edit)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent edit entries:"
-            tail -20 "$DATA_DIR/edit.log" 2>/dev/null || echo "  No entries yet. Use: deadline edit <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/edit.log"
-            local total=$(wc -l < "$DATA_DIR/edit.log")
-            echo "  [Deadline] edit: $input"
-            echo "  Saved. Total edit entries: $total"
-            _log "edit" "$input"
-        fi
-        ;;
-    optimize)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent optimize entries:"
-            tail -20 "$DATA_DIR/optimize.log" 2>/dev/null || echo "  No entries yet. Use: deadline optimize <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/optimize.log"
-            local total=$(wc -l < "$DATA_DIR/optimize.log")
-            echo "  [Deadline] optimize: $input"
-            echo "  Saved. Total optimize entries: $total"
-            _log "optimize" "$input"
-        fi
-        ;;
-    schedule)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent schedule entries:"
-            tail -20 "$DATA_DIR/schedule.log" 2>/dev/null || echo "  No entries yet. Use: deadline schedule <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/schedule.log"
-            local total=$(wc -l < "$DATA_DIR/schedule.log")
-            echo "  [Deadline] schedule: $input"
-            echo "  Saved. Total schedule entries: $total"
-            _log "schedule" "$input"
-        fi
-        ;;
-    hashtags)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent hashtags entries:"
-            tail -20 "$DATA_DIR/hashtags.log" 2>/dev/null || echo "  No entries yet. Use: deadline hashtags <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/hashtags.log"
-            local total=$(wc -l < "$DATA_DIR/hashtags.log")
-            echo "  [Deadline] hashtags: $input"
-            echo "  Saved. Total hashtags entries: $total"
-            _log "hashtags" "$input"
-        fi
-        ;;
-    hooks)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent hooks entries:"
-            tail -20 "$DATA_DIR/hooks.log" 2>/dev/null || echo "  No entries yet. Use: deadline hooks <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/hooks.log"
-            local total=$(wc -l < "$DATA_DIR/hooks.log")
-            echo "  [Deadline] hooks: $input"
-            echo "  Saved. Total hooks entries: $total"
-            _log "hooks" "$input"
-        fi
-        ;;
-    cta)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent cta entries:"
-            tail -20 "$DATA_DIR/cta.log" 2>/dev/null || echo "  No entries yet. Use: deadline cta <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/cta.log"
-            local total=$(wc -l < "$DATA_DIR/cta.log")
-            echo "  [Deadline] cta: $input"
-            echo "  Saved. Total cta entries: $total"
-            _log "cta" "$input"
-        fi
-        ;;
-    rewrite)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent rewrite entries:"
-            tail -20 "$DATA_DIR/rewrite.log" 2>/dev/null || echo "  No entries yet. Use: deadline rewrite <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/rewrite.log"
-            local total=$(wc -l < "$DATA_DIR/rewrite.log")
-            echo "  [Deadline] rewrite: $input"
-            echo "  Saved. Total rewrite entries: $total"
-            _log "rewrite" "$input"
-        fi
-        ;;
-    translate)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent translate entries:"
-            tail -20 "$DATA_DIR/translate.log" 2>/dev/null || echo "  No entries yet. Use: deadline translate <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/translate.log"
-            local total=$(wc -l < "$DATA_DIR/translate.log")
-            echo "  [Deadline] translate: $input"
-            echo "  Saved. Total translate entries: $total"
-            _log "translate" "$input"
-        fi
-        ;;
-    tone)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent tone entries:"
-            tail -20 "$DATA_DIR/tone.log" 2>/dev/null || echo "  No entries yet. Use: deadline tone <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/tone.log"
-            local total=$(wc -l < "$DATA_DIR/tone.log")
-            echo "  [Deadline] tone: $input"
-            echo "  Saved. Total tone entries: $total"
-            _log "tone" "$input"
-        fi
-        ;;
-    headline)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent headline entries:"
-            tail -20 "$DATA_DIR/headline.log" 2>/dev/null || echo "  No entries yet. Use: deadline headline <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/headline.log"
-            local total=$(wc -l < "$DATA_DIR/headline.log")
-            echo "  [Deadline] headline: $input"
-            echo "  Saved. Total headline entries: $total"
-            _log "headline" "$input"
-        fi
-        ;;
-    outline)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent outline entries:"
-            tail -20 "$DATA_DIR/outline.log" 2>/dev/null || echo "  No entries yet. Use: deadline outline <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/outline.log"
-            local total=$(wc -l < "$DATA_DIR/outline.log")
-            echo "  [Deadline] outline: $input"
-            echo "  Saved. Total outline entries: $total"
-            _log "outline" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown: $1 — run 'deadline help'"
-        exit 1
-        ;;
+        echo "Set: $key=$val"
+    fi
+}
+
+CMD="${1:-help}"
+shift 2>/dev/null || true
+_ensure_dirs
+
+case "$CMD" in
+    status) cmd_status "$@" ;;
+    add) cmd_add "$@" ;;
+    list) cmd_list "$@" ;;
+    search) cmd_search "$@" ;;
+    remove) cmd_remove "$@" ;;
+    export) cmd_export "$@" ;;
+    stats) cmd_stats "$@" ;;
+    config) cmd_config "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "deadline v$VERSION -- Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: deadline help"; exit 1 ;;
 esac

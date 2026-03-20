@@ -1,0 +1,9 @@
+{
+  "name": "gpio",
+  "description": "Control GPIO pins on Raspberry Pi or embedded boards with logging support. Use when reading sensors, toggling relays, or logging pin state changes.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "theme",
+  "description": "Generate and manage UI color themes using CLI tools. Use when you need to create, preview, apply, import, or export dark/light mode themes, palettes,",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

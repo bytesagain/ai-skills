@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Error Analysis
-description: "错题分析助手。分析错误原因、知识点定位、举一反三出变式题。. Use when you need error analysis capabilities. Triggers on: error analysis."
-  错题分析助手。错题归类、知识点定位、薄弱环节分析、复习建议。Error analysis for study with categorization, knowledge gap identification. 错题本、考试复盘、学习分析。Use when analyzing exam mistakes.
+description: "Analyze wrong answers and generate variant practice problems from mistakes. Use when diagnosing errors, locating gaps, or drilling weak topics."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # error-analysis

@@ -1,61 +1,114 @@
 ---
-version: "2.0.0"
+version: "3.0.0"
 name: doc-summarize-pro
-description: "Enhanced document summarizer. Smart summary, bullet extraction, executive summary, chapter breakdown, multi-doc comparison, translate+summarize, action item extraction, timeline extraction. Use when summarizing documents, extracting key points, generating executive summaries, or pulling action items from meeting notes. Triggers on: doc summarize pro."
+description: "Enhanced document summarizer. Smart summary, bullet extraction, executive summary, chapter breakdown, multi-doc comparison, translate+summarize."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
-# 📝 Summarize Pro — Enhanced Document Summarizer
+# 📝 Doc Summarize Pro — Document Analysis Toolkit
 
-> One tool for every summarization need — from bullet points to timelines.
+> Pure-bash document summarizer: extract summaries, keywords, outlines, stats, and more — no external dependencies.
 
-## ❓ FAQ
+## Commands
 
-### What summary modes are available?
-Eight modes covering all scenarios: `summarize` (default), `bullet` (key points), `executive` (decision-maker brief), `chapter` (section breakdown), `compare` (multi-doc), `translate-summary` (translate + summarize), `action` (action items), `timeline` (chronological events).
+### `summarize <file>`
 
-### How do I use it?
-Run `bash scripts/summarize.sh <command> [text]` or let the Agent pick the right command for your need.
+Generate a document summary by extracting key sentences from each paragraph (first and last sentences, plus topic sentences).
 
-### What's the difference between executive and summarize?
-`summarize` outputs a full summary with details. `executive` targets decision-makers — highlights conclusions, impact, and recommendations in a shorter format.
+### `keywords <file>`
 
-### How does compare mode work?
-Provide multiple text blocks separated by `---`. The tool extracts core points from each and generates a comparative analysis.
+Extract keywords via word-frequency analysis. Filters common stop-words and ranks by occurrence count.
 
-### What languages are supported?
-Works with any language input. `translate-summary` can translate while summarizing in one step.
+### `outline <file>`
 
-## 🔧 Commands
+Extract document structure and outline by detecting heading lines (Markdown `#` headers, ALL-CAPS lines, numbered sections).
 
-| Command | Purpose | Input |
-|---------|---------|-------|
-| `summarize` | General summary | Text |
-| `bullet` | Key points list | Text |
-| `executive` | Executive brief | Text |
-| `chapter` | Section breakdown | Long text |
-| `compare` | Multi-doc comparison | Multiple texts |
-| `translate-summary` | Translate + summarize | Text + target lang |
-| `action` | Action item extraction | Meeting notes / text |
-| `timeline` | Timeline extraction | Text with dates |
+### `stats <file>`
 
-## 📂 Scripts
+Document statistics: word count, character count, paragraph count, sentence count, unique words, and estimated reading time.
 
-- `scripts/summarize.sh` — Main script, bash + python3 heredoc
----
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
+### `compare <file1> <file2>`
+
+Compare two documents side-by-side: word count difference, shared keywords, and unique keywords per file.
+
+### `batch <dir>`
+
+Batch-summarize all text files in a directory. Processes `.txt`, `.md`, `.rst`, `.log` files and outputs a summary for each.
+
+### `export <file> <format>`
+
+Export a file's summary in a specified format. Supported formats: `md` (Markdown), `txt` (plain text), `json`.
+
+### `history`
+
+Display processing history — shows all previously run commands with timestamps.
+
+### `config`
+
+View or update configuration. Settings: `summary_sentences` (sentences per paragraph in summary), `keyword_count` (max keywords to display).
+
+### `help`
+
+Show usage information and available commands.
+
+### `version`
+
+Print the current version number.
 
 ## Examples
 
 ```bash
-# Quick start
-doc-summarize-pro help
+# Summarize a document
+bash scripts/script.sh summarize ~/Documents/report.md
 
-# Run main function
-doc-summarize-pro run
+# Extract keywords from a file
+bash scripts/script.sh keywords paper.txt
+
+# Get document outline
+bash scripts/script.sh outline thesis.md
+
+# Show file statistics
+bash scripts/script.sh stats notes.txt
+
+# Compare two documents
+bash scripts/script.sh compare draft-v1.md draft-v2.md
+
+# Batch summarize a directory
+bash scripts/script.sh batch ~/Documents/notes/
+
+# Export summary as JSON
+bash scripts/script.sh export report.md json
+
+# View processing history
+bash scripts/script.sh history
+
+# View/update config
+bash scripts/script.sh config
+bash scripts/script.sh config summary_sentences 3
+bash scripts/script.sh config keyword_count 20
 ```
 
-## Commands
+## Configuration
 
-Run `doc-summarize-pro help` to see all available commands.
+Settings are stored in `$HOME/.doc-summarize-pro/config`:
+
+| Key                 | Default | Description                          |
+|---------------------|---------|--------------------------------------|
+| `summary_sentences` | `2`     | Sentences extracted per paragraph     |
+| `keyword_count`     | `15`    | Maximum keywords to display           |
+
+Update via `config <key> <value>` or edit the config file directly.
+
+## Data Storage
+
+All data is stored under `$HOME/.doc-summarize-pro/`:
+
+| File            | Purpose                        |
+|-----------------|--------------------------------|
+| `config`        | Key-value configuration file   |
+| `history.log`   | Processing history with timestamps |
+
+---
+Powered by BytesAgain | bytesagain.com

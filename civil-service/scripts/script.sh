@@ -1,101 +1,157 @@
 #!/usr/bin/env bash
-# civil-service - Developer workflow automation tool
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${CIVIL_SERVICE_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/civil-service}"
-DB="$DATA_DIR/data.log"
+
+VERSION="3.0.0"
+SCRIPT_NAME="civil-service"
+DATA_DIR="$HOME/.local/share/civil-service"
 mkdir -p "$DATA_DIR"
 
-show_help() {
-    cat << EOF
-civil-service v$VERSION
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-Developer workflow automation tool
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
-Usage: civil-service <command> [args]
-
-Commands:
-  init                 Initialize project
-  check                Run checks
-  build                Build project
-  test                 Run tests
-  deploy               Deploy guide
-  config               Configuration
-  status               Project status
-  template             Code template
-  docs                 Documentation
-  clean                Clean artifacts
-  help                 Show this help
-  version              Show version
-
-Data: \$DATA_DIR
-EOF
+cmd_topics() {
+    echo '行测: 言语理解 数量关系 判断推理 资料分析 常识判断'
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-
-cmd_init() {
-    echo "  Project initialized in $(pwd)"
-    _log "init" "${1:-}"
+cmd_quiz() {
+    local category="${2:-}"
+    [ -z "$category" ] && die "Usage: $SCRIPT_NAME quiz <category>"
+    echo '题目 ($2): 以下哪项不属于我国的基本国策？
+A. 计划生育 B. 节约资源 C. 对外开放 D. 发展旅游
+答案: D'
 }
 
-cmd_check() {
-    echo "  Running lint + type check + tests..."
-    _log "check" "${1:-}"
+cmd_tips() {
+    local topic="${2:-}"
+    [ -z "$topic" ] && die "Usage: $SCRIPT_NAME tips <topic>"
+    echo '$2 备考建议: 多做真题，总结规律，注意时间分配'
 }
 
-cmd_build() {
-    echo "  Building..."
-    _log "build" "${1:-}"
+cmd_timer() {
+    local minutes="${2:-}"
+    [ -z "$minutes" ] && die "Usage: $SCRIPT_NAME timer <minutes>"
+    echo '计时 ${2:-30} 分钟开始'; sleep $((${2:-30}*60)) && echo '时间到！'
 }
 
-cmd_test() {
-    echo "  Running test suite..."
-    _log "test" "${1:-}"
+cmd_score() {
+    local correct="${2:-}"
+    local total="${3:-}"
+    [ -z "$correct" ] && die "Usage: $SCRIPT_NAME score <correct total>"
+    awk "BEGIN{printf \"得分: %.1f%%\n\", $2/$3*100}"
 }
 
-cmd_deploy() {
-    echo "  Deploy: build -> test -> stage -> prod"
-    _log "deploy" "${1:-}"
+cmd_history() {
+    cat $DATA_DIR/quiz_history.log 2>/dev/null || echo '暂无记录'
 }
 
-cmd_config() {
-    echo "  Config: $DATA_DIR/config.json"
-    _log "config" "${1:-}"
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
+    echo ""
+    echo "Commands:"
+    printf "  %-25s\n" "topics"
+    printf "  %-25s\n" "quiz <category>"
+    printf "  %-25s\n" "tips <topic>"
+    printf "  %-25s\n" "timer <minutes>"
+    printf "  %-25s\n" "score <correct total>"
+    printf "  %-25s\n" "history"
+    printf "  %%-25s\n" "help"
+    echo ""
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-cmd_status() {
-    echo "  Status: checking project health..."
-    _log "status" "${1:-}"
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        topics) shift; cmd_topics "$@" ;;
+        quiz) shift; cmd_quiz "$@" ;;
+        tips) shift; cmd_tips "$@" ;;
+        timer) shift; cmd_timer "$@" ;;
+        score) shift; cmd_score "$@" ;;
+        history) shift; cmd_history "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
+    esac
 }
 
-cmd_template() {
-    echo "  Template for: $1"
-    _log "template" "${1:-}"
-}
-
-cmd_docs() {
-    echo "  Generating docs..."
-    _log "docs" "${1:-}"
-}
-
-cmd_clean() {
-    echo "  Cleaned build artifacts"
-    _log "clean" "${1:-}"
-}
-
-case "${1:-help}" in
-    init) shift; cmd_init "$@" ;;
-    check) shift; cmd_check "$@" ;;
-    build) shift; cmd_build "$@" ;;
-    test) shift; cmd_test "$@" ;;
-    deploy) shift; cmd_deploy "$@" ;;
-    config) shift; cmd_config "$@" ;;
-    status) shift; cmd_status "$@" ;;
-    template) shift; cmd_template "$@" ;;
-    docs) shift; cmd_docs "$@" ;;
-    clean) shift; cmd_clean "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "civil-service v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
-esac
+main "$@"

@@ -1,0 +1,9 @@
+{
+  "name": "secret-encrypt",
+  "description": "Encrypt, rotate, and manage application secrets securely. Use when scanning exposed credentials, monitoring expiry, reporting access, alerting on violations.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

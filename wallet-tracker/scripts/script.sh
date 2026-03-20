@@ -1,101 +1,155 @@
 #!/usr/bin/env bash
-# wallet-tracker - Financial tracking and analysis tool
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${WALLET_TRACKER_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/wallet-tracker}"
-DB="$DATA_DIR/data.log"
+
+VERSION="3.0.0"
+SCRIPT_NAME="wallet-tracker"
+DATA_DIR="$HOME/.local/share/wallet-tracker"
 mkdir -p "$DATA_DIR"
 
-show_help() {
-    cat << EOF
-wallet-tracker v$VERSION
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-Financial tracking and analysis tool
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
-Usage: wallet-tracker <command> [args]
-
-Commands:
-  track                Record a transaction
-  balance              Show current balance
-  summary              Financial summary
-  export               Export to CSV
-  budget               Budget overview
-  history              Transaction history
-  alert                Set price/budget alert
-  compare              Compare periods
-  forecast             Simple forecast
-  categories           Spending categories
-  help                 Show this help
-  version              Show version
-
-Data: \$DATA_DIR
-EOF
+cmd_add() {
+    local address="${2:-}"
+    local label="${3:-}"
+    [ -z "$address" ] && die "Usage: $SCRIPT_NAME add <address label>"
+    echo '{"addr":"'$2'","label":"'${3:-unlabeled}'"}' >> $DATA_DIR/wallets.jsonl && echo 'Added $2'
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-
-cmd_track() {
-    echo "  Transaction: $1 Amount: ${2:-0}"
-    _log "track" "${1:-}"
+cmd_list() {
+    cat $DATA_DIR/wallets.jsonl 2>/dev/null || echo 'No wallets'
 }
 
 cmd_balance() {
-    echo "  Balance: check $DATA_DIR/ledger"
-    _log "balance" "${1:-}"
+    local address="${2:-}"
+    [ -z "$address" ] && die "Usage: $SCRIPT_NAME balance <address>"
+    curl -s 'https://blockstream.info/api/address/$2' 2>/dev/null | python3 -c 'import json,sys;d=json.load(sys.stdin);cs=d.get("chain_stats",{});print("Balance:",(cs.get("funded_txo_sum",0)-cs.get("spent_txo_sum",0))/1e8,"BTC")' 2>/dev/null
 }
 
-cmd_summary() {
-    echo "  Period: $(date +%Y-%m) | Income: $0 | Expenses: $0"
-    _log "summary" "${1:-}"
+cmd_check() {
+    local address="${2:-}"
+    [ -z "$address" ] && die "Usage: $SCRIPT_NAME check <address>"
+    curl -s 'https://blockstream.info/api/address/$2/txs' 2>/dev/null | python3 -c 'import json,sys;txs=json.load(sys.stdin);print("Transactions:",len(txs))' 2>/dev/null
 }
 
-cmd_export() {
-    echo "date,description,amount" && cat "$DB" 2>/dev/null
-    _log "export" "${1:-}"
+cmd_remove() {
+    local address="${2:-}"
+    [ -z "$address" ] && die "Usage: $SCRIPT_NAME remove <address>"
+    grep -v $2 $DATA_DIR/wallets.jsonl > $DATA_DIR/wallets.tmp && mv $DATA_DIR/wallets.tmp $DATA_DIR/wallets.jsonl && echo 'Removed $2'
 }
 
-cmd_budget() {
-    echo "  Category | Budget | Spent | Remaining"
-    _log "budget" "${1:-}"
+cmd_report() {
+    echo '=== Wallet Report ==='
 }
 
-cmd_history() {
-    [ -f "$DB" ] && tail -20 "$DB" || echo "No history"
-    _log "history" "${1:-}"
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
+    echo ""
+    echo "Commands:"
+    printf "  %-25s\n" "add <address label>"
+    printf "  %-25s\n" "list"
+    printf "  %-25s\n" "balance <address>"
+    printf "  %-25s\n" "check <address>"
+    printf "  %-25s\n" "remove <address>"
+    printf "  %-25s\n" "report"
+    printf "  %%-25s\n" "help"
+    echo ""
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-cmd_alert() {
-    echo "  Alert set for: $1 at $2"
-    _log "alert" "${1:-}"
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        add) shift; cmd_add "$@" ;;
+        list) shift; cmd_list "$@" ;;
+        balance) shift; cmd_balance "$@" ;;
+        check) shift; cmd_check "$@" ;;
+        remove) shift; cmd_remove "$@" ;;
+        report) shift; cmd_report "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
+    esac
 }
 
-cmd_compare() {
-    echo "  Comparing current vs previous period"
-    _log "compare" "${1:-}"
-}
-
-cmd_forecast() {
-    echo "  Based on trends: [projection]"
-    _log "forecast" "${1:-}"
-}
-
-cmd_categories() {
-    echo "  Food | Transport | Housing | Entertainment | Savings"
-    _log "categories" "${1:-}"
-}
-
-case "${1:-help}" in
-    track) shift; cmd_track "$@" ;;
-    balance) shift; cmd_balance "$@" ;;
-    summary) shift; cmd_summary "$@" ;;
-    export) shift; cmd_export "$@" ;;
-    budget) shift; cmd_budget "$@" ;;
-    history) shift; cmd_history "$@" ;;
-    alert) shift; cmd_alert "$@" ;;
-    compare) shift; cmd_compare "$@" ;;
-    forecast) shift; cmd_forecast "$@" ;;
-    categories) shift; cmd_categories "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "wallet-tracker v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
-esac
+main "$@"

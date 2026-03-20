@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: Pinpoint
-description: "APM, (Application Performance Management) tool for large-scale distributed systems. apm-monitor, java, agent, apm, distributed-tracing, monitoring, performance. Use when you need apm-monitor capabilities. Triggers on: apm-monitor."
+description: "APM, (Application Performance Management) tool for large-scale distributed systems. apm-monitor, java, agent, apm, distributed-tracing, monitoring."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Pinpoint
@@ -40,7 +42,6 @@ apm-monitor run
 
 - Run `apm-monitor help` for all commands
 
-- Run `apm-monitor help` for all commands
 
 ## Output
 

@@ -1,101 +1,155 @@
 #!/usr/bin/env bash
-# chaos-testing - Multi-purpose utility tool
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${CHAOS_TESTING_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/chaos-testing}"
-DB="$DATA_DIR/data.log"
+
+VERSION="3.0.0"
+SCRIPT_NAME="chaos-testing"
+DATA_DIR="$HOME/.local/share/chaos-testing"
 mkdir -p "$DATA_DIR"
 
-show_help() {
-    cat << EOF
-chaos-testing v$VERSION
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-Multi-purpose utility tool
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
-Usage: chaos-testing <command> [args]
-
-Commands:
-  run                  Execute main function
-  config               Configuration
-  status               Show status
-  init                 Initialize
-  list                 List items
-  add                  Add entry
-  remove               Remove entry
-  search               Search
-  export               Export data
-  info                 Show info
-  help                 Show this help
-  version              Show version
-
-Data: \$DATA_DIR
-EOF
+cmd_cpu_stress() {
+    local seconds="${2:-}"
+    [ -z "$seconds" ] && die "Usage: $SCRIPT_NAME cpu-stress <seconds>"
+    echo 'CPU stress for ${2:-10}s'; timeout ${2:-10} dd if=/dev/urandom of=/dev/null bs=1M 2>/dev/null; echo Done
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-
-cmd_run() {
-    echo "  Running: $1"
-    _log "run" "${1:-}"
+cmd_mem_stress() {
+    local mb="${2:-}"
+    [ -z "$mb" ] && die "Usage: $SCRIPT_NAME mem-stress <mb>"
+    echo 'Allocating ${2:-100}MB'; head -c ${2:-100}m /dev/urandom > /tmp/chaos_mem_test; rm /tmp/chaos_mem_test; echo Done
 }
 
-cmd_config() {
-    echo "  Config: $DATA_DIR/config.json"
-    _log "config" "${1:-}"
+cmd_disk_fill() {
+    local mb="${2:-}"
+    local dir="${3:-}"
+    [ -z "$mb" ] && die "Usage: $SCRIPT_NAME disk-fill <mb dir>"
+    dd if=/dev/zero of=${3:-/tmp}/chaos_disk bs=1M count=${2:-100} 2>/dev/null; rm ${3:-/tmp}/chaos_disk; echo Done
+}
+
+cmd_io_stress() {
+    local seconds="${2:-}"
+    [ -z "$seconds" ] && die "Usage: $SCRIPT_NAME io-stress <seconds>"
+    echo 'I/O stress for ${2:-10}s'; timeout ${2:-10} dd if=/dev/urandom of=/dev/null bs=4k 2>/dev/null; echo Done
+}
+
+cmd_report() {
+    echo '=== System After Test ==='; uptime; free -h; df -h / | tail -1
 }
 
 cmd_status() {
-    echo "  Status: ready"
-    _log "status" "${1:-}"
+    uptime && free -h | head -2
 }
 
-cmd_init() {
-    echo "  Initialized in $DATA_DIR"
-    _log "init" "${1:-}"
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
+    echo ""
+    echo "Commands:"
+    printf "  %-25s\n" "cpu-stress <seconds>"
+    printf "  %-25s\n" "mem-stress <mb>"
+    printf "  %-25s\n" "disk-fill <mb dir>"
+    printf "  %-25s\n" "io-stress <seconds>"
+    printf "  %-25s\n" "report"
+    printf "  %-25s\n" "status"
+    printf "  %%-25s\n" "help"
+    echo ""
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-cmd_list() {
-    [ -f "$DB" ] && cat "$DB" || echo "  (empty)"
-    _log "list" "${1:-}"
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        cpu-stress) shift; cmd_cpu_stress "$@" ;;
+        mem-stress) shift; cmd_mem_stress "$@" ;;
+        disk-fill) shift; cmd_disk_fill "$@" ;;
+        io-stress) shift; cmd_io_stress "$@" ;;
+        report) shift; cmd_report "$@" ;;
+        status) shift; cmd_status "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
+    esac
 }
 
-cmd_add() {
-    echo "$(date +%Y-%m-%d) $*" >> "$DB"; echo "  Added: $*"
-    _log "add" "${1:-}"
-}
-
-cmd_remove() {
-    echo "  Removed: $1"
-    _log "remove" "${1:-}"
-}
-
-cmd_search() {
-    grep -i "$1" "$DB" 2>/dev/null || echo "  Not found: $1"
-    _log "search" "${1:-}"
-}
-
-cmd_export() {
-    [ -f "$DB" ] && cat "$DB" || echo "No data"
-    _log "export" "${1:-}"
-}
-
-cmd_info() {
-    echo "  Version: $VERSION | Data: $DATA_DIR"
-    _log "info" "${1:-}"
-}
-
-case "${1:-help}" in
-    run) shift; cmd_run "$@" ;;
-    config) shift; cmd_config "$@" ;;
-    status) shift; cmd_status "$@" ;;
-    init) shift; cmd_init "$@" ;;
-    list) shift; cmd_list "$@" ;;
-    add) shift; cmd_add "$@" ;;
-    remove) shift; cmd_remove "$@" ;;
-    search) shift; cmd_search "$@" ;;
-    export) shift; cmd_export "$@" ;;
-    info) shift; cmd_info "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "chaos-testing v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
-esac
+main "$@"

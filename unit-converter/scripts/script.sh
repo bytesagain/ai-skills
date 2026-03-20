@@ -1,101 +1,155 @@
 #!/usr/bin/env bash
-# unit-converter - Multi-purpose utility tool
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${UNIT_CONVERTER_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/unit-converter}"
-DB="$DATA_DIR/data.log"
+
+VERSION="3.0.0"
+SCRIPT_NAME="unit-converter"
+DATA_DIR="$HOME/.local/share/unit-converter"
 mkdir -p "$DATA_DIR"
 
-show_help() {
-    cat << EOF
-unit-converter v$VERSION
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-Multi-purpose utility tool
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
-Usage: unit-converter <command> [args]
-
-Commands:
-  run                  Execute main function
-  config               Configuration
-  status               Show status
-  init                 Initialize
-  list                 List items
-  add                  Add entry
-  remove               Remove entry
-  search               Search
-  export               Export data
-  info                 Show info
-  help                 Show this help
-  version              Show version
-
-Data: \$DATA_DIR
-EOF
+cmd_length() {
+    local val="${2:-}"
+    local from="${3:-}"
+    local to="${4:-}"
+    [ -z "$val" ] && die "Usage: $SCRIPT_NAME length <val from to>"
+    awk "BEGIN{m[\"m\"]=1;m[\"ft\"]=0.3048;m[\"in\"]=0.0254;m[\"cm\"]=0.01;m[\"km\"]=1000;m[\"mi\"]=1609.34; printf \"%.4f %s\n\",$2*m[\"$3\"]/m[\"$4\"],\"$4\"}"
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-
-cmd_run() {
-    echo "  Running: $1"
-    _log "run" "${1:-}"
+cmd_weight() {
+    local val="${2:-}"
+    local from="${3:-}"
+    local to="${4:-}"
+    [ -z "$val" ] && die "Usage: $SCRIPT_NAME weight <val from to>"
+    awk "BEGIN{m[\"kg\"]=1;m[\"lb\"]=0.453592;m[\"oz\"]=0.0283495;m[\"g\"]=0.001; printf \"%.4f %s\n\",$2*m[\"$3\"]/m[\"$4\"],\"$4\"}"
 }
 
-cmd_config() {
-    echo "  Config: $DATA_DIR/config.json"
-    _log "config" "${1:-}"
+cmd_temp() {
+    local val="${2:-}"
+    local from="${3:-}"
+    local to="${4:-}"
+    [ -z "$val" ] && die "Usage: $SCRIPT_NAME temp <val from to>"
+    case $3$4 in CF) awk "BEGIN{printf \"%.1f F\n\",$2*9/5+32}";; FC) awk "BEGIN{printf \"%.1f C\n\",($2-32)*5/9}";; CK) awk "BEGIN{printf \"%.1f K\n\",$2+273.15}";; *) echo 'Use: C, F, K';; esac
 }
 
-cmd_status() {
-    echo "  Status: ready"
-    _log "status" "${1:-}"
+cmd_speed() {
+    local val="${2:-}"
+    local from="${3:-}"
+    local to="${4:-}"
+    [ -z "$val" ] && die "Usage: $SCRIPT_NAME speed <val from to>"
+    awk "BEGIN{m[\"kmh\"]=1;m[\"mph\"]=1.60934;m[\"ms\"]=3.6; printf \"%.2f %s\n\",$2*m[\"$3\"]/m[\"$4\"],\"$4\"}"
 }
 
-cmd_init() {
-    echo "  Initialized in $DATA_DIR"
-    _log "init" "${1:-}"
+cmd_data() {
+    local val="${2:-}"
+    local from="${3:-}"
+    local to="${4:-}"
+    [ -z "$val" ] && die "Usage: $SCRIPT_NAME data <val from to>"
+    awk "BEGIN{m[\"B\"]=1;m[\"KB\"]=1024;m[\"MB\"]=1048576;m[\"GB\"]=1073741824;m[\"TB\"]=1099511627776; printf \"%.4f %s\n\",$2*m[\"$3\"]/m[\"$4\"],\"$4\"}"
 }
 
-cmd_list() {
-    [ -f "$DB" ] && cat "$DB" || echo "  (empty)"
-    _log "list" "${1:-}"
+cmd_volume() {
+    local val="${2:-}"
+    local from="${3:-}"
+    local to="${4:-}"
+    [ -z "$val" ] && die "Usage: $SCRIPT_NAME volume <val from to>"
+    awk "BEGIN{m[\"L\"]=1;m[\"ml\"]=0.001;m[\"gal\"]=3.78541; printf \"%.4f %s\n\",$2*m[\"$3\"]/m[\"$4\"],\"$4\"}"
 }
 
-cmd_add() {
-    echo "$(date +%Y-%m-%d) $*" >> "$DB"; echo "  Added: $*"
-    _log "add" "${1:-}"
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
+    echo ""
+    echo "Commands:"
+    printf "  %-25s\n" "length <val from to>"
+    printf "  %-25s\n" "weight <val from to>"
+    printf "  %-25s\n" "temp <val from to>"
+    printf "  %-25s\n" "speed <val from to>"
+    printf "  %-25s\n" "data <val from to>"
+    printf "  %-25s\n" "volume <val from to>"
+    printf "  %%-25s\n" "help"
+    echo ""
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-cmd_remove() {
-    echo "  Removed: $1"
-    _log "remove" "${1:-}"
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        length) shift; cmd_length "$@" ;;
+        weight) shift; cmd_weight "$@" ;;
+        temp) shift; cmd_temp "$@" ;;
+        speed) shift; cmd_speed "$@" ;;
+        data) shift; cmd_data "$@" ;;
+        volume) shift; cmd_volume "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
+    esac
 }
 
-cmd_search() {
-    grep -i "$1" "$DB" 2>/dev/null || echo "  Not found: $1"
-    _log "search" "${1:-}"
-}
-
-cmd_export() {
-    [ -f "$DB" ] && cat "$DB" || echo "No data"
-    _log "export" "${1:-}"
-}
-
-cmd_info() {
-    echo "  Version: $VERSION | Data: $DATA_DIR"
-    _log "info" "${1:-}"
-}
-
-case "${1:-help}" in
-    run) shift; cmd_run "$@" ;;
-    config) shift; cmd_config "$@" ;;
-    status) shift; cmd_status "$@" ;;
-    init) shift; cmd_init "$@" ;;
-    list) shift; cmd_list "$@" ;;
-    add) shift; cmd_add "$@" ;;
-    remove) shift; cmd_remove "$@" ;;
-    search) shift; cmd_search "$@" ;;
-    export) shift; cmd_export "$@" ;;
-    info) shift; cmd_info "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "unit-converter v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
-esac
+main "$@"

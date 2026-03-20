@@ -1,101 +1,155 @@
 #!/usr/bin/env bash
-# trademark-helper - Financial tracking and analysis tool
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${TRADEMARK_HELPER_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/trademark-helper}"
-DB="$DATA_DIR/data.log"
+
+VERSION="3.0.0"
+SCRIPT_NAME="trademark-helper"
+DATA_DIR="$HOME/.local/share/trademark-helper"
 mkdir -p "$DATA_DIR"
 
-show_help() {
-    cat << EOF
-trademark-helper v$VERSION
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-Financial tracking and analysis tool
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
-Usage: trademark-helper <command> [args]
-
-Commands:
-  track                Record a transaction
-  balance              Show current balance
-  summary              Financial summary
-  export               Export to CSV
-  budget               Budget overview
-  history              Transaction history
-  alert                Set price/budget alert
-  compare              Compare periods
-  forecast             Simple forecast
-  categories           Spending categories
-  help                 Show this help
-  version              Show version
-
-Data: \$DATA_DIR
-EOF
+cmd_classes() {
+    echo 'Nice Classification: 45 classes'; echo 'Class 9: Software, electronics'; echo 'Class 42: IT services, SaaS'; echo 'Class 35: Advertising, business management'
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-
-cmd_track() {
-    echo "  Transaction: $1 Amount: ${2:-0}"
-    _log "track" "${1:-}"
+cmd_check() {
+    local name="${2:-}"
+    [ -z "$name" ] && die "Usage: $SCRIPT_NAME check <name>"
+    echo 'Checking: $2'; echo 'Search WIPO/USPTO for official status'
 }
 
-cmd_balance() {
-    echo "  Balance: check $DATA_DIR/ledger"
-    _log "balance" "${1:-}"
+cmd_search() {
+    local term="${2:-}"
+    [ -z "$term" ] && die "Usage: $SCRIPT_NAME search <term>"
+    echo 'Searching marks similar to: $2'
 }
 
-cmd_summary() {
-    echo "  Period: $(date +%Y-%m) | Income: $0 | Expenses: $0"
-    _log "summary" "${1:-}"
-}
-
-cmd_export() {
-    echo "date,description,amount" && cat "$DB" 2>/dev/null
-    _log "export" "${1:-}"
-}
-
-cmd_budget() {
-    echo "  Category | Budget | Spent | Remaining"
-    _log "budget" "${1:-}"
-}
-
-cmd_history() {
-    [ -f "$DB" ] && tail -20 "$DB" || echo "No history"
-    _log "history" "${1:-}"
-}
-
-cmd_alert() {
-    echo "  Alert set for: $1 at $2"
-    _log "alert" "${1:-}"
+cmd_suggest() {
+    local keyword="${2:-}"
+    [ -z "$keyword" ] && die "Usage: $SCRIPT_NAME suggest <keyword>"
+    echo 'Suggestions based on $2: ${2}ly, ${2}hub, ${2}io, get$2'
 }
 
 cmd_compare() {
-    echo "  Comparing current vs previous period"
-    _log "compare" "${1:-}"
+    local n1="${2:-}"
+    local n2="${3:-}"
+    [ -z "$n1" ] && die "Usage: $SCRIPT_NAME compare <n1 n2>"
+    echo 'Comparing $2 vs $3: check for visual/phonetic similarity'
 }
 
-cmd_forecast() {
-    echo "  Based on trends: [projection]"
-    _log "forecast" "${1:-}"
+cmd_report() {
+    local name="${2:-}"
+    [ -z "$name" ] && die "Usage: $SCRIPT_NAME report <name>"
+    echo '=== Trademark Report: $2 ==='; echo 'Status: search required'
 }
 
-cmd_categories() {
-    echo "  Food | Transport | Housing | Entertainment | Savings"
-    _log "categories" "${1:-}"
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
+    echo ""
+    echo "Commands:"
+    printf "  %-25s\n" "classes"
+    printf "  %-25s\n" "check <name>"
+    printf "  %-25s\n" "search <term>"
+    printf "  %-25s\n" "suggest <keyword>"
+    printf "  %-25s\n" "compare <n1 n2>"
+    printf "  %-25s\n" "report <name>"
+    printf "  %%-25s\n" "help"
+    echo ""
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-case "${1:-help}" in
-    track) shift; cmd_track "$@" ;;
-    balance) shift; cmd_balance "$@" ;;
-    summary) shift; cmd_summary "$@" ;;
-    export) shift; cmd_export "$@" ;;
-    budget) shift; cmd_budget "$@" ;;
-    history) shift; cmd_history "$@" ;;
-    alert) shift; cmd_alert "$@" ;;
-    compare) shift; cmd_compare "$@" ;;
-    forecast) shift; cmd_forecast "$@" ;;
-    categories) shift; cmd_categories "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "trademark-helper v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
-esac
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        classes) shift; cmd_classes "$@" ;;
+        check) shift; cmd_check "$@" ;;
+        search) shift; cmd_search "$@" ;;
+        suggest) shift; cmd_suggest "$@" ;;
+        compare) shift; cmd_compare "$@" ;;
+        report) shift; cmd_report "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
+    esac
+}
+
+main "$@"

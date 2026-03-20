@@ -1,332 +1,168 @@
 #!/usr/bin/env bash
-# Warehouse — data tool
+# warehouse -- Design data warehouse schemas and optimize query pipelines. Use when ingesting datasets, transforming tables, tuning queries, or building aggregations.
 # Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-DATA_DIR="${HOME}/.local/share/warehouse"
-mkdir -p "$DATA_DIR"
+VERSION="1.0.0"
+DATA_DIR="${WAREHOUSE_DIR:-$HOME/.warehouse}"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+_ensure_dirs() { mkdir -p "$DATA_DIR"; }
 
-_version() { echo "warehouse v2.0.0"; }
-
-_help() {
-    echo "Warehouse v2.0.0 — data toolkit"
-    echo ""
-    echo "Usage: warehouse <command> [args]"
-    echo ""
-    echo "Commands:"
-    echo "  ingest             Ingest"
-    echo "  transform          Transform"
-    echo "  query              Query"
-    echo "  filter             Filter"
-    echo "  aggregate          Aggregate"
-    echo "  visualize          Visualize"
-    echo "  export             Export"
-    echo "  sample             Sample"
-    echo "  schema             Schema"
-    echo "  validate           Validate"
-    echo "  pipeline           Pipeline"
-    echo "  profile            Profile"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
+_save_entry() {
+    _ensure_dirs
+    local cmd="$1" val="$2"
+    local ts=$(date '+%Y-%m-%d %H:%M:%S')
+    printf '{"ts":"%s","cmd":"%s","val":"%s"}\n' "$ts" "$cmd" "$val" >> "$DATA_DIR/data.jsonl"
 }
 
-_stats() {
-    echo "=== Warehouse Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Since: $(head -1 "$DATA_DIR/history.log" 2>/dev/null | cut -d'|' -f1 || echo 'N/A')"
+show_help() {
+    cat << EOF
+warehouse v$VERSION -- Design data warehouse schemas and optimize query pipelines. Use when ingesting datasets, transforming tables, tuning queries, or building aggregations.
+
+Usage: warehouse <command> [args]
+
+Commands:
+  status          Show current status
+  add             Add new entry
+  list            List all entries
+  search          Search entries
+  remove          Remove entry by number
+  export          Export data to file
+  stats           Show statistics
+  config          View or set config
+  help              Show this help
+  version           Show version
+
+Data: $DATA_DIR
+Powered by BytesAgain | bytesagain.com
+EOF
 }
 
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "" >> "$out"
-            echo "]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    echo "$name,$ts,$val" >> "$out"
-                done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Warehouse Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-                echo "" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
-    esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
-}
-
-_status() {
-    echo "=== Warehouse Status ==="
-    echo "  Version: v2.0.0"
+cmd_status() {
+    echo "=== warehouse Status ==="
+    echo "  Version: $VERSION"
     echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    local last=$(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo "never")
-    echo "  Last activity: $last"
-    echo "  Status: OK"
+    local entries=$(cat "$DATA_DIR"/*.jsonl 2>/dev/null | wc -l || echo 0)
+    echo "  Entries: $entries"
+    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1 || echo empty)"
 }
 
-_search() {
-    local term="${1:?Usage: warehouse search <term>}"
-    echo "Searching for: $term"
-    local found=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local matches=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$matches" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$matches" | while read -r line; do
-                echo "    $line"
-                found=$((found + 1))
-            done
-        fi
-    done
-    [ $found -eq 0 ] && echo "  No matches found."
+cmd_add() {
+    local value="${1:?Usage: warehouse add <entry>}"
+    shift || true
+    _save_entry "add" "$value $*"
+    local count=$(wc -l < "$DATA_DIR/data.jsonl" 2>/dev/null || echo 0)
+    echo "Added: $value (entry #$count)"
 }
 
-_recent() {
-    echo "=== Recent Activity ==="
-    if [ -f "$DATA_DIR/history.log" ]; then
-        tail -20 "$DATA_DIR/history.log" | while IFS='' read -r line; do
-            echo "  $line"
+cmd_list() {
+    echo "=== Warehouse Entries ==="
+    if [ -f "$DATA_DIR/data.jsonl" ]; then
+        local count=$(wc -l < "$DATA_DIR/data.jsonl")
+        echo "Total: $count"
+        echo "---"
+        tail -20 "$DATA_DIR/data.jsonl" | while IFS= read -r line; do
+            local ts=$(echo "$line" | grep -o '"ts":"[^"]*' | cut -d'"' -f4)
+            local cmd=$(echo "$line" | grep -o '"cmd":"[^"]*' | cut -d'"' -f4)
+            local val=$(echo "$line" | grep -o '"val":"[^"]*' | cut -d'"' -f4)
+            echo "  [$ts] $cmd: $val"
         done
     else
-        echo "  No activity yet."
+        echo "No entries yet."
     fi
 }
 
-# Main dispatch
-case "${1:-help}" in
-    ingest)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent ingest entries:"
-            tail -20 "$DATA_DIR/ingest.log" 2>/dev/null || echo "  No entries yet. Use: warehouse ingest <input>"
+cmd_search() {
+    local term="${1:?Usage: warehouse search <term>}"
+    if [ -f "$DATA_DIR/data.jsonl" ]; then
+        local matches=$(grep -ic "$term" "$DATA_DIR/data.jsonl" 2>/dev/null || echo 0)
+        echo "Found: $matches matches"
+        grep -i "$term" "$DATA_DIR/data.jsonl" 2>/dev/null | head -20 | while IFS= read -r line; do
+            local val=$(echo "$line" | grep -o '"val":"[^"]*' | cut -d'"' -f4)
+            local ts=$(echo "$line" | grep -o '"ts":"[^"]*' | cut -d'"' -f4)
+            echo "  [$ts] $val"
+        done
+    else
+        echo "No data to search."
+    fi
+}
+
+cmd_remove() {
+    local num="${1:?Usage: warehouse remove <line-number>}"
+    if [ -f "$DATA_DIR/data.jsonl" ]; then
+        local total=$(wc -l < "$DATA_DIR/data.jsonl")
+        if [ "$num" -ge 1 ] 2>/dev/null && [ "$num" -le "$total" ] 2>/dev/null; then
+            sed -i "${num}d" "$DATA_DIR/data.jsonl"
+            echo "Removed #$num ($((total-1)) remaining)"
+        else echo "Invalid: $num (total: $total)"; fi
+    else echo "No data."; fi
+}
+
+cmd_export() {
+    local fmt="${1:-json}"
+    local out="warehouse-export.$fmt"
+    if [ ! -f "$DATA_DIR/data.jsonl" ]; then echo "No data."; return 0; fi
+    case "$fmt" in
+        json) cp "$DATA_DIR/data.jsonl" "$out" ;;
+        csv)
+            echo "timestamp,command,value" > "$out"
+            while IFS= read -r line; do
+                ts=$(echo "$line" | grep -o '"ts":"[^"]*' | cut -d'"' -f4)
+                c2=$(echo "$line" | grep -o '"cmd":"[^"]*' | cut -d'"' -f4)
+                vl=$(echo "$line" | grep -o '"val":"[^"]*' | cut -d'"' -f4)
+                echo "$ts,$c2,$vl" >> "$out"
+            done < "$DATA_DIR/data.jsonl"
+            ;;
+        *) echo "Formats: json, csv"; return 1 ;;
+    esac
+    echo "Exported: $out ($(wc -c < "$out") bytes)"
+}
+
+cmd_stats() {
+    echo "=== Warehouse Stats ==="
+    if [ -f "$DATA_DIR/data.jsonl" ]; then
+        local total=$(wc -l < "$DATA_DIR/data.jsonl")
+        local bytes=$(wc -c < "$DATA_DIR/data.jsonl")
+        echo "  Entries: $total"
+        echo "  Size: $bytes bytes"
+        echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
+    else echo "  No data yet."; fi
+}
+
+cmd_config() {
+    local key="${1:-}" val="${2:-}"
+    local cfg="$DATA_DIR/config.txt"
+    if [ -z "$key" ]; then
+        echo "=== Config ==="
+        if [ -f "$cfg" ]; then
+            while IFS="=" read -r k v; do echo "  $k=$v"; done < "$cfg"
+        else echo "  (empty — use config <key> <value>)"; fi
+    elif [ -z "$val" ]; then
+        grep "^${key}=" "$cfg" 2>/dev/null | cut -d= -f2- || echo "(not set)"
+    else
+        if [ -f "$cfg" ] && grep -q "^${key}=" "$cfg" 2>/dev/null; then
+            sed -i "s|^${key}=.*|${key}=${val}|" "$cfg"
         else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/ingest.log"
-            local total=$(wc -l < "$DATA_DIR/ingest.log")
-            echo "  [Warehouse] ingest: $input"
-            echo "  Saved. Total ingest entries: $total"
-            _log "ingest" "$input"
+            echo "${key}=${val}" >> "$cfg"
         fi
-        ;;
-    transform)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent transform entries:"
-            tail -20 "$DATA_DIR/transform.log" 2>/dev/null || echo "  No entries yet. Use: warehouse transform <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/transform.log"
-            local total=$(wc -l < "$DATA_DIR/transform.log")
-            echo "  [Warehouse] transform: $input"
-            echo "  Saved. Total transform entries: $total"
-            _log "transform" "$input"
-        fi
-        ;;
-    query)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent query entries:"
-            tail -20 "$DATA_DIR/query.log" 2>/dev/null || echo "  No entries yet. Use: warehouse query <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/query.log"
-            local total=$(wc -l < "$DATA_DIR/query.log")
-            echo "  [Warehouse] query: $input"
-            echo "  Saved. Total query entries: $total"
-            _log "query" "$input"
-        fi
-        ;;
-    filter)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent filter entries:"
-            tail -20 "$DATA_DIR/filter.log" 2>/dev/null || echo "  No entries yet. Use: warehouse filter <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/filter.log"
-            local total=$(wc -l < "$DATA_DIR/filter.log")
-            echo "  [Warehouse] filter: $input"
-            echo "  Saved. Total filter entries: $total"
-            _log "filter" "$input"
-        fi
-        ;;
-    aggregate)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent aggregate entries:"
-            tail -20 "$DATA_DIR/aggregate.log" 2>/dev/null || echo "  No entries yet. Use: warehouse aggregate <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/aggregate.log"
-            local total=$(wc -l < "$DATA_DIR/aggregate.log")
-            echo "  [Warehouse] aggregate: $input"
-            echo "  Saved. Total aggregate entries: $total"
-            _log "aggregate" "$input"
-        fi
-        ;;
-    visualize)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent visualize entries:"
-            tail -20 "$DATA_DIR/visualize.log" 2>/dev/null || echo "  No entries yet. Use: warehouse visualize <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/visualize.log"
-            local total=$(wc -l < "$DATA_DIR/visualize.log")
-            echo "  [Warehouse] visualize: $input"
-            echo "  Saved. Total visualize entries: $total"
-            _log "visualize" "$input"
-        fi
-        ;;
-    export)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent export entries:"
-            tail -20 "$DATA_DIR/export.log" 2>/dev/null || echo "  No entries yet. Use: warehouse export <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/export.log"
-            local total=$(wc -l < "$DATA_DIR/export.log")
-            echo "  [Warehouse] export: $input"
-            echo "  Saved. Total export entries: $total"
-            _log "export" "$input"
-        fi
-        ;;
-    sample)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent sample entries:"
-            tail -20 "$DATA_DIR/sample.log" 2>/dev/null || echo "  No entries yet. Use: warehouse sample <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/sample.log"
-            local total=$(wc -l < "$DATA_DIR/sample.log")
-            echo "  [Warehouse] sample: $input"
-            echo "  Saved. Total sample entries: $total"
-            _log "sample" "$input"
-        fi
-        ;;
-    schema)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent schema entries:"
-            tail -20 "$DATA_DIR/schema.log" 2>/dev/null || echo "  No entries yet. Use: warehouse schema <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/schema.log"
-            local total=$(wc -l < "$DATA_DIR/schema.log")
-            echo "  [Warehouse] schema: $input"
-            echo "  Saved. Total schema entries: $total"
-            _log "schema" "$input"
-        fi
-        ;;
-    validate)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent validate entries:"
-            tail -20 "$DATA_DIR/validate.log" 2>/dev/null || echo "  No entries yet. Use: warehouse validate <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/validate.log"
-            local total=$(wc -l < "$DATA_DIR/validate.log")
-            echo "  [Warehouse] validate: $input"
-            echo "  Saved. Total validate entries: $total"
-            _log "validate" "$input"
-        fi
-        ;;
-    pipeline)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent pipeline entries:"
-            tail -20 "$DATA_DIR/pipeline.log" 2>/dev/null || echo "  No entries yet. Use: warehouse pipeline <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/pipeline.log"
-            local total=$(wc -l < "$DATA_DIR/pipeline.log")
-            echo "  [Warehouse] pipeline: $input"
-            echo "  Saved. Total pipeline entries: $total"
-            _log "pipeline" "$input"
-        fi
-        ;;
-    profile)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent profile entries:"
-            tail -20 "$DATA_DIR/profile.log" 2>/dev/null || echo "  No entries yet. Use: warehouse profile <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/profile.log"
-            local total=$(wc -l < "$DATA_DIR/profile.log")
-            echo "  [Warehouse] profile: $input"
-            echo "  Saved. Total profile entries: $total"
-            _log "profile" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown command: $1"
-        echo "Run 'warehouse help' for available commands."
-        exit 1
-        ;;
+        echo "Set: $key=$val"
+    fi
+}
+
+CMD="${1:-help}"
+shift 2>/dev/null || true
+_ensure_dirs
+
+case "$CMD" in
+    status) cmd_status "$@" ;;
+    add) cmd_add "$@" ;;
+    list) cmd_list "$@" ;;
+    search) cmd_search "$@" ;;
+    remove) cmd_remove "$@" ;;
+    export) cmd_export "$@" ;;
+    stats) cmd_stats "$@" ;;
+    config) cmd_config "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "warehouse v$VERSION -- Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: warehouse help"; exit 1 ;;
 esac

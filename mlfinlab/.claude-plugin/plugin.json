@@ -1,0 +1,9 @@
+{
+  "name": "mlfinlab",
+  "description": "Apply ML to finance with portfolio optimization, signals, and backtesting tools. Use when building trading models, optimizing portfolios, backtesting.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "essay",
+  "description": "Draft and polish essays with outlines, argument structure, and paragraph edits. Use when writing papers, structuring arguments, or editing prose.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

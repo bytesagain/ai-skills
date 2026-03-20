@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: SQL Generator
-description: "📊 SQL生成器 — sql.sh. Use when you need sql generator capabilities. Triggers on: sql generator."
-  SQL生成器。自然语言转SQL、SQL解释、性能优化、建表语句、测试数据生成、数据库迁移、SQL速查表。SQL generator from natural language, explainer, optimizer, DDL creator, mock data, migration scripts, cheatsheet. SQL、数据库、MySQL。
+description: "Generate SQL from natural language, explain queries, and optimize perf. Use when querying data, importing schemas, transforming dialects, validating syntax."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # SQL Generator
 

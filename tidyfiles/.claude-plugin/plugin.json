@@ -1,0 +1,9 @@
+{
+  "name": "tidyfiles",
+  "description": "Sort and organize files into folders by type, date, or rules. Use when decluttering dirs, checking structure, running cleanup, generating reports.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

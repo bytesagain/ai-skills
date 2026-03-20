@@ -1,49 +1,57 @@
 ---
-version: "2.0.0"
-name: Benchmark Tool
-description: "A command-line benchmarking tool benchmark tool, rust, benchmark, cli, command-line, rust, terminal. Use when you need benchmark tool capabilities. Triggers on: benchmark tool."
-author: BytesAgain
+name: "benchmark-tool"
+version: "3.0.0"
+description: "Benchmark CPU, memory, disk I/O, and network on your system. Use when measuring server performance."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
 ---
 
-# Benchmark Tool
+# benchmark-tool
 
-A command-line benchmarking tool ## Commands
+Benchmark CPU, memory, disk I/O, and network on your system. Use when measuring server performance.
 
-- `help` - Help
-- `run` - Run
-- `info` - Info
-- `status` - Status
+## Commands
 
-## Features
-
-- Core functionality from sharkdp/hyperfine
-
-## Usage
-
-Run any command: `benchmark-tool <command> [args]`
-
----
-> **Disclaimer**: This skill is an independent, original implementation. It is not affiliated with, endorsed by, or derived from the referenced open-source project. No code was copied. The reference is for context only.
----
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
-
-## Examples
+### `cpu`
 
 ```bash
-# Show help
-benchmark-tool help
-
-# Run
-benchmark-tool run
+scripts/script.sh cpu
 ```
 
-- Run `benchmark-tool help` for commands
-- No API keys needed
+### `memory`
 
-- Run `benchmark-tool help` for all commands
+```bash
+scripts/script.sh memory
+```
 
-## When to Use
+### `disk`
 
-- Quick benchmark tasks from terminal
-- Automation pipelines
+```bash
+scripts/script.sh disk <dir>
+```
+
+### `network`
+
+```bash
+scripts/script.sh network <host>
+```
+
+### `all`
+
+```bash
+scripts/script.sh all
+```
+
+### `compare`
+
+```bash
+scripts/script.sh compare <f1 f2>
+```
+
+## Data Storage
+
+Data stored in `~/.local/share/benchmark-tool/`.
+
+---
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

@@ -1,0 +1,9 @@
+{
+  "name": "sysadmin-handbook",
+  "description": "A collection of inspiring lists, manuals, cheatsheets, blogs, hacks, one-liners, cli/web tools and m the book of secret knowledge, python, awesome.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

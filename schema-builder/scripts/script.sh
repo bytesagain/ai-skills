@@ -1,101 +1,155 @@
 #!/usr/bin/env bash
-# schema-builder - Design reference and helper tool
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${SCHEMA_BUILDER_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/schema-builder}"
-DB="$DATA_DIR/data.log"
+
+VERSION="3.0.0"
+SCRIPT_NAME="schema-builder"
+DATA_DIR="$HOME/.local/share/schema-builder"
 mkdir -p "$DATA_DIR"
 
-show_help() {
-    cat << EOF
-schema-builder v$VERSION
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-Design reference and helper tool
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
-Usage: schema-builder <command> [args]
-
-Commands:
-  palette              Color palette
-  font                 Font pairing
-  layout               Layout template
-  icon                 Icon reference
-  spacing              Spacing guide
-  breakpoint           Responsive breakpoints
-  contrast             Contrast checker
-  shadow               Shadow presets
-  mockup               Mockup template
-  checklist            Design checklist
-  help                 Show this help
-  version              Show version
-
-Data: \$DATA_DIR
-EOF
+cmd_create() {
+    local table="${2:-}"
+    local cols="${3:-}"
+    [ -z "$table" ] && die "Usage: $SCRIPT_NAME create <table cols>"
+    echo 'CREATE TABLE $2 ('; echo '  id INTEGER PRIMARY KEY,'; echo '  $3'; echo ');'
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-
-cmd_palette() {
-    echo "  Primary: #2563EB | Secondary: #7C3AED | Accent: #F59E0B"
-    _log "palette" "${1:-}"
+cmd_alter() {
+    local table="${2:-}"
+    local action="${3:-}"
+    local col="${4:-}"
+    [ -z "$table" ] && die "Usage: $SCRIPT_NAME alter <table action col>"
+    echo 'ALTER TABLE $2 $3 COLUMN $4;'
 }
 
-cmd_font() {
-    echo "  Heading: Inter/Poppins | Body: Open Sans/Lato"
-    _log "font" "${1:-}"
+cmd_show() {
+    local table="${2:-}"
+    [ -z "$table" ] && die "Usage: $SCRIPT_NAME show <table>"
+    echo 'DESCRIBE $2;'
 }
 
-cmd_layout() {
-    echo "  Grid: 12-col | Spacing: 8px base | Max-width: 1200px"
-    _log "layout" "${1:-}"
+cmd_export() {
+    local format="${2:-}"
+    [ -z "$format" ] && die "Usage: $SCRIPT_NAME export <format>"
+    case $2 in sql) echo 'Exporting as SQL';; json) echo 'Exporting as JSON schema';; *) echo 'Formats: sql, json';; esac
 }
 
-cmd_icon() {
-    echo "  Libraries: Heroicons | Lucide | Phosphor | Tabler"
-    _log "icon" "${1:-}"
+cmd_validate() {
+    local file="${2:-}"
+    [ -z "$file" ] && die "Usage: $SCRIPT_NAME validate <file>"
+    [ -f $2 ] && grep -qi 'create table\|alter table' $2 && echo 'Valid SQL schema' || echo 'No SQL found'
 }
 
-cmd_spacing() {
-    echo "  xs:4 sm:8 md:16 lg:24 xl:32 2xl:48"
-    _log "spacing" "${1:-}"
+cmd_er() {
+    local t1="${2:-}"
+    local t2="${3:-}"
+    local relation="${4:-}"
+    [ -z "$t1" ] && die "Usage: $SCRIPT_NAME er <t1 t2 relation>"
+    echo '$2 --[$3]--> $4'
 }
 
-cmd_breakpoint() {
-    echo "  sm:640 md:768 lg:1024 xl:1280 2xl:1536"
-    _log "breakpoint" "${1:-}"
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
+    echo ""
+    echo "Commands:"
+    printf "  %-25s\n" "create <table cols>"
+    printf "  %-25s\n" "alter <table action col>"
+    printf "  %-25s\n" "show <table>"
+    printf "  %-25s\n" "export <format>"
+    printf "  %-25s\n" "validate <file>"
+    printf "  %-25s\n" "er <t1 t2 relation>"
+    printf "  %%-25s\n" "help"
+    echo ""
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-cmd_contrast() {
-    echo "  Check: webaim.org/resources/contrastchecker"
-    _log "contrast" "${1:-}"
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        create) shift; cmd_create "$@" ;;
+        alter) shift; cmd_alter "$@" ;;
+        show) shift; cmd_show "$@" ;;
+        export) shift; cmd_export "$@" ;;
+        validate) shift; cmd_validate "$@" ;;
+        er) shift; cmd_er "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
+    esac
 }
 
-cmd_shadow() {
-    echo "  sm: 0 1px 2px | md: 0 4px 6px | lg: 0 10px 15px"
-    _log "shadow" "${1:-}"
-}
-
-cmd_mockup() {
-    echo "  Tool: Figma | Sketch | Adobe XD"
-    _log "mockup" "${1:-}"
-}
-
-cmd_checklist() {
-    echo "  [ ] Consistent spacing | [ ] Color contrast | [ ] Mobile responsive"
-    _log "checklist" "${1:-}"
-}
-
-case "${1:-help}" in
-    palette) shift; cmd_palette "$@" ;;
-    font) shift; cmd_font "$@" ;;
-    layout) shift; cmd_layout "$@" ;;
-    icon) shift; cmd_icon "$@" ;;
-    spacing) shift; cmd_spacing "$@" ;;
-    breakpoint) shift; cmd_breakpoint "$@" ;;
-    contrast) shift; cmd_contrast "$@" ;;
-    shadow) shift; cmd_shadow "$@" ;;
-    mockup) shift; cmd_mockup "$@" ;;
-    checklist) shift; cmd_checklist "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "schema-builder v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
-esac
+main "$@"

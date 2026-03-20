@@ -1,0 +1,9 @@
+{
+  "name": "privacy",
+  "description": "Audit and harden privacy settings across systems. Use when generating reports, checking data exposure, rotating encryption keys, auditing access logs.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

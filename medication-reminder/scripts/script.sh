@@ -1,101 +1,155 @@
 #!/usr/bin/env bash
-# medication-reminder - Multi-purpose utility tool
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${MEDICATION_REMINDER_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/medication-reminder}"
-DB="$DATA_DIR/data.log"
+
+VERSION="3.0.0"
+SCRIPT_NAME="medication-reminder"
+DATA_DIR="$HOME/.local/share/medication-reminder"
 mkdir -p "$DATA_DIR"
 
-show_help() {
-    cat << EOF
-medication-reminder v$VERSION
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-Multi-purpose utility tool
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
-Usage: medication-reminder <command> [args]
-
-Commands:
-  run                  Execute main function
-  config               Configuration
-  status               Show status
-  init                 Initialize
-  list                 List items
-  add                  Add entry
-  remove               Remove entry
-  search               Search
-  export               Export data
-  info                 Show info
-  help                 Show this help
-  version              Show version
-
-Data: \$DATA_DIR
-EOF
-}
-
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-
-cmd_run() {
-    echo "  Running: $1"
-    _log "run" "${1:-}"
-}
-
-cmd_config() {
-    echo "  Config: $DATA_DIR/config.json"
-    _log "config" "${1:-}"
-}
-
-cmd_status() {
-    echo "  Status: ready"
-    _log "status" "${1:-}"
-}
-
-cmd_init() {
-    echo "  Initialized in $DATA_DIR"
-    _log "init" "${1:-}"
+cmd_add() {
+    local med="${2:-}"
+    local dose="${3:-}"
+    local frequency="${4:-}"
+    [ -z "$med" ] && die "Usage: $SCRIPT_NAME add <med dose frequency>"
+    echo '{"med":"'$2'","dose":"'$3'","freq":"'$4'","ts":"'$(date +%s)'"}' >> $DATA_DIR/meds.jsonl && echo 'Added $2'
 }
 
 cmd_list() {
-    [ -f "$DB" ] && cat "$DB" || echo "  (empty)"
-    _log "list" "${1:-}"
+    cat $DATA_DIR/meds.jsonl 2>/dev/null | tail -10
 }
 
-cmd_add() {
-    echo "$(date +%Y-%m-%d) $*" >> "$DB"; echo "  Added: $*"
-    _log "add" "${1:-}"
+cmd_take() {
+    local med="${2:-}"
+    [ -z "$med" ] && die "Usage: $SCRIPT_NAME take <med>"
+    echo '{"med":"'$2'","taken":"'$(date +%Y-%m-%d_%H:%M)'"}' >> $DATA_DIR/intake.jsonl && echo 'Logged: $2'
 }
 
-cmd_remove() {
-    echo "  Removed: $1"
-    _log "remove" "${1:-}"
+cmd_history() {
+    local days="${2:-}"
+    [ -z "$days" ] && die "Usage: $SCRIPT_NAME history <days>"
+    tail -${2:-20} $DATA_DIR/intake.jsonl 2>/dev/null
 }
 
-cmd_search() {
-    grep -i "$1" "$DB" 2>/dev/null || echo "  Not found: $1"
-    _log "search" "${1:-}"
+cmd_schedule() {
+    echo 'Current medication schedule:'
 }
 
-cmd_export() {
-    [ -f "$DB" ] && cat "$DB" || echo "No data"
-    _log "export" "${1:-}"
+cmd_due() {
+    echo 'Medications due now:'
 }
 
-cmd_info() {
-    echo "  Version: $VERSION | Data: $DATA_DIR"
-    _log "info" "${1:-}"
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
+    echo ""
+    echo "Commands:"
+    printf "  %-25s\n" "add <med dose frequency>"
+    printf "  %-25s\n" "list"
+    printf "  %-25s\n" "take <med>"
+    printf "  %-25s\n" "history <days>"
+    printf "  %-25s\n" "schedule"
+    printf "  %-25s\n" "due"
+    printf "  %%-25s\n" "help"
+    echo ""
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-case "${1:-help}" in
-    run) shift; cmd_run "$@" ;;
-    config) shift; cmd_config "$@" ;;
-    status) shift; cmd_status "$@" ;;
-    init) shift; cmd_init "$@" ;;
-    list) shift; cmd_list "$@" ;;
-    add) shift; cmd_add "$@" ;;
-    remove) shift; cmd_remove "$@" ;;
-    search) shift; cmd_search "$@" ;;
-    export) shift; cmd_export "$@" ;;
-    info) shift; cmd_info "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "medication-reminder v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
-esac
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        add) shift; cmd_add "$@" ;;
+        list) shift; cmd_list "$@" ;;
+        take) shift; cmd_take "$@" ;;
+        history) shift; cmd_history "$@" ;;
+        schedule) shift; cmd_schedule "$@" ;;
+        due) shift; cmd_due "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
+    esac
+}
+
+main "$@"

@@ -1,83 +1,112 @@
 ---
-name: equity
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [equity, tool, utility]
-description: "Equity - command-line tool for everyday use"
+name: "equity"
+version: "1.0.0"
+description: "Model cap tables, dilution scenarios, and vesting schedules for startups. Use when planning fundraising, pricing options, or tracking equity."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [equity, general, cli, tool]
+category: "general"
 ---
 
-# Equity
+# equity
 
-Equity calculator — cap table, dilution modeling, vesting schedules, and option pricing.
+Model cap tables, dilution scenarios, and vesting schedules for startups. Use when planning fundraising, pricing options, or tracking equity.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `equity help` | Show usage info |
-| `equity run` | Run main task |
-| `equity status` | Check state |
-| `equity list` | List items |
-| `equity add <item>` | Add item |
-| `equity export <fmt>` | Export data |
-
-## Usage
+### `status`
 
 ```bash
-equity help
-equity run
-equity status
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-equity help
-equity run
-equity export json
+scripts/script.sh add
 ```
 
-## Output
+Add new entry
 
-Results go to stdout. Save with `equity run > output.txt`.
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `EQUITY_DIR` to change data directory. Default: `~/.local/share/equity/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `EQUITY_DIR` | No | Data directory (default: ~/.equity/) |
+
+## Data Storage
+
+All data stored in `~/.equity/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
 
-
-## Features
-
-- Simple command-line interface for quick access
-- Local data storage with JSON/CSV export
-- History tracking and activity logs
-- Search across all entries
-
-## Quick Start
-
-```bash
-# Check status
-equity status
-
-# View help
-equity help
-
-# Export data
-equity export json
-```
-
-## How It Works
-
-Equity stores all data locally in `~/.local/share/equity/`. Each command logs activity with timestamps for full traceability.
-
-## Support
-
-- Feedback: https://bytesagain.com/feedback/
-- Website: https://bytesagain.com
-
-Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

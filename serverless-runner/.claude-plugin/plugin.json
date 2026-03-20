@@ -1,0 +1,9 @@
+{
+  "name": "serverless-runner",
+  "description": "Laf is a vibrant cloud development platform that provides essential tools like cloud functions, data serverless-runner, typescript, cloudbase, faas.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

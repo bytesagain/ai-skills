@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Horoscope
-description: "星座运势分析。每日运势、星座配对、性格分析、五行属性、事业运、感情运。Horoscope with daily fortune, compatibility, personality. 星座、运势、占. Use when you need horoscope capabilities. Triggers on: horoscope."
-  星座运势分析。每日运势、星座配对、性格分析、五行属性、事业运、感情运。Horoscope with daily fortune, compatibility, personality. 星座、运势、占星。
+description: "Read daily horoscopes, check zodiac compatibility, and explore sign traits. Use when checking fortunes, matching compatibility, or analyzing sign traits."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # Horoscope
 

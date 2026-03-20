@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: OKR Planner
-description: "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━. Use when you need okr planner capabilities. Triggers on: okr planner."
-  OKR目标管理。OKR制定、季度复盘、上下对齐、评分、模板库、级联分解。OKR planner with goal setting, quarterly reviews, alignment, scoring, templates, cascading. OKR、目标管理、绩效。
+description: "Plan OKRs with goal setting, quarterly reviews, alignment, and scoring templates. Use when defining OKRs, running alignment, scoring key result progress."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # OKR Planner
 

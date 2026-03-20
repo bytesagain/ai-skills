@@ -2,9 +2,11 @@
 name: readme
 version: "2.0.0"
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 license: MIT-0
 tags: [readme, tool, utility]
-description: "Readme - command-line tool for everyday use"
+description: "Generate README files with badges, TOC, and API docs. Use when scaffolding project docs, validating structure, generating contents, formatting references."
 ---
 
 # Readme

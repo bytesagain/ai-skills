@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Legal Advisor
-description: "法律咨询模板生成器。劳动纠纷、消费维权、租房纠纷、交通事故。含法律条文参考。. Use when you need legal advisor capabilities. Triggers on: legal advisor."
-  法律咨询助手。劳动法、合同法、消费者权益、知识产权、民事纠纷。Legal advisor for labor law, contract law, consumer rights, IP, civil disputes. 法律咨询、律师、维权、法律常识。Use when needing legal guidance.
+description: "Generate legal templates for labor, consumer, rental, and traffic disputes. Use when drafting dispute letters, reviewing tenant rights, preparing claims."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # legal-advisor

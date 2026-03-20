@@ -1,0 +1,9 @@
+{
+  "name": "web-module-runner",
+  "description": "\ud83d\udc69\u200d\ud83d\ude80 The tiny all-in-one development tool for modern web apps. web-module-runner, javascript, build-tool, esmodules, preact.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

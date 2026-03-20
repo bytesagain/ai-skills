@@ -1,64 +1,112 @@
 ---
-name: crawler
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [crawler, tool, utility]
-description: "Crawler - command-line tool for everyday use"
+name: "crawler"
+version: "1.0.0"
+description: "Crawl websites, extract links, and scrape content with rate limiting. Use when scraping pages, extracting links, generating sitemaps."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [crawler, general, cli, tool]
+category: "general"
 ---
 
-# Crawler
+# crawler
 
-Web crawler toolkit — site crawling, link extraction, content scraping, sitemap generation, rate limiting, and data export.
+Crawl websites, extract links, and scrape content with rate limiting. Use when scraping pages, extracting links, generating sitemaps.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `crawler run` | Execute main function |
-| `crawler list` | List all items |
-| `crawler add <item>` | Add new item |
-| `crawler status` | Show current status |
-| `crawler export <format>` | Export data |
-| `crawler help` | Show help |
-
-## Usage
+### `status`
 
 ```bash
-# Show help
-crawler help
-
-# Quick start
-crawler run
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-# Run with defaults
-crawler run
-
-# Check status
-crawler status
-
-# Export results
-crawler export json
+scripts/script.sh add
 ```
 
-- Run `crawler help` for all commands
-crawler/`
+Add new entry
 
----
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
+### `list`
 
-- Run `crawler help` for all commands
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `CRAWLER_DIR` to change data directory. Default: `~/.local/share/crawler/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
 
-## When to Use
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `CRAWLER_DIR` | No | Data directory (default: ~/.crawler/) |
 
-- Quick crawler tasks from terminal
-- Automation pipelines
+## Data Storage
+
+All data stored in `~/.crawler/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
+
+---
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

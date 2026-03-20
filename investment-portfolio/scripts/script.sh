@@ -1,16 +1,487 @@
 #!/usr/bin/env bash
 # investment-portfolio — Investment portfolio tracker and analyzer
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${PORTFOLIO_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/investment-portfolio}"
+VERSION="4.0.0"
+DATA_DIR="${PORTFOLIO_DIR:-$HOME/.investment-portfolio}"
 DB="$DATA_DIR/holdings.jsonl"
+HISTORY="$DATA_DIR/history.log"
 mkdir -p "$DATA_DIR"
+
+BOLD='\033[1m'; GREEN='\033[0;32m'; RED='\033[0;31m'; YELLOW='\033[1;33m'; DIM='\033[2m'; RESET='\033[0m'
+
+die() { echo -e "${RED}Error: $1${RESET}" >&2; exit 1; }
+info() { echo -e "${GREEN}✓${RESET} $1"; }
+
+_log() { echo "$(date '+%Y-%m-%d %H:%M') $*" >> "$HISTORY"; }
+
+# === add: add a holding ===
+cmd_add() {
+    local ticker="${1:?Usage: investment-portfolio add <TICKER> <shares> <buy_price>}"
+    local shares="${2:?Missing shares}"
+    local buy_price="${3:?Missing buy_price}"
+    ticker=$(echo "$ticker" | tr 'a-z' 'A-Z')
+
+    TICKER="$ticker" SHARES="$shares" PRICE="$buy_price" DB_FILE="$DB" python3 << 'PYEOF'
+import json, os
+from datetime import datetime
+entry = {
+    "ticker": os.environ["TICKER"],
+    "shares": float(os.environ["SHARES"]),
+    "buy_price": float(os.environ["PRICE"]),
+    "current_price": float(os.environ["PRICE"]),
+    "date": datetime.now().strftime("%Y-%m-%d")
+}
+with open(os.environ["DB_FILE"], "a") as f:
+    f.write(json.dumps(entry) + "\n")
+cost = entry["shares"] * entry["buy_price"]
+print("  Added: {} x {:.2f} shares @ ${:.2f} (${:,.2f} total)".format(
+    entry["ticker"], entry["shares"], entry["buy_price"], cost))
+PYEOF
+    _log "ADD $ticker $shares @ $buy_price"
+}
+
+# === remove: remove a holding ===
+cmd_remove() {
+    local ticker="${1:?Usage: investment-portfolio remove <TICKER>}"
+    ticker=$(echo "$ticker" | tr 'a-z' 'A-Z')
+    [ ! -f "$DB" ] && { echo "  No holdings."; return 0; }
+
+    TICKER="$ticker" DB_FILE="$DB" python3 << 'PYEOF'
+import json, os
+ticker = os.environ["TICKER"]
+db = os.environ["DB_FILE"]
+kept = []
+removed = 0
+with open(db) as f:
+    for line in f:
+        if not line.strip():
+            continue
+        h = json.loads(line)
+        if h["ticker"] == ticker:
+            removed += 1
+        else:
+            kept.append(line)
+with open(db, "w") as f:
+    f.writelines(kept)
+if removed:
+    print("  Removed {} entries for {}".format(removed, ticker))
+else:
+    print("  {} not found in portfolio".format(ticker))
+PYEOF
+    _log "REMOVE $ticker"
+}
+
+# === update: update current price ===
+cmd_update() {
+    local ticker="${1:?Usage: investment-portfolio update <TICKER> <current_price>}"
+    local price="${2:?Missing current price}"
+    ticker=$(echo "$ticker" | tr 'a-z' 'A-Z')
+    [ ! -f "$DB" ] && { echo "  No holdings."; return 0; }
+
+    TICKER="$ticker" PRICE="$price" DB_FILE="$DB" python3 << 'PYEOF'
+import json, os
+ticker = os.environ["TICKER"]
+price = float(os.environ["PRICE"])
+db = os.environ["DB_FILE"]
+updated = 0
+lines = []
+with open(db) as f:
+    for line in f:
+        if not line.strip():
+            continue
+        h = json.loads(line)
+        if h["ticker"] == ticker:
+            h["current_price"] = price
+            updated += 1
+        lines.append(json.dumps(h) + "\n")
+with open(db, "w") as f:
+    f.writelines(lines)
+if updated:
+    print("  Updated {} → ${:,.2f} ({} entries)".format(ticker, price, updated))
+else:
+    print("  {} not found".format(ticker))
+PYEOF
+    _log "UPDATE $ticker $price"
+}
+
+# === list: show all holdings ===
+cmd_list() {
+    [ ! -f "$DB" ] || [ ! -s "$DB" ] && { echo "  Portfolio is empty."; return 0; }
+    echo -e "${BOLD}Holdings${RESET}"
+    echo ""
+
+    DB_FILE="$DB" python3 << 'PYEOF'
+import json, os
+db = os.environ["DB_FILE"]
+print("  {:>8} {:>10} {:>10} {:>10} {:>10}".format("Ticker", "Shares", "Buy", "Current", "P/L%"))
+print("  " + "-" * 52)
+with open(db) as f:
+    for line in f:
+        if not line.strip():
+            continue
+        h = json.loads(line)
+        pnl = (h["current_price"] - h["buy_price"]) / h["buy_price"] * 100 if h["buy_price"] > 0 else 0
+        print("  {:>8} {:>10.2f} ${:>9.2f} ${:>9.2f} {:>+9.1f}%".format(
+            h["ticker"], h["shares"], h["buy_price"], h["current_price"], pnl))
+PYEOF
+}
+
+# === summary: portfolio summary ===
+cmd_summary() {
+    [ ! -f "$DB" ] || [ ! -s "$DB" ] && { echo "  Portfolio is empty."; return 0; }
+    echo -e "${BOLD}Portfolio Summary${RESET}"
+
+    DB_FILE="$DB" python3 << 'PYEOF'
+import json, os
+db = os.environ["DB_FILE"]
+total_cost = 0
+total_value = 0
+count = 0
+with open(db) as f:
+    for line in f:
+        if not line.strip():
+            continue
+        h = json.loads(line)
+        cost = h["shares"] * h["buy_price"]
+        value = h["shares"] * h["current_price"]
+        total_cost += cost
+        total_value += value
+        count += 1
+
+pnl = total_value - total_cost
+pct = pnl / total_cost * 100 if total_cost > 0 else 0
+
+print("  Holdings:    {}".format(count))
+print("  Total Cost:  ${:,.2f}".format(total_cost))
+print("  Total Value: ${:,.2f}".format(total_value))
+print("  P/L:         ${:+,.2f} ({:+.1f}%)".format(pnl, pct))
+PYEOF
+}
+
+# === allocation: allocation chart ===
+cmd_allocation() {
+    [ ! -f "$DB" ] || [ ! -s "$DB" ] && { echo "  No holdings."; return 0; }
+    echo -e "${BOLD}Asset Allocation${RESET}"
+
+    DB_FILE="$DB" python3 << 'PYEOF'
+import json, os
+db = os.environ["DB_FILE"]
+holdings = {}
+total = 0
+with open(db) as f:
+    for line in f:
+        if not line.strip():
+            continue
+        h = json.loads(line)
+        val = h["shares"] * h["current_price"]
+        ticker = h["ticker"]
+        holdings[ticker] = holdings.get(ticker, 0) + val
+        total += val
+
+if total == 0:
+    print("  No value")
+else:
+    print("")
+    for ticker in sorted(holdings, key=holdings.get, reverse=True):
+        val = holdings[ticker]
+        pct = val / total * 100
+        bar_len = int(pct / 2)
+        bar = chr(9608) * bar_len
+        print("  {:>8} {:>8.1f}%  {} ${:,.0f}".format(ticker, pct, bar, val))
+PYEOF
+}
+
+# === performance: gain/loss per holding ===
+cmd_performance() {
+    [ ! -f "$DB" ] || [ ! -s "$DB" ] && { echo "  No holdings."; return 0; }
+    echo -e "${BOLD}Performance Analysis${RESET}"
+
+    DB_FILE="$DB" python3 << 'PYEOF'
+import json, os
+db = os.environ["DB_FILE"]
+print("")
+print("  {:>8} {:>12} {:>12} {:>12} {:>8}".format("Ticker", "Cost", "Value", "P/L", "Return"))
+print("  " + "-" * 56)
+with open(db) as f:
+    for line in f:
+        if not line.strip():
+            continue
+        h = json.loads(line)
+        cost = h["shares"] * h["buy_price"]
+        value = h["shares"] * h["current_price"]
+        pl = value - cost
+        ret = pl / cost * 100 if cost > 0 else 0
+        print("  {:>8} ${:>11,.2f} ${:>11,.2f} ${:>+11,.2f} {:>+7.1f}%".format(
+            h["ticker"], cost, value, pl, ret))
+PYEOF
+}
+
+# === risk: risk assessment ===
+cmd_risk() {
+    [ ! -f "$DB" ] || [ ! -s "$DB" ] && { echo "  No holdings."; return 0; }
+    echo -e "${BOLD}Risk Assessment${RESET}"
+
+    DB_FILE="$DB" python3 << 'PYEOF'
+import json, os, math
+db = os.environ["DB_FILE"]
+returns = []
+tickers = set()
+with open(db) as f:
+    for line in f:
+        if not line.strip():
+            continue
+        h = json.loads(line)
+        tickers.add(h["ticker"])
+        if h["buy_price"] > 0:
+            ret = (h["current_price"] - h["buy_price"]) / h["buy_price"]
+            returns.append(ret)
+
+n = len(returns)
+if n < 2:
+    print("  Need at least 2 holdings for risk analysis.")
+else:
+    avg = sum(returns) / n
+    variance = sum((r - avg) ** 2 for r in returns) / (n - 1)
+    std = math.sqrt(variance)
+    max_r = max(returns)
+    min_r = min(returns)
+    
+    div_score = min(10, len(tickers))
+    
+    print("  Positions:        {}".format(n))
+    print("  Unique tickers:   {}".format(len(tickers)))
+    print("  Avg return:       {:+.1f}%".format(avg * 100))
+    print("  Std deviation:    {:.1f}%".format(std * 100))
+    print("  Best performer:   {:+.1f}%".format(max_r * 100))
+    print("  Worst performer:  {:+.1f}%".format(min_r * 100))
+    print("  Diversification:  {}/10".format(div_score))
+PYEOF
+}
+
+# === rebalance: rebalance suggestions ===
+cmd_rebalance() {
+    local target="${1:-}"
+    [ -z "$target" ] && { echo "Usage: investment-portfolio rebalance '{\"AAPL\":40,\"GOOGL\":30,\"BTC\":30}'"; return 1; }
+    [ ! -f "$DB" ] || [ ! -s "$DB" ] && { echo "  No holdings."; return 0; }
+
+    DB_FILE="$DB" TARGET_JSON="$target" python3 << 'PYEOF'
+import json, os, sys
+target_raw = os.environ["TARGET_JSON"]
+db = os.environ["DB_FILE"]
+try:
+    target = json.loads(target_raw)
+except:
+    print("  Invalid JSON. Example: {\"AAPL\":40,\"GOOGL\":30,\"BTC\":30}")
+    sys.exit(1)
+
+holdings = {}
+total = 0.0
+with open(db) as f:
+    for line in f:
+        if not line.strip():
+            continue
+        h = json.loads(line)
+        val = h["shares"] * h["current_price"]
+        t = h["ticker"]
+        holdings[t] = holdings.get(t, 0) + val
+        total += val
+
+if total == 0:
+    print("  Portfolio value is $0.")
+    sys.exit(0)
+
+print("  Rebalance Suggestions (total: ${:,.2f}):".format(total))
+print("")
+print("  {:>8} {:>10} {:>10} {:>10} {:>12}".format("Ticker", "Current%", "Target%", "Diff%", "Action"))
+print("  " + "-" * 54)
+
+for ticker, tgt_pct in sorted(target.items()):
+    cur_val = holdings.get(ticker, 0)
+    cur_pct = cur_val / total * 100
+    diff = tgt_pct - cur_pct
+    amount = abs(diff) / 100 * total
+    if diff > 1:
+        action = "BUY ${:,.0f}".format(amount)
+    elif diff < -1:
+        action = "SELL ${:,.0f}".format(amount)
+    else:
+        action = "OK"
+    print("  {:>8} {:>9.1f}% {:>9.1f}% {:>+9.1f}% {:>12}".format(
+        ticker, cur_pct, tgt_pct, diff, action))
+PYEOF
+}
+
+# === dca: dollar cost averaging ===
+cmd_dca() {
+    local ticker="${1:?Usage: investment-portfolio dca <TICKER> <monthly_amount>}"
+    local monthly="${2:?Missing monthly amount}"
+    ticker=$(echo "$ticker" | tr 'a-z' 'A-Z')
+
+    echo -e "${BOLD}DCA Calculator: $ticker @ \$$monthly/month${RESET}"
+    echo ""
+    echo "  Month   Investment    Cumulative"
+    echo "  ──────────────────────────────────"
+    local total=0
+    for m in $(seq 1 12); do
+        total=$((total + monthly))
+        printf "  %-7d \$%-12s \$%s\n" "$m" "$monthly" "$total"
+    done
+    echo ""
+    echo "  Total invested after 12 months: \$$total"
+}
+
+# === dividend: yield calculator ===
+cmd_dividend() {
+    local ticker="${1:?Usage: investment-portfolio dividend <TICKER> <annual_div> <price>}"
+    local annual_div="${2:?Missing annual dividend}"
+    local price="${3:?Missing current price}"
+
+    ANNUAL="$annual_div" PRICE="$price" python3 << 'PYEOF'
+import os
+div = float(os.environ["ANNUAL"])
+price = float(os.environ["PRICE"])
+if price > 0:
+    yld = div / price * 100
+    print("  Dividend Yield: {:.2f}%".format(yld))
+    print("  Annual:  ${:.2f} per share".format(div))
+    print("  Price:   ${:.2f}".format(price))
+    print("  Quarterly: ${:.4f}".format(div / 4))
+else:
+    print("  Invalid price")
+PYEOF
+}
+
+# === compare: compare two holdings ===
+cmd_compare() {
+    local t1="${1:?Usage: investment-portfolio compare <TICKER1> <TICKER2>}"
+    local t2="${2:?Missing second ticker}"
+    t1=$(echo "$t1" | tr 'a-z' 'A-Z')
+    t2=$(echo "$t2" | tr 'a-z' 'A-Z')
+    [ ! -f "$DB" ] && { echo "  No holdings."; return 0; }
+
+    DB_FILE="$DB" T1="$t1" T2="$t2" python3 << 'PYEOF'
+import json, os
+db = os.environ["DB_FILE"]
+t1, t2 = os.environ["T1"], os.environ["T2"]
+holdings = {}
+with open(db) as f:
+    for line in f:
+        if not line.strip():
+            continue
+        h = json.loads(line)
+        t = h["ticker"]
+        if t in (t1, t2):
+            if t not in holdings:
+                holdings[t] = {"shares": 0, "cost": 0, "value": 0}
+            holdings[t]["shares"] += h["shares"]
+            holdings[t]["cost"] += h["shares"] * h["buy_price"]
+            holdings[t]["value"] += h["shares"] * h["current_price"]
+
+print("  {:>12} {:>14} {:>14}".format("", t1, t2))
+print("  " + "-" * 42)
+for label, key in [("Shares", "shares"), ("Cost", "cost"), ("Value", "value")]:
+    v1 = holdings.get(t1, {}).get(key, 0)
+    v2 = holdings.get(t2, {}).get(key, 0)
+    if key == "shares":
+        print("  {:>12} {:>14.2f} {:>14.2f}".format(label, v1, v2))
+    else:
+        print("  {:>12} ${:>13,.2f} ${:>13,.2f}".format(label, v1, v2))
+
+for t in [t1, t2]:
+    d = holdings.get(t)
+    if d and d["cost"] > 0:
+        pl = d["value"] - d["cost"]
+        pct = pl / d["cost"] * 100
+        print("  {:>12} {:>+13,.2f} ({:+.1f}%)".format(t + " P/L", pl, pct))
+PYEOF
+}
+
+# === sectors: sector breakdown ===
+cmd_sectors() {
+    [ ! -f "$DB" ] || [ ! -s "$DB" ] && { echo "  No holdings."; return 0; }
+    echo -e "${BOLD}Sector Breakdown${RESET}"
+
+    DB_FILE="$DB" python3 << 'PYEOF'
+import json, os
+db = os.environ["DB_FILE"]
+sector_map = {
+    "AAPL": "Technology", "GOOGL": "Technology", "MSFT": "Technology",
+    "AMZN": "Consumer", "TSLA": "Automotive", "META": "Technology",
+    "NVDA": "Technology", "AMD": "Technology", "INTC": "Technology",
+    "BTC": "Crypto", "ETH": "Crypto", "SOL": "Crypto", "BNB": "Crypto",
+    "JPM": "Finance", "GS": "Finance", "BAC": "Finance", "V": "Finance",
+    "JNJ": "Healthcare", "PFE": "Healthcare", "UNH": "Healthcare",
+    "XOM": "Energy", "CVX": "Energy", "BP": "Energy",
+}
+sectors = {}
+total = 0.0
+with open(db) as f:
+    for line in f:
+        if not line.strip():
+            continue
+        h = json.loads(line)
+        val = h["shares"] * h["current_price"]
+        sector = sector_map.get(h["ticker"].upper(), "Other")
+        sectors[sector] = sectors.get(sector, 0) + val
+        total += val
+
+if not sectors:
+    print("  No holdings.")
+else:
+    print("")
+    for sector in sorted(sectors, key=sectors.get, reverse=True):
+        val = sectors[sector]
+        pct = val / total * 100 if total > 0 else 0
+        bar = chr(9608) * int(pct / 2)
+        print("  {:>14} ${:>10,.2f} {:>5.1f}% {}".format(sector, val, pct, bar))
+PYEOF
+}
+
+# === export ===
+cmd_export() {
+    local fmt="${1:-csv}"
+    [ ! -f "$DB" ] && { echo "  No data."; return 0; }
+    case "$fmt" in
+        csv)
+            echo "ticker,shares,buy_price,current_price,date"
+            DB_FILE="$DB" python3 << 'PYEOF'
+import json, os
+with open(os.environ["DB_FILE"]) as f:
+    for line in f:
+        if not line.strip():
+            continue
+        h = json.loads(line)
+        print("{},{},{},{},{}".format(h["ticker"], h["shares"], h["buy_price"], h["current_price"], h.get("date","")))
+PYEOF
+            ;;
+        json)
+            echo "["
+            local first=true
+            while IFS= read -r line; do
+                [ -z "$line" ] && continue
+                $first && first=false || echo ","
+                echo "  $line"
+            done < "$DB"
+            echo "]"
+            ;;
+        *) die "Unknown format: $fmt (csv or json)" ;;
+    esac
+}
+
+# === history ===
+cmd_history() {
+    if [ -f "$HISTORY" ]; then
+        echo -e "${BOLD}Transaction History${RESET}"
+        tail -20 "$HISTORY"
+    else
+        echo "  No history yet."
+    fi
+}
 
 show_help() {
     cat << EOF
-investment-portfolio v$VERSION
-
-Track, analyze, and rebalance your investment portfolio
+investment-portfolio v$VERSION — Investment portfolio tracker
 
 Usage: investment-portfolio <command> [args]
 
@@ -21,249 +492,35 @@ Holdings:
   list                             Show all holdings
 
 Analysis:
-  summary                         Portfolio summary
-  allocation                      Asset allocation chart
-  performance                     Gain/loss analysis
-  risk                            Risk metrics
-  diversify                       Diversification score
-  dividend <ticker> <annual>      Track dividend yield
+  summary                          Portfolio summary (total value, P/L)
+  allocation                       Asset allocation bar chart
+  performance                      Per-holding gain/loss analysis
+  risk                             Risk metrics (std dev, diversification)
+  rebalance <target-json>          Rebalance suggestions
+  compare <t1> <t2>                Compare two holdings
+  sectors                          Sector breakdown
 
-Strategy:
-  rebalance <target-json>         Rebalance suggestions
-  dca <ticker> <amount> <freq>    Dollar cost averaging plan
-  compare <t1> <t2>               Compare two assets
-  sectors                         Sector breakdown
+Tools:
+  dca <ticker> <monthly>           DCA calculator (12-month table)
+  dividend <t> <annual> <price>    Dividend yield calculator
+  export <csv|json>                Export portfolio data
+  history                          Transaction history
 
-Export:
-  export [csv|json]               Export portfolio
-  history                         Transaction history
-  help                            Show this help
+  help                             Show this help
+  version                          Show version
 
+All prices manually entered. Data: $DATA_DIR
 EOF
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-
-cmd_add() {
-    local ticker="${1:?Usage: investment-portfolio add <ticker> <shares> <price>}"
-    local shares="${2:?}"
-    local price="${3:?}"
-    ticker=$(echo "$ticker" | tr 'a-z' 'A-Z')
-    local cost=$(python3 -c "print('{:.2f}'.format($shares * $price))")
-    echo "{\"ticker\":\"$ticker\",\"shares\":$shares,\"buy_price\":$price,\"cost\":$cost,\"date\":\"$(date +%Y-%m-%d)\",\"current\":$price}" >> "$DB"
-    echo "  Added: $shares shares of $ticker @ \$$price (total: \$$cost)"
-    _log "add" "$ticker $shares@$price"
+show_version() {
+    echo "investment-portfolio v$VERSION"
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-cmd_remove() {
-    local ticker="${1:?}"
-    ticker=$(echo "$ticker" | tr 'a-z' 'A-Z')
-    if [ -f "$DB" ]; then
-        grep -v "\"$ticker\"" "$DB" > "$DB.tmp" && mv "$DB.tmp" "$DB"
-        echo "  Removed: $ticker"
-    fi
-    _log "remove" "$ticker"
-}
+[ $# -eq 0 ] && { show_help; exit 0; }
 
-cmd_update() {
-    local ticker="${1:?Usage: investment-portfolio update <ticker> <price>}"
-    local price="${2:?}"
-    ticker=$(echo "$ticker" | tr 'a-z' 'A-Z')
-    [ -f "$DB" ] || { echo "No holdings"; return 1; }
-    python3 << PYEOF
-import json
-lines = []
-found = False
-with open("$DB") as f:
-    for line in f:
-        line = line.strip()
-        if not line: continue
-        d = json.loads(line)
-        if d["ticker"] == "$ticker":
-            d["current"] = $price
-            found = True
-        lines.append(json.dumps(d))
-if found:
-    with open("$DB", "w") as f:
-        f.write("\n".join(lines) + "\n")
-    print("  Updated $ticker to \$$price")
-else:
-    print("  $ticker not found")
-PYEOF
-}
-
-cmd_list() {
-    [ -f "$DB" ] || { echo "  No holdings. Use: investment-portfolio add <ticker> <shares> <price>"; return; }
-    echo "  ═══ Portfolio Holdings ═══"
-    printf "  %-8s %8s %10s %10s %10s %8s\n" "TICKER" "SHARES" "BUY PRICE" "CURRENT" "VALUE" "P/L %"
-    echo "  $(printf '%.0s─' {1..60})"
-    python3 << PYEOF
-import json
-with open("$DB") as f:
-    for line in f:
-        line = line.strip()
-        if not line: continue
-        d = json.loads(line)
-        val = d["shares"] * d.get("current", d["buy_price"])
-        cost = d["shares"] * d["buy_price"]
-        pnl = ((val - cost) / cost * 100) if cost > 0 else 0
-        sign = "+" if pnl >= 0 else ""
-        print("  {:<8s} {:>8.1f} {:>10.2f} {:>10.2f} {:>10.2f} {:>7s}%".format(
-            d["ticker"], d["shares"], d["buy_price"], 
-            d.get("current", d["buy_price"]), val, "{}{}".format(sign, "{:.1f}".format(pnl))))
-PYEOF
-}
-
-cmd_summary() {
-    [ -f "$DB" ] || { echo "  No holdings."; return; }
-    echo "  ═══ Portfolio Summary ═══"
-    python3 << PYEOF
-import json
-total_cost = 0
-total_value = 0
-positions = 0
-with open("$DB") as f:
-    for line in f:
-        line = line.strip()
-        if not line: continue
-        d = json.loads(line)
-        cost = d["shares"] * d["buy_price"]
-        val = d["shares"] * d.get("current", d["buy_price"])
-        total_cost += cost
-        total_value += val
-        positions += 1
-
-pnl = total_value - total_cost
-pnl_pct = (pnl / total_cost * 100) if total_cost > 0 else 0
-print("  Positions:   {}".format(positions))
-print("  Total cost:  ${:,.2f}".format(total_cost))
-print("  Total value: ${:,.2f}".format(total_value))
-print("  P/L:         ${:,.2f} ({:+.1f}%)".format(pnl, pnl_pct))
-PYEOF
-}
-
-cmd_allocation() {
-    [ -f "$DB" ] || { echo "  No holdings."; return; }
-    echo "  ═══ Asset Allocation ═══"
-    python3 << PYEOF
-import json
-holdings = {}
-total = 0
-with open("$DB") as f:
-    for line in f:
-        line = line.strip()
-        if not line: continue
-        d = json.loads(line)
-        val = d["shares"] * d.get("current", d["buy_price"])
-        holdings[d["ticker"]] = holdings.get(d["ticker"], 0) + val
-        total += val
-
-for ticker in sorted(holdings, key=lambda t: holdings[t], reverse=True):
-    val = holdings[ticker]
-    pct = (val / total * 100) if total > 0 else 0
-    bar = "█" * int(pct / 2)
-    print("  {:<8s} {:>8.1f}%  {} ${:,.0f}".format(ticker, pct, bar, val))
-PYEOF
-}
-
-cmd_performance() {
-    [ -f "$DB" ] || return
-    echo "  ═══ Performance Analysis ═══"
-    python3 << PYEOF
-import json
-winners = []
-losers = []
-with open("$DB") as f:
-    for line in f:
-        line = line.strip()
-        if not line: continue
-        d = json.loads(line)
-        pnl = (d.get("current", d["buy_price"]) - d["buy_price"]) / d["buy_price"] * 100
-        if pnl >= 0:
-            winners.append((d["ticker"], pnl))
-        else:
-            losers.append((d["ticker"], pnl))
-
-print("  Winners ({})".format(len(winners)))
-for t, p in sorted(winners, key=lambda x: x[1], reverse=True):
-    print("    ✅ {}: +{:.1f}%".format(t, p))
-print("  Losers ({})".format(len(losers)))
-for t, p in sorted(losers, key=lambda x: x[1]):
-    print("    ❌ {}: {:.1f}%".format(t, p))
-PYEOF
-}
-
-cmd_risk() {
-    echo "  ═══ Risk Assessment ═══"
-    [ -f "$DB" ] || { echo "  No holdings."; return; }
-    python3 << PYEOF
-import json
-positions = []
-total = 0
-with open("$DB") as f:
-    for line in f:
-        line = line.strip()
-        if not line: continue
-        d = json.loads(line)
-        val = d["shares"] * d.get("current", d["buy_price"])
-        positions.append(val)
-        total += val
-
-n = len(positions)
-if n == 0:
-    print("  No data")
-else:
-    max_pct = max(positions) / total * 100 if total > 0 else 0
-    print("  Positions: {}".format(n))
-    print("  Largest position: {:.1f}% of portfolio".format(max_pct))
-    if max_pct > 50: print("  ⚠️ HIGH concentration risk")
-    elif max_pct > 25: print("  ⚠️ MODERATE concentration")
-    else: print("  ✅ Well diversified")
-    if n < 5: print("  ⚠️ Few positions — consider diversifying")
-    elif n > 30: print("  ℹ️ Many positions — consider consolidating")
-PYEOF
-}
-
-cmd_dca() {
-    local ticker="${1:?Usage: investment-portfolio dca <ticker> <amount> <frequency>}"
-    local amount="${2:?}"
-    local freq="${3:-monthly}"
-    echo "  ═══ DCA Plan: $ticker ═══"
-    echo "  Amount: \$$amount per $freq"
-    echo ""
-    echo "  Month    Investment   Cumulative"
-    echo "  ─────────────────────────────────"
-    for m in $(seq 1 12); do
-        local cum=$((m * amount))
-        printf "  %-8d \$%-11d \$%d\n" "$m" "$amount" "$cum"
-    done
-    echo ""
-    echo "  Annual total: \$$((12 * amount))"
-}
-
-cmd_export() {
-    local fmt="${1:-csv}"
-    [ -f "$DB" ] || { echo "No holdings."; return; }
-    case "$fmt" in
-        csv) echo "ticker,shares,buy_price,current,date"
-             python3 -c "
-import json
-with open('$DB') as f:
-    for line in f:
-        line = line.strip()
-        if not line: continue
-        d = json.loads(line)
-        print('{},{},{},{},{}'.format(d['ticker'],d['shares'],d['buy_price'],d.get('current',''),d.get('date','')))" ;;
-        json) cat "$DB" ;;
-        *) echo "Formats: csv, json" ;;
-    esac
-}
-
-cmd_history() {
-    [ -f "$DATA_DIR/history.log" ] && tail -20 "$DATA_DIR/history.log" || echo "  No history"
-}
-
-case "${1:-help}" in
+case "$1" in
     add)          shift; cmd_add "$@" ;;
     remove)       shift; cmd_remove "$@" ;;
     update)       shift; cmd_update "$@" ;;
@@ -272,15 +529,15 @@ case "${1:-help}" in
     allocation)   cmd_allocation ;;
     performance)  cmd_performance ;;
     risk)         cmd_risk ;;
-    diversify)    cmd_risk ;;
-    dividend)     shift; echo "  $1 annual dividend \$$2 → yield $(python3 -c "print('{:.1f}'.format($2/$3*100) if $3>0 else '?')" 2>/dev/null || echo "?")%" ;;
-    rebalance)    shift; echo "  Provide target: {\"AAPL\":40,\"GOOGL\":30,\"BTC\":30}" ;;
+    rebalance)    shift; cmd_rebalance "$@" ;;
     dca)          shift; cmd_dca "$@" ;;
-    compare)      shift; echo "  Compare $1 vs $2: check current prices and P/L in your holdings" ;;
-    sectors)      echo "  Sector breakdown: tag your holdings with sectors first" ;;
-    export)       shift; cmd_export "${1:-csv}" ;;
+    dividend)     shift; cmd_dividend "$@" ;;
+    compare)      shift; cmd_compare "$@" ;;
+    sectors)      cmd_sectors ;;
+    diversify)    cmd_risk ;;
+    export)       shift; cmd_export "$@" ;;
     history)      cmd_history ;;
     help|-h)      show_help ;;
-    version|-v)   echo "investment-portfolio v$VERSION" ;;
+    version|-v)   show_version ;;
     *)            echo "Unknown: $1"; show_help; exit 1 ;;
 esac

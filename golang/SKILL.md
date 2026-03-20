@@ -1,88 +1,112 @@
 ---
-name: golang
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [golang, tool, utility]
-description: "Golang - command-line tool for everyday use"
+name: "golang"
+version: "1.0.0"
+description: "Build, test, lint, and format Go projects with integrated dev tooling. Use when compiling binaries, running tests, linting code, or formatting files."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [golang, general, cli, tool]
+category: "general"
 ---
 
-# Golang
+# golang
 
-Go development toolkit — build, test, lint, format, and manage Go projects.
+Build, test, lint, and format Go projects with integrated dev tooling. Use when compiling binaries, running tests, linting code, or formatting files.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `golang help` | Show usage info |
-| `golang run` | Run main task |
-| `golang status` | Check current state |
-| `golang list` | List items |
-| `golang add <item>` | Add new item |
-| `golang export <fmt>` | Export data |
-
-## Usage
+### `status`
 
 ```bash
-golang help
-golang run
-golang status
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-# Get started
-golang help
-
-# Run default task
-golang run
-
-# Export as JSON
-golang export json
+scripts/script.sh add
 ```
 
-## Output
+Add new entry
 
-Results go to stdout. Save with `golang run > output.txt`.
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `GOLANG_DIR` to change data directory. Default: `~/.local/share/golang/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `GOLANG_DIR` | No | Data directory (default: ~/.golang/) |
+
+## Data Storage
+
+All data stored in `~/.golang/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
 
-
-## Features
-
-- Simple command-line interface for quick access
-- Local data storage with JSON/CSV export
-- History tracking and activity logs
-- Search across all entries
-
-## Quick Start
-
-```bash
-# Check status
-golang status
-
-# View help
-golang help
-
-# Export data
-golang export json
-```
-
-## How It Works
-
-Golang stores all data locally in `~/.local/share/golang/`. Each command logs activity with timestamps for full traceability.
-
-## Support
-
-- Feedback: https://bytesagain.com/feedback/
-- Website: https://bytesagain.com
-
-Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

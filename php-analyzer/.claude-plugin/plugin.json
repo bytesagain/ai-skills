@@ -1,0 +1,9 @@
+{
+  "name": "php-analyzer",
+  "description": "PHP Static Analysis Tool - discover bugs in your code without running it! php-analyzer, php, php, php7, php-analyzer, static-analysis.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

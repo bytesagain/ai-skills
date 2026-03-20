@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: notion-template
-description: "Notion模板生成器。工作空间规划、数据库设计、仪表盘布局、知识库Wiki、项目管理、个人模板。Notion template generator with workspace, database, dashboard, wiki, project, and personal templates. Use when you need notion template capabilities. Triggers on: notion template."
+description: "Notion模板生成器。工作空间规划、数据库设计、仪表盘布局、知识库Wiki、项目管理、个人模板。Notion template generator with workspace, database, dashboard, wiki, project."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # notion-template
 

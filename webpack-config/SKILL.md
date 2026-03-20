@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Webpack Config
-description: "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━. Use when you need webpack config capabilities. Triggers on: webpack config."
-  Webpack/Vite配置生成。项目配置、插件、Loader、优化、代码分割、迁移。Webpack/Vite config generator with plugins, loaders, optimization, code splitting. Webpack、Vite、构建工具。
+description: "Generate Webpack/Vite configs with plugins and code splitting. Use when initializing builds, adding loaders, configuring tree-shaking, or migrating tools."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # Webpack Config
 

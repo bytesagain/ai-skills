@@ -1,0 +1,9 @@
+{
+  "name": "spell",
+  "description": "Log anything fast and find it later with search and export. Use when running lookups, checking entries, converting formats, generating summaries.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

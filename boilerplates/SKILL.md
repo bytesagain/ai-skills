@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: Boilerplates
-description: "This is my personal template collection. Here you'll find templates, and configurations for various boilerplates, python, ansible, docker, docker-compose, kubernetes, packer. Use when you need boilerplates capabilities. Triggers on: boilerplates."
+description: "This is my personal template collection. Here you'll find templates, and configurations for various boilerplates, python, ansible, docker, docker-compose."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Boilerplates

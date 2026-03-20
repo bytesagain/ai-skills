@@ -1,62 +1,57 @@
 ---
-name: finder
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [finder, tool, utility]
-description: "Finder - command-line tool for everyday use"
+name: "finder"
+version: "3.0.0"
+description: "Find files by name, size, date, and type with deduplication. Use when searching filesystems."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
 ---
 
-# Finder
+# finder
 
-File finder — locate files by name, content, size, date, type, duplicates detection, and bulk operations.
+Find files by name, size, date, and type with deduplication. Use when searching filesystems.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `finder run` | Execute main function |
-| `finder list` | List all items |
-| `finder add <item>` | Add new item |
-| `finder status` | Show current status |
-| `finder export <format>` | Export data |
-| `finder help` | Show help |
-
-## Usage
+### `name`
 
 ```bash
-# Show help
-finder help
-
-# Quick start
-finder run
+scripts/script.sh name <pattern dir>
 ```
 
-## Examples
+### `size`
 
 ```bash
-# Run with defaults
-finder run
-
-# Check status
-finder status
-
-# Export results
-finder export json
+scripts/script.sh size <min dir>
 ```
 
-- Run `finder help` for all commands
-finder/`
+### `recent`
 
-## When to Use
+```bash
+scripts/script.sh recent <dir days>
+```
 
-- for batch processing finder operations
-- as part of a larger automation pipeline
+### `type`
 
-## Output
+```bash
+scripts/script.sh type <ext dir>
+```
 
-Returns structured data to stdout. Redirect to a file with `finder run > output.txt`.
+### `empty`
+
+```bash
+scripts/script.sh empty <dir>
+```
+
+### `large`
+
+```bash
+scripts/script.sh large <dir count>
+```
+
+## Data Storage
+
+Data stored in `~/.local/share/finder/`.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

@@ -1,0 +1,9 @@
+{
+  "name": "shell-gpt",
+  "description": "Run AI-powered shell commands and prompts for faster terminal workflows. Use when generating scripts, comparing outputs, evaluating prompts.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

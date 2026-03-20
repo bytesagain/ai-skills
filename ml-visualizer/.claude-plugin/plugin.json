@@ -1,0 +1,9 @@
+{
+  "name": "ml-visualizer",
+  "description": "Visual analysis and diagnostic tools to help machine learning model selection. ml-visualizer, python, anaconda, estimator, machine-learning, matplotlib.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

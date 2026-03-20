@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: newsletter-writer
-description: "Newsletter邮件内容生成、标题优化、受众分类、A/B测试文案、发送时间建议、效果分析。Newsletter content writer with subject optimization, audience segmentation, A/B testing, scheduling, performance analysis. Use when you need newsletter writer capabilities. Triggers on: newsletter writer."
+description: "Newsletter邮件内容生成、标题优化、受众分类、A/B测试文案、发送时间建议、效果分析。Newsletter content writer with subject optimization, audience segmentation, A/B testing, scheduling."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # newsletter-writer
 

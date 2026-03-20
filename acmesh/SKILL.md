@@ -1,53 +1,57 @@
 ---
-version: "2.0.0"
-name: Acmesh
-description: "A pure Unix shell script ACME client for SSL / TLS certificate automation acmesh, shell, acme, acme-challenge, acme-protocol, acme-v2, ash. Use when you need acmesh capabilities. Triggers on: acmesh."
-author: BytesAgain
+name: "acmesh"
+version: "3.0.0"
+description: "Manage ACME/SSL certificates with issuance, renewal, and revocation. Use when provisioning certs or checking SSL status."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
 ---
 
-# Acmesh
+# acmesh
 
-A pure Unix shell script ACME client for SSL / TLS certificate automation ## Commands
+Manage ACME/SSL certificates with issuance, renewal, and revocation. Use when provisioning certs or checking SSL status.
 
-- `help` - Help
-- `run` - Run
-- `info` - Info
-- `status` - Status
+## Commands
 
-## Features
-
-- Core functionality from acmesh-official/acme.sh
-
-## Usage
-
-Run any command: `acmesh <command> [args]`
----
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
-
-## Examples
+### `issue`
 
 ```bash
-# Show help
-acmesh help
-
-# Run
-acmesh run
+scripts/script.sh issue <domain>
 ```
 
-- Run `acmesh help` for all commands
+### `list`
 
-- Run `acmesh help` for all commands
+```bash
+scripts/script.sh list
+```
 
-## When to Use
+### `info`
 
-- to automate acmesh tasks in your workflow
-- for batch processing acmesh operations
+```bash
+scripts/script.sh info <domain>
+```
 
-## Output
+### `renew`
 
-Returns reports to stdout. Redirect to a file with `acmesh run > output.txt`.
+```bash
+scripts/script.sh renew <domain>
+```
 
-## Configuration
+### `revoke`
 
-Set `ACMESH_DIR` environment variable to change the data directory. Default: `~/.local/share/acmesh/`
+```bash
+scripts/script.sh revoke <domain>
+```
+
+### `check`
+
+```bash
+scripts/script.sh check <domain>
+```
+
+## Data Storage
+
+Data stored in `~/.local/share/acmesh/`.
+
+---
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

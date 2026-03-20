@@ -1,0 +1,9 @@
+{
+  "name": "usb",
+  "description": "List and manage USB devices and storage from the terminal. Use when enumerating devices, formatting drives, mounting volumes, or diagnosing connections.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,39 +1,96 @@
 ---
 name: SSHKey
-description: "SSH key pair manager. Generate new SSH key pairs, list existing keys, copy public keys to clipboard, check key fingerprints, add keys to ssh-agent, convert key formats, and test SSH connections. Simplify SSH key management from your terminal."
-version: "2.0.0"
+description: "Generate, list, copy, and test SSH keys without complex flags. Use when scanning keys, monitoring expiry, reporting fingerprints, alerting weak algorithms."
+version: "3.0.1"
 author: "BytesAgain"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 tags: ["ssh","key","security","authentication","crypto","server","admin","devops"]
 categories: ["Security", "System Tools", "Developer Tools"]
 ---
-# SSHKey
-Manage SSH keys without remembering flags. Generate, list, copy, test.
+
+# sshkey
+
+SSH key manager.
+
 ## Commands
-- `generate [name] [type]` — Generate new key pair (ed25519/rsa)
-- `list` — List existing SSH keys
-- `fingerprint [keyfile]` — Show key fingerprint
-- `copy [keyfile]` — Show public key for copying
-- `test <host>` — Test SSH connection
-## Usage Examples
+
+### `generate`
+
+Generate new SSH key (ed25519/rsa/ecdsa)
+
 ```bash
-sshkey generate myserver ed25519
-sshkey list
-sshkey fingerprint ~/.ssh/id_ed25519
-sshkey copy
-sshkey test github.com
+scripts/script.sh generate [type] [bits]
 ```
+
+### `list`
+
+List all SSH keys
+
+```bash
+scripts/script.sh list
+```
+
+### `fingerprint`
+
+Show key fingerprint (MD5 + SHA256)
+
+```bash
+scripts/script.sh fingerprint <keyfile>
+```
+
+### `info`
+
+Detailed key information
+
+```bash
+scripts/script.sh info <keyfile>
+```
+
+### `copy`
+
+Copy public key to remote host
+
+```bash
+scripts/script.sh copy <user@host> [keyfile]
+```
+
+### `test`
+
+Test SSH connection
+
+```bash
+scripts/script.sh test <user@host>
+```
+
+### `authorized-list`
+
+List authorized keys
+
+```bash
+scripts/script.sh authorized-list
+```
+
+### `authorized-add`
+
+Add key to authorized_keys
+
+```bash
+scripts/script.sh authorized-add <pubkey>
+```
+
+### `audit`
+
+Security audit of SSH keys and permissions
+
+```bash
+scripts/script.sh audit
+```
+
+## Requirements
+
+- ssh-keygen
+
 ---
-Powered by BytesAgain | bytesagain.com
 
-## When to Use
-
-- when you need quick sshkey from the command line
-- to automate sshkey tasks in your workflow
-
-## Output
-
-Returns summaries to stdout. Redirect to a file with `sshkey run > output.txt`.
-
----
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

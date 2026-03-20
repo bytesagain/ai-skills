@@ -1,59 +1,57 @@
 ---
-version: "2.0.0"
-name: Civil Service Exam
-description: "Civil Service Exam Assistant. Use when you need civil service capabilities. Triggers on: civil service."
-  公务员考试助手。申论写作、行测技巧、面试模拟、时政热点、备考计划、真题分析。Civil service exam prep. 公务员、国考、省考、申论。
-author: BytesAgain
+name: "civil-service"
+version: "3.0.0"
+description: "Civil service exam study helper with quizzes and topic review (公务员考试). Use when preparing for exams."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
 ---
-# Civil Service Exam
 
-公务员考试助手。申论写作、行测技巧、面试模拟、时政热点、备考计划、真题分析。Civil service exam prep. 公务员、国考、省考、申论。
+# civil-service
 
-## 如何使用
-
-1. 选择你需要的功能命令
-2. 输入你的具体需求描述
-3. 获取专业的输出结果
-4. 根据需要调整和完善
-
-## 命令列表
-
-| 命令 | 功能 |
-|------|------|
-| `shenlun` | shenlun |
-| `xingce` | xingce |
-| `interview` | interview |
-| `hotspot` | hotspot |
-| `plan` | plan |
-| `essay` | essay |
-
----
-*Civil Service Exam by BytesAgain*
----
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
-
-## Examples
-
-```bash
-# Show help
-civil-service help
-
-# Run
-civil-service run
-```
-
-- Run `civil-service help` for all commands
+Civil service exam study helper with quizzes and topic review (公务员考试). Use when preparing for exams.
 
 ## Commands
 
-Run `civil-service help` to see all available commands.
+### `topics`
 
-## When to Use
+```bash
+scripts/script.sh topics
+```
 
-- Quick civil tasks from terminal
-- Automation pipelines
+### `quiz`
 
-## Output
+```bash
+scripts/script.sh quiz <category>
+```
 
-Results go to stdout. Save with `civil-service run > output.txt`.
+### `tips`
+
+```bash
+scripts/script.sh tips <topic>
+```
+
+### `timer`
+
+```bash
+scripts/script.sh timer <minutes>
+```
+
+### `score`
+
+```bash
+scripts/script.sh score <correct total>
+```
+
+### `history`
+
+```bash
+scripts/script.sh history
+```
+
+## Data Storage
+
+Data stored in `~/.local/share/civil-service/`.
+
+---
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

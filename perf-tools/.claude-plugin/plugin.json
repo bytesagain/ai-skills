@@ -1,0 +1,9 @@
+{
+  "name": "perf-tools",
+  "description": "Trace Linux system performance bottlenecks in real time. Use when scanning disk I/O, monitoring latency, reporting CPU usage, alerting on memory leaks.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

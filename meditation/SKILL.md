@@ -1,63 +1,86 @@
 ---
 name: meditation
-version: "2.0.0"
+description: "Guide meditation practice. Use when starting timed sessions, breathing exercises, body scans, logging practice, or viewing stats."
+version: "3.4.0"
 author: BytesAgain
-license: MIT-0
-tags: [meditation, tool, utility]
-description: "Meditation - command-line tool for everyday use"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
+tags:
+  - meditation
+  - mindfulness
+  - breathing
+  - wellness
+  - timer
+  - body-scan
 ---
 
-# Meditation
+# Meditation Skill
 
-Meditation and mindfulness toolkit — guided session timer, breathing exercises, mood logging, streak tracking, ambient sounds, and session history.
+Time meditation sessions, guide breathing and body scans, log practice, and track stats.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `meditation start` | [minutes] |
-| `meditation breathe` | [pattern] |
-| `meditation mood` | <1-10> |
-| `meditation streak` | Streak |
-| `meditation history` | History |
-| `meditation sounds` | Sounds |
+### start
 
-## Usage
+Start a meditation timer with optional bell intervals.
 
 ```bash
-# Show help
-meditation help
-
-# Quick start
-meditation start [minutes]
+bash scripts/script.sh start [--duration <minutes>] [--bell <interval_min>] [--type focus|open|loving-kindness]
 ```
 
-## Examples
+### breathe
+
+Run a guided breathing exercise.
 
 ```bash
-# Example 1
-meditation start [minutes]
-
-# Example 2
-meditation breathe [pattern]
+bash scripts/script.sh breathe [--pattern 4-7-8|box|deep] [--cycles <num>]
 ```
 
-- Run `meditation help` for all available commands
+### body-scan
 
----
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
+Generate a body scan meditation guide.
 
-## When to Use
+```bash
+bash scripts/script.sh body-scan [--duration short|medium|long] [--focus full|upper|lower]
+```
 
-- Quick meditation tasks from terminal
-- Automation pipelines
+### log
+
+Record a meditation session to the journal.
+
+```bash
+bash scripts/script.sh log <duration_min> [--type <type>] [--mood <1-10>] [--note <text>]
+```
+
+### stats
+
+View meditation practice statistics.
+
+```bash
+bash scripts/script.sh stats [--period week|month|year|all] [--format table|json]
+```
+
+### playlist
+
+Generate a meditation audio playlist.
+
+```bash
+bash scripts/script.sh playlist [--mood calm|sleep|focus|energy] [--duration <minutes>] [--count <num>]
+```
 
 ## Output
 
-Results go to stdout. Save with `meditation run > output.txt`.
+All commands print to stdout. Session logs are stored in `~/.meditation/sessions.json`. Timer and breathing commands print real-time prompts to the terminal.
 
-## When to Use
 
-- Quick meditation tasks from terminal
-- Automation pipelines
+## Requirements
+- bash 4+
+- python3 (standard library only)
+
+## Feedback
+
+Questions or suggestions? → [https://bytesagain.com/feedback/](https://bytesagain.com/feedback/)
+
+---
+
+Powered by BytesAgain | bytesagain.com

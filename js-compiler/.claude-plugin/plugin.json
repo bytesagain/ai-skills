@@ -1,0 +1,9 @@
+{
+  "name": "js-compiler",
+  "description": "Compile, bundle, and optimize JavaScript with high-performance build tools. Use when bundling modules, minifying builds, or analyzing bundle output sizes.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

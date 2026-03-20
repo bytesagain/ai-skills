@@ -1,0 +1,9 @@
+{
+  "name": "render-debugger",
+  "description": "render-debugger by Welldone Software monkey patches React to notify you about potentially avoidab why did you render, javascript, component, hooks-tracking.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

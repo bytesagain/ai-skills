@@ -1,0 +1,9 @@
+{
+  "name": "mix",
+  "description": "Record, search, and analyze music and audio sessions with playback tracking. Use when logging audio sessions, searching metadata, analyzing listening data.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

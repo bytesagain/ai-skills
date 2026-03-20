@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Privacy Policy Generator
-description: "Privacy Policy Generator - 隐私政策生成器. Use when you need privacy policy capabilities. Triggers on: privacy policy."
-  隐私政策生成器。GDPR/CCPA合规、App/网站隐私政策、合规审计。Privacy policy generator with GDPR, CCPA compliance. 隐私政策、合规。
+description: "Generate GDPR/CCPA-compliant privacy policies. Use when scanning data practices, auditing consent flows, checking compliance, drafting policy documents."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # Privacy Policy Generator
 
@@ -50,3 +51,7 @@ privacy-policy run
 ```
 
 - Run `privacy-policy help` for all commands
+
+## Requirements
+- bash 4+
+- python3 (standard library only)

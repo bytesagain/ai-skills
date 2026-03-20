@@ -1,0 +1,9 @@
+{
+  "name": "spend-tracker",
+  "description": "Track expenses, categorize spending, and generate finance reports. Use when logging purchases, checking balances, converting currencies, analyzing trends.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: work-report-writer
-description: "Work report generator. 工作汇报生成器、周报生成、工作周报、每周总结、weekly report、周报模板、周报怎么写、日报生成、工作日报、daily report、日报模板、月报生成、月度总结、monthly report、项目汇报、年终总结、年度总结、annual review、站会汇报、standup report、OKR报告、工作总结、述职报告、季度总结、Q1Q2Q3Q4总结、项目复盘、经验教训、改进措施、project review、retrospective。Generate daily/weekly/monthly/project/annual reports, standup updates, OKR reports, and project reviews. Use when: (1) writing daily/weekly/monthly work reports, (2) generating project progress updates, (3) preparing annual review summaries, (4) standup/scrum meeting updates, (5) OKR-format work reports, (6) project retrospectives with lessons learned, (7) any work report or work summary generation. 适用场景：写日报、写周报、写月报、项目进展汇报、年终总结、站会汇报、OKR复盘、述职报告、季度总结、项目复盘报告。支持多种格式和风格，中英双语可选。 Triggers on: work report writer, lang, lang."
+description: "Work report generator. 工作汇报生成器、周报生成、工作周报、每周总结、weekly report、周报模板、周报怎么写、日报生成、工作日报、daily report、日报模板、月报生成、月度总结、monthly report、项目汇报、年终总结、年度总结、annual review、站会汇报."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Work Report Writer

@@ -1,0 +1,9 @@
+{
+  "name": "job-scheduler",
+  "description": "Enable Self-Service Operations: Give specific users access to your existing tools, services, and scr job-scheduler, groovy, ansible, audit, automation.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

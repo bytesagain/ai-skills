@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: email-writer
-description: "Email writing assistant. 邮件写作、邮件助手、商务邮件、business email、英文邮件、English email、求职邮件、job application email、跟进邮件、follow-up email、冷启动邮件、cold email、道歉邮件、apology email、回复邮件、reply email、邮件模板、email template、外贸邮件、催款邮件、感谢邮件、邀请邮件、通知邮件、邮件序列、email sequence、邮件主题行、subject line、高打开率、拒绝邮件、decline email。Generate business, follow-up, cold outreach, apology, reply emails, email sequences (sales/cooperation/collection/recruitment), template library (thanks/notice/invitation/decline/collection), and high-open-rate subject lines. Use when: (1) writing business/professional emails, (2) crafting follow-up emails, (3) writing cold outreach emails, (4) composing apology emails, (5) replying to emails with appropriate tone, (6) creating email sequences for sales or recruitment, (7) generating email templates for common scenarios, (8) writing high-open-rate subject lines, (9) any email writing task in Chinese or English. 适用场景：写商务邮件、跟进邮件、冷启动邮件、道歉邮件、回复邮件、邮件序列、邮件模板库、主题行优化。中英双语支持。 Triggers on: email writer."
+description: "Email writing assistant. 邮件写作、邮件助手、商务邮件、business email、英文邮件、English email、求职邮件、job application email、跟进邮件、follow-up email、冷启动邮件、cold email、道歉邮件、apology email."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # email-writer

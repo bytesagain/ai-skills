@@ -1,364 +1,324 @@
 #!/usr/bin/env bash
-# Memwatch — sysops tool
+# MemWatch — Memory monitor
 # Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-DATA_DIR="${HOME}/.local/share/memwatch"
-mkdir -p "$DATA_DIR"
+VERSION="3.0.0"
+SCRIPT_NAME="memwatch"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+# ─────────────────────────────────────────────────────────────
+# Usage / Help
+# ─────────────────────────────────────────────────────────────
+usage() {
+  cat <<'EOF'
+MemWatch — Memory monitor
+Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-_version() { echo "memwatch v2.0.0"; }
+USAGE:
+  memwatch <command> [arguments]
 
-_help() {
-    echo "Memwatch v2.0.0 — sysops toolkit"
+COMMANDS:
+  status                Current memory usage summary
+  top [n]               Top N memory-consuming processes (default: 10)
+  watch                 Snapshot memory every 2s for 10 iterations
+  process <pid>         Memory details for a specific PID
+  swap                  Swap usage details
+  alert <threshold>     Check if memory usage exceeds threshold %
+  detailed              Detailed /proc/meminfo breakdown
+  compare               Compare memory now vs 30s later
+  help                  Show this help message
+  version               Show version
+
+EXAMPLES:
+  memwatch status
+  memwatch top 5
+  memwatch watch
+  memwatch process 1234
+  memwatch swap
+  memwatch alert 80
+  memwatch detailed
+  memwatch compare
+EOF
+}
+
+# ─────────────────────────────────────────────────────────────
+# Helpers
+# ─────────────────────────────────────────────────────────────
+die() { echo "ERROR: $*" >&2; exit 1; }
+
+require_arg() {
+  if [[ -z "${1:-}" ]]; then
+    die "Missing required argument: $2"
+  fi
+}
+
+timestamp() {
+  date '+%Y-%m-%d %H:%M:%S'
+}
+
+get_mem_percent() {
+  # Returns used memory percentage
+  if [[ -f /proc/meminfo ]]; then
+    awk '/^MemTotal:/{total=$2} /^MemAvailable:/{avail=$2} END{printf "%.1f", ((total-avail)/total)*100}' /proc/meminfo
+  else
+    free | awk '/^Mem:/{printf "%.1f", ($3/$2)*100}'
+  fi
+}
+
+# ─────────────────────────────────────────────────────────────
+# Commands
+# ─────────────────────────────────────────────────────────────
+
+cmd_status() {
+  echo "Memory Status — $(timestamp)"
+  echo "─────────────────────────────────────"
+
+  # Use free -h for human-readable
+  if command -v free &>/dev/null; then
+    free -h
     echo ""
-    echo "Usage: memwatch <command> [args]"
+  fi
+
+  # Memory usage percentage
+  local pct
+  pct=$(get_mem_percent)
+  echo "Usage: ${pct}%"
+
+  # Visual bar
+  local filled
+  filled=$(awk "BEGIN{printf \"%d\", $pct / 2}")
+  local empty=$(( 50 - filled ))
+  printf "  ["
+  printf '%0.s█' $(seq 1 "$filled" 2>/dev/null) || true
+  printf '%0.s░' $(seq 1 "$empty" 2>/dev/null) || true
+  printf "] %s%%\n" "$pct"
+
+  # Key values from /proc/meminfo
+  if [[ -f /proc/meminfo ]]; then
     echo ""
-    echo "Commands:"
-    echo "  scan               Scan"
-    echo "  monitor            Monitor"
-    echo "  report             Report"
-    echo "  alert              Alert"
-    echo "  top                Top"
-    echo "  usage              Usage"
-    echo "  check              Check"
-    echo "  fix                Fix"
-    echo "  cleanup            Cleanup"
-    echo "  backup             Backup"
-    echo "  restore            Restore"
-    echo "  log                Log"
-    echo "  benchmark          Benchmark"
-    echo "  compare            Compare"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
+    local total avail buffers cached
+    total=$(awk '/^MemTotal:/{printf "%.0f", $2/1024}' /proc/meminfo)
+    avail=$(awk '/^MemAvailable:/{printf "%.0f", $2/1024}' /proc/meminfo)
+    buffers=$(awk '/^Buffers:/{printf "%.0f", $2/1024}' /proc/meminfo)
+    cached=$(awk '/^Cached:/{printf "%.0f", $2/1024}' /proc/meminfo)
+    echo "  Total:     ${total}MB"
+    echo "  Available: ${avail}MB"
+    echo "  Buffers:   ${buffers}MB"
+    echo "  Cached:    ${cached}MB"
+  fi
 }
 
-_stats() {
-    echo "=== Memwatch Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Since: $(head -1 "$DATA_DIR/history.log" 2>/dev/null | cut -d'|' -f1 || echo 'N/A')"
+cmd_top() {
+  local n="${1:-10}"
+  [[ "$n" =~ ^[0-9]+$ ]] || die "n must be a positive integer"
+  echo "Top $n Memory Consumers — $(timestamp)"
+  echo "─────────────────────────────────────"
+  printf "%-8s %-6s %-10s %s\n" "PID" "%MEM" "RSS(MB)" "COMMAND"
+  echo "─────────────────────────────────────"
+  ps aux --sort=-%mem 2>/dev/null | awk 'NR>1{printf "%-8s %-6s %-10.1f %s\n", $2, $4, $6/1024, $11}' | head -"$n"
 }
 
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "" >> "$out"
-            echo "]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    echo "$name,$ts,$val" >> "$out"
-                done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Memwatch Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-                echo "" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
-    esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
-}
-
-_status() {
-    echo "=== Memwatch Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    local last=$(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo "never")
-    echo "  Last activity: $last"
-    echo "  Status: OK"
-}
-
-_search() {
-    local term="${1:?Usage: memwatch search <term>}"
-    echo "Searching for: $term"
-    local found=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local matches=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$matches" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$matches" | while read -r line; do
-                echo "    $line"
-                found=$((found + 1))
-            done
-        fi
-    done
-    [ $found -eq 0 ] && echo "  No matches found."
-}
-
-_recent() {
-    echo "=== Recent Activity ==="
-    if [ -f "$DATA_DIR/history.log" ]; then
-        tail -20 "$DATA_DIR/history.log" | while IFS='' read -r line; do
-            echo "  $line"
-        done
+cmd_watch() {
+  local iterations=10
+  local interval=2
+  echo "Memory Watch — $iterations snapshots, ${interval}s interval"
+  echo "─────────────────────────────────────"
+  printf "%-20s %-8s %-10s %-10s %-10s\n" "TIMESTAMP" "USED%" "TOTAL(MB)" "USED(MB)" "AVAIL(MB)"
+  echo "─────────────────────────────────────"
+  local i
+  for (( i = 1; i <= iterations; i++ )); do
+    local ts pct total used avail
+    ts=$(date '+%H:%M:%S')
+    if [[ -f /proc/meminfo ]]; then
+      read -r total avail <<< "$(awk '/^MemTotal:/{t=$2} /^MemAvailable:/{a=$2} END{print int(t/1024), int(a/1024)}' /proc/meminfo)"
+      used=$(( total - avail ))
+      pct=$(awk "BEGIN{printf \"%.1f\", ($used/$total)*100}")
     else
-        echo "  No activity yet."
+      read -r total used avail <<< "$(free -m | awk '/^Mem:/{print $2, $3, $7}')"
+      pct=$(awk "BEGIN{printf \"%.1f\", ($used/$total)*100}")
     fi
+    printf "%-20s %-8s %-10s %-10s %-10s\n" "$ts" "${pct}%" "$total" "$used" "$avail"
+    [[ $i -lt $iterations ]] && sleep "$interval"
+  done
 }
 
-# Main dispatch
-case "${1:-help}" in
-    scan)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent scan entries:"
-            tail -20 "$DATA_DIR/scan.log" 2>/dev/null || echo "  No entries yet. Use: memwatch scan <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/scan.log"
-            local total=$(wc -l < "$DATA_DIR/scan.log")
-            echo "  [Memwatch] scan: $input"
-            echo "  Saved. Total scan entries: $total"
-            _log "scan" "$input"
-        fi
-        ;;
-    monitor)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent monitor entries:"
-            tail -20 "$DATA_DIR/monitor.log" 2>/dev/null || echo "  No entries yet. Use: memwatch monitor <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/monitor.log"
-            local total=$(wc -l < "$DATA_DIR/monitor.log")
-            echo "  [Memwatch] monitor: $input"
-            echo "  Saved. Total monitor entries: $total"
-            _log "monitor" "$input"
-        fi
-        ;;
-    report)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent report entries:"
-            tail -20 "$DATA_DIR/report.log" 2>/dev/null || echo "  No entries yet. Use: memwatch report <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/report.log"
-            local total=$(wc -l < "$DATA_DIR/report.log")
-            echo "  [Memwatch] report: $input"
-            echo "  Saved. Total report entries: $total"
-            _log "report" "$input"
-        fi
-        ;;
-    alert)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent alert entries:"
-            tail -20 "$DATA_DIR/alert.log" 2>/dev/null || echo "  No entries yet. Use: memwatch alert <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/alert.log"
-            local total=$(wc -l < "$DATA_DIR/alert.log")
-            echo "  [Memwatch] alert: $input"
-            echo "  Saved. Total alert entries: $total"
-            _log "alert" "$input"
-        fi
-        ;;
-    top)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent top entries:"
-            tail -20 "$DATA_DIR/top.log" 2>/dev/null || echo "  No entries yet. Use: memwatch top <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/top.log"
-            local total=$(wc -l < "$DATA_DIR/top.log")
-            echo "  [Memwatch] top: $input"
-            echo "  Saved. Total top entries: $total"
-            _log "top" "$input"
-        fi
-        ;;
-    usage)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent usage entries:"
-            tail -20 "$DATA_DIR/usage.log" 2>/dev/null || echo "  No entries yet. Use: memwatch usage <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/usage.log"
-            local total=$(wc -l < "$DATA_DIR/usage.log")
-            echo "  [Memwatch] usage: $input"
-            echo "  Saved. Total usage entries: $total"
-            _log "usage" "$input"
-        fi
-        ;;
-    check)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent check entries:"
-            tail -20 "$DATA_DIR/check.log" 2>/dev/null || echo "  No entries yet. Use: memwatch check <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/check.log"
-            local total=$(wc -l < "$DATA_DIR/check.log")
-            echo "  [Memwatch] check: $input"
-            echo "  Saved. Total check entries: $total"
-            _log "check" "$input"
-        fi
-        ;;
-    fix)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent fix entries:"
-            tail -20 "$DATA_DIR/fix.log" 2>/dev/null || echo "  No entries yet. Use: memwatch fix <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/fix.log"
-            local total=$(wc -l < "$DATA_DIR/fix.log")
-            echo "  [Memwatch] fix: $input"
-            echo "  Saved. Total fix entries: $total"
-            _log "fix" "$input"
-        fi
-        ;;
-    cleanup)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent cleanup entries:"
-            tail -20 "$DATA_DIR/cleanup.log" 2>/dev/null || echo "  No entries yet. Use: memwatch cleanup <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/cleanup.log"
-            local total=$(wc -l < "$DATA_DIR/cleanup.log")
-            echo "  [Memwatch] cleanup: $input"
-            echo "  Saved. Total cleanup entries: $total"
-            _log "cleanup" "$input"
-        fi
-        ;;
-    backup)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent backup entries:"
-            tail -20 "$DATA_DIR/backup.log" 2>/dev/null || echo "  No entries yet. Use: memwatch backup <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/backup.log"
-            local total=$(wc -l < "$DATA_DIR/backup.log")
-            echo "  [Memwatch] backup: $input"
-            echo "  Saved. Total backup entries: $total"
-            _log "backup" "$input"
-        fi
-        ;;
-    restore)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent restore entries:"
-            tail -20 "$DATA_DIR/restore.log" 2>/dev/null || echo "  No entries yet. Use: memwatch restore <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/restore.log"
-            local total=$(wc -l < "$DATA_DIR/restore.log")
-            echo "  [Memwatch] restore: $input"
-            echo "  Saved. Total restore entries: $total"
-            _log "restore" "$input"
-        fi
-        ;;
-    log)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent log entries:"
-            tail -20 "$DATA_DIR/log.log" 2>/dev/null || echo "  No entries yet. Use: memwatch log <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/log.log"
-            local total=$(wc -l < "$DATA_DIR/log.log")
-            echo "  [Memwatch] log: $input"
-            echo "  Saved. Total log entries: $total"
-            _log "log" "$input"
-        fi
-        ;;
-    benchmark)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent benchmark entries:"
-            tail -20 "$DATA_DIR/benchmark.log" 2>/dev/null || echo "  No entries yet. Use: memwatch benchmark <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/benchmark.log"
-            local total=$(wc -l < "$DATA_DIR/benchmark.log")
-            echo "  [Memwatch] benchmark: $input"
-            echo "  Saved. Total benchmark entries: $total"
-            _log "benchmark" "$input"
-        fi
-        ;;
-    compare)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent compare entries:"
-            tail -20 "$DATA_DIR/compare.log" 2>/dev/null || echo "  No entries yet. Use: memwatch compare <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/compare.log"
-            local total=$(wc -l < "$DATA_DIR/compare.log")
-            echo "  [Memwatch] compare: $input"
-            echo "  Saved. Total compare entries: $total"
-            _log "compare" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown command: $1"
-        echo "Run 'memwatch help' for available commands."
-        exit 1
-        ;;
-esac
+cmd_process() {
+  local pid="${1:-}"
+  require_arg "$pid" "PID"
+  [[ "$pid" =~ ^[0-9]+$ ]] || die "PID must be a number"
+
+  if [[ ! -d "/proc/$pid" ]]; then
+    die "Process $pid not found"
+  fi
+
+  echo "Memory for PID $pid — $(timestamp)"
+  echo "─────────────────────────────────────"
+
+  # Process name
+  local comm="?"
+  [[ -f "/proc/$pid/comm" ]] && comm=$(cat "/proc/$pid/comm")
+  echo "  Process:  $comm (PID $pid)"
+
+  # From /proc/PID/status
+  if [[ -f "/proc/$pid/status" ]]; then
+    local vmsize vmrss vmswap threads
+    vmsize=$(awk '/^VmSize:/{print $2, $3}' "/proc/$pid/status" 2>/dev/null || echo "?")
+    vmrss=$(awk '/^VmRSS:/{print $2, $3}' "/proc/$pid/status" 2>/dev/null || echo "?")
+    vmswap=$(awk '/^VmSwap:/{print $2, $3}' "/proc/$pid/status" 2>/dev/null || echo "?")
+    threads=$(awk '/^Threads:/{print $2}' "/proc/$pid/status" 2>/dev/null || echo "?")
+    echo "  VmSize:   $vmsize"
+    echo "  VmRSS:    $vmrss"
+    echo "  VmSwap:   $vmswap"
+    echo "  Threads:  $threads"
+  fi
+
+  # From /proc/PID/smaps_rollup if available
+  if [[ -r "/proc/$pid/smaps_rollup" ]]; then
+    local pss
+    pss=$(awk '/^Pss:/{print $2, $3}' "/proc/$pid/smaps_rollup" 2>/dev/null || echo "?")
+    echo "  PSS:      $pss"
+  fi
+
+  # From ps
+  local ps_info
+  ps_info=$(ps -p "$pid" -o %mem=,rss=,vsz=,etime= 2>/dev/null || true)
+  if [[ -n "$ps_info" ]]; then
+    read -r pmem rss vsz etime <<< "$ps_info"
+    echo "  %MEM:     ${pmem}%"
+    echo "  RSS:      $(( rss / 1024 ))MB"
+    echo "  VSZ:      $(( vsz / 1024 ))MB"
+    echo "  Elapsed:  $etime"
+  fi
+}
+
+cmd_swap() {
+  echo "Swap Usage — $(timestamp)"
+  echo "─────────────────────────────────────"
+
+  if command -v free &>/dev/null; then
+    free -h | head -1
+    free -h | grep -i swap
+    echo ""
+  fi
+
+  if [[ -f /proc/swaps ]]; then
+    echo "Swap Devices:"
+    cat /proc/swaps
+    echo ""
+  fi
+
+  if [[ -f /proc/meminfo ]]; then
+    local swap_total swap_free swap_cached
+    swap_total=$(awk '/^SwapTotal:/{printf "%.0f", $2/1024}' /proc/meminfo)
+    swap_free=$(awk '/^SwapFree:/{printf "%.0f", $2/1024}' /proc/meminfo)
+    swap_cached=$(awk '/^SwapCached:/{printf "%.0f", $2/1024}' /proc/meminfo)
+    local swap_used=$(( swap_total - swap_free ))
+    echo "Summary:"
+    echo "  Total:   ${swap_total}MB"
+    echo "  Used:    ${swap_used}MB"
+    echo "  Free:    ${swap_free}MB"
+    echo "  Cached:  ${swap_cached}MB"
+    if [[ "$swap_total" -gt 0 ]]; then
+      local pct
+      pct=$(awk "BEGIN{printf \"%.1f\", ($swap_used/$swap_total)*100}")
+      echo "  Usage:   ${pct}%"
+    fi
+  fi
+
+  # Top swap consumers
+  echo ""
+  echo "Top Swap Consumers:"
+  for pid_dir in /proc/[0-9]*/status; do
+    [[ -f "$pid_dir" ]] || continue
+    awk '/^VmSwap:/{swap=$2} /^Name:/{name=$2} END{if(swap>0) printf "  %-8s %s kB  %s\n", FILENAME, swap, name}' \
+      FILENAME="$(dirname "$pid_dir" | xargs basename)" "$pid_dir" 2>/dev/null || true
+  done | sort -t' ' -k2 -rn | head -10
+}
+
+cmd_alert() {
+  local threshold="${1:-}"
+  require_arg "$threshold" "threshold (%)"
+  [[ "$threshold" =~ ^[0-9]+$ ]] || die "Threshold must be an integer percentage"
+  [[ "$threshold" -ge 1 && "$threshold" -le 100 ]] || die "Threshold must be between 1 and 100"
+
+  local current
+  current=$(get_mem_percent)
+  local current_int
+  current_int=$(awk "BEGIN{printf \"%d\", $current}")
+
+  echo "Memory Alert Check"
+  echo "─────────────────────────────────────"
+  echo "  Threshold: ${threshold}%"
+  echo "  Current:   ${current}%"
+
+  if [[ "$current_int" -ge "$threshold" ]]; then
+    echo "  Status:    🚨 ALERT — memory usage exceeds threshold!"
+    echo ""
+    echo "Top 5 memory consumers:"
+    ps aux --sort=-%mem 2>/dev/null | awk 'NR>1 && NR<=6{printf "  PID %-8s %5s%%  %s\n", $2, $4, $11}'
+    return 1
+  else
+    echo "  Status:    ✅ OK — memory usage is within limits"
+    local headroom
+    headroom=$(awk "BEGIN{printf \"%.1f\", $threshold - $current}")
+    echo "  Headroom:  ${headroom}%"
+    return 0
+  fi
+}
+
+cmd_detailed() {
+  echo "Detailed Memory Info — $(timestamp)"
+  echo "─────────────────────────────────────"
+  [[ -f /proc/meminfo ]] || die "/proc/meminfo not found"
+  cat /proc/meminfo
+}
+
+cmd_compare() {
+  echo "Memory Comparison (now vs 30 seconds later)"
+  echo "─────────────────────────────────────"
+  echo "Snapshot 1 — $(timestamp)"
+  local s1_total s1_avail s1_buffers s1_cached
+  read -r s1_total s1_avail s1_buffers s1_cached <<< "$(awk '/^MemTotal:/{t=$2} /^MemAvailable:/{a=$2} /^Buffers:/{b=$2} /^Cached:/{c=$2} END{print t, a, b, c}' /proc/meminfo)"
+  printf "  Total: %dMB | Available: %dMB | Buffers: %dMB | Cached: %dMB\n" \
+    $((s1_total/1024)) $((s1_avail/1024)) $((s1_buffers/1024)) $((s1_cached/1024))
+
+  echo "  Waiting 30 seconds..."
+  sleep 30
+
+  echo "Snapshot 2 — $(timestamp)"
+  local s2_total s2_avail s2_buffers s2_cached
+  read -r s2_total s2_avail s2_buffers s2_cached <<< "$(awk '/^MemTotal:/{t=$2} /^MemAvailable:/{a=$2} /^Buffers:/{b=$2} /^Cached:/{c=$2} END{print t, a, b, c}' /proc/meminfo)"
+  printf "  Total: %dMB | Available: %dMB | Buffers: %dMB | Cached: %dMB\n" \
+    $((s2_total/1024)) $((s2_avail/1024)) $((s2_buffers/1024)) $((s2_cached/1024))
+
+  echo ""
+  echo "Delta:"
+  local d_avail=$(( (s2_avail - s1_avail) / 1024 ))
+  local d_buffers=$(( (s2_buffers - s1_buffers) / 1024 ))
+  local d_cached=$(( (s2_cached - s1_cached) / 1024 ))
+  printf "  Available: %+dMB | Buffers: %+dMB | Cached: %+dMB\n" "$d_avail" "$d_buffers" "$d_cached"
+}
+
+# ─────────────────────────────────────────────────────────────
+# Main dispatcher
+# ─────────────────────────────────────────────────────────────
+main() {
+  local cmd="${1:-help}"
+  shift || true
+
+  case "$cmd" in
+    status)   cmd_status ;;
+    top)      cmd_top "$@" ;;
+    watch)    cmd_watch ;;
+    process)  cmd_process "$@" ;;
+    swap)     cmd_swap ;;
+    alert)    cmd_alert "$@" ;;
+    detailed) cmd_detailed ;;
+    compare)  cmd_compare ;;
+    version)  echo "$SCRIPT_NAME $VERSION" ;;
+    help|--help|-h) usage ;;
+    *)        die "Unknown command: $cmd (try 'memwatch help')" ;;
+  esac
+}
+
+main "$@"

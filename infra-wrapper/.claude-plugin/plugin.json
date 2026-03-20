@@ -1,0 +1,9 @@
+{
+  "name": "infra-wrapper",
+  "description": "Terragrunt is a flexible orchestration tool that allows Infrastructure as Code written in OpenTofu/T terraform-wrapper, go, aws, cli, developer-tools.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

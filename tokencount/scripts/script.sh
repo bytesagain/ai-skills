@@ -1,332 +1,333 @@
 #!/usr/bin/env bash
-# Tokencount — crypto tool
+# ============================================================================
+# TokenCount — Text & Token Counter
 # Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+# ============================================================================
 set -euo pipefail
 
-DATA_DIR="${HOME}/.local/share/tokencount"
-mkdir -p "$DATA_DIR"
+VERSION="3.0.0"
+SCRIPT_NAME="tokencount"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+# --- Colors ----------------------------------------------------------------
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+BOLD='\033[1m'
+NC='\033[0m'
 
-_version() { echo "tokencount v2.0.0"; }
+# --- Helpers ---------------------------------------------------------------
+info()    { echo -e "${BLUE}ℹ${NC} $*"; }
+success() { echo -e "${GREEN}✔${NC} $*"; }
+warn()    { echo -e "${YELLOW}⚠${NC} $*"; }
+error()   { echo -e "${RED}✖${NC} $*" >&2; }
+die()     { error "$@"; exit 1; }
 
-_help() {
-    echo "Tokencount v2.0.0 — crypto toolkit"
-    echo ""
-    echo "Usage: tokencount <command> [args]"
-    echo ""
-    echo "Commands:"
-    echo "  track              Track"
-    echo "  portfolio          Portfolio"
-    echo "  alert              Alert"
-    echo "  price              Price"
-    echo "  compare            Compare"
-    echo "  history            History"
-    echo "  gas                Gas"
-    echo "  whale-watch        Whale Watch"
-    echo "  report             Report"
-    echo "  watchlist          Watchlist"
-    echo "  analyze            Analyze"
-    echo "  export             Export"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
-}
-
-_stats() {
-    echo "=== Tokencount Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Since: $(head -1 "$DATA_DIR/history.log" 2>/dev/null | cut -d'|' -f1 || echo 'N/A')"
-}
-
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "" >> "$out"
-            echo "]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    echo "$name,$ts,$val" >> "$out"
-                done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Tokencount Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-                echo "" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
-    esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
-}
-
-_status() {
-    echo "=== Tokencount Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    local last=$(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo "never")
-    echo "  Last activity: $last"
-    echo "  Status: OK"
-}
-
-_search() {
-    local term="${1:?Usage: tokencount search <term>}"
-    echo "Searching for: $term"
-    local found=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local matches=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$matches" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$matches" | while read -r line; do
-                echo "    $line"
-                found=$((found + 1))
-            done
-        fi
-    done
-    [ $found -eq 0 ] && echo "  No matches found."
-}
-
-_recent() {
-    echo "=== Recent Activity ==="
-    if [ -f "$DATA_DIR/history.log" ]; then
-        tail -20 "$DATA_DIR/history.log" | while IFS='' read -r line; do
-            echo "  $line"
-        done
+# Resolve input: if it's a file, use the file; otherwise treat as text
+resolve_input() {
+    if [[ -f "${1:-}" ]]; then
+        echo "file"
     else
-        echo "  No activity yet."
+        echo "text"
     fi
 }
 
-# Main dispatch
-case "${1:-help}" in
-    track)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent track entries:"
-            tail -20 "$DATA_DIR/track.log" 2>/dev/null || echo "  No entries yet. Use: tokencount track <input>"
+# --- Usage -----------------------------------------------------------------
+usage() {
+    cat <<EOF
+${BOLD}TokenCount v${VERSION}${NC} — Text & Token Counter
+Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+
+${BOLD}Usage:${NC}
+  ${SCRIPT_NAME} <command> [arguments]
+
+${BOLD}Commands:${NC}
+  count  <file|text>       Count words, lines, characters, sentences
+  tokens <file>            Estimate LLM token count (chars/4 approx)
+  freq   <file>            Word frequency analysis
+  top    <file> [n]        Top N most common words (default: 20)
+  diff   <file1> <file2>   Compare word counts between files
+
+${BOLD}Options:${NC}
+  -h, --help               Show this help
+  -v, --version            Show version
+
+${BOLD}Examples:${NC}
+  ${SCRIPT_NAME} count README.md
+  ${SCRIPT_NAME} count "Hello, world! This is a test."
+  ${SCRIPT_NAME} tokens article.txt
+  ${SCRIPT_NAME} freq   novel.txt
+  ${SCRIPT_NAME} top    essay.txt 10
+  ${SCRIPT_NAME} diff   draft1.txt draft2.txt
+EOF
+}
+
+# --- Commands --------------------------------------------------------------
+
+cmd_count() {
+    [[ -z "${1:-}" ]] && die "Missing argument: <file> or <text>"
+    local input_type
+    input_type=$(resolve_input "$1")
+
+    if [[ "$input_type" == "file" ]]; then
+        info "Counting: ${CYAN}$1${NC} (file)"
+        echo ""
+
+        local chars words lines bytes
+        chars=$(wc -m < "$1" | tr -d ' ')
+        words=$(wc -w < "$1" | tr -d ' ')
+        lines=$(wc -l < "$1" | tr -d ' ')
+        bytes=$(wc -c < "$1" | tr -d ' ')
+
+        # Count sentences (rough: split on .!?)
+        local sentences
+        sentences=$(grep -oE '[.!?]+' "$1" 2>/dev/null | wc -l | tr -d ' ')
+
+        # Count paragraphs (blocks separated by blank lines)
+        local paragraphs
+        paragraphs=$(awk 'BEGIN{p=0; in_para=0} /^[[:space:]]*$/{if(in_para) in_para=0} /[^[:space:]]/{if(!in_para){p++; in_para=1}} END{print p}' "$1")
+
+        # Average word length
+        local avg_word_len
+        if [[ "$words" -gt 0 ]]; then
+            avg_word_len=$(awk '{for(i=1;i<=NF;i++){total+=length($i); count++}} END{if(count>0) printf "%.1f", total/count; else print "0"}' "$1")
         else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/track.log"
-            local total=$(wc -l < "$DATA_DIR/track.log")
-            echo "  [Tokencount] track: $input"
-            echo "  Saved. Total track entries: $total"
-            _log "track" "$input"
+            avg_word_len="0"
         fi
-        ;;
-    portfolio)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent portfolio entries:"
-            tail -20 "$DATA_DIR/portfolio.log" 2>/dev/null || echo "  No entries yet. Use: tokencount portfolio <input>"
+
+        # Average words per sentence
+        local avg_wps
+        if [[ "$sentences" -gt 0 ]]; then
+            avg_wps=$((words / sentences))
         else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/portfolio.log"
-            local total=$(wc -l < "$DATA_DIR/portfolio.log")
-            echo "  [Tokencount] portfolio: $input"
-            echo "  Saved. Total portfolio entries: $total"
-            _log "portfolio" "$input"
+            avg_wps="N/A"
         fi
-        ;;
-    alert)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent alert entries:"
-            tail -20 "$DATA_DIR/alert.log" 2>/dev/null || echo "  No entries yet. Use: tokencount alert <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/alert.log"
-            local total=$(wc -l < "$DATA_DIR/alert.log")
-            echo "  [Tokencount] alert: $input"
-            echo "  Saved. Total alert entries: $total"
-            _log "alert" "$input"
+
+        printf "  %-22s %s\n" "Characters:" "$chars"
+        printf "  %-22s %s\n" "Characters (no space):" "$(tr -d '[:space:]' < "$1" | wc -m | tr -d ' ')"
+        printf "  %-22s %s\n" "Words:" "$words"
+        printf "  %-22s %s\n" "Lines:" "$lines"
+        printf "  %-22s %s\n" "Sentences (approx):" "$sentences"
+        printf "  %-22s %s\n" "Paragraphs:" "$paragraphs"
+        printf "  %-22s %s\n" "Bytes:" "$bytes"
+        printf "  %-22s %s\n" "Avg word length:" "${avg_word_len} chars"
+        printf "  %-22s %s\n" "Avg words/sentence:" "$avg_wps"
+
+        # Reading time estimate (200 wpm average)
+        if [[ "$words" -gt 0 ]]; then
+            local read_min=$((words / 200))
+            local read_sec=$(( (words % 200) * 60 / 200 ))
+            printf "  %-22s %s\n" "Reading time:" "${read_min}m ${read_sec}s (@ 200 wpm)"
         fi
-        ;;
-    price)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent price entries:"
-            tail -20 "$DATA_DIR/price.log" 2>/dev/null || echo "  No entries yet. Use: tokencount price <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/price.log"
-            local total=$(wc -l < "$DATA_DIR/price.log")
-            echo "  [Tokencount] price: $input"
-            echo "  Saved. Total price entries: $total"
-            _log "price" "$input"
-        fi
-        ;;
-    compare)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent compare entries:"
-            tail -20 "$DATA_DIR/compare.log" 2>/dev/null || echo "  No entries yet. Use: tokencount compare <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/compare.log"
-            local total=$(wc -l < "$DATA_DIR/compare.log")
-            echo "  [Tokencount] compare: $input"
-            echo "  Saved. Total compare entries: $total"
-            _log "compare" "$input"
-        fi
-        ;;
-    history)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent history entries:"
-            tail -20 "$DATA_DIR/history.log" 2>/dev/null || echo "  No entries yet. Use: tokencount history <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/history.log"
-            local total=$(wc -l < "$DATA_DIR/history.log")
-            echo "  [Tokencount] history: $input"
-            echo "  Saved. Total history entries: $total"
-            _log "history" "$input"
-        fi
-        ;;
-    gas)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent gas entries:"
-            tail -20 "$DATA_DIR/gas.log" 2>/dev/null || echo "  No entries yet. Use: tokencount gas <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/gas.log"
-            local total=$(wc -l < "$DATA_DIR/gas.log")
-            echo "  [Tokencount] gas: $input"
-            echo "  Saved. Total gas entries: $total"
-            _log "gas" "$input"
-        fi
-        ;;
-    whale-watch)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent whale-watch entries:"
-            tail -20 "$DATA_DIR/whale-watch.log" 2>/dev/null || echo "  No entries yet. Use: tokencount whale-watch <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/whale-watch.log"
-            local total=$(wc -l < "$DATA_DIR/whale-watch.log")
-            echo "  [Tokencount] whale-watch: $input"
-            echo "  Saved. Total whale-watch entries: $total"
-            _log "whale-watch" "$input"
-        fi
-        ;;
-    report)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent report entries:"
-            tail -20 "$DATA_DIR/report.log" 2>/dev/null || echo "  No entries yet. Use: tokencount report <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/report.log"
-            local total=$(wc -l < "$DATA_DIR/report.log")
-            echo "  [Tokencount] report: $input"
-            echo "  Saved. Total report entries: $total"
-            _log "report" "$input"
-        fi
-        ;;
-    watchlist)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent watchlist entries:"
-            tail -20 "$DATA_DIR/watchlist.log" 2>/dev/null || echo "  No entries yet. Use: tokencount watchlist <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/watchlist.log"
-            local total=$(wc -l < "$DATA_DIR/watchlist.log")
-            echo "  [Tokencount] watchlist: $input"
-            echo "  Saved. Total watchlist entries: $total"
-            _log "watchlist" "$input"
-        fi
-        ;;
-    analyze)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent analyze entries:"
-            tail -20 "$DATA_DIR/analyze.log" 2>/dev/null || echo "  No entries yet. Use: tokencount analyze <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/analyze.log"
-            local total=$(wc -l < "$DATA_DIR/analyze.log")
-            echo "  [Tokencount] analyze: $input"
-            echo "  Saved. Total analyze entries: $total"
-            _log "analyze" "$input"
-        fi
-        ;;
-    export)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent export entries:"
-            tail -20 "$DATA_DIR/export.log" 2>/dev/null || echo "  No entries yet. Use: tokencount export <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/export.log"
-            local total=$(wc -l < "$DATA_DIR/export.log")
-            echo "  [Tokencount] export: $input"
-            echo "  Saved. Total export entries: $total"
-            _log "export" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown command: $1"
-        echo "Run 'tokencount help' for available commands."
-        exit 1
-        ;;
-esac
+    else
+        # Text input
+        local text="$1"
+        info "Counting: inline text"
+        echo ""
+
+        local chars=${#text}
+        local words
+        words=$(echo "$text" | wc -w | tr -d ' ')
+        local sentences
+        sentences=$(echo "$text" | grep -oE '[.!?]+' | wc -l | tr -d ' ')
+
+        printf "  %-22s %s\n" "Characters:" "$chars"
+        printf "  %-22s %s\n" "Words:" "$words"
+        printf "  %-22s %s\n" "Sentences (approx):" "$sentences"
+    fi
+}
+
+cmd_tokens() {
+    [[ -z "${1:-}" ]] && die "Missing argument: <file>"
+    [[ -f "$1" ]]     || die "File not found: $1"
+
+    info "Estimating tokens: ${CYAN}$1${NC}"
+    echo ""
+
+    local chars words bytes
+    chars=$(wc -m < "$1" | tr -d ' ')
+    words=$(wc -w < "$1" | tr -d ' ')
+    bytes=$(wc -c < "$1" | tr -d ' ')
+
+    # Method 1: chars / 4 (OpenAI rule of thumb)
+    local tokens_by_chars=$((chars / 4))
+
+    # Method 2: words * 1.33 (another common approximation)
+    local tokens_by_words
+    tokens_by_words=$(awk "BEGIN{printf \"%d\", ${words} * 1.33}")
+
+    # Method 3: bytes-based for code (bytes / 3.5)
+    local tokens_by_bytes
+    tokens_by_bytes=$(awk "BEGIN{printf \"%d\", ${bytes} / 3.5}")
+
+    # Average of methods
+    local avg_tokens=$(( (tokens_by_chars + tokens_by_words + tokens_by_bytes) / 3 ))
+
+    printf "  ${BOLD}%-30s %s${NC}\n" "Estimated tokens (average):" "~${avg_tokens}"
+    echo ""
+    printf "  %-30s %s\n" "Method 1 (chars ÷ 4):" "~${tokens_by_chars}"
+    printf "  %-30s %s\n" "Method 2 (words × 1.33):" "~${tokens_by_words}"
+    printf "  %-30s %s\n" "Method 3 (bytes ÷ 3.5):" "~${tokens_by_bytes}"
+    echo ""
+
+    # Cost estimates (approximate, based on GPT-4 pricing)
+    local cost_input cost_output
+    cost_input=$(awk "BEGIN{printf \"%.4f\", ${avg_tokens} / 1000000 * 30}")
+    cost_output=$(awk "BEGIN{printf \"%.4f\", ${avg_tokens} / 1000000 * 60}")
+
+    printf "  ${BOLD}Approximate costs (GPT-4 class):${NC}\n"
+    printf "  %-30s \$%s\n" "As input tokens:" "$cost_input"
+    printf "  %-30s \$%s\n" "As output tokens:" "$cost_output"
+    echo ""
+
+    # Model context window comparison
+    printf "  ${BOLD}Context window usage:${NC}\n"
+    for model_info in "GPT-4o:128000" "Claude-3:200000" "Gemini-1.5:1000000" "GPT-3.5:16385"; do
+        local model_name="${model_info%%:*}"
+        local ctx="${model_info##*:}"
+        local pct
+        pct=$(awk "BEGIN{printf \"%.1f\", ${avg_tokens} / ${ctx} * 100}")
+        local bar_len
+        bar_len=$(awk "BEGIN{v=int(${avg_tokens}/${ctx}*20); if(v>20) v=20; print v}")
+        local bar=""
+        for ((i=0; i<bar_len; i++)); do bar+="█"; done
+        for ((i=bar_len; i<20; i++)); do bar+="░"; done
+        printf "  %-12s [%s] %s%%\n" "${model_name}:" "$bar" "$pct"
+    done
+}
+
+cmd_freq() {
+    [[ -z "${1:-}" ]] && die "Missing argument: <file>"
+    [[ -f "$1" ]]     || die "File not found: $1"
+
+    info "Word frequency analysis: ${CYAN}$1${NC}"
+    echo ""
+
+    # Extract words, lowercase, count frequency
+    local total_words unique_words
+    total_words=$(wc -w < "$1" | tr -d ' ')
+
+    echo "  ${BOLD}Word Frequency Distribution${NC}"
+    echo ""
+
+    # Top words with count and bar chart
+    tr '[:upper:]' '[:lower:]' < "$1" | \
+        tr -cs '[:alpha:]' '\n' | \
+        grep -v '^$' | \
+        sort | uniq -c | sort -rn | \
+        head -30 | \
+        awk -v total="$total_words" '
+        BEGIN {
+            printf "  %-4s  %-20s  %6s  %6s  %s\n", "Rank", "Word", "Count", "Pct", "Bar"
+            printf "  %-4s  %-20s  %6s  %6s  %s\n", "----", "--------------------", "------", "------", "---"
+        }
+        {
+            rank++
+            pct = ($1 / total) * 100
+            bar_len = int(pct * 2)
+            if (bar_len < 1 && $1 > 0) bar_len = 1
+            if (bar_len > 40) bar_len = 40
+            bar = ""
+            for (i = 0; i < bar_len; i++) bar = bar "█"
+            printf "  %4d  %-20s  %6d  %5.1f%%  %s\n", rank, $2, $1, pct, bar
+        }'
+
+    echo ""
+    unique_words=$(tr '[:upper:]' '[:lower:]' < "$1" | tr -cs '[:alpha:]' '\n' | grep -v '^$' | sort -u | wc -l | tr -d ' ')
+    printf "  Total words: %s | Unique words: %s | Vocabulary richness: %.1f%%\n" \
+        "$total_words" "$unique_words" \
+        "$(awk "BEGIN{printf \"%.1f\", ${unique_words}/${total_words}*100}")"
+}
+
+cmd_top() {
+    [[ -z "${1:-}" ]] && die "Missing argument: <file>"
+    [[ -f "$1" ]]     || die "File not found: $1"
+    local n="${2:-20}"
+
+    info "Top ${n} words in: ${CYAN}$1${NC}"
+    echo ""
+
+    tr '[:upper:]' '[:lower:]' < "$1" | \
+        tr -cs '[:alpha:]' '\n' | \
+        grep -v '^$' | \
+        sort | uniq -c | sort -rn | \
+        head -"$n" | \
+        awk '{printf "  %4d  %-30s  (%d occurrences)\n", NR, $2, $1}'
+}
+
+cmd_diff() {
+    [[ -z "${1:-}" ]] && die "Missing argument: <file1>"
+    [[ -z "${2:-}" ]] && die "Missing argument: <file2>"
+    [[ -f "$1" ]]     || die "File not found: $1"
+    [[ -f "$2" ]]     || die "File not found: $2"
+
+    info "Comparing: ${CYAN}$1${NC} vs ${CYAN}$2${NC}"
+    echo ""
+
+    # Get stats for both files
+    local w1 w2 l1 l2 c1 c2
+    w1=$(wc -w < "$1" | tr -d ' ')
+    w2=$(wc -w < "$2" | tr -d ' ')
+    l1=$(wc -l < "$1" | tr -d ' ')
+    l2=$(wc -l < "$2" | tr -d ' ')
+    c1=$(wc -m < "$1" | tr -d ' ')
+    c2=$(wc -m < "$2" | tr -d ' ')
+
+    local b1 b2
+    b1=$(wc -c < "$1" | tr -d ' ')
+    b2=$(wc -c < "$2" | tr -d ' ')
+
+    printf "  ${BOLD}%-20s  %12s  %12s  %12s${NC}\n" "Metric" "$(basename "$1")" "$(basename "$2")" "Difference"
+    printf "  %-20s  %12s  %12s  %12s\n" "--------------------" "------------" "------------" "------------"
+    printf "  %-20s  %12d  %12d  %+12d\n" "Words" "$w1" "$w2" "$((w2 - w1))"
+    printf "  %-20s  %12d  %12d  %+12d\n" "Lines" "$l1" "$l2" "$((l2 - l1))"
+    printf "  %-20s  %12d  %12d  %+12d\n" "Characters" "$c1" "$c2" "$((c2 - c1))"
+    printf "  %-20s  %12d  %12d  %+12d\n" "Bytes" "$b1" "$b2" "$((b2 - b1))"
+
+    # Unique words comparison
+    local u1 u2
+    u1=$(tr '[:upper:]' '[:lower:]' < "$1" | tr -cs '[:alpha:]' '\n' | grep -v '^$' | sort -u | wc -l | tr -d ' ')
+    u2=$(tr '[:upper:]' '[:lower:]' < "$2" | tr -cs '[:alpha:]' '\n' | grep -v '^$' | sort -u | wc -l | tr -d ' ')
+    printf "  %-20s  %12d  %12d  %+12d\n" "Unique words" "$u1" "$u2" "$((u2 - u1))"
+
+    # Token estimates
+    local t1=$((c1 / 4))
+    local t2=$((c2 / 4))
+    printf "  %-20s  %12d  %12d  %+12d\n" "Est. tokens" "$t1" "$t2" "$((t2 - t1))"
+
+    echo ""
+    # Words only in file1, only in file2
+    local only1 only2 common
+    local tmp1 tmp2
+    tmp1=$(mktemp)
+    tmp2=$(mktemp)
+    tr '[:upper:]' '[:lower:]' < "$1" | tr -cs '[:alpha:]' '\n' | grep -v '^$' | sort -u > "$tmp1"
+    tr '[:upper:]' '[:lower:]' < "$2" | tr -cs '[:alpha:]' '\n' | grep -v '^$' | sort -u > "$tmp2"
+    only1=$(comm -23 "$tmp1" "$tmp2" | wc -l | tr -d ' ')
+    only2=$(comm -13 "$tmp1" "$tmp2" | wc -l | tr -d ' ')
+    common=$(comm -12 "$tmp1" "$tmp2" | wc -l | tr -d ' ')
+    rm -f "$tmp1" "$tmp2"
+
+    printf "  Words only in %s: %d\n" "$(basename "$1")" "$only1"
+    printf "  Words only in %s: %d\n" "$(basename "$2")" "$only2"
+    printf "  Words in common: %d\n" "$common"
+}
+
+# --- Main ------------------------------------------------------------------
+main() {
+    [[ $# -eq 0 ]] && { usage; exit 0; }
+
+    case "${1}" in
+        -h|--help)      usage ;;
+        -v|--version)   echo "${SCRIPT_NAME} v${VERSION}" ;;
+        count)          shift; cmd_count "${1:-}" ;;
+        tokens)         shift; cmd_tokens "${1:-}" ;;
+        freq)           shift; cmd_freq "${1:-}" ;;
+        top)            shift; cmd_top "${1:-}" "${2:-}" ;;
+        diff)           shift; cmd_diff "${1:-}" "${2:-}" ;;
+        *)              die "Unknown command: $1 (try --help)" ;;
+    esac
+}
+
+main "$@"

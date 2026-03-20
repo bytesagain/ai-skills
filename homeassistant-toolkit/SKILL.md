@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: homeassistant-toolkit
-description: "Deep integration with Home Assistant via REST API. Control devices, manage automations, query entity states, and manage scenes/scripts from the command line. Use when you need homeassistant toolkit capabilities. Triggers on: homeassistant toolkit."
+description: "Control Home Assistant devices and automations from the terminal directly. Use when toggling lights, listing entities, or triggering automation scripts."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Home Assistant Toolkit

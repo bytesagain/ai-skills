@@ -2,9 +2,11 @@
 name: trigger
 version: "2.0.0"
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 license: MIT-0
 tags: [trigger, tool, utility]
-description: "Trigger - command-line tool for everyday use"
+description: "Set up event triggers with webhooks, file watchers, and automation. Use when adding rules, planning flows, tracking events, reviewing triggers, building chains."
 ---
 
 # Trigger

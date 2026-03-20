@@ -1,0 +1,9 @@
+{
+  "name": "novel",
+  "description": "Manage novel data \u2014 chapters, characters, plots \u2014 from the terminal fast. Use when outlining chapters, tracking characters, organizing plot timelines.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

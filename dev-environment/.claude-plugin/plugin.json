@@ -1,0 +1,9 @@
+{
+  "name": "dev-environment",
+  "description": "macOS development environment setup: Easy-to-understand instructions with automated setup scripts f dev setup, python, android-development, aws, bash, cli.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

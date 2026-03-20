@@ -1,0 +1,9 @@
+{
+  "name": "perf-analyzer",
+  "description": "Profile Linux performance with perf_events and ftrace. Use when scanning CPU hotspots, monitoring syscalls, reporting flame graphs, alerting on spikes.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

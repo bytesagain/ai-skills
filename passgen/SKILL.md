@@ -1,8 +1,10 @@
 ---
 name: PassGen
-description: "Secure password generator with multiple modes. Generate strong random passwords with customizable length, create numeric PINs, build memorable passphrases from word lists, and check existing password strength with detailed scoring. Uses cryptographically secure randomness."
+description: "Generate strong passwords and check credential strength. Use when creating passphrases, auditing policies, rotating credentials, batch generating."
 version: "2.0.0"
 author: "BytesAgain"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 tags: ["password","security","generator","random","pin","passphrase","crypto","privacy"]
 categories: ["Security", "Utility", "Developer Tools"]
 ---

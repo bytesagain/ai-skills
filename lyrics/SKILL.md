@@ -1,65 +1,57 @@
 ---
-name: lyrics
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [lyrics, tool, utility]
-description: "Lyrics - command-line tool for everyday use"
+name: "lyrics"
+version: "3.0.0"
+description: "Save and search song lyrics in a personal collection. Use when managing lyrics."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
 ---
 
-# Lyrics
+# lyrics
 
-Lyrics toolkit — songwriting assistant, rhyme finder, syllable counter, verse structure, chorus patterns, and format export.
+Save and search song lyrics in a personal collection. Use when managing lyrics.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `lyrics run` | Execute main function |
-| `lyrics list` | List all items |
-| `lyrics add <item>` | Add new item |
-| `lyrics status` | Show current status |
-| `lyrics export <format>` | Export data |
-| `lyrics help` | Show help |
-
-## Usage
+### `save`
 
 ```bash
-# Show help
-lyrics help
-
-# Quick start
-lyrics run
+scripts/script.sh save <artist title>
 ```
 
-## Examples
+### `list`
 
 ```bash
-# Run with defaults
-lyrics run
-
-# Check status
-lyrics status
-
-# Export results
-lyrics export json
+scripts/script.sh list
 ```
 
-- Run `lyrics help` for all commands
-- Data stored in `~/.local/share/lyrics/`
+### `search`
+
+```bash
+scripts/script.sh search <query>
+```
+
+### `random`
+
+```bash
+scripts/script.sh random
+```
+
+### `export`
+
+```bash
+scripts/script.sh export <file>
+```
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+## Data Storage
+
+Data stored in `~/.local/share/lyrics/`.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
 
-## Output
-
-Results go to stdout. Save with `lyrics run > output.txt`.
-
-## Output
-
-Results go to stdout. Save with `lyrics run > output.txt`.
-
-## Configuration
-
-Set `LYRICS_DIR` to change data directory. Default: `~/.local/share/lyrics/`
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

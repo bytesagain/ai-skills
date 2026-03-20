@@ -36,15 +36,15 @@ get_date_n_days_ago() {
 read_json_value() {
     local file=$1
     local key=$2
-    python3 -c "
-import json
+    FILE="$file" KEY="$key" python3 << 'PYEOF'
+import json, os
 try:
-    with open('$file') as f:
+    with open(os.environ["FILE"]) as f:
         data = json.load(f)
-    print(data.get('$key', ''))
+    print(data.get(os.environ["KEY"], ''))
 except (FileNotFoundError, json.JSONDecodeError):
     print('')
-"
+PYEOF
 }
 
 # Write JSON value using Python
@@ -54,14 +54,13 @@ write_json_value() {
     local value=$3 # raw value, will be handled by python as int/str
     local is_int=$4 # 'true' if value is an integer
 
-    python3 -c "
-import json
-import sys
+    FILE="$file" KEY="$key" VALUE="$value" IS_INT="$is_int" python3 << 'PYEOF'
+import json, os, sys
 
-file_path = '$file'
-key = '$key'
-value = '$value'
-is_int = '$is_int' == 'true'
+file_path = os.environ["FILE"]
+key = os.environ["KEY"]
+value = os.environ["VALUE"]
+is_int = os.environ.get("IS_INT", "") == 'true'
 
 try:
     with open(file_path, 'r') as f:
@@ -80,7 +79,7 @@ else:
 
 with open(file_path, 'w') as f:
     json.dump(data, f, indent=2)
-"
+PYEOF
 }
 
 # Get current goal
@@ -225,24 +224,28 @@ cmd_history() {
 # Hydration statistics (simple version)
 cmd_stats() {
     echo "--- Hydration Statistics ---"
-    local total_days=$(python3 -c "
-import json
+    local total_days
+    total_days=$(DATA_FILE="$DATA_FILE" python3 << 'PYEOF'
+import json, os
 try:
-    with open('$DATA_FILE') as f:
+    with open(os.environ["DATA_FILE"]) as f:
         data = json.load(f)
     print(len(data))
 except:
     print(0)
-")
-    local total_intake=$(python3 -c "
-import json
+PYEOF
+    )
+    local total_intake
+    total_intake=$(DATA_FILE="$DATA_FILE" python3 << 'PYEOF'
+import json, os
 try:
-    with open('$DATA_FILE') as f:
+    with open(os.environ["DATA_FILE"]) as f:
         data = json.load(f)
     print(sum(data.values()))
 except:
     print(0)
-")
+PYEOF
+    )
     local goal=$(get_goal)
 
     echo "Days tracked: $total_days"

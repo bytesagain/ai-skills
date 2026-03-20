@@ -2,9 +2,11 @@
 name: scheduler
 version: "2.0.0"
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 license: MIT-0
 tags: [scheduler, tool, utility]
-description: "Scheduler - command-line tool for everyday use"
+description: "Schedule recurring tasks, deadlines, and time blocks. Use when adding cron jobs, planning routines, tracking due dates, reviewing upcoming tasks."
 ---
 
 # Scheduler

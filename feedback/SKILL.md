@@ -1,56 +1,112 @@
 ---
-name: feedback
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [feedback, tool, utility]
-description: "Feedback - command-line tool for everyday use"
+name: "feedback"
+version: "1.0.0"
+description: "Collect user feedback, categorize by theme, and track issue resolution. Use when gathering opinions, prioritizing bugs, or tracking fix progress."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [feedback, general, cli, tool]
+category: "general"
 ---
 
-# Feedback
+# feedback
 
-Feedback collector — gather user feedback, categorize, prioritize, and track resolution.
+Collect user feedback, categorize by theme, and track issue resolution. Use when gathering opinions, prioritizing bugs, or tracking fix progress.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `feedback help` | Show usage info |
-| `feedback run` | Run main task |
-| `feedback status` | Check current state |
-| `feedback list` | List items |
-| `feedback add <item>` | Add new item |
-| `feedback export <fmt>` | Export data |
-
-## Usage
+### `status`
 
 ```bash
-feedback help
-feedback run
-feedback status
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-# Get started
-feedback help
-
-# Run default task
-feedback run
-
-# Export as JSON
-feedback export json
+scripts/script.sh add
 ```
 
-## Output
+Add new entry
 
-Results go to stdout. Save with `feedback run > output.txt`.
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `FEEDBACK_DIR` to change data directory. Default: `~/.local/share/feedback/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `FEEDBACK_DIR` | No | Data directory (default: ~/.feedback/) |
+
+## Data Storage
+
+All data stored in `~/.feedback/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

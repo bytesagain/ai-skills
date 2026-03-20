@@ -1,0 +1,9 @@
+{
+  "name": "login",
+  "description": "Store, retrieve, and manage login credentials securely using bash and Python with local encryption. Use when saving website logins, API keys,",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

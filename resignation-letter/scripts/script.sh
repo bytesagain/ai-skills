@@ -1,101 +1,155 @@
 #!/usr/bin/env bash
-# resignation-letter - Multi-purpose utility tool
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${RESIGNATION_LETTER_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/resignation-letter}"
-DB="$DATA_DIR/data.log"
+
+VERSION="3.0.0"
+SCRIPT_NAME="resignation-letter"
+DATA_DIR="$HOME/.local/share/resignation-letter"
 mkdir -p "$DATA_DIR"
 
-show_help() {
-    cat << EOF
-resignation-letter v$VERSION
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-Multi-purpose utility tool
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
-Usage: resignation-letter <command> [args]
-
-Commands:
-  run                  Execute main function
-  config               Configuration
-  status               Show status
-  init                 Initialize
-  list                 List items
-  add                  Add entry
-  remove               Remove entry
-  search               Search
-  export               Export data
-  info                 Show info
-  help                 Show this help
-  version              Show version
-
-Data: \$DATA_DIR
-EOF
+cmd_create() {
+    local name="${2:-}"
+    local company="${3:-}"
+    local last_day="${4:-}"
+    [ -z "$name" ] && die "Usage: $SCRIPT_NAME create <name company last_day>"
+    printf 'Dear Manager,\n\nI, %s, hereby resign from my position at %s.\nMy last day will be %s.\n\nSincerely,\n%s\n' $2 $3 $4 $2
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-
-cmd_run() {
-    echo "  Running: $1"
-    _log "run" "${1:-}"
+cmd_template() {
+    local style="${2:-}"
+    [ -z "$style" ] && die "Usage: $SCRIPT_NAME template <style>"
+    case $2 in formal) echo 'Dear [Manager], I am writing to formally notify...';; casual) echo 'Hi [Manager], I wanted to let you know...';; *) echo 'Styles: formal, casual, grateful, brief';; esac
 }
 
-cmd_config() {
-    echo "  Config: $DATA_DIR/config.json"
-    _log "config" "${1:-}"
+cmd_checklist() {
+    echo '[ ] Submit letter 2 weeks before last day'; echo '[ ] Return company property'; echo '[ ] Transfer knowledge'; echo '[ ] Update LinkedIn'
 }
 
-cmd_status() {
-    echo "  Status: ready"
-    _log "status" "${1:-}"
+cmd_timeline() {
+    local last_day="${2:-}"
+    [ -z "$last_day" ] && die "Usage: $SCRIPT_NAME timeline <last_day>"
+    echo 'Last day: $2'; echo 'Submit letter 2 weeks prior'
 }
 
-cmd_init() {
-    echo "  Initialized in $DATA_DIR"
-    _log "init" "${1:-}"
+cmd_formal() {
+    local name="${2:-}"
+    local company="${3:-}"
+    [ -z "$name" ] && die "Usage: $SCRIPT_NAME formal <name company>"
+    cmd_create $2 $3 TBD
 }
 
-cmd_list() {
-    [ -f "$DB" ] && cat "$DB" || echo "  (empty)"
-    _log "list" "${1:-}"
+cmd_casual() {
+    local name="${2:-}"
+    local company="${3:-}"
+    [ -z "$name" ] && die "Usage: $SCRIPT_NAME casual <name company>"
+    echo 'Hi, I wanted to let you know I will be leaving $3. Thanks for everything! - $2'
 }
 
-cmd_add() {
-    echo "$(date +%Y-%m-%d) $*" >> "$DB"; echo "  Added: $*"
-    _log "add" "${1:-}"
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
+    echo ""
+    echo "Commands:"
+    printf "  %-25s\n" "create <name company last_day>"
+    printf "  %-25s\n" "template <style>"
+    printf "  %-25s\n" "checklist"
+    printf "  %-25s\n" "timeline <last_day>"
+    printf "  %-25s\n" "formal <name company>"
+    printf "  %-25s\n" "casual <name company>"
+    printf "  %%-25s\n" "help"
+    echo ""
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-cmd_remove() {
-    echo "  Removed: $1"
-    _log "remove" "${1:-}"
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        create) shift; cmd_create "$@" ;;
+        template) shift; cmd_template "$@" ;;
+        checklist) shift; cmd_checklist "$@" ;;
+        timeline) shift; cmd_timeline "$@" ;;
+        formal) shift; cmd_formal "$@" ;;
+        casual) shift; cmd_casual "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
+    esac
 }
 
-cmd_search() {
-    grep -i "$1" "$DB" 2>/dev/null || echo "  Not found: $1"
-    _log "search" "${1:-}"
-}
-
-cmd_export() {
-    [ -f "$DB" ] && cat "$DB" || echo "No data"
-    _log "export" "${1:-}"
-}
-
-cmd_info() {
-    echo "  Version: $VERSION | Data: $DATA_DIR"
-    _log "info" "${1:-}"
-}
-
-case "${1:-help}" in
-    run) shift; cmd_run "$@" ;;
-    config) shift; cmd_config "$@" ;;
-    status) shift; cmd_status "$@" ;;
-    init) shift; cmd_init "$@" ;;
-    list) shift; cmd_list "$@" ;;
-    add) shift; cmd_add "$@" ;;
-    remove) shift; cmd_remove "$@" ;;
-    search) shift; cmd_search "$@" ;;
-    export) shift; cmd_export "$@" ;;
-    info) shift; cmd_info "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "resignation-letter v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
-esac
+main "$@"

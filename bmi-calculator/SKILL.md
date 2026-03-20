@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: BMI Calculator
-description: "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━. Use when you need bmi calculator capabilities. Triggers on: bmi calculator."
-  BMI计算器。BMI计算、理想体重、健康计划、体重追踪、儿童BMI、结果解读。BMI calculator with ideal weight, health plan. BMI、体重、健康。
+description: "Calculate BMI, ideal weight, and health plans for adults and children. Use when checking body metrics, interpreting results, or tracking weight."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # BMI Calculator
 

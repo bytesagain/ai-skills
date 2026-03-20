@@ -70,7 +70,10 @@ cmd_hash() {
 }
 
 cmd_password() {
-    python3 -c "import random,string;print("".join(random.choices(string.ascii_letters+string.digits+"!@#",k=16)))"
+    python3 << 'PYEOF'
+import random, string
+print("".join(random.choices(string.ascii_letters + string.digits + "!@#", k=16)))
+PYEOF
     _log "password" "${1:-}"
 }
 

@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: Semaphore
-description: "Modern UI and powerful API for Ansible, Terraform/OpenTofu/Terragrunt, PowerShell and other DevOps t ansible-ui, go, ansible, awx, ci, cicd, devops. Use when you need ansible-ui capabilities. Triggers on: ansible-ui."
+description: "Modern UI and powerful API for Ansible, Terraform/OpenTofu/Terragrunt, PowerShell and other DevOps t ansible-ui, go, ansible, awx, ci, cicd."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Semaphore
@@ -40,7 +42,6 @@ ansible-ui run
 
 - Run `ansible-ui help` for all commands
 
-- Run `ansible-ui help` for all commands
 
 ## Configuration
 

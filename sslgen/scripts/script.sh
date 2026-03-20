@@ -1,332 +1,279 @@
 #!/usr/bin/env bash
-# Sslgen — devtools tool
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
+###############################################################################
+# SSLGen — SSL Certificate Generator
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+###############################################################################
 
-DATA_DIR="${HOME}/.local/share/sslgen"
-mkdir -p "$DATA_DIR"
+VERSION="3.0.0"
+SCRIPT_NAME="sslgen"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+# Colors
+RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'
+BLUE='\033[0;34m'; CYAN='\033[0;36m'; BOLD='\033[1m'; NC='\033[0m'
 
-_version() { echo "sslgen v2.0.0"; }
+info()  { echo -e "${CYAN}[INFO]${NC} $*"; }
+ok()    { echo -e "${GREEN}[OK]${NC} $*"; }
+warn()  { echo -e "${YELLOW}[WARN]${NC} $*"; }
+err()   { echo -e "${RED}[ERROR]${NC} $*" >&2; }
 
-_help() {
-    echo "Sslgen v2.0.0 — devtools toolkit"
-    echo ""
-    echo "Usage: sslgen <command> [args]"
-    echo ""
-    echo "Commands:"
-    echo "  check              Check"
-    echo "  validate           Validate"
-    echo "  generate           Generate"
-    echo "  format             Format"
-    echo "  lint               Lint"
-    echo "  explain            Explain"
-    echo "  convert            Convert"
-    echo "  template           Template"
-    echo "  diff               Diff"
-    echo "  preview            Preview"
-    echo "  fix                Fix"
-    echo "  report             Report"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
+usage() {
+  cat <<EOF
+${BOLD}SSLGen v${VERSION}${NC} — SSL Certificate Generator
+Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+
+${BOLD}Usage:${NC}
+  $SCRIPT_NAME self-signed <domain>       Generate self-signed cert + key
+  $SCRIPT_NAME csr <domain>               Generate CSR + private key
+  $SCRIPT_NAME info <certfile>             Show certificate details
+  $SCRIPT_NAME verify <certfile>           Verify certificate validity
+  $SCRIPT_NAME chain <certfile>            Show certificate chain
+  $SCRIPT_NAME expiry <certfile>           Check certificate expiry date
+
+${BOLD}Examples:${NC}
+  $SCRIPT_NAME self-signed example.com
+  $SCRIPT_NAME csr myapp.local
+  $SCRIPT_NAME info /path/to/cert.pem
+  $SCRIPT_NAME verify server.crt
+  $SCRIPT_NAME expiry /etc/ssl/certs/ca-certificates.crt
+EOF
 }
 
-_stats() {
-    echo "=== Sslgen Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Since: $(head -1 "$DATA_DIR/history.log" 2>/dev/null | cut -d'|' -f1 || echo 'N/A')"
+require_openssl() {
+  if ! command -v openssl &>/dev/null; then
+    err "openssl is required but not found. Install it first."
+    exit 1
+  fi
 }
 
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "" >> "$out"
-            echo "]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    echo "$name,$ts,$val" >> "$out"
-                done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Sslgen Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-                echo "" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
-    esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
+cmd_self_signed() {
+  local domain="${1:?Usage: $SCRIPT_NAME self-signed <domain>}"
+  local key_file="${domain}.key"
+  local cert_file="${domain}.crt"
+  local days=365
+
+  info "Generating self-signed certificate for ${BOLD}${domain}${NC}..."
+
+  openssl req -x509 -newkey rsa:2048 -nodes \
+    -keyout "$key_file" \
+    -out "$cert_file" \
+    -days "$days" \
+    -subj "/CN=${domain}/O=Self-Signed/C=US" \
+    -addext "subjectAltName=DNS:${domain},DNS:*.${domain}" \
+    2>/dev/null
+
+  ok "Certificate generated successfully!"
+  echo ""
+  echo -e "  ${BOLD}Key:${NC}  ${key_file}"
+  echo -e "  ${BOLD}Cert:${NC} ${cert_file}"
+  echo -e "  ${BOLD}Valid:${NC} ${days} days"
+  echo ""
+  echo -e "  ${YELLOW}Fingerprint (SHA-256):${NC}"
+  openssl x509 -in "$cert_file" -noout -fingerprint -sha256 2>/dev/null | sed 's/^/    /'
 }
 
-_status() {
-    echo "=== Sslgen Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    local last=$(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo "never")
-    echo "  Last activity: $last"
-    echo "  Status: OK"
+cmd_csr() {
+  local domain="${1:?Usage: $SCRIPT_NAME csr <domain>}"
+  local key_file="${domain}.key"
+  local csr_file="${domain}.csr"
+
+  info "Generating CSR for ${BOLD}${domain}${NC}..."
+
+  openssl req -new -newkey rsa:2048 -nodes \
+    -keyout "$key_file" \
+    -out "$csr_file" \
+    -subj "/CN=${domain}/O=${domain}/C=US" \
+    -addext "subjectAltName=DNS:${domain},DNS:*.${domain}" \
+    2>/dev/null
+
+  ok "CSR generated successfully!"
+  echo ""
+  echo -e "  ${BOLD}Key:${NC} ${key_file}"
+  echo -e "  ${BOLD}CSR:${NC} ${csr_file}"
+  echo ""
+  info "CSR details:"
+  openssl req -in "$csr_file" -noout -text 2>/dev/null | grep -E '(Subject:|DNS:)' | sed 's/^/    /'
 }
 
-_search() {
-    local term="${1:?Usage: sslgen search <term>}"
-    echo "Searching for: $term"
-    local found=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local matches=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$matches" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$matches" | while read -r line; do
-                echo "    $line"
-                found=$((found + 1))
-            done
-        fi
-    done
-    [ $found -eq 0 ] && echo "  No matches found."
+cmd_info() {
+  local certfile="${1:?Usage: $SCRIPT_NAME info <certfile>}"
+
+  if [[ ! -f "$certfile" ]]; then
+    err "File not found: $certfile"
+    exit 1
+  fi
+
+  info "Certificate info for ${BOLD}${certfile}${NC}:"
+  echo ""
+
+  echo -e "${BOLD}Subject:${NC}"
+  openssl x509 -in "$certfile" -noout -subject 2>/dev/null | sed 's/^subject=/  /'
+
+  echo -e "${BOLD}Issuer:${NC}"
+  openssl x509 -in "$certfile" -noout -issuer 2>/dev/null | sed 's/^issuer=/  /'
+
+  echo -e "${BOLD}Serial:${NC}"
+  openssl x509 -in "$certfile" -noout -serial 2>/dev/null | sed 's/^serial=/  /'
+
+  echo -e "${BOLD}Validity:${NC}"
+  openssl x509 -in "$certfile" -noout -dates 2>/dev/null | sed 's/^/  /'
+
+  echo -e "${BOLD}SANs:${NC}"
+  openssl x509 -in "$certfile" -noout -ext subjectAltName 2>/dev/null | sed 's/^/  /' || echo "  (none)"
+
+  echo -e "${BOLD}Fingerprint (SHA-256):${NC}"
+  openssl x509 -in "$certfile" -noout -fingerprint -sha256 2>/dev/null | sed 's/^/  /'
+
+  echo -e "${BOLD}Signature Algorithm:${NC}"
+  openssl x509 -in "$certfile" -noout -text 2>/dev/null | grep "Signature Algorithm" | head -1 | sed 's/^[[:space:]]*/  /'
+
+  echo -e "${BOLD}Public Key:${NC}"
+  openssl x509 -in "$certfile" -noout -text 2>/dev/null | grep "Public-Key:" | sed 's/^[[:space:]]*/  /'
 }
 
-_recent() {
-    echo "=== Recent Activity ==="
-    if [ -f "$DATA_DIR/history.log" ]; then
-        tail -20 "$DATA_DIR/history.log" | while IFS='' read -r line; do
-            echo "  $line"
-        done
+cmd_verify() {
+  local certfile="${1:?Usage: $SCRIPT_NAME verify <certfile>}"
+
+  if [[ ! -f "$certfile" ]]; then
+    err "File not found: $certfile"
+    exit 1
+  fi
+
+  info "Verifying certificate ${BOLD}${certfile}${NC}..."
+  echo ""
+
+  # Check if self-signed or needs CA
+  local result
+  if result=$(openssl verify "$certfile" 2>&1); then
+    ok "Certificate verification: PASSED"
+    echo "  $result"
+  else
+    # Try self-signed verification
+    if result=$(openssl verify -CAfile "$certfile" "$certfile" 2>&1); then
+      ok "Certificate verification: PASSED (self-signed)"
+      echo "  $result"
     else
-        echo "  No activity yet."
+      warn "Certificate verification: FAILED"
+      echo "  $result"
     fi
+  fi
+
+  echo ""
+
+  # Check expiry
+  local end_date
+  end_date=$(openssl x509 -in "$certfile" -noout -enddate 2>/dev/null | cut -d= -f2)
+  local end_epoch
+  end_epoch=$(date -d "$end_date" +%s 2>/dev/null || date -j -f "%b %d %T %Y %Z" "$end_date" +%s 2>/dev/null || echo 0)
+  local now_epoch
+  now_epoch=$(date +%s)
+
+  if [[ "$end_epoch" -gt 0 ]]; then
+    local days_left=$(( (end_epoch - now_epoch) / 86400 ))
+    if [[ "$days_left" -lt 0 ]]; then
+      err "Certificate EXPIRED ${days_left#-} days ago"
+    elif [[ "$days_left" -lt 30 ]]; then
+      warn "Certificate expires in ${days_left} days"
+    else
+      ok "Certificate valid for ${days_left} days"
+    fi
+  fi
+}
+
+cmd_chain() {
+  local certfile="${1:?Usage: $SCRIPT_NAME chain <certfile>}"
+
+  if [[ ! -f "$certfile" ]]; then
+    err "File not found: $certfile"
+    exit 1
+  fi
+
+  info "Certificate chain for ${BOLD}${certfile}${NC}:"
+  echo ""
+
+  local depth=0
+  local tmpfile
+  tmpfile=$(mktemp)
+  trap 'rm -f "$tmpfile"' EXIT
+
+  # Split PEM bundle into individual certs
+  awk 'BEGIN{c=0} /-----BEGIN CERT/{c++} {print > "'"$tmpfile"'." c}' "$certfile"
+
+  local count
+  count=$(ls "${tmpfile}".* 2>/dev/null | wc -l)
+
+  if [[ "$count" -eq 0 ]]; then
+    # Single cert
+    echo -e "  ${BOLD}[0] Leaf Certificate${NC}"
+    openssl x509 -in "$certfile" -noout -subject -issuer 2>/dev/null | sed 's/^/      /'
+  else
+    for f in "${tmpfile}".*; do
+      echo -e "  ${BOLD}[${depth}] $([ "$depth" -eq 0 ] && echo "Leaf" || echo "Intermediate/Root") Certificate${NC}"
+      openssl x509 -in "$f" -noout -subject -issuer 2>/dev/null | sed 's/^/      /'
+      echo ""
+      depth=$((depth + 1))
+      rm -f "$f"
+    done
+  fi
+
+  echo -e "  ${CYAN}Chain depth: ${depth:-1}${NC}"
+}
+
+cmd_expiry() {
+  local certfile="${1:?Usage: $SCRIPT_NAME expiry <certfile>}"
+
+  if [[ ! -f "$certfile" ]]; then
+    err "File not found: $certfile"
+    exit 1
+  fi
+
+  info "Checking expiry for ${BOLD}${certfile}${NC}..."
+  echo ""
+
+  local start_date end_date
+  start_date=$(openssl x509 -in "$certfile" -noout -startdate 2>/dev/null | cut -d= -f2)
+  end_date=$(openssl x509 -in "$certfile" -noout -enddate 2>/dev/null | cut -d= -f2)
+
+  echo -e "  ${BOLD}Not Before:${NC} ${start_date}"
+  echo -e "  ${BOLD}Not After:${NC}  ${end_date}"
+  echo ""
+
+  local end_epoch now_epoch
+  end_epoch=$(date -d "$end_date" +%s 2>/dev/null || echo 0)
+  now_epoch=$(date +%s)
+
+  if [[ "$end_epoch" -gt 0 ]]; then
+    local days_left=$(( (end_epoch - now_epoch) / 86400 ))
+    if [[ "$days_left" -lt 0 ]]; then
+      echo -e "  ${RED}${BOLD}EXPIRED${NC} — expired ${days_left#-} days ago"
+    elif [[ "$days_left" -eq 0 ]]; then
+      echo -e "  ${RED}${BOLD}EXPIRES TODAY${NC}"
+    elif [[ "$days_left" -lt 7 ]]; then
+      echo -e "  ${RED}⚠ Expires in ${days_left} days — CRITICAL${NC}"
+    elif [[ "$days_left" -lt 30 ]]; then
+      echo -e "  ${YELLOW}⚠ Expires in ${days_left} days — WARNING${NC}"
+    elif [[ "$days_left" -lt 90 ]]; then
+      echo -e "  ${YELLOW}Expires in ${days_left} days${NC}"
+    else
+      echo -e "  ${GREEN}✓ Valid for ${days_left} days${NC}"
+    fi
+  fi
 }
 
 # Main dispatch
-case "${1:-help}" in
-    check)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent check entries:"
-            tail -20 "$DATA_DIR/check.log" 2>/dev/null || echo "  No entries yet. Use: sslgen check <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/check.log"
-            local total=$(wc -l < "$DATA_DIR/check.log")
-            echo "  [Sslgen] check: $input"
-            echo "  Saved. Total check entries: $total"
-            _log "check" "$input"
-        fi
-        ;;
-    validate)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent validate entries:"
-            tail -20 "$DATA_DIR/validate.log" 2>/dev/null || echo "  No entries yet. Use: sslgen validate <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/validate.log"
-            local total=$(wc -l < "$DATA_DIR/validate.log")
-            echo "  [Sslgen] validate: $input"
-            echo "  Saved. Total validate entries: $total"
-            _log "validate" "$input"
-        fi
-        ;;
-    generate)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent generate entries:"
-            tail -20 "$DATA_DIR/generate.log" 2>/dev/null || echo "  No entries yet. Use: sslgen generate <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/generate.log"
-            local total=$(wc -l < "$DATA_DIR/generate.log")
-            echo "  [Sslgen] generate: $input"
-            echo "  Saved. Total generate entries: $total"
-            _log "generate" "$input"
-        fi
-        ;;
-    format)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent format entries:"
-            tail -20 "$DATA_DIR/format.log" 2>/dev/null || echo "  No entries yet. Use: sslgen format <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/format.log"
-            local total=$(wc -l < "$DATA_DIR/format.log")
-            echo "  [Sslgen] format: $input"
-            echo "  Saved. Total format entries: $total"
-            _log "format" "$input"
-        fi
-        ;;
-    lint)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent lint entries:"
-            tail -20 "$DATA_DIR/lint.log" 2>/dev/null || echo "  No entries yet. Use: sslgen lint <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/lint.log"
-            local total=$(wc -l < "$DATA_DIR/lint.log")
-            echo "  [Sslgen] lint: $input"
-            echo "  Saved. Total lint entries: $total"
-            _log "lint" "$input"
-        fi
-        ;;
-    explain)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent explain entries:"
-            tail -20 "$DATA_DIR/explain.log" 2>/dev/null || echo "  No entries yet. Use: sslgen explain <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/explain.log"
-            local total=$(wc -l < "$DATA_DIR/explain.log")
-            echo "  [Sslgen] explain: $input"
-            echo "  Saved. Total explain entries: $total"
-            _log "explain" "$input"
-        fi
-        ;;
-    convert)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent convert entries:"
-            tail -20 "$DATA_DIR/convert.log" 2>/dev/null || echo "  No entries yet. Use: sslgen convert <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/convert.log"
-            local total=$(wc -l < "$DATA_DIR/convert.log")
-            echo "  [Sslgen] convert: $input"
-            echo "  Saved. Total convert entries: $total"
-            _log "convert" "$input"
-        fi
-        ;;
-    template)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent template entries:"
-            tail -20 "$DATA_DIR/template.log" 2>/dev/null || echo "  No entries yet. Use: sslgen template <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/template.log"
-            local total=$(wc -l < "$DATA_DIR/template.log")
-            echo "  [Sslgen] template: $input"
-            echo "  Saved. Total template entries: $total"
-            _log "template" "$input"
-        fi
-        ;;
-    diff)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent diff entries:"
-            tail -20 "$DATA_DIR/diff.log" 2>/dev/null || echo "  No entries yet. Use: sslgen diff <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/diff.log"
-            local total=$(wc -l < "$DATA_DIR/diff.log")
-            echo "  [Sslgen] diff: $input"
-            echo "  Saved. Total diff entries: $total"
-            _log "diff" "$input"
-        fi
-        ;;
-    preview)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent preview entries:"
-            tail -20 "$DATA_DIR/preview.log" 2>/dev/null || echo "  No entries yet. Use: sslgen preview <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/preview.log"
-            local total=$(wc -l < "$DATA_DIR/preview.log")
-            echo "  [Sslgen] preview: $input"
-            echo "  Saved. Total preview entries: $total"
-            _log "preview" "$input"
-        fi
-        ;;
-    fix)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent fix entries:"
-            tail -20 "$DATA_DIR/fix.log" 2>/dev/null || echo "  No entries yet. Use: sslgen fix <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/fix.log"
-            local total=$(wc -l < "$DATA_DIR/fix.log")
-            echo "  [Sslgen] fix: $input"
-            echo "  Saved. Total fix entries: $total"
-            _log "fix" "$input"
-        fi
-        ;;
-    report)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent report entries:"
-            tail -20 "$DATA_DIR/report.log" 2>/dev/null || echo "  No entries yet. Use: sslgen report <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/report.log"
-            local total=$(wc -l < "$DATA_DIR/report.log")
-            echo "  [Sslgen] report: $input"
-            echo "  Saved. Total report entries: $total"
-            _log "report" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown command: $1"
-        echo "Run 'sslgen help' for available commands."
-        exit 1
-        ;;
+require_openssl
+
+case "${1:-}" in
+  self-signed) shift; cmd_self_signed "$@" ;;
+  csr)         shift; cmd_csr "$@" ;;
+  info)        shift; cmd_info "$@" ;;
+  verify)      shift; cmd_verify "$@" ;;
+  chain)       shift; cmd_chain "$@" ;;
+  expiry)      shift; cmd_expiry "$@" ;;
+  -h|--help|"") usage ;;
+  *)
+    err "Unknown command: $1"
+    usage
+    exit 1
+    ;;
 esac

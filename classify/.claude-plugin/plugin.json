@@ -1,0 +1,9 @@
+{
+  "name": "classify",
+  "description": "Train and run text classification models using keyword-based and TF-IDF methods. Use when you need to categorize, label,",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

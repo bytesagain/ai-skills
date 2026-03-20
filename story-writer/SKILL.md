@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: story-writer
-description: "小说创作、角色设计、情节设计(三幕式)、对话生成、世界观构建、续写。Story writing with character design, three-act plot structure, dialogue generation, worldbuilding, and continuation. Use when you need story writer capabilities. Triggers on: story writer, 随机角色生成, 情节种子含反转, 角色弧光可视化, 每次运行结果不同."
+description: "小说创作、角色设计、情节设计(三幕式)、对话生成、世界观构建、续写。Story writing with character design, three-act plot structure, dialogue generation, worldbuilding."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # story-writer
 

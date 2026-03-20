@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: Docs Generator
-description: "Automated documentation generator. API docs, README, CHANGELOG, contributing guide, architecture docs, tutorials, FAQ, reference manual. REST, GraphQL, OpenAPI. documentation, technical-writing, api-docs, developer-tools. Use when you need docs generator capabilities. Triggers on: docs generator."
+description: "Automated documentation generator. API docs, README, CHANGELOG, contributing guide, architecture docs, tutorials, FAQ, reference manual. REST, GraphQL."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Docs Generator — Automated Documentation

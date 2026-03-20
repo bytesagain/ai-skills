@@ -1,8 +1,10 @@
 ---
 name: Hydration Tracker
-description: "每日水分追踪器，帮助您设定补水目标、记录饮水量、检查进度并提供个性化提醒。确保您保持最佳水合状态，提升健康和精力。关键词：水，饮水，健康，提醒，水合，追踪，健康管理。"
+description: "Track daily water intake, set hydration goals, and get drink reminders. Use when logging water, setting targets, or reviewing weekly intake trends."
 version: "2.0.0"
 author: "BytesAgain"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 tags: ["health", "hydration", "water", "reminder", "wellness", "utility", "健康", "饮水"]
 categories: ["Health & Wellness", "Utility", "Personal Management"]
 commands:
@@ -67,37 +69,91 @@ support_url: "https://bytesagain.com/feedback"
 
 # Hydration Tracker
 
-Hydration Tracker是一款设计精巧的每日水分追踪器，旨在帮助用户轻松管理日常饮水习惯，确保身体保持充足的水合状态。通过设定个性化目标、记录饮水量，您可以实时监控进度，并接收智能提醒，从而改善整体健康状况和提升日常活力。
+A daily water intake tracker that helps you build and maintain healthy hydration habits. Log every drink, set personalized daily goals, check your progress throughout the day, and review weekly summaries — all from the command line with local-only data storage.
 
-## 核心亮点 (Features)
+## Commands
 
--   **便捷记录**：快速记录每次饮水量，支持自定义毫升数或通过预设的“杯”和“瓶”快速记录。
--   **目标管理**：自由设定每日饮水目标，技能将帮助您追踪是否达标。
--   **进度检查**：随时了解当前饮水进度，评估是否符合目标。
--   **数据概览**：提供今日总饮水量、周度摘要及历史记录查询，一览无余。
--   **数据隐私**：数据本地存储，无需外部账户，充分保护用户隐私。
+| Command | Description |
+|---------|-------------|
+| `drink [ml]` | Log water intake in milliliters (default: 250ml). Shows running total and goal progress with celebration when goal is reached |
+| `cup` | Quick-log a cup of water (250ml) — shortcut for `drink 250` |
+| `bottle` | Quick-log a bottle of water (500ml) — shortcut for `drink 500` |
+| `today` | Display today's total intake vs. daily goal, with remaining amount or goal-reached indicator |
+| `goal [ml]` | Set your daily hydration goal in milliliters (default: 2000ml) |
+| `check` | Check if you're on track — compares current intake against expected intake based on time of day |
+| `week` | Show a 7-day hydration summary with daily breakdowns, weekly total, and daily average |
+| `history [n]` | Show hydration history for the last N days (default: 7, max: 30) |
+| `stats` | Display overall statistics — total days tracked, total intake, and average daily intake |
+| `remind` | Get a random hydration tip (e.g., "Drink a glass of water before each meal") |
+| `info` | Show version info (v1.0.0) |
+| `help` | Show all available commands with usage examples |
 
-## 快速开始 (Quick Start)
+## Data Storage
 
-通过以下命令获取详细帮助信息：
-\`\`\`bash
-water-reminder help
-\`\`\`
+- **Data directory:** `~/.water_reminder/`
+- **Intake data:** `data.json` — JSON object mapping dates (YYYY-MM-DD) to cumulative daily intake in ml
+- **Goal config:** `goal.json` — stores your current daily goal (default: 2000ml)
+- **Max history:** 30 days of lookback for the `history` command
+- All data is stored locally in JSON format; no external services, accounts, or network access required
 
----
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
+## Requirements
+
+- Bash 4+
+- Python 3 (standard library only — used for JSON read/write)
+- Standard POSIX utilities (`date`, `seq`)
+- No API keys or external dependencies
+
+## When to Use
+
+1. **Building a daily hydration habit** — log each drink throughout the day and let the progress tracker keep you motivated with goal-reached celebrations
+2. **Checking mid-day progress** — use `check` to see if your intake is on track relative to the time of day, so you can catch up before evening
+3. **Reviewing weekly trends** — run `week` to see a 7-day summary with emoji indicators showing which days you hit your goal
+4. **Adjusting your hydration goal** — use `goal` to increase or decrease your daily target based on activity level, weather, or health needs
+5. **Getting gentle reminders** — run `remind` for evidence-based hydration tips to keep healthy habits top of mind
 
 ## Examples
 
 ```bash
-# Show help
-hydration-tracker help
+# Log 300ml of water
+hydration-tracker drink 300
 
-# Run
-hydration-tracker run
+# Quick-log a cup (250ml)
+hydration-tracker cup
+
+# Quick-log a bottle (500ml)
+hydration-tracker bottle
+
+# Check today's progress
+hydration-tracker today
+
+# Set a custom daily goal of 2500ml
+hydration-tracker goal 2500
 ```
 
-## Commands
+### Example Output
 
-Run `hydration-tracker help` to see all available commands.
+```
+$ hydration-tracker drink 300
+Logged 300ml. Today's total: 1200ml / 2000ml.
+Almost there! Keep going!
+
+$ hydration-tracker today
+Today's intake (2026-03-18): 1200ml / 2000ml
+Remaining: 800ml
+
+$ hydration-tracker week
+--- Weekly Hydration Summary ---
+2026-03-18: (1200ml / 2000ml) 💧
+2026-03-17: (2100ml / 2000ml) 🎉
+2026-03-16: (1800ml / 2000ml) 💧
+...
+Weekly total: 12300ml
+Daily average: 1757ml (Goal: 2000ml)
+
+$ hydration-tracker remind
+💧 Hydration Tip: Drink a glass of water before each meal.
+```
+
+---
+
+Powered by BytesAgain | bytesagain.com | hello@bytesagain.com

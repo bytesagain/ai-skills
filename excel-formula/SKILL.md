@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Excel Formula Helper
-description: "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━. Use when you need excel formula capabilities. Triggers on: excel formula."
-  Excel公式助手。根据描述生成公式、解释公式、诊断错误、公式转换、场景模板(CSV输出)、快捷键速查、透视表建议。Excel formula generator, explainer, error diagnosis, cross-platform converter, CSV templates, shortcuts, pivot table advisor. Excel公式、函数、VLOOKUP、数据透视表。
+description: "Generate Excel formulas from descriptions and diagnose spreadsheet errors. Use when writing VLOOKUP formulas, debugging errors, or converting formulas."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # Excel Formula Helper
 

@@ -1,0 +1,9 @@
+{
+  "name": "comment",
+  "description": "Organize comment data with filtering, analysis, and export tools. Use when collecting feedback, analyzing sentiment, exporting threads.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

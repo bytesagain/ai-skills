@@ -1,0 +1,9 @@
+{
+  "name": "curl",
+  "description": "Send HTTP requests and test API endpoints using Python urllib. Use when you need to debug, test, or interact with web services.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

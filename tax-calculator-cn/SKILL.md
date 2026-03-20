@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Tax Calculator Cn
-description: "个税计算器。工资个税、年终奖、劳务报酬、专项附加扣除、退税计算、避税优化、Offer对比。Chinese tax calculator for salary, bonus, freelance inc. Use when you need tax calculator cn capabilities. Triggers on: tax calculator cn."
-  个税计算器。工资个税、年终奖、劳务报酬、专项附加扣除、退税计算、避税优化、Offer对比。Chinese tax calculator for salary, bonus, freelance income, deductions, tax refund, optimization, offer comparison. 个人所得税、税后工资、退税计算、汇算清缴。Use when calculating Chinese personal income tax.
+description: "Calculate Chinese income tax for salary, bonus, and deductions. Use when tracking tax, comparing offers, summarizing annual tax, budgeting income."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # Tax Calculator Cn
 

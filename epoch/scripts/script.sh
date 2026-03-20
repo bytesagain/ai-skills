@@ -1,364 +1,223 @@
 #!/usr/bin/env bash
-# Epoch — sysops tool
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-DATA_DIR="${HOME}/.local/share/epoch"
-mkdir -p "$DATA_DIR"
+###############################################################################
+# epoch — Unix Timestamp Tool
+# Convert, compare, and calculate Unix epoch timestamps.
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+###############################################################################
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+VERSION="3.0.0"
+SCRIPT_NAME="epoch"
 
-_version() { echo "epoch v2.0.0"; }
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
 
-_help() {
-    echo "Epoch v2.0.0 — sysops toolkit"
-    echo ""
-    echo "Usage: epoch <command> [args]"
-    echo ""
-    echo "Commands:"
-    echo "  scan               Scan"
-    echo "  monitor            Monitor"
-    echo "  report             Report"
-    echo "  alert              Alert"
-    echo "  top                Top"
-    echo "  usage              Usage"
-    echo "  check              Check"
-    echo "  fix                Fix"
-    echo "  cleanup            Cleanup"
-    echo "  backup             Backup"
-    echo "  restore            Restore"
-    echo "  log                Log"
-    echo "  benchmark          Benchmark"
-    echo "  compare            Compare"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
+print_banner() {
+  echo "═══════════════════════════════════════════════════════"
+  echo "  ${SCRIPT_NAME} v${VERSION} — Unix Timestamp Tool"
+  echo "  Powered by BytesAgain | bytesagain.com"
+  echo "═══════════════════════════════════════════════════════"
 }
 
-_stats() {
-    echo "=== Epoch Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Since: $(head -1 "$DATA_DIR/history.log" 2>/dev/null | cut -d'|' -f1 || echo 'N/A')"
+usage() {
+  print_banner
+  echo ""
+  echo "Usage: ${SCRIPT_NAME} <command> [arguments]"
+  echo ""
+  echo "Commands:"
+  echo "  now                        Show current epoch timestamp + human-readable date"
+  echo "  convert <timestamp>        Convert epoch timestamp to human-readable date"
+  echo "  from <date-string>         Convert human-readable date string to epoch"
+  echo "  diff <ts1> <ts2>           Calculate difference between two timestamps"
+  echo "  add <timestamp> <seconds>  Add seconds to a timestamp"
+  echo "  version                    Show version"
+  echo "  help                       Show this help message"
+  echo ""
+  echo "Examples:"
+  echo "  ${SCRIPT_NAME} now"
+  echo "  ${SCRIPT_NAME} convert 1700000000"
+  echo "  ${SCRIPT_NAME} from '2024-01-15 10:30:00'"
+  echo "  ${SCRIPT_NAME} diff 1700000000 1700086400"
+  echo "  ${SCRIPT_NAME} add 1700000000 3600"
+  echo ""
+  echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "" >> "$out"
-            echo "]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    echo "$name,$ts,$val" >> "$out"
-                done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Epoch Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-                echo "" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
-    esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
+die() {
+  echo "ERROR: $*" >&2
+  exit 1
 }
 
-_status() {
-    echo "=== Epoch Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    local last=$(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo "never")
-    echo "  Last activity: $last"
-    echo "  Status: OK"
+is_numeric() {
+  [[ "$1" =~ ^-?[0-9]+$ ]]
 }
 
-_search() {
-    local term="${1:?Usage: epoch search <term>}"
-    echo "Searching for: $term"
-    local found=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local matches=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$matches" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$matches" | while read -r line; do
-                echo "    $line"
-                found=$((found + 1))
-            done
-        fi
-    done
-    [ $found -eq 0 ] && echo "  No matches found."
+format_duration() {
+  local total_seconds="$1"
+  local abs_seconds="${total_seconds#-}"
+  local sign=""
+  if [[ "$total_seconds" -lt 0 ]]; then
+    sign="-"
+    abs_seconds=$(( -total_seconds ))
+  fi
+
+  local days=$(( abs_seconds / 86400 ))
+  local hours=$(( (abs_seconds % 86400) / 3600 ))
+  local minutes=$(( (abs_seconds % 3600) / 60 ))
+  local seconds=$(( abs_seconds % 60 ))
+
+  echo "${sign}${days}d ${hours}h ${minutes}m ${seconds}s"
 }
 
-_recent() {
-    echo "=== Recent Activity ==="
-    if [ -f "$DATA_DIR/history.log" ]; then
-        tail -20 "$DATA_DIR/history.log" | while IFS='' read -r line; do
-            echo "  $line"
-        done
-    else
-        echo "  No activity yet."
-    fi
+# ---------------------------------------------------------------------------
+# Commands
+# ---------------------------------------------------------------------------
+
+cmd_now() {
+  local epoch
+  epoch="$(date +%s)"
+  local human
+  human="$(date -d "@${epoch}" '+%Y-%m-%d %H:%M:%S %Z' 2>/dev/null || date -r "${epoch}" '+%Y-%m-%d %H:%M:%S %Z' 2>/dev/null)"
+
+  echo "┌─────────────────────────────────────┐"
+  echo "│  Current Time                       │"
+  echo "├─────────────────────────────────────┤"
+  printf "│  Epoch:  %-27s │\n" "${epoch}"
+  printf "│  Human:  %-27s │\n" "${human}"
+  echo "├─────────────────────────────────────┤"
+  echo "│  UTC:    $(date -u '+%Y-%m-%d %H:%M:%S UTC')    │"
+  echo "└─────────────────────────────────────┘"
 }
 
+cmd_convert() {
+  local ts="${1:-}"
+  [[ -z "$ts" ]] && die "Usage: ${SCRIPT_NAME} convert <timestamp>"
+  is_numeric "$ts" || die "Invalid timestamp: '${ts}' — must be a number"
+
+  local human_local human_utc
+  human_local="$(date -d "@${ts}" '+%Y-%m-%d %H:%M:%S %Z' 2>/dev/null || date -r "${ts}" '+%Y-%m-%d %H:%M:%S %Z' 2>/dev/null)" \
+    || die "Failed to convert timestamp: ${ts}"
+  human_utc="$(TZ=UTC date -d "@${ts}" '+%Y-%m-%d %H:%M:%S UTC' 2>/dev/null || TZ=UTC date -r "${ts}" '+%Y-%m-%d %H:%M:%S UTC' 2>/dev/null)"
+
+  local now
+  now="$(date +%s)"
+  local age
+  age=$(( now - ts ))
+  local age_str
+  age_str="$(format_duration "$age")"
+
+  echo "┌─────────────────────────────────────────────┐"
+  echo "│  Epoch → Human Date                         │"
+  echo "├─────────────────────────────────────────────┤"
+  printf "│  Epoch:  %-35s │\n" "${ts}"
+  printf "│  Local:  %-35s │\n" "${human_local}"
+  printf "│  UTC:    %-35s │\n" "${human_utc}"
+  printf "│  Age:    %-35s │\n" "${age_str} ago"
+  echo "└─────────────────────────────────────────────┘"
+}
+
+cmd_from() {
+  local datestr="${1:-}"
+  [[ -z "$datestr" ]] && die "Usage: ${SCRIPT_NAME} from <date-string>\n  Example: ${SCRIPT_NAME} from '2024-01-15 10:30:00'"
+
+  local epoch
+  epoch="$(date -d "${datestr}" '+%s' 2>/dev/null || date -j -f '%Y-%m-%d %H:%M:%S' "${datestr}" '+%s' 2>/dev/null)" \
+    || die "Failed to parse date: '${datestr}'"
+
+  local human
+  human="$(date -d "@${epoch}" '+%Y-%m-%d %H:%M:%S %Z' 2>/dev/null || date -r "${epoch}" '+%Y-%m-%d %H:%M:%S %Z' 2>/dev/null)"
+
+  echo "┌─────────────────────────────────────────────┐"
+  echo "│  Human Date → Epoch                         │"
+  echo "├─────────────────────────────────────────────┤"
+  printf "│  Input:  %-35s │\n" "${datestr}"
+  printf "│  Epoch:  %-35s │\n" "${epoch}"
+  printf "│  Parsed: %-35s │\n" "${human}"
+  echo "└─────────────────────────────────────────────┘"
+}
+
+cmd_diff() {
+  local ts1="${1:-}"
+  local ts2="${2:-}"
+  [[ -z "$ts1" || -z "$ts2" ]] && die "Usage: ${SCRIPT_NAME} diff <ts1> <ts2>"
+  is_numeric "$ts1" || die "Invalid timestamp: '${ts1}'"
+  is_numeric "$ts2" || die "Invalid timestamp: '${ts2}'"
+
+  local diff_seconds=$(( ts2 - ts1 ))
+  local abs_diff="${diff_seconds#-}"
+  [[ "$diff_seconds" -lt 0 ]] && abs_diff=$(( -diff_seconds ))
+
+  local diff_minutes diff_hours diff_days
+  diff_minutes=$(awk "BEGIN { printf \"%.2f\", ${abs_diff} / 60 }")
+  diff_hours=$(awk "BEGIN { printf \"%.2f\", ${abs_diff} / 3600 }")
+  diff_days=$(awk "BEGIN { printf \"%.4f\", ${abs_diff} / 86400 }")
+
+  local human1 human2
+  human1="$(date -d "@${ts1}" '+%Y-%m-%d %H:%M:%S %Z' 2>/dev/null || date -r "${ts1}" '+%Y-%m-%d %H:%M:%S %Z' 2>/dev/null)"
+  human2="$(date -d "@${ts2}" '+%Y-%m-%d %H:%M:%S %Z' 2>/dev/null || date -r "${ts2}" '+%Y-%m-%d %H:%M:%S %Z' 2>/dev/null)"
+
+  local duration_str
+  duration_str="$(format_duration "$diff_seconds")"
+
+  echo "┌───────────────────────────────────────────────────┐"
+  echo "│  Timestamp Difference                             │"
+  echo "├───────────────────────────────────────────────────┤"
+  printf "│  From:     %-39s │\n" "${ts1} (${human1})"
+  printf "│  To:       %-39s │\n" "${ts2} (${human2})"
+  echo "├───────────────────────────────────────────────────┤"
+  printf "│  Seconds:  %-39s │\n" "${diff_seconds}"
+  printf "│  Minutes:  %-39s │\n" "${diff_minutes}"
+  printf "│  Hours:    %-39s │\n" "${diff_hours}"
+  printf "│  Days:     %-39s │\n" "${diff_days}"
+  printf "│  Duration: %-39s │\n" "${duration_str}"
+  echo "└───────────────────────────────────────────────────┘"
+}
+
+cmd_add() {
+  local ts="${1:-}"
+  local secs="${2:-}"
+  [[ -z "$ts" || -z "$secs" ]] && die "Usage: ${SCRIPT_NAME} add <timestamp> <seconds>"
+  is_numeric "$ts" || die "Invalid timestamp: '${ts}'"
+  is_numeric "$secs" || die "Invalid seconds: '${secs}'"
+
+  local result=$(( ts + secs ))
+  local human_original human_result
+  human_original="$(date -d "@${ts}" '+%Y-%m-%d %H:%M:%S %Z' 2>/dev/null || date -r "${ts}" '+%Y-%m-%d %H:%M:%S %Z' 2>/dev/null)"
+  human_result="$(date -d "@${result}" '+%Y-%m-%d %H:%M:%S %Z' 2>/dev/null || date -r "${result}" '+%Y-%m-%d %H:%M:%S %Z' 2>/dev/null)"
+
+  local duration_str
+  duration_str="$(format_duration "$secs")"
+
+  echo "┌───────────────────────────────────────────────────┐"
+  echo "│  Timestamp Addition                               │"
+  echo "├───────────────────────────────────────────────────┤"
+  printf "│  Original: %-39s │\n" "${ts} (${human_original})"
+  printf "│  Added:    %-39s │\n" "${secs} seconds (${duration_str})"
+  printf "│  Result:   %-39s │\n" "${result} (${human_result})"
+  echo "└───────────────────────────────────────────────────┘"
+}
+
+# ---------------------------------------------------------------------------
 # Main dispatch
-case "${1:-help}" in
-    scan)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent scan entries:"
-            tail -20 "$DATA_DIR/scan.log" 2>/dev/null || echo "  No entries yet. Use: epoch scan <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/scan.log"
-            local total=$(wc -l < "$DATA_DIR/scan.log")
-            echo "  [Epoch] scan: $input"
-            echo "  Saved. Total scan entries: $total"
-            _log "scan" "$input"
-        fi
-        ;;
-    monitor)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent monitor entries:"
-            tail -20 "$DATA_DIR/monitor.log" 2>/dev/null || echo "  No entries yet. Use: epoch monitor <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/monitor.log"
-            local total=$(wc -l < "$DATA_DIR/monitor.log")
-            echo "  [Epoch] monitor: $input"
-            echo "  Saved. Total monitor entries: $total"
-            _log "monitor" "$input"
-        fi
-        ;;
-    report)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent report entries:"
-            tail -20 "$DATA_DIR/report.log" 2>/dev/null || echo "  No entries yet. Use: epoch report <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/report.log"
-            local total=$(wc -l < "$DATA_DIR/report.log")
-            echo "  [Epoch] report: $input"
-            echo "  Saved. Total report entries: $total"
-            _log "report" "$input"
-        fi
-        ;;
-    alert)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent alert entries:"
-            tail -20 "$DATA_DIR/alert.log" 2>/dev/null || echo "  No entries yet. Use: epoch alert <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/alert.log"
-            local total=$(wc -l < "$DATA_DIR/alert.log")
-            echo "  [Epoch] alert: $input"
-            echo "  Saved. Total alert entries: $total"
-            _log "alert" "$input"
-        fi
-        ;;
-    top)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent top entries:"
-            tail -20 "$DATA_DIR/top.log" 2>/dev/null || echo "  No entries yet. Use: epoch top <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/top.log"
-            local total=$(wc -l < "$DATA_DIR/top.log")
-            echo "  [Epoch] top: $input"
-            echo "  Saved. Total top entries: $total"
-            _log "top" "$input"
-        fi
-        ;;
-    usage)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent usage entries:"
-            tail -20 "$DATA_DIR/usage.log" 2>/dev/null || echo "  No entries yet. Use: epoch usage <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/usage.log"
-            local total=$(wc -l < "$DATA_DIR/usage.log")
-            echo "  [Epoch] usage: $input"
-            echo "  Saved. Total usage entries: $total"
-            _log "usage" "$input"
-        fi
-        ;;
-    check)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent check entries:"
-            tail -20 "$DATA_DIR/check.log" 2>/dev/null || echo "  No entries yet. Use: epoch check <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/check.log"
-            local total=$(wc -l < "$DATA_DIR/check.log")
-            echo "  [Epoch] check: $input"
-            echo "  Saved. Total check entries: $total"
-            _log "check" "$input"
-        fi
-        ;;
-    fix)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent fix entries:"
-            tail -20 "$DATA_DIR/fix.log" 2>/dev/null || echo "  No entries yet. Use: epoch fix <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/fix.log"
-            local total=$(wc -l < "$DATA_DIR/fix.log")
-            echo "  [Epoch] fix: $input"
-            echo "  Saved. Total fix entries: $total"
-            _log "fix" "$input"
-        fi
-        ;;
-    cleanup)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent cleanup entries:"
-            tail -20 "$DATA_DIR/cleanup.log" 2>/dev/null || echo "  No entries yet. Use: epoch cleanup <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/cleanup.log"
-            local total=$(wc -l < "$DATA_DIR/cleanup.log")
-            echo "  [Epoch] cleanup: $input"
-            echo "  Saved. Total cleanup entries: $total"
-            _log "cleanup" "$input"
-        fi
-        ;;
-    backup)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent backup entries:"
-            tail -20 "$DATA_DIR/backup.log" 2>/dev/null || echo "  No entries yet. Use: epoch backup <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/backup.log"
-            local total=$(wc -l < "$DATA_DIR/backup.log")
-            echo "  [Epoch] backup: $input"
-            echo "  Saved. Total backup entries: $total"
-            _log "backup" "$input"
-        fi
-        ;;
-    restore)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent restore entries:"
-            tail -20 "$DATA_DIR/restore.log" 2>/dev/null || echo "  No entries yet. Use: epoch restore <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/restore.log"
-            local total=$(wc -l < "$DATA_DIR/restore.log")
-            echo "  [Epoch] restore: $input"
-            echo "  Saved. Total restore entries: $total"
-            _log "restore" "$input"
-        fi
-        ;;
-    log)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent log entries:"
-            tail -20 "$DATA_DIR/log.log" 2>/dev/null || echo "  No entries yet. Use: epoch log <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/log.log"
-            local total=$(wc -l < "$DATA_DIR/log.log")
-            echo "  [Epoch] log: $input"
-            echo "  Saved. Total log entries: $total"
-            _log "log" "$input"
-        fi
-        ;;
-    benchmark)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent benchmark entries:"
-            tail -20 "$DATA_DIR/benchmark.log" 2>/dev/null || echo "  No entries yet. Use: epoch benchmark <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/benchmark.log"
-            local total=$(wc -l < "$DATA_DIR/benchmark.log")
-            echo "  [Epoch] benchmark: $input"
-            echo "  Saved. Total benchmark entries: $total"
-            _log "benchmark" "$input"
-        fi
-        ;;
-    compare)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent compare entries:"
-            tail -20 "$DATA_DIR/compare.log" 2>/dev/null || echo "  No entries yet. Use: epoch compare <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/compare.log"
-            local total=$(wc -l < "$DATA_DIR/compare.log")
-            echo "  [Epoch] compare: $input"
-            echo "  Saved. Total compare entries: $total"
-            _log "compare" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown command: $1"
-        echo "Run 'epoch help' for available commands."
-        exit 1
-        ;;
-esac
+# ---------------------------------------------------------------------------
+
+main() {
+  local cmd="${1:-help}"
+  shift || true
+
+  case "$cmd" in
+    now)      cmd_now "$@" ;;
+    convert)  cmd_convert "$@" ;;
+    from)     cmd_from "$@" ;;
+    diff)     cmd_diff "$@" ;;
+    add)      cmd_add "$@" ;;
+    version)  echo "${SCRIPT_NAME} v${VERSION}" ;;
+    help|--help|-h) usage ;;
+    *)        die "Unknown command: '${cmd}'. Run '${SCRIPT_NAME} help' for usage." ;;
+  esac
+}
+
+main "$@"

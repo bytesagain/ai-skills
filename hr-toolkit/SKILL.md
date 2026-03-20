@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: hr-toolkit
-description: "HR工具包。招聘流程、入职办理、离职管理、制度规范、员工手册、HR模板库。HR toolkit with recruitment, onboarding, offboarding, policy, handbook, templates. 人力资源、招聘、入职、离职、制度、员工手册。Use when managing HR processes. Triggers on: hr toolkit."
+description: "Draft recruitment flows, onboarding checklists, and HR policy templates. Use when writing job posts, building onboarding plans, or drafting handbooks."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # hr-toolkit
 

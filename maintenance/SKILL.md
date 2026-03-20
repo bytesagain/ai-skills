@@ -1,99 +1,112 @@
 ---
-name: "Maintenance"
-description: "Maintenance makes home management simple. Record, search, and analyze your data with clear terminal output."
-version: "2.0.0"
+name: "maintenance"
+version: "1.0.0"
+description: "Log home maintenance tasks, set reminders, and track repair history with checklists. Use when scheduling repairs, tracking appliance upkeep, inventorying."
 author: "BytesAgain"
-tags: ["maintenance", "domestic", "smart-home", "inventory", "household"]
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [maintenance, general, cli, tool]
+category: "general"
 ---
 
-# Maintenance
+# maintenance
 
-Maintenance makes home management simple. Record, search, and analyze your data with clear terminal output.
-
-## Why Maintenance?
-
-- Works entirely offline — your data never leaves your machine
-- Simple command-line interface, no GUI needed
-- Export to JSON, CSV, or plain text anytime
-- Automatic history and activity logging
-
-## Getting Started
-
-```bash
-# See what you can do
-maintenance help
-
-# Check current status
-maintenance status
-
-# View your statistics
-maintenance stats
-```
+Log home maintenance tasks, set reminders, and track repair history with checklists. Use when scheduling repairs, tracking appliance upkeep, inventorying.
 
 ## Commands
 
-| Command | What it does |
-|---------|-------------|
-| `maintenance add` | Add |
-| `maintenance inventory` | Inventory |
-| `maintenance schedule` | Schedule |
-| `maintenance remind` | Remind |
-| `maintenance checklist` | Checklist |
-| `maintenance usage` | Usage |
-| `maintenance cost` | Cost |
-| `maintenance maintain` | Maintain |
-| `maintenance log` | Log |
-| `maintenance report` | Report |
-| `maintenance seasonal` | Seasonal |
-| `maintenance tips` | Tips |
-| `maintenance stats` | Summary statistics |
-| `maintenance export` | <fmt>       Export (json|csv|txt) |
-| `maintenance search` | <term>      Search entries |
-| `maintenance recent` | Recent activity |
-| `maintenance status` | Health check |
-| `maintenance help` | Show this help |
-| `maintenance version` | Show version |
-| `maintenance $name:` | $c entries |
-| `maintenance Total:` | $total entries |
-| `maintenance Data` | size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1) |
-| `maintenance Version:` | v2.0.0 |
-| `maintenance Data` | dir: $DATA_DIR |
-| `maintenance Entries:` | $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total |
-| `maintenance Disk:` | $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1) |
-| `maintenance Last:` | $(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo never) |
-| `maintenance Status:` | OK |
-| `maintenance [Maintenance]` | add: $input |
-| `maintenance Saved.` | Total add entries: $total |
-| `maintenance [Maintenance]` | inventory: $input |
-| `maintenance Saved.` | Total inventory entries: $total |
-| `maintenance [Maintenance]` | schedule: $input |
-| `maintenance Saved.` | Total schedule entries: $total |
-| `maintenance [Maintenance]` | remind: $input |
-| `maintenance Saved.` | Total remind entries: $total |
-| `maintenance [Maintenance]` | checklist: $input |
-| `maintenance Saved.` | Total checklist entries: $total |
-| `maintenance [Maintenance]` | usage: $input |
-| `maintenance Saved.` | Total usage entries: $total |
-| `maintenance [Maintenance]` | cost: $input |
-| `maintenance Saved.` | Total cost entries: $total |
-| `maintenance [Maintenance]` | maintain: $input |
-| `maintenance Saved.` | Total maintain entries: $total |
-| `maintenance [Maintenance]` | log: $input |
-| `maintenance Saved.` | Total log entries: $total |
-| `maintenance [Maintenance]` | report: $input |
-| `maintenance Saved.` | Total report entries: $total |
-| `maintenance [Maintenance]` | seasonal: $input |
-| `maintenance Saved.` | Total seasonal entries: $total |
-| `maintenance [Maintenance]` | tips: $input |
-| `maintenance Saved.` | Total tips entries: $total |
+### `status`
+
+```bash
+scripts/script.sh status
+```
+
+Show current status
+
+### `add`
+
+```bash
+scripts/script.sh add
+```
+
+Add new entry
+
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
+
+## Configuration
+
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `MAINTENANCE_DIR` | No | Data directory (default: ~/.maintenance/) |
 
 ## Data Storage
 
-All data is stored locally at `~/.local/share/maintenance/`. Each action is logged with timestamps. Use `export` to back up your data anytime.
+All data stored in `~/.maintenance/` using JSONL format (one JSON object per line).
 
-## Feedback
+## Output
 
-Found a bug or have a suggestion? Let us know: https://bytesagain.com/feedback/
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

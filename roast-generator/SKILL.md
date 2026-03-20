@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Roast Generator
-description: "Roast Generator. Use when you need roast generator capabilities. Triggers on: roast generator."
-  吐槽生成器。温和吐槽、毒舌模式、朋友互怼、名人吐槽、自嘲、Battle模式。Roast generator with gentle, savage modes. 吐槽、毒舌、搞笑。
+description: "Generate comedic roasts in gentle or savage mode. Use when writing friendly jabs, composing rap battles, crafting celebrity roasts, listing self-burns."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # Roast Generator
 

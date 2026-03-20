@@ -1,0 +1,9 @@
+{
+  "name": "gpu-helper",
+  "description": "Lightweight, open-source control tool for ASUS laptops and ROG Ally. Manage performance modes, fans, g helper, c#, ally, amd, armoury, armoury-crate.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

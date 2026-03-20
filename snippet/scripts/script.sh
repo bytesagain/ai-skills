@@ -1,332 +1,294 @@
 #!/usr/bin/env bash
-# Snippet — devtools tool
+# snippet — Code snippet manager
 # Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
-
-DATA_DIR="${HOME}/.local/share/snippet"
+VERSION="3.0.1"
+DATA_DIR="${SNIPPET_DIR:-$HOME/.local/share/snippet}"
+DB="$DATA_DIR/snippets.jsonl"
 mkdir -p "$DATA_DIR"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+BOLD='\033[1m'; GREEN='\033[0;32m'; RED='\033[0;31m'; DIM='\033[2m'; RESET='\033[0m'
+die() { echo -e "${RED}Error: $1${RESET}" >&2; exit 1; }
+info() { echo -e "${GREEN}✓${RESET} $1"; }
 
-_version() { echo "snippet v2.0.0"; }
-
-_help() {
-    echo "Snippet v2.0.0 — devtools toolkit"
-    echo ""
-    echo "Usage: snippet <command> [args]"
-    echo ""
-    echo "Commands:"
-    echo "  check              Check"
-    echo "  validate           Validate"
-    echo "  generate           Generate"
-    echo "  format             Format"
-    echo "  lint               Lint"
-    echo "  explain            Explain"
-    echo "  convert            Convert"
-    echo "  template           Template"
-    echo "  diff               Diff"
-    echo "  preview            Preview"
-    echo "  fix                Fix"
-    echo "  report             Report"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
+cmd_save() {
+    local name="${1:?Usage: echo 'code' | snippet save <name> [lang]}"
+    local lang="${2:-text}"
+    
+    local content
+    if [ -t 0 ]; then
+        echo "Enter snippet (Ctrl+D to finish):"
+        content=$(cat)
+    else
+        content=$(cat)
+    fi
+    
+    [ -z "$content" ] && die "No content provided"
+    
+    NAME="$name" LANG="$lang" CONTENT="$content" DB_FILE="$DB" python3 << 'PYEOF'
+import json, os
+from datetime import datetime
+entry = {
+    "name": os.environ["NAME"],
+    "lang": os.environ["LANG"],
+    "content": os.environ["CONTENT"],
+    "tags": [],
+    "created": datetime.now().strftime("%Y-%m-%d %H:%M"),
+    "updated": datetime.now().strftime("%Y-%m-%d %H:%M")
+}
+with open(os.environ["DB_FILE"], "a") as f:
+    f.write(json.dumps(entry) + "\n")
+print("  Saved: {} ({}, {} bytes)".format(entry["name"], entry["lang"], len(entry["content"])))
+PYEOF
 }
 
-_stats() {
-    echo "=== Snippet Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Since: $(head -1 "$DATA_DIR/history.log" 2>/dev/null | cut -d'|' -f1 || echo 'N/A')"
+cmd_get() {
+    local name="${1:?Usage: snippet get <name>}"
+    [ ! -f "$DB" ] && die "No snippets saved yet"
+    
+    NAME="$name" DB_FILE="$DB" python3 << 'PYEOF'
+import json, os
+name = os.environ["NAME"]
+db = os.environ["DB_FILE"]
+found = None
+with open(db) as f:
+    for line in f:
+        if not line.strip():
+            continue
+        entry = json.loads(line)
+        if entry["name"] == name:
+            found = entry
+
+if found:
+    print("# {} [{}] — {}".format(found["name"], found["lang"], found.get("created","")))
+    if found.get("tags"):
+        print("# Tags: {}".format(", ".join(found["tags"])))
+    print("")
+    print(found["content"])
+else:
+    print("  Snippet '{}' not found".format(name))
+PYEOF
 }
 
-_export() {
+cmd_list() {
+    local lang_filter="${1:-}"
+    [ ! -f "$DB" ] || [ ! -s "$DB" ] && { echo "  No snippets saved."; return 0; }
+    
+    echo -e "${BOLD}Saved Snippets${RESET}"
+    echo ""
+    
+    LANG_FILTER="$lang_filter" DB_FILE="$DB" python3 << 'PYEOF'
+import json, os
+lang_filter = os.environ["LANG_FILTER"]
+db = os.environ["DB_FILE"]
+count = 0
+with open(db) as f:
+    for line in f:
+        if not line.strip():
+            continue
+        entry = json.loads(line)
+        if lang_filter and entry.get("lang") != lang_filter:
+            continue
+        count += 1
+        tags = " [{}]".format(",".join(entry["tags"])) if entry.get("tags") else ""
+        size = len(entry.get("content",""))
+        print("  {:>3}. {:20s} {:8s} {:>6}b  {}{}".format(
+            count, entry["name"], entry.get("lang",""), size, entry.get("created",""), tags))
+
+if count == 0:
+    print("  No snippets found")
+else:
+    print("\n  Total: {} snippets".format(count))
+PYEOF
+}
+
+cmd_search() {
+    local keyword="${1:?Usage: snippet search <keyword>}"
+    [ ! -f "$DB" ] && die "No snippets saved"
+    
+    KEYWORD="$keyword" DB_FILE="$DB" python3 << 'PYEOF'
+import json, os
+kw = os.environ["KEYWORD"].lower()
+db = os.environ["DB_FILE"]
+results = []
+with open(db) as f:
+    for line in f:
+        if not line.strip():
+            continue
+        entry = json.loads(line)
+        if kw in entry["name"].lower() or kw in entry.get("content","").lower() or kw in " ".join(entry.get("tags",[])).lower():
+            results.append(entry)
+
+if results:
+    print("  Found {} matches for '{}':\n".format(len(results), os.environ["KEYWORD"]))
+    for r in results:
+        preview = r.get("content","")[:60].replace("\n"," ")
+        print("  {} [{}] — {}...".format(r["name"], r.get("lang",""), preview))
+else:
+    print("  No matches for '{}'".format(os.environ["KEYWORD"]))
+PYEOF
+}
+
+cmd_delete() {
+    local name="${1:?Usage: snippet delete <name>}"
+    [ ! -f "$DB" ] && die "No snippets"
+    
+    NAME="$name" DB_FILE="$DB" python3 << 'PYEOF'
+import json, os
+name = os.environ["NAME"]
+db = os.environ["DB_FILE"]
+kept = []
+removed = 0
+with open(db) as f:
+    for line in f:
+        if not line.strip():
+            continue
+        entry = json.loads(line)
+        if entry["name"] == name:
+            removed += 1
+        else:
+            kept.append(line)
+with open(db, "w") as f:
+    f.writelines(kept)
+if removed:
+    print("  Deleted: {}".format(name))
+else:
+    print("  '{}' not found".format(name))
+PYEOF
+}
+
+cmd_tags() {
+    local name="${1:?Usage: snippet tags <name> <tag1> [tag2...]}"
+    shift
+    [ $# -eq 0 ] && die "No tags specified"
+    [ ! -f "$DB" ] && die "No snippets"
+    
+    NAME="$name" TAGS="$*" DB_FILE="$DB" python3 << 'PYEOF'
+import json, os
+name = os.environ["NAME"]
+new_tags = os.environ["TAGS"].split()
+db = os.environ["DB_FILE"]
+lines = []
+updated = False
+with open(db) as f:
+    for line in f:
+        if not line.strip():
+            continue
+        entry = json.loads(line)
+        if entry["name"] == name:
+            existing = set(entry.get("tags", []))
+            existing.update(new_tags)
+            entry["tags"] = sorted(existing)
+            updated = True
+        lines.append(json.dumps(entry) + "\n")
+with open(db, "w") as f:
+    f.writelines(lines)
+if updated:
+    print("  Tags updated for {}".format(name))
+else:
+    print("  '{}' not found".format(name))
+PYEOF
+}
+
+cmd_export() {
     local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
+    [ ! -f "$DB" ] && die "No snippets"
+    
     case "$fmt" in
         json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "" >> "$out"
-            echo "]" >> "$out"
+            echo "["
+            local first=true
+            while IFS= read -r line; do
+                [ -z "$line" ] && continue
+                $first && first=false || echo ","
+                echo "  $line"
+            done < "$DB"
+            echo "]"
             ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    echo "$name,$ts,$val" >> "$out"
-                done < "$f"
-            done
+        md|markdown)
+            DB_FILE="$DB" python3 << 'PYEOF'
+import json, os
+with open(os.environ["DB_FILE"]) as f:
+    for line in f:
+        if not line.strip():
+            continue
+        e = json.loads(line)
+        print("## {}".format(e["name"]))
+        print("")
+        print("```{}".format(e.get("lang","")))
+        print(e.get("content",""))
+        print("```")
+        print("")
+PYEOF
             ;;
-        txt)
-            echo "=== Snippet Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-                echo "" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
+        *) die "Unknown format: $fmt (json or md)" ;;
     esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
 }
 
-_status() {
-    echo "=== Snippet Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    local last=$(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo "never")
-    echo "  Last activity: $last"
-    echo "  Status: OK"
+cmd_stats() {
+    [ ! -f "$DB" ] || [ ! -s "$DB" ] && { echo "  No snippets."; return 0; }
+    
+    DB_FILE="$DB" python3 << 'PYEOF'
+import json, os
+from collections import Counter
+db = os.environ["DB_FILE"]
+langs = Counter()
+total_size = 0
+count = 0
+with open(db) as f:
+    for line in f:
+        if not line.strip():
+            continue
+        e = json.loads(line)
+        langs[e.get("lang","text")] += 1
+        total_size += len(e.get("content",""))
+        count += 1
+
+print("  Snippets:  {}".format(count))
+print("  Total size: {} bytes".format(total_size))
+print("  Languages:")
+for lang, c in langs.most_common(10):
+    print("    {}: {}".format(lang, c))
+PYEOF
 }
 
-_search() {
-    local term="${1:?Usage: snippet search <term>}"
-    echo "Searching for: $term"
-    local found=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local matches=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$matches" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$matches" | while read -r line; do
-                echo "    $line"
-                found=$((found + 1))
-            done
-        fi
-    done
-    [ $found -eq 0 ] && echo "  No matches found."
+show_help() {
+    cat << EOF
+snippet v$VERSION — Code snippet manager
+
+Usage: snippet <command> [args]
+
+Save/Retrieve:
+  save <name> [lang]          Save snippet from stdin
+  get <name>                  Display a snippet
+  list [lang]                 List all snippets (filter by language)
+  search <keyword>            Search snippets by name/content/tags
+
+Manage:
+  delete <name>               Delete a snippet
+  tags <name> <tag1> ...      Add tags to a snippet
+  export <json|md>            Export all snippets
+  stats                       Usage statistics
+
+  help                        Show this help
+  version                     Show version
+
+Data: $DATA_DIR
+Requires: python3
+EOF
 }
 
-_recent() {
-    echo "=== Recent Activity ==="
-    if [ -f "$DATA_DIR/history.log" ]; then
-        tail -20 "$DATA_DIR/history.log" | while IFS='' read -r line; do
-            echo "  $line"
-        done
-    else
-        echo "  No activity yet."
-    fi
-}
-
-# Main dispatch
-case "${1:-help}" in
-    check)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent check entries:"
-            tail -20 "$DATA_DIR/check.log" 2>/dev/null || echo "  No entries yet. Use: snippet check <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/check.log"
-            local total=$(wc -l < "$DATA_DIR/check.log")
-            echo "  [Snippet] check: $input"
-            echo "  Saved. Total check entries: $total"
-            _log "check" "$input"
-        fi
-        ;;
-    validate)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent validate entries:"
-            tail -20 "$DATA_DIR/validate.log" 2>/dev/null || echo "  No entries yet. Use: snippet validate <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/validate.log"
-            local total=$(wc -l < "$DATA_DIR/validate.log")
-            echo "  [Snippet] validate: $input"
-            echo "  Saved. Total validate entries: $total"
-            _log "validate" "$input"
-        fi
-        ;;
-    generate)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent generate entries:"
-            tail -20 "$DATA_DIR/generate.log" 2>/dev/null || echo "  No entries yet. Use: snippet generate <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/generate.log"
-            local total=$(wc -l < "$DATA_DIR/generate.log")
-            echo "  [Snippet] generate: $input"
-            echo "  Saved. Total generate entries: $total"
-            _log "generate" "$input"
-        fi
-        ;;
-    format)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent format entries:"
-            tail -20 "$DATA_DIR/format.log" 2>/dev/null || echo "  No entries yet. Use: snippet format <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/format.log"
-            local total=$(wc -l < "$DATA_DIR/format.log")
-            echo "  [Snippet] format: $input"
-            echo "  Saved. Total format entries: $total"
-            _log "format" "$input"
-        fi
-        ;;
-    lint)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent lint entries:"
-            tail -20 "$DATA_DIR/lint.log" 2>/dev/null || echo "  No entries yet. Use: snippet lint <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/lint.log"
-            local total=$(wc -l < "$DATA_DIR/lint.log")
-            echo "  [Snippet] lint: $input"
-            echo "  Saved. Total lint entries: $total"
-            _log "lint" "$input"
-        fi
-        ;;
-    explain)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent explain entries:"
-            tail -20 "$DATA_DIR/explain.log" 2>/dev/null || echo "  No entries yet. Use: snippet explain <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/explain.log"
-            local total=$(wc -l < "$DATA_DIR/explain.log")
-            echo "  [Snippet] explain: $input"
-            echo "  Saved. Total explain entries: $total"
-            _log "explain" "$input"
-        fi
-        ;;
-    convert)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent convert entries:"
-            tail -20 "$DATA_DIR/convert.log" 2>/dev/null || echo "  No entries yet. Use: snippet convert <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/convert.log"
-            local total=$(wc -l < "$DATA_DIR/convert.log")
-            echo "  [Snippet] convert: $input"
-            echo "  Saved. Total convert entries: $total"
-            _log "convert" "$input"
-        fi
-        ;;
-    template)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent template entries:"
-            tail -20 "$DATA_DIR/template.log" 2>/dev/null || echo "  No entries yet. Use: snippet template <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/template.log"
-            local total=$(wc -l < "$DATA_DIR/template.log")
-            echo "  [Snippet] template: $input"
-            echo "  Saved. Total template entries: $total"
-            _log "template" "$input"
-        fi
-        ;;
-    diff)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent diff entries:"
-            tail -20 "$DATA_DIR/diff.log" 2>/dev/null || echo "  No entries yet. Use: snippet diff <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/diff.log"
-            local total=$(wc -l < "$DATA_DIR/diff.log")
-            echo "  [Snippet] diff: $input"
-            echo "  Saved. Total diff entries: $total"
-            _log "diff" "$input"
-        fi
-        ;;
-    preview)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent preview entries:"
-            tail -20 "$DATA_DIR/preview.log" 2>/dev/null || echo "  No entries yet. Use: snippet preview <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/preview.log"
-            local total=$(wc -l < "$DATA_DIR/preview.log")
-            echo "  [Snippet] preview: $input"
-            echo "  Saved. Total preview entries: $total"
-            _log "preview" "$input"
-        fi
-        ;;
-    fix)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent fix entries:"
-            tail -20 "$DATA_DIR/fix.log" 2>/dev/null || echo "  No entries yet. Use: snippet fix <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/fix.log"
-            local total=$(wc -l < "$DATA_DIR/fix.log")
-            echo "  [Snippet] fix: $input"
-            echo "  Saved. Total fix entries: $total"
-            _log "fix" "$input"
-        fi
-        ;;
-    report)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent report entries:"
-            tail -20 "$DATA_DIR/report.log" 2>/dev/null || echo "  No entries yet. Use: snippet report <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/report.log"
-            local total=$(wc -l < "$DATA_DIR/report.log")
-            echo "  [Snippet] report: $input"
-            echo "  Saved. Total report entries: $total"
-            _log "report" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown command: $1"
-        echo "Run 'snippet help' for available commands."
-        exit 1
-        ;;
+[ $# -eq 0 ] && { show_help; exit 0; }
+case "$1" in
+    save)    shift; cmd_save "$@" ;;
+    get)     shift; cmd_get "$@" ;;
+    list|ls) shift; cmd_list "${1:-}" ;;
+    search)  shift; cmd_search "$@" ;;
+    delete)  shift; cmd_delete "$@" ;;
+    tags)    shift; cmd_tags "$@" ;;
+    export)  shift; cmd_export "${1:-json}" ;;
+    stats)   cmd_stats ;;
+    help|-h) show_help ;;
+    version|-v) echo "snippet v$VERSION"; echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com" ;;
+    *)       echo "Unknown: $1"; show_help; exit 1 ;;
 esac

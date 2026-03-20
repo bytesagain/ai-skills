@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Business Plan Generator
-description: "📋 商业计划书生成器 — bp.sh. Use when you need business plan cn capabilities. Triggers on: business plan cn."
-  商业计划书生成器。完整BP、精益画布、SWOT分析、财务预测、电梯演讲、市场分析。Business plan generator with lean canvas, SWOT, financial projections, elevator pitch, market analysis. 商业计划、创业、BP。
+description: "Generate Chinese business plans with lean canvas, SWOT, and financials. Use when writing investor decks, analyzing markets, or modeling revenue."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # Business Plan Generator
 

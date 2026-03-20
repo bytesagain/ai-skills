@@ -1,364 +1,376 @@
 #!/usr/bin/env bash
-# Htpasswd — sysops tool
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-DATA_DIR="${HOME}/.local/share/htpasswd"
-mkdir -p "$DATA_DIR"
+###############################################################################
+# htpasswd — Apache/Nginx htpasswd File Manager
+# Create, manage, and verify htpasswd files for HTTP basic authentication.
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+###############################################################################
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+VERSION="3.0.0"
+SCRIPT_NAME="htpasswd"
 
-_version() { echo "htpasswd v2.0.0"; }
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
 
-_help() {
-    echo "Htpasswd v2.0.0 — sysops toolkit"
-    echo ""
-    echo "Usage: htpasswd <command> [args]"
-    echo ""
-    echo "Commands:"
-    echo "  scan               Scan"
-    echo "  monitor            Monitor"
-    echo "  report             Report"
-    echo "  alert              Alert"
-    echo "  top                Top"
-    echo "  usage              Usage"
-    echo "  check              Check"
-    echo "  fix                Fix"
-    echo "  cleanup            Cleanup"
-    echo "  backup             Backup"
-    echo "  restore            Restore"
-    echo "  log                Log"
-    echo "  benchmark          Benchmark"
-    echo "  compare            Compare"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
+print_banner() {
+  echo "═══════════════════════════════════════════════════════"
+  echo "  ${SCRIPT_NAME} v${VERSION} — htpasswd File Manager"
+  echo "  Powered by BytesAgain | bytesagain.com"
+  echo "═══════════════════════════════════════════════════════"
 }
 
-_stats() {
-    echo "=== Htpasswd Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Since: $(head -1 "$DATA_DIR/history.log" 2>/dev/null | cut -d'|' -f1 || echo 'N/A')"
+usage() {
+  print_banner
+  echo ""
+  echo "Usage: ${SCRIPT_NAME} <command> [arguments]"
+  echo ""
+  echo "Commands:"
+  echo "  create <file> <user> <password>   Create a new htpasswd file with a user"
+  echo "  add <file> <user> <password>      Add a user to an existing htpasswd file"
+  echo "  delete <file> <user>              Remove a user from an htpasswd file"
+  echo "  verify <file> <user> <password>   Verify a user's password"
+  echo "  list <file>                       List all users in an htpasswd file"
+  echo "  version                           Show version"
+  echo "  help                              Show this help message"
+  echo ""
+  echo "Password hash algorithms:"
+  echo "  Default: apr1 (Apache MD5) via openssl"
+  echo "  Set HTPASSWD_ALGO=sha256 or HTPASSWD_ALGO=sha512 for SHA variants"
+  echo ""
+  echo "Examples:"
+  echo "  ${SCRIPT_NAME} create /etc/nginx/.htpasswd admin secret123"
+  echo "  ${SCRIPT_NAME} add /etc/nginx/.htpasswd newuser pass456"
+  echo "  ${SCRIPT_NAME} delete /etc/nginx/.htpasswd olduser"
+  echo "  ${SCRIPT_NAME} verify /etc/nginx/.htpasswd admin secret123"
+  echo "  ${SCRIPT_NAME} list /etc/nginx/.htpasswd"
+  echo ""
+  echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "" >> "$out"
-            echo "]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    echo "$name,$ts,$val" >> "$out"
-                done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Htpasswd Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-                echo "" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
-    esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
+die() {
+  echo "ERROR: $*" >&2
+  exit 1
 }
 
-_status() {
-    echo "=== Htpasswd Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    local last=$(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo "never")
-    echo "  Last activity: $last"
-    echo "  Status: OK"
+check_openssl() {
+  command -v openssl &>/dev/null || die "openssl is required but not found. Install it first."
 }
 
-_search() {
-    local term="${1:?Usage: htpasswd search <term>}"
-    echo "Searching for: $term"
-    local found=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local matches=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$matches" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$matches" | while read -r line; do
-                echo "    $line"
-                found=$((found + 1))
-            done
-        fi
-    done
-    [ $found -eq 0 ] && echo "  No matches found."
-}
+# Generate password hash using openssl
+# Uses apr1 (Apache MD5) by default, supports sha256/sha512 via env
+generate_hash() {
+  local password="$1"
+  local algo="${HTPASSWD_ALGO:-apr1}"
 
-_recent() {
-    echo "=== Recent Activity ==="
-    if [ -f "$DATA_DIR/history.log" ]; then
-        tail -20 "$DATA_DIR/history.log" | while IFS='' read -r line; do
-            echo "  $line"
-        done
-    else
-        echo "  No activity yet."
-    fi
-}
-
-# Main dispatch
-case "${1:-help}" in
-    scan)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent scan entries:"
-            tail -20 "$DATA_DIR/scan.log" 2>/dev/null || echo "  No entries yet. Use: htpasswd scan <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/scan.log"
-            local total=$(wc -l < "$DATA_DIR/scan.log")
-            echo "  [Htpasswd] scan: $input"
-            echo "  Saved. Total scan entries: $total"
-            _log "scan" "$input"
-        fi
-        ;;
-    monitor)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent monitor entries:"
-            tail -20 "$DATA_DIR/monitor.log" 2>/dev/null || echo "  No entries yet. Use: htpasswd monitor <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/monitor.log"
-            local total=$(wc -l < "$DATA_DIR/monitor.log")
-            echo "  [Htpasswd] monitor: $input"
-            echo "  Saved. Total monitor entries: $total"
-            _log "monitor" "$input"
-        fi
-        ;;
-    report)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent report entries:"
-            tail -20 "$DATA_DIR/report.log" 2>/dev/null || echo "  No entries yet. Use: htpasswd report <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/report.log"
-            local total=$(wc -l < "$DATA_DIR/report.log")
-            echo "  [Htpasswd] report: $input"
-            echo "  Saved. Total report entries: $total"
-            _log "report" "$input"
-        fi
-        ;;
-    alert)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent alert entries:"
-            tail -20 "$DATA_DIR/alert.log" 2>/dev/null || echo "  No entries yet. Use: htpasswd alert <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/alert.log"
-            local total=$(wc -l < "$DATA_DIR/alert.log")
-            echo "  [Htpasswd] alert: $input"
-            echo "  Saved. Total alert entries: $total"
-            _log "alert" "$input"
-        fi
-        ;;
-    top)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent top entries:"
-            tail -20 "$DATA_DIR/top.log" 2>/dev/null || echo "  No entries yet. Use: htpasswd top <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/top.log"
-            local total=$(wc -l < "$DATA_DIR/top.log")
-            echo "  [Htpasswd] top: $input"
-            echo "  Saved. Total top entries: $total"
-            _log "top" "$input"
-        fi
-        ;;
-    usage)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent usage entries:"
-            tail -20 "$DATA_DIR/usage.log" 2>/dev/null || echo "  No entries yet. Use: htpasswd usage <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/usage.log"
-            local total=$(wc -l < "$DATA_DIR/usage.log")
-            echo "  [Htpasswd] usage: $input"
-            echo "  Saved. Total usage entries: $total"
-            _log "usage" "$input"
-        fi
-        ;;
-    check)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent check entries:"
-            tail -20 "$DATA_DIR/check.log" 2>/dev/null || echo "  No entries yet. Use: htpasswd check <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/check.log"
-            local total=$(wc -l < "$DATA_DIR/check.log")
-            echo "  [Htpasswd] check: $input"
-            echo "  Saved. Total check entries: $total"
-            _log "check" "$input"
-        fi
-        ;;
-    fix)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent fix entries:"
-            tail -20 "$DATA_DIR/fix.log" 2>/dev/null || echo "  No entries yet. Use: htpasswd fix <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/fix.log"
-            local total=$(wc -l < "$DATA_DIR/fix.log")
-            echo "  [Htpasswd] fix: $input"
-            echo "  Saved. Total fix entries: $total"
-            _log "fix" "$input"
-        fi
-        ;;
-    cleanup)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent cleanup entries:"
-            tail -20 "$DATA_DIR/cleanup.log" 2>/dev/null || echo "  No entries yet. Use: htpasswd cleanup <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/cleanup.log"
-            local total=$(wc -l < "$DATA_DIR/cleanup.log")
-            echo "  [Htpasswd] cleanup: $input"
-            echo "  Saved. Total cleanup entries: $total"
-            _log "cleanup" "$input"
-        fi
-        ;;
-    backup)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent backup entries:"
-            tail -20 "$DATA_DIR/backup.log" 2>/dev/null || echo "  No entries yet. Use: htpasswd backup <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/backup.log"
-            local total=$(wc -l < "$DATA_DIR/backup.log")
-            echo "  [Htpasswd] backup: $input"
-            echo "  Saved. Total backup entries: $total"
-            _log "backup" "$input"
-        fi
-        ;;
-    restore)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent restore entries:"
-            tail -20 "$DATA_DIR/restore.log" 2>/dev/null || echo "  No entries yet. Use: htpasswd restore <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/restore.log"
-            local total=$(wc -l < "$DATA_DIR/restore.log")
-            echo "  [Htpasswd] restore: $input"
-            echo "  Saved. Total restore entries: $total"
-            _log "restore" "$input"
-        fi
-        ;;
-    log)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent log entries:"
-            tail -20 "$DATA_DIR/log.log" 2>/dev/null || echo "  No entries yet. Use: htpasswd log <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/log.log"
-            local total=$(wc -l < "$DATA_DIR/log.log")
-            echo "  [Htpasswd] log: $input"
-            echo "  Saved. Total log entries: $total"
-            _log "log" "$input"
-        fi
-        ;;
-    benchmark)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent benchmark entries:"
-            tail -20 "$DATA_DIR/benchmark.log" 2>/dev/null || echo "  No entries yet. Use: htpasswd benchmark <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/benchmark.log"
-            local total=$(wc -l < "$DATA_DIR/benchmark.log")
-            echo "  [Htpasswd] benchmark: $input"
-            echo "  Saved. Total benchmark entries: $total"
-            _log "benchmark" "$input"
-        fi
-        ;;
-    compare)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent compare entries:"
-            tail -20 "$DATA_DIR/compare.log" 2>/dev/null || echo "  No entries yet. Use: htpasswd compare <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/compare.log"
-            local total=$(wc -l < "$DATA_DIR/compare.log")
-            echo "  [Htpasswd] compare: $input"
-            echo "  Saved. Total compare entries: $total"
-            _log "compare" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
+  case "$algo" in
+    apr1)
+      openssl passwd -apr1 "$password"
+      ;;
+    sha256)
+      # Use SHA-256 with salt
+      local salt
+      salt="$(openssl rand -hex 8)"
+      openssl passwd -5 -salt "$salt" "$password"
+      ;;
+    sha512)
+      # Use SHA-512 with salt
+      local salt
+      salt="$(openssl rand -hex 8)"
+      openssl passwd -6 -salt "$salt" "$password"
+      ;;
     *)
-        echo "Unknown command: $1"
-        echo "Run 'htpasswd help' for available commands."
-        exit 1
-        ;;
-esac
+      die "Unknown algorithm: '${algo}'. Supported: apr1, sha256, sha512"
+      ;;
+  esac
+}
+
+# Check if user exists in file
+user_exists() {
+  local file="$1"
+  local user="$2"
+  grep -q "^${user}:" "$file" 2>/dev/null
+}
+
+# Validate username (no colons, no whitespace)
+validate_username() {
+  local user="$1"
+  if [[ -z "$user" ]]; then
+    die "Username cannot be empty"
+  fi
+  if [[ "$user" =~ : ]]; then
+    die "Username cannot contain ':' character"
+  fi
+  if [[ "$user" =~ [[:space:]] ]]; then
+    die "Username cannot contain whitespace"
+  fi
+  if [[ "${#user}" -gt 255 ]]; then
+    die "Username too long (max 255 characters)"
+  fi
+}
+
+# ---------------------------------------------------------------------------
+# Commands
+# ---------------------------------------------------------------------------
+
+cmd_create() {
+  local file="${1:-}"
+  local user="${2:-}"
+  local password="${3:-}"
+
+  [[ -z "$file" || -z "$user" || -z "$password" ]] && \
+    die "Usage: ${SCRIPT_NAME} create <file> <user> <password>"
+
+  check_openssl
+  validate_username "$user"
+
+  if [[ -f "$file" ]]; then
+    die "File '${file}' already exists. Use 'add' to add users, or remove the file first."
+  fi
+
+  # Create parent directory if needed
+  local dir
+  dir="$(dirname "$file")"
+  if [[ ! -d "$dir" ]]; then
+    mkdir -p "$dir"
+  fi
+
+  local hash
+  hash="$(generate_hash "$password")"
+  echo "${user}:${hash}" > "$file"
+  chmod 640 "$file"
+
+  echo "┌──────────────────────────────────────────────────┐"
+  echo "│  htpasswd File Created                           │"
+  echo "├──────────────────────────────────────────────────┤"
+  printf "│  File:     %-38s │\n" "${file}"
+  printf "│  User:     %-38s │\n" "${user}"
+  printf "│  Algo:     %-38s │\n" "${HTPASSWD_ALGO:-apr1}"
+  printf "│  Perms:    %-38s │\n" "640 (owner rw, group r)"
+  echo "├──────────────────────────────────────────────────┤"
+  echo "│  ✅ File created with 1 user                     │"
+  echo "└──────────────────────────────────────────────────┘"
+}
+
+cmd_add() {
+  local file="${1:-}"
+  local user="${2:-}"
+  local password="${3:-}"
+
+  [[ -z "$file" || -z "$user" || -z "$password" ]] && \
+    die "Usage: ${SCRIPT_NAME} add <file> <user> <password>"
+
+  check_openssl
+  validate_username "$user"
+
+  if [[ ! -f "$file" ]]; then
+    die "File '${file}' does not exist. Use 'create' to create a new file."
+  fi
+
+  local hash
+  hash="$(generate_hash "$password")"
+
+  if user_exists "$file" "$user"; then
+    # Update existing user
+    local tmp
+    tmp="$(mktemp)"
+    sed "s|^${user}:.*|${user}:${hash}|" "$file" > "$tmp"
+    mv "$tmp" "$file"
+
+    echo "┌──────────────────────────────────────────────────┐"
+    echo "│  User Password Updated                           │"
+    echo "├──────────────────────────────────────────────────┤"
+    printf "│  File:     %-38s │\n" "${file}"
+    printf "│  User:     %-38s │\n" "${user}"
+    printf "│  Action:   %-38s │\n" "Password updated"
+    echo "├──────────────────────────────────────────────────┤"
+    echo "│  ⚠️  User already existed — password replaced     │"
+    echo "└──────────────────────────────────────────────────┘"
+  else
+    # Append new user
+    echo "${user}:${hash}" >> "$file"
+    local count
+    count="$(wc -l < "$file" | tr -d ' ')"
+
+    echo "┌──────────────────────────────────────────────────┐"
+    echo "│  User Added                                      │"
+    echo "├──────────────────────────────────────────────────┤"
+    printf "│  File:     %-38s │\n" "${file}"
+    printf "│  User:     %-38s │\n" "${user}"
+    printf "│  Algo:     %-38s │\n" "${HTPASSWD_ALGO:-apr1}"
+    printf "│  Total:    %-38s │\n" "${count} user(s)"
+    echo "├──────────────────────────────────────────────────┤"
+    echo "│  ✅ User added successfully                      │"
+    echo "└──────────────────────────────────────────────────┘"
+  fi
+}
+
+cmd_delete() {
+  local file="${1:-}"
+  local user="${2:-}"
+
+  [[ -z "$file" || -z "$user" ]] && \
+    die "Usage: ${SCRIPT_NAME} delete <file> <user>"
+
+  [[ -f "$file" ]] || die "File '${file}' does not exist"
+
+  if ! user_exists "$file" "$user"; then
+    die "User '${user}' not found in '${file}'"
+  fi
+
+  local tmp
+  tmp="$(mktemp)"
+  grep -v "^${user}:" "$file" > "$tmp" || true
+  mv "$tmp" "$file"
+
+  local remaining
+  remaining="$(wc -l < "$file" | tr -d ' ')"
+
+  echo "┌──────────────────────────────────────────────────┐"
+  echo "│  User Deleted                                    │"
+  echo "├──────────────────────────────────────────────────┤"
+  printf "│  File:       %-36s │\n" "${file}"
+  printf "│  Deleted:    %-36s │\n" "${user}"
+  printf "│  Remaining:  %-36s │\n" "${remaining} user(s)"
+  echo "├──────────────────────────────────────────────────┤"
+  echo "│  ✅ User removed successfully                    │"
+  echo "└──────────────────────────────────────────────────┘"
+}
+
+cmd_verify() {
+  local file="${1:-}"
+  local user="${2:-}"
+  local password="${3:-}"
+
+  [[ -z "$file" || -z "$user" || -z "$password" ]] && \
+    die "Usage: ${SCRIPT_NAME} verify <file> <user> <password>"
+
+  check_openssl
+
+  [[ -f "$file" ]] || die "File '${file}' does not exist"
+
+  if ! user_exists "$file" "$user"; then
+    die "User '${user}' not found in '${file}'"
+  fi
+
+  local stored_hash
+  stored_hash="$(grep "^${user}:" "$file" | head -1 | cut -d: -f2-)"
+
+  local verified=0
+
+  # Detect hash type and verify
+  if [[ "$stored_hash" == '$apr1$'* ]]; then
+    # APR1 (Apache MD5)
+    local salt
+    salt="$(echo "$stored_hash" | cut -d'$' -f3)"
+    local computed
+    computed="$(openssl passwd -apr1 -salt "$salt" "$password")"
+    [[ "$computed" == "$stored_hash" ]] && verified=1
+  elif [[ "$stored_hash" == '$5$'* ]]; then
+    # SHA-256
+    local salt
+    salt="$(echo "$stored_hash" | cut -d'$' -f3)"
+    local computed
+    computed="$(openssl passwd -5 -salt "$salt" "$password")"
+    [[ "$computed" == "$stored_hash" ]] && verified=1
+  elif [[ "$stored_hash" == '$6$'* ]]; then
+    # SHA-512
+    local salt
+    salt="$(echo "$stored_hash" | cut -d'$' -f3)"
+    local computed
+    computed="$(openssl passwd -6 -salt "$salt" "$password")"
+    [[ "$computed" == "$stored_hash" ]] && verified=1
+  elif [[ "$stored_hash" == '{SHA}'* ]]; then
+    # SHA1 (legacy)
+    local b64pass
+    b64pass="$(printf '%s' "$password" | openssl dgst -sha1 -binary | openssl enc -base64)"
+    [[ "{SHA}${b64pass}" == "$stored_hash" ]] && verified=1
+  else
+    # Try crypt-style
+    local salt
+    salt="${stored_hash:0:2}"
+    local computed
+    computed="$(openssl passwd -crypt -salt "$salt" "$password" 2>/dev/null || true)"
+    [[ "$computed" == "$stored_hash" ]] && verified=1
+  fi
+
+  echo "┌──────────────────────────────────────────────────┐"
+  echo "│  Password Verification                           │"
+  echo "├──────────────────────────────────────────────────┤"
+  printf "│  File:     %-38s │\n" "${file}"
+  printf "│  User:     %-38s │\n" "${user}"
+
+  if [[ "$verified" -eq 1 ]]; then
+    printf "│  Result:   %-38s │\n" "✅ Password CORRECT"
+    echo "└──────────────────────────────────────────────────┘"
+    return 0
+  else
+    printf "│  Result:   %-38s │\n" "❌ Password INCORRECT"
+    echo "└──────────────────────────────────────────────────┘"
+    return 1
+  fi
+}
+
+cmd_list() {
+  local file="${1:-}"
+  [[ -z "$file" ]] && die "Usage: ${SCRIPT_NAME} list <file>"
+  [[ -f "$file" ]] || die "File '${file}' does not exist"
+
+  local count
+  count="$(wc -l < "$file" | tr -d ' ')"
+
+  echo "┌──────────────────────────────────────────────────┐"
+  echo "│  htpasswd Users                                  │"
+  echo "├──────────────────────────────────────────────────┤"
+  printf "│  File:  %-41s │\n" "${file}"
+  printf "│  Users: %-41s │\n" "${count}"
+  echo "├──────────────────────────────────────────────────┤"
+
+  local i=1
+  while IFS=: read -r username hash_val; do
+    # Skip empty lines
+    [[ -z "$username" ]] && continue
+
+    local hash_type="unknown"
+    if [[ "$hash_val" == '$apr1$'* ]]; then
+      hash_type="apr1 (MD5)"
+    elif [[ "$hash_val" == '$5$'* ]]; then
+      hash_type="sha256"
+    elif [[ "$hash_val" == '$6$'* ]]; then
+      hash_type="sha512"
+    elif [[ "$hash_val" == '{SHA}'* ]]; then
+      hash_type="sha1"
+    elif [[ "${#hash_val}" -eq 13 ]]; then
+      hash_type="crypt (DES)"
+    fi
+
+    printf "│  %2d. %-20s [%-16s] │\n" "$i" "$username" "$hash_type"
+    i=$(( i + 1 ))
+  done < "$file"
+
+  echo "└──────────────────────────────────────────────────┘"
+}
+
+# ---------------------------------------------------------------------------
+# Main dispatch
+# ---------------------------------------------------------------------------
+
+main() {
+  local cmd="${1:-help}"
+  shift || true
+
+  case "$cmd" in
+    create)   cmd_create "$@" ;;
+    add)      cmd_add "$@" ;;
+    delete)   cmd_delete "$@" ;;
+    verify)   cmd_verify "$@" ;;
+    list)     cmd_list "$@" ;;
+    version)  echo "${SCRIPT_NAME} v${VERSION}" ;;
+    help|--help|-h) usage ;;
+    *)        die "Unknown command: '${cmd}'. Run '${SCRIPT_NAME} help' for usage." ;;
+  esac
+}
+
+main "$@"

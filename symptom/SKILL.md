@@ -1,99 +1,112 @@
 ---
-name: "Symptom"
-description: "Symptom — a fast health & wellness tool. Log anything, find it later, export when needed."
-version: "2.0.0"
+name: "symptom"
+version: "1.0.0"
+description: "Log health symptoms, track patterns, and chart trends. Use when logging symptoms, tracking frequency, charting trends, reviewing patterns."
 author: "BytesAgain"
-tags: ["fitness", "tracking", "daily", "self-care", "symptom"]
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [symptom, general, cli, tool]
+category: "general"
 ---
 
-# Symptom
+# symptom
 
-Symptom — a fast health & wellness tool. Log anything, find it later, export when needed.
-
-## Why Symptom?
-
-- Works entirely offline — your data never leaves your machine
-- Simple command-line interface, no GUI needed
-- Export to JSON, CSV, or plain text anytime
-- Automatic history and activity logging
-
-## Getting Started
-
-```bash
-# See what you can do
-symptom help
-
-# Check current status
-symptom status
-
-# View your statistics
-symptom stats
-```
+Log health symptoms, track patterns, and chart trends. Use when logging symptoms, tracking frequency, charting trends, reviewing patterns.
 
 ## Commands
 
-| Command | What it does |
-|---------|-------------|
-| `symptom log` | Log |
-| `symptom track` | Track |
-| `symptom chart` | Chart |
-| `symptom goal` | Goal |
-| `symptom remind` | Remind |
-| `symptom weekly` | Weekly |
-| `symptom monthly` | Monthly |
-| `symptom compare` | Compare |
-| `symptom export` | Export |
-| `symptom streak` | Streak |
-| `symptom milestone` | Milestone |
-| `symptom trend` | Trend |
-| `symptom stats` | Summary statistics |
-| `symptom export` | <fmt>       Export (json|csv|txt) |
-| `symptom search` | <term>      Search entries |
-| `symptom recent` | Recent activity |
-| `symptom status` | Health check |
-| `symptom help` | Show this help |
-| `symptom version` | Show version |
-| `symptom $name:` | $c entries |
-| `symptom Total:` | $total entries |
-| `symptom Data` | size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1) |
-| `symptom Version:` | v2.0.0 |
-| `symptom Data` | dir: $DATA_DIR |
-| `symptom Entries:` | $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total |
-| `symptom Disk:` | $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1) |
-| `symptom Last:` | $(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo never) |
-| `symptom Status:` | OK |
-| `symptom [Symptom]` | log: $input |
-| `symptom Saved.` | Total log entries: $total |
-| `symptom [Symptom]` | track: $input |
-| `symptom Saved.` | Total track entries: $total |
-| `symptom [Symptom]` | chart: $input |
-| `symptom Saved.` | Total chart entries: $total |
-| `symptom [Symptom]` | goal: $input |
-| `symptom Saved.` | Total goal entries: $total |
-| `symptom [Symptom]` | remind: $input |
-| `symptom Saved.` | Total remind entries: $total |
-| `symptom [Symptom]` | weekly: $input |
-| `symptom Saved.` | Total weekly entries: $total |
-| `symptom [Symptom]` | monthly: $input |
-| `symptom Saved.` | Total monthly entries: $total |
-| `symptom [Symptom]` | compare: $input |
-| `symptom Saved.` | Total compare entries: $total |
-| `symptom [Symptom]` | export: $input |
-| `symptom Saved.` | Total export entries: $total |
-| `symptom [Symptom]` | streak: $input |
-| `symptom Saved.` | Total streak entries: $total |
-| `symptom [Symptom]` | milestone: $input |
-| `symptom Saved.` | Total milestone entries: $total |
-| `symptom [Symptom]` | trend: $input |
-| `symptom Saved.` | Total trend entries: $total |
+### `status`
+
+```bash
+scripts/script.sh status
+```
+
+Show current status
+
+### `add`
+
+```bash
+scripts/script.sh add
+```
+
+Add new entry
+
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
+
+## Configuration
+
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `SYMPTOM_DIR` | No | Data directory (default: ~/.symptom/) |
 
 ## Data Storage
 
-All data is stored locally at `~/.local/share/symptom/`. Each action is logged with timestamps. Use `export` to back up your data anytime.
+All data stored in `~/.symptom/` using JSONL format (one JSON object per line).
 
-## Feedback
+## Output
 
-Found a bug or have a suggestion? Let us know: https://bytesagain.com/feedback/
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

@@ -1,101 +1,155 @@
 #!/usr/bin/env bash
-# policy-reader - Multi-purpose utility tool
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${POLICY_READER_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/policy-reader}"
-DB="$DATA_DIR/data.log"
+
+VERSION="3.0.0"
+SCRIPT_NAME="policy-reader"
+DATA_DIR="$HOME/.local/share/policy-reader"
 mkdir -p "$DATA_DIR"
 
-show_help() {
-    cat << EOF
-policy-reader v$VERSION
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-Multi-purpose utility tool
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
-Usage: policy-reader <command> [args]
-
-Commands:
-  run                  Execute main function
-  config               Configuration
-  status               Show status
-  init                 Initialize
-  list                 List items
-  add                  Add entry
-  remove               Remove entry
-  search               Search
-  export               Export data
-  info                 Show info
-  help                 Show this help
-  version              Show version
-
-Data: \$DATA_DIR
-EOF
+cmd_scan() {
+    local file="${2:-}"
+    [ -z "$file" ] && die "Usage: $SCRIPT_NAME scan <file>"
+    echo '=== Policy Scan: $2 ==='; echo 'Words: '$(wc -w < $2); grep -ci 'data\|personal\|information\|collect\|share\|third.party' $2 | awk '{print "Privacy keywords: "$1}'
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-
-cmd_run() {
-    echo "  Running: $1"
-    _log "run" "${1:-}"
+cmd_summary() {
+    local file="${2:-}"
+    [ -z "$file" ] && die "Usage: $SCRIPT_NAME summary <file>"
+    head -20 $2; echo '...'
 }
 
-cmd_config() {
-    echo "  Config: $DATA_DIR/config.json"
-    _log "config" "${1:-}"
+cmd_check() {
+    local file="${2:-}"
+    local keyword="${3:-}"
+    [ -z "$file" ] && die "Usage: $SCRIPT_NAME check <file keyword>"
+    grep -in $3 $2 | head -10
 }
 
-cmd_status() {
-    echo "  Status: ready"
-    _log "status" "${1:-}"
+cmd_score() {
+    local file="${2:-}"
+    [ -z "$file" ] && die "Usage: $SCRIPT_NAME score <file>"
+    local w=$(wc -w < $2); local k=$(grep -ci 'data\|privacy\|security' $2); awk "BEGIN{printf \"Readability: %d words, %d privacy terms\n\", $w, $k}"
 }
 
-cmd_init() {
-    echo "  Initialized in $DATA_DIR"
-    _log "init" "${1:-}"
+cmd_compare() {
+    local f1="${2:-}"
+    local f2="${3:-}"
+    [ -z "$f1" ] && die "Usage: $SCRIPT_NAME compare <f1 f2>"
+    echo 'Words: '$(wc -w < $2)' vs '$(wc -w < $3)
 }
 
-cmd_list() {
-    [ -f "$DB" ] && cat "$DB" || echo "  (empty)"
-    _log "list" "${1:-}"
+cmd_extract() {
+    local file="${2:-}"
+    local section="${3:-}"
+    [ -z "$file" ] && die "Usage: $SCRIPT_NAME extract <file section>"
+    grep -A10 -i $3 $2 | head -15
 }
 
-cmd_add() {
-    echo "$(date +%Y-%m-%d) $*" >> "$DB"; echo "  Added: $*"
-    _log "add" "${1:-}"
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
+    echo ""
+    echo "Commands:"
+    printf "  %-25s\n" "scan <file>"
+    printf "  %-25s\n" "summary <file>"
+    printf "  %-25s\n" "check <file keyword>"
+    printf "  %-25s\n" "score <file>"
+    printf "  %-25s\n" "compare <f1 f2>"
+    printf "  %-25s\n" "extract <file section>"
+    printf "  %%-25s\n" "help"
+    echo ""
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-cmd_remove() {
-    echo "  Removed: $1"
-    _log "remove" "${1:-}"
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        scan) shift; cmd_scan "$@" ;;
+        summary) shift; cmd_summary "$@" ;;
+        check) shift; cmd_check "$@" ;;
+        score) shift; cmd_score "$@" ;;
+        compare) shift; cmd_compare "$@" ;;
+        extract) shift; cmd_extract "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
+    esac
 }
 
-cmd_search() {
-    grep -i "$1" "$DB" 2>/dev/null || echo "  Not found: $1"
-    _log "search" "${1:-}"
-}
-
-cmd_export() {
-    [ -f "$DB" ] && cat "$DB" || echo "No data"
-    _log "export" "${1:-}"
-}
-
-cmd_info() {
-    echo "  Version: $VERSION | Data: $DATA_DIR"
-    _log "info" "${1:-}"
-}
-
-case "${1:-help}" in
-    run) shift; cmd_run "$@" ;;
-    config) shift; cmd_config "$@" ;;
-    status) shift; cmd_status "$@" ;;
-    init) shift; cmd_init "$@" ;;
-    list) shift; cmd_list "$@" ;;
-    add) shift; cmd_add "$@" ;;
-    remove) shift; cmd_remove "$@" ;;
-    search) shift; cmd_search "$@" ;;
-    export) shift; cmd_export "$@" ;;
-    info) shift; cmd_info "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "policy-reader v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
-esac
+main "$@"

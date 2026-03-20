@@ -1,0 +1,9 @@
+{
+  "name": "passport",
+  "description": "Validate and format passport or identity document data. Use when checking fields, validating numbers, generating fixtures, linting records.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

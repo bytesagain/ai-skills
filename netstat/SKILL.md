@@ -1,44 +1,63 @@
 ---
-name: NetStat
-description: "Network statistics and connection viewer. Show active connections, listening ports, connection states, bandwidth usage estimates, and network interface statistics."
-version: "2.0.0"
+name: "netstat"
+version: "3.0.0"
+description: "Display network connections, listening ports, and routing tables. Use when diagnosing network issues."
 author: "BytesAgain"
-tags: ["network","connections","ports","tcp","statistics","admin"]
-categories: ["Developer Tools", "Utility"]
+homepage: "https://bytesagain.com"
 ---
-# NetStat
 
-Network statistics and connection viewer. Show active connections, listening ports, connection states, bandwidth usage estimates, and network interface statistics.
+# netstat
 
-## Quick Start
+Display network connections, listening ports, and routing tables. Use when diagnosing network issues.
 
-Run `netstat help` for available commands and usage examples.
+## Commands
 
-## Features
-
-- Fast and lightweight — pure bash with embedded Python
-- No external dependencies required
- in `~/.netstat/`
-- Works on Linux and macOS
-
-## Usage
+### `listen`
 
 ```bash
-netstat help
+scripts/script.sh listen
 ```
 
+### `connections`
+
+```bash
+scripts/script.sh connections <state>
+```
+
+### `ports`
+
+```bash
+scripts/script.sh ports <port>
+```
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+### `interfaces`
+
+```bash
+scripts/script.sh interfaces
+```
+
+### `route`
+
+```bash
+scripts/script.sh route
+```
+
+### `dns`
+
+```bash
+scripts/script.sh dns
+```
+
+## Data Storage
+
+Data stored in `~/.local/share/netstat/`.
+
 ---
-💬 Feedback: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
 
-- Run `netstat help` for all commands
-
-## When to Use
-
-- Quick netstat tasks from terminal
-- Automation pipelines
-
-## When to Use
-
-- Quick netstat tasks from terminal
-- Automation pipelines
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

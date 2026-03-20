@@ -1,0 +1,9 @@
+{
+  "name": "security-roadmap",
+  "description": "A collection of hacking tools, resources and references to practice ethical hacking. hacker roadmap, python, exploitation, frameworks, hacking, hacking-tool.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

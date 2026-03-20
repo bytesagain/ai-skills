@@ -1,0 +1,9 @@
+{
+  "name": "prophet",
+  "description": "Forecast time-series data with seasonal trend modeling. Use when predicting sales, checking model accuracy, converting frequencies, analyzing growth.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

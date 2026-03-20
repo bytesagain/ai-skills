@@ -1,0 +1,9 @@
+{
+  "name": "weathernow",
+  "description": "Fetch current weather and forecasts for any city. Use when checking temperature, planning outdoor activities, comparing forecasts, or packing for trips.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

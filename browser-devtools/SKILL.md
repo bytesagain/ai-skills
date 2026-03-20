@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: Chromedeveditor
-description: "Chrome Dev Editor is a developer tool for building apps on the Chrome platform - Chrome Apps and Web browser-devtools, dart. Use when you need browser-devtools capabilities. Triggers on: browser-devtools."
+description: "Build Chrome Apps and Web Apps with integrated developer tooling. Use when prototyping extensions, debugging web apps, or packaging Chrome apps."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Chromedeveditor

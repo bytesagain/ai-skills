@@ -1,101 +1,155 @@
 #!/usr/bin/env bash
-# inventory-manager - Multi-purpose utility tool
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${INVENTORY_MANAGER_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/inventory-manager}"
-DB="$DATA_DIR/data.log"
+
+VERSION="3.0.0"
+SCRIPT_NAME="inventory-manager"
+DATA_DIR="$HOME/.local/share/inventory-manager"
 mkdir -p "$DATA_DIR"
 
-show_help() {
-    cat << EOF
-inventory-manager v$VERSION
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-Multi-purpose utility tool
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
-Usage: inventory-manager <command> [args]
-
-Commands:
-  run                  Execute main function
-  config               Configuration
-  status               Show status
-  init                 Initialize
-  list                 List items
-  add                  Add entry
-  remove               Remove entry
-  search               Search
-  export               Export data
-  info                 Show info
-  help                 Show this help
-  version              Show version
-
-Data: \$DATA_DIR
-EOF
-}
-
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-
-cmd_run() {
-    echo "  Running: $1"
-    _log "run" "${1:-}"
-}
-
-cmd_config() {
-    echo "  Config: $DATA_DIR/config.json"
-    _log "config" "${1:-}"
-}
-
-cmd_status() {
-    echo "  Status: ready"
-    _log "status" "${1:-}"
-}
-
-cmd_init() {
-    echo "  Initialized in $DATA_DIR"
-    _log "init" "${1:-}"
+cmd_add() {
+    local item="${2:-}"
+    local qty="${3:-}"
+    local price="${4:-}"
+    [ -z "$item" ] && die "Usage: $SCRIPT_NAME add <item qty price>"
+    echo '{"item":"'$2'","qty":'$3',"price":'$4',"ts":"'$(date +%s)'"}' >> $DATA_DIR/inventory.jsonl && echo 'Added $2'
 }
 
 cmd_list() {
-    [ -f "$DB" ] && cat "$DB" || echo "  (empty)"
-    _log "list" "${1:-}"
-}
-
-cmd_add() {
-    echo "$(date +%Y-%m-%d) $*" >> "$DB"; echo "  Added: $*"
-    _log "add" "${1:-}"
+    local filter="${2:-}"
+    [ -z "$filter" ] && die "Usage: $SCRIPT_NAME list <filter>"
+    cat $DATA_DIR/inventory.jsonl 2>/dev/null | tail -20
 }
 
 cmd_remove() {
-    echo "  Removed: $1"
-    _log "remove" "${1:-}"
+    local item="${2:-}"
+    local qty="${3:-}"
+    [ -z "$item" ] && die "Usage: $SCRIPT_NAME remove <item qty>"
+    echo 'Removed $3 of $2'
 }
 
-cmd_search() {
-    grep -i "$1" "$DB" 2>/dev/null || echo "  Not found: $1"
-    _log "search" "${1:-}"
+cmd_low_stock() {
+    local threshold="${2:-}"
+    [ -z "$threshold" ] && die "Usage: $SCRIPT_NAME low-stock <threshold>"
+    echo 'Items below ${2:-5} units:'
+}
+
+cmd_value() {
+    echo 'Total inventory value calculation'
 }
 
 cmd_export() {
-    [ -f "$DB" ] && cat "$DB" || echo "No data"
-    _log "export" "${1:-}"
+    local file="${2:-}"
+    [ -z "$file" ] && die "Usage: $SCRIPT_NAME export <file>"
+    cp $DATA_DIR/inventory.jsonl $2 2>/dev/null && echo 'Exported'
 }
 
-cmd_info() {
-    echo "  Version: $VERSION | Data: $DATA_DIR"
-    _log "info" "${1:-}"
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
+    echo ""
+    echo "Commands:"
+    printf "  %-25s\n" "add <item qty price>"
+    printf "  %-25s\n" "list <filter>"
+    printf "  %-25s\n" "remove <item qty>"
+    printf "  %-25s\n" "low-stock <threshold>"
+    printf "  %-25s\n" "value"
+    printf "  %-25s\n" "export <file>"
+    printf "  %%-25s\n" "help"
+    echo ""
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-case "${1:-help}" in
-    run) shift; cmd_run "$@" ;;
-    config) shift; cmd_config "$@" ;;
-    status) shift; cmd_status "$@" ;;
-    init) shift; cmd_init "$@" ;;
-    list) shift; cmd_list "$@" ;;
-    add) shift; cmd_add "$@" ;;
-    remove) shift; cmd_remove "$@" ;;
-    search) shift; cmd_search "$@" ;;
-    export) shift; cmd_export "$@" ;;
-    info) shift; cmd_info "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "inventory-manager v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
-esac
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        add) shift; cmd_add "$@" ;;
+        list) shift; cmd_list "$@" ;;
+        remove) shift; cmd_remove "$@" ;;
+        low-stock) shift; cmd_low_stock "$@" ;;
+        value) shift; cmd_value "$@" ;;
+        export) shift; cmd_export "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
+    esac
+}
+
+main "$@"

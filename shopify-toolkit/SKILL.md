@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: shopify-toolkit
-description: "Error: --action required. Use when you need shopify toolkit capabilities. Triggers on: shopify toolkit, store, token, product-id, order-id, customer-id."
+description: "Manage Shopify products, orders, inventory, and collections via API. Use when syncing catalogs, monitoring orders, automating stock, notifying events."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Shopify Toolkit

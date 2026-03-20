@@ -1,89 +1,112 @@
 ---
-name: merge
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [merge, tool, utility]
-description: "Merge - command-line tool for everyday use"
+name: "merge"
+version: "1.0.0"
+description: "Combine files, resolve conflicts, concatenate data, and deduplicate across sources. Use when merging files, resolving conflicts, deduplicating datasets."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [merge, general, cli, tool]
+category: "general"
 ---
 
-# Merge
+# merge
 
-Merge toolkit — combine files, resolve conflicts, concatenate data, and deduplicate.
+Combine files, resolve conflicts, concatenate data, and deduplicate across sources. Use when merging files, resolving conflicts, deduplicating datasets.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `merge help` | Show usage info |
-| `merge run` | Run main task |
-| `merge status` | Check state |
-| `merge list` | List items |
-| `merge add <item>` | Add item |
-| `merge export <fmt>` | Export data |
-
-## Usage
+### `status`
 
 ```bash
-merge help
-merge run
-merge status
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-merge help
-merge run
-merge export json
+scripts/script.sh add
 ```
 
-## Output
+Add new entry
 
-Results go to stdout. Save with `merge run > output.txt`.
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `MERGE_DIR` to change data directory. Default: `~/.local/share/merge/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `MERGE_DIR` | No | Data directory (default: ~/.merge/) |
+
+## Data Storage
+
+All data stored in `~/.merge/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
 
-
-## Features
-
-- Simple command-line interface for quick access
-- Local data storage with JSON/CSV export
-- History tracking and activity logs
-- Search across all entries
-- Status monitoring and health checks
-- No external dependencies required
-
-## Quick Start
-
-```bash
-# Check status
-merge status
-
-# View help and available commands
-merge help
-
-# View statistics
-merge stats
-
-# Export your data
-merge export json
-```
-
-## How It Works
-
-Merge stores all data locally in `~/.local/share/merge/`. Each command logs activity with timestamps for full traceability. Use `stats` to see a summary, or `export` to back up your data in JSON, CSV, or plain text format.
-
-## Support
-
-- Feedback: https://bytesagain.com/feedback/
-- Website: https://bytesagain.com
-- Email: hello@bytesagain.com
-
-Powered by BytesAgain | bytesagain.com
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

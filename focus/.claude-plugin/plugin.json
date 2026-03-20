@@ -1,0 +1,9 @@
+{
+  "name": "focus",
+  "description": "Log focus sessions, track productivity streaks, and plan deep work blocks. Use when timing sessions, logging tasks, or maintaining daily streaks.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

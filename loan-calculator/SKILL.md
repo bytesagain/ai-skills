@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: loan-calculator
-description: "贷款计算器。等额本息/等额本金计算、方案对比、提前还款分析、贷款能力评估、还款计划表、再融资分析。Loan calculator with equal installment/principal, comparison, prepayment analysis, affordability, schedule, refinance. Use when you need loan calculator capabilities. Triggers on: loan calculator."
+description: "贷款计算器。等额本息/等额本金计算、方案对比、提前还款分析、贷款能力评估、还款计划表、再融资分析。Loan calculator with equal installment/principal, comparison, prepayment analysis, affordability, schedule."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # loan-calculator
 

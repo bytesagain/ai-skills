@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: wechat-mp-writer
-description: "WeChat Official Account (公众号) content writer with article formatting, headline optimization, and engagement tips. Use when you need to write WeChat articles, optimize headlines for WeChat, format content for mobile reading, or plan WeChat content strategy. Triggers on: 公众号, WeChat, 微信, article writer, 排版, headline, 标题."
+description: "Draft WeChat Official Account articles with headlines and CTAs. Use when writing posts, optimizing titles, scheduling publications, or repurposing content."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # WeChat MP Writer

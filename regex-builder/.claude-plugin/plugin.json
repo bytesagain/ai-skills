@@ -1,0 +1,9 @@
+{
+  "name": "regex-builder",
+  "description": "Construct and test regex patterns with visual reference. Use when building expressions, scoring efficiency, ranking match results, reviewing history.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

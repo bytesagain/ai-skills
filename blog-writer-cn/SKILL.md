@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Blog Writer
-description: "✍️ 博客写作工具 — blog.sh. Use when you need blog writer cn capabilities. Triggers on: blog writer cn."
-  博客写作助手。完整文章生成(Markdown输出)、多角度大纲、SEO优化诊断、开头段落、系列文章规划、风格改写、CTA文案。Blog writer with full articles, outlines, SEO analysis, hooks, series planning, rewriting, CTA copy. 博客、写作、SEO、内容营销。
+description: "Write Chinese blog articles with SEO diagnostics and style rewriting. Use when drafting Mandarin content, planning series, or generating CTAs."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # Blog Writer
 

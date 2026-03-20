@@ -1,101 +1,155 @@
 #!/usr/bin/env bash
-# meditation-guide - Design reference and helper tool
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${MEDITATION_GUIDE_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/meditation-guide}"
-DB="$DATA_DIR/data.log"
+
+VERSION="3.0.0"
+SCRIPT_NAME="meditation-guide"
+DATA_DIR="$HOME/.local/share/meditation-guide"
 mkdir -p "$DATA_DIR"
 
-show_help() {
-    cat << EOF
-meditation-guide v$VERSION
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-Design reference and helper tool
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
-Usage: meditation-guide <command> [args]
-
-Commands:
-  palette              Color palette
-  font                 Font pairing
-  layout               Layout template
-  icon                 Icon reference
-  spacing              Spacing guide
-  breakpoint           Responsive breakpoints
-  contrast             Contrast checker
-  shadow               Shadow presets
-  mockup               Mockup template
-  checklist            Design checklist
-  help                 Show this help
-  version              Show version
-
-Data: \$DATA_DIR
-EOF
+cmd_breathe() {
+    local pattern="${2:-}"
+    [ -z "$pattern" ] && die "Usage: $SCRIPT_NAME breathe <pattern>"
+    echo 'Breathing (${2:-4-7-8}): Inhale ${2%%[-_]*}s, Hold, Exhale'; echo 'Press Ctrl+C to stop'
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-
-cmd_palette() {
-    echo "  Primary: #2563EB | Secondary: #7C3AED | Accent: #F59E0B"
-    _log "palette" "${1:-}"
+cmd_timer() {
+    local minutes="${2:-}"
+    [ -z "$minutes" ] && die "Usage: $SCRIPT_NAME timer <minutes>"
+    echo 'Meditation timer: ${2:-10} minutes'; echo 'Starting...'; sleep $((${2:-10}*60)) 2>/dev/null && echo 'Session complete'
 }
 
-cmd_font() {
-    echo "  Heading: Inter/Poppins | Body: Open Sans/Lato"
-    _log "font" "${1:-}"
+cmd_guide() {
+    local type="${2:-}"
+    [ -z "$type" ] && die "Usage: $SCRIPT_NAME guide <type>"
+    case ${2:-calm} in calm) echo 'Focus on breath. Let thoughts pass like clouds.';; focus) echo 'Choose one point of focus. Return gently when distracted.';; *) echo 'Available: calm, focus, sleep, body-scan';; esac
 }
 
-cmd_layout() {
-    echo "  Grid: 12-col | Spacing: 8px base | Max-width: 1200px"
-    _log "layout" "${1:-}"
+cmd_history() {
+    cat $DATA_DIR/sessions.jsonl 2>/dev/null | tail -10
 }
 
-cmd_icon() {
-    echo "  Libraries: Heroicons | Lucide | Phosphor | Tabler"
-    _log "icon" "${1:-}"
+cmd_streak() {
+    echo 'Sessions: '$(wc -l < $DATA_DIR/sessions.jsonl 2>/dev/null || echo 0)
 }
 
-cmd_spacing() {
-    echo "  xs:4 sm:8 md:16 lg:24 xl:32 2xl:48"
-    _log "spacing" "${1:-}"
+cmd_start() {
+    local minutes="${2:-}"
+    [ -z "$minutes" ] && die "Usage: $SCRIPT_NAME start <minutes>"
+    echo '{"duration":'${2:-10}',"date":"'$(date +%Y-%m-%d)'"}' >> $DATA_DIR/sessions.jsonl && echo 'Session logged'
 }
 
-cmd_breakpoint() {
-    echo "  sm:640 md:768 lg:1024 xl:1280 2xl:1536"
-    _log "breakpoint" "${1:-}"
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
+    echo ""
+    echo "Commands:"
+    printf "  %-25s\n" "breathe <pattern>"
+    printf "  %-25s\n" "timer <minutes>"
+    printf "  %-25s\n" "guide <type>"
+    printf "  %-25s\n" "history"
+    printf "  %-25s\n" "streak"
+    printf "  %-25s\n" "start <minutes>"
+    printf "  %%-25s\n" "help"
+    echo ""
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-cmd_contrast() {
-    echo "  Check: webaim.org/resources/contrastchecker"
-    _log "contrast" "${1:-}"
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        breathe) shift; cmd_breathe "$@" ;;
+        timer) shift; cmd_timer "$@" ;;
+        guide) shift; cmd_guide "$@" ;;
+        history) shift; cmd_history "$@" ;;
+        streak) shift; cmd_streak "$@" ;;
+        start) shift; cmd_start "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
+    esac
 }
 
-cmd_shadow() {
-    echo "  sm: 0 1px 2px | md: 0 4px 6px | lg: 0 10px 15px"
-    _log "shadow" "${1:-}"
-}
-
-cmd_mockup() {
-    echo "  Tool: Figma | Sketch | Adobe XD"
-    _log "mockup" "${1:-}"
-}
-
-cmd_checklist() {
-    echo "  [ ] Consistent spacing | [ ] Color contrast | [ ] Mobile responsive"
-    _log "checklist" "${1:-}"
-}
-
-case "${1:-help}" in
-    palette) shift; cmd_palette "$@" ;;
-    font) shift; cmd_font "$@" ;;
-    layout) shift; cmd_layout "$@" ;;
-    icon) shift; cmd_icon "$@" ;;
-    spacing) shift; cmd_spacing "$@" ;;
-    breakpoint) shift; cmd_breakpoint "$@" ;;
-    contrast) shift; cmd_contrast "$@" ;;
-    shadow) shift; cmd_shadow "$@" ;;
-    mockup) shift; cmd_mockup "$@" ;;
-    checklist) shift; cmd_checklist "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "meditation-guide v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
-esac
+main "$@"

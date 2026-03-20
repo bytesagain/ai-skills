@@ -1,47 +1,46 @@
 ---
 name: YAMLCheck
-description: "YAML validator and formatter. Validate YAML syntax, pretty-print with proper indentation, convert between YAML and JSON, and lint YAML files for common issues."
-version: "2.0.0"
+description: "Validate YAML syntax using python3, lint configs, and convert YAML to JSON. Use when checking syntax, finding errors, or converting formats."
+version: "3.0.2"
 author: "BytesAgain"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 tags: ["yaml","validator","lint","formatter","json","developer"]
 categories: ["Developer Tools", "Utility"]
 ---
+
 # YAMLCheck
 
-YAML validator and formatter. Validate YAML syntax, pretty-print with proper indentation, convert between YAML and JSON, and lint YAML files for common issues.
+A real YAML validator and toolkit. Check syntax, convert YAML to JSON, lint for style issues, and list top-level keys. Uses PyYAML when available, falls back to basic parsing when not.
 
-## Quick Start
+## Commands
 
-Run `yamlcheck help` for available commands and usage examples.
+| Command | Description |
+|---------|-------------|
+| `yamlcheck validate <file>` | Validate YAML syntax — reports document count, types, key counts, file size. Falls back to basic tab/colon checks without PyYAML |
+| `yamlcheck to-json <file>` | Convert YAML to formatted JSON output. Handles multi-document YAML files |
+| `yamlcheck lint <file>` | Check for common style issues: tabs, trailing whitespace, Windows line endings, odd indentation, missing spaces after colons, long lines |
+| `yamlcheck keys <file>` | List top-level keys with types and value previews |
 
-## Features
+## Requirements
 
-- Fast and lightweight — pure bash with embedded Python
-- No external dependencies required
- in `~/.yamlcheck/`
-- Works on Linux and macOS
+- `python3` (required)
+- `PyYAML` (optional — enables full parsing; install with `pip3 install pyyaml`)
 
-## Usage
+Without PyYAML, the tool still works but uses basic regex-based checks instead of full YAML parsing.
+
+## Examples
 
 ```bash
-yamlcheck help
+# Validate a docker-compose file
+yamlcheck validate docker-compose.yml
+
+# Convert YAML config to JSON
+yamlcheck to-json values.yaml
+
+# Check for style issues
+yamlcheck lint playbook.yml
+
+# See what keys are defined
+yamlcheck keys config.yaml
 ```
-
----
-💬 Feedback: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
-
-- Run `yamlcheck help` for all commands
-
-## When to Use
-
-- to automate yamlcheck tasks in your workflow
-- for batch processing yamlcheck operations
-
-## Output
-
-Returns logs to stdout. Redirect to a file with `yamlcheck run > output.txt`.
-
-## Configuration
-
-Set `YAMLCHECK_DIR` environment variable to change the data directory. Default: `~/.local/share/yamlcheck/`

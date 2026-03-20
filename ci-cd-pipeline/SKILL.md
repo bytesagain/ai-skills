@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: CI/CD Pipeline
-description: "CI/CD Pipeline Generator - CI/CD流水线生成器. Use when you need ci cd pipeline capabilities. Triggers on: ci cd pipeline."
-  CI/CD流水线配置。GitHub Actions、GitLab CI、Jenkins、Docker构建、测试、部署。CI/CD pipeline configs for GitHub Actions, GitLab CI, Jenkins, Docker. CI/CD、DevOps。
+description: "Generate CI/CD configs for GitHub Actions, GitLab CI, and Jenkins. Use when setting up pipelines, configuring test stages, or automating deploys."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # CI/CD Pipeline
 

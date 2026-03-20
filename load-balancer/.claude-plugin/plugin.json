@@ -1,0 +1,9 @@
+{
+  "name": "load-balancer",
+  "description": "Manage load balancer configurations and server pools using CLI tools. Use when you need to create, test, or rotate backend server pools.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,101 +1,155 @@
 #!/usr/bin/env bash
-# exercise-form - Developer workflow automation tool
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${EXERCISE_FORM_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/exercise-form}"
-DB="$DATA_DIR/data.log"
+
+VERSION="3.0.0"
+SCRIPT_NAME="exercise-form"
+DATA_DIR="$HOME/.local/share/exercise-form"
 mkdir -p "$DATA_DIR"
 
-show_help() {
-    cat << EOF
-exercise-form v$VERSION
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-Developer workflow automation tool
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
-Usage: exercise-form <command> [args]
-
-Commands:
-  init                 Initialize project
-  check                Run checks
-  build                Build project
-  test                 Run tests
-  deploy               Deploy guide
-  config               Configuration
-  status               Project status
-  template             Code template
-  docs                 Documentation
-  clean                Clean artifacts
-  help                 Show this help
-  version              Show version
-
-Data: \$DATA_DIR
-EOF
+cmd_guide() {
+    local exercise="${2:-}"
+    [ -z "$exercise" ] && die "Usage: $SCRIPT_NAME guide <exercise>"
+    case $2 in squat) echo 'Squat: feet shoulder-width, chest up, hips back, knees over toes, depth below parallel';; pushup) echo 'Push-up: hands shoulder-width, body straight, elbows 45deg, full ROM';; deadlift) echo 'Deadlift: bar over mid-foot, hips hinge, flat back, drive through heels';; plank) echo 'Plank: forearms on ground, body straight, engage core, hold position';; *) echo 'Exercise $2: maintain proper form, control the movement';; esac
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-
-cmd_init() {
-    echo "  Project initialized in $(pwd)"
-    _log "init" "${1:-}"
+cmd_search() {
+    local muscle="${2:-}"
+    [ -z "$muscle" ] && die "Usage: $SCRIPT_NAME search <muscle>"
+    case $2 in chest) echo 'Push-up, bench press, flyes';; back) echo 'Pull-up, row, deadlift';; legs) echo 'Squat, lunge, leg press';; core) echo 'Plank, crunch, leg raise';; *) echo 'Exercises for $2: consult a trainer';; esac
 }
 
-cmd_check() {
-    echo "  Running lint + type check + tests..."
-    _log "check" "${1:-}"
+cmd_warmup() {
+    local type="${2:-}"
+    [ -z "$type" ] && die "Usage: $SCRIPT_NAME warmup <type>"
+    echo 'Warmup ($2): 5min cardio, dynamic stretches, activation exercises'
 }
 
-cmd_build() {
-    echo "  Building..."
-    _log "build" "${1:-}"
+cmd_routine() {
+    local goal="${2:-}"
+    local minutes="${3:-}"
+    [ -z "$goal" ] && die "Usage: $SCRIPT_NAME routine <goal minutes>"
+    echo 'Routine ($2, ${3:-30}min): warmup 5min, main exercises 20min, cooldown 5min'
 }
 
-cmd_test() {
-    echo "  Running test suite..."
-    _log "test" "${1:-}"
+cmd_list() {
+    local category="${2:-}"
+    [ -z "$category" ] && die "Usage: $SCRIPT_NAME list <category>"
+    echo 'Categories: chest, back, legs, core, shoulders, arms, cardio'
 }
 
-cmd_deploy() {
-    echo "  Deploy: build -> test -> stage -> prod"
-    _log "deploy" "${1:-}"
+cmd_tips() {
+    local exercise="${2:-}"
+    [ -z "$exercise" ] && die "Usage: $SCRIPT_NAME tips <exercise>"
+    echo 'Tips for $2: focus on form, breathe properly, progressive overload'
 }
 
-cmd_config() {
-    echo "  Config: $DATA_DIR/config.json"
-    _log "config" "${1:-}"
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
+    echo ""
+    echo "Commands:"
+    printf "  %-25s\n" "guide <exercise>"
+    printf "  %-25s\n" "search <muscle>"
+    printf "  %-25s\n" "warmup <type>"
+    printf "  %-25s\n" "routine <goal minutes>"
+    printf "  %-25s\n" "list <category>"
+    printf "  %-25s\n" "tips <exercise>"
+    printf "  %%-25s\n" "help"
+    echo ""
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-cmd_status() {
-    echo "  Status: checking project health..."
-    _log "status" "${1:-}"
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        guide) shift; cmd_guide "$@" ;;
+        search) shift; cmd_search "$@" ;;
+        warmup) shift; cmd_warmup "$@" ;;
+        routine) shift; cmd_routine "$@" ;;
+        list) shift; cmd_list "$@" ;;
+        tips) shift; cmd_tips "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
+    esac
 }
 
-cmd_template() {
-    echo "  Template for: $1"
-    _log "template" "${1:-}"
-}
-
-cmd_docs() {
-    echo "  Generating docs..."
-    _log "docs" "${1:-}"
-}
-
-cmd_clean() {
-    echo "  Cleaned build artifacts"
-    _log "clean" "${1:-}"
-}
-
-case "${1:-help}" in
-    init) shift; cmd_init "$@" ;;
-    check) shift; cmd_check "$@" ;;
-    build) shift; cmd_build "$@" ;;
-    test) shift; cmd_test "$@" ;;
-    deploy) shift; cmd_deploy "$@" ;;
-    config) shift; cmd_config "$@" ;;
-    status) shift; cmd_status "$@" ;;
-    template) shift; cmd_template "$@" ;;
-    docs) shift; cmd_docs "$@" ;;
-    clean) shift; cmd_clean "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "exercise-form v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
-esac
+main "$@"

@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: amazon-listing
-description: "亚马逊Listing优化工具。标题优化、五点描述、后台关键词、PPC广告、评价管理、排名提升。Amazon listing optimizer with title, bullets, backend keywords, PPC, reviews, ranking. 亚马逊、Amazon、跨境电商、Listing。Use when optimizing Amazon product listings. Triggers on: amazon listing."
+description: "亚马逊Listing优化工具。标题优化、五点描述、后台关键词、PPC广告、评价管理、排名提升。Amazon listing optimizer with title, bullets, backend keywords, PPC, reviews."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Amazon Listing — 亚马逊Listing优化

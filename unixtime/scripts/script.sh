@@ -1,364 +1,327 @@
 #!/usr/bin/env bash
-# Unixtime — sysops tool
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-DATA_DIR="${HOME}/.local/share/unixtime"
-mkdir -p "$DATA_DIR"
+###############################################################################
+# unixtime — Unix Time Utility
+# Convert timestamps, count down to events, and calculate time ranges.
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+###############################################################################
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+VERSION="3.0.0"
+SCRIPT_NAME="unixtime"
 
-_version() { echo "unixtime v2.0.0"; }
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
 
-_help() {
-    echo "Unixtime v2.0.0 — sysops toolkit"
-    echo ""
-    echo "Usage: unixtime <command> [args]"
-    echo ""
-    echo "Commands:"
-    echo "  scan               Scan"
-    echo "  monitor            Monitor"
-    echo "  report             Report"
-    echo "  alert              Alert"
-    echo "  top                Top"
-    echo "  usage              Usage"
-    echo "  check              Check"
-    echo "  fix                Fix"
-    echo "  cleanup            Cleanup"
-    echo "  backup             Backup"
-    echo "  restore            Restore"
-    echo "  log                Log"
-    echo "  benchmark          Benchmark"
-    echo "  compare            Compare"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
+print_banner() {
+  echo "═══════════════════════════════════════════════════════"
+  echo "  ${SCRIPT_NAME} v${VERSION} — Unix Time Utility"
+  echo "  Powered by BytesAgain | bytesagain.com"
+  echo "═══════════════════════════════════════════════════════"
 }
 
-_stats() {
-    echo "=== Unixtime Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Since: $(head -1 "$DATA_DIR/history.log" 2>/dev/null | cut -d'|' -f1 || echo 'N/A')"
+usage() {
+  print_banner
+  echo ""
+  echo "Usage: ${SCRIPT_NAME} <command> [arguments]"
+  echo ""
+  echo "Commands:"
+  echo "  current                      Show current Unix timestamp with details"
+  echo "  to-date <timestamp>          Convert Unix timestamp to readable date"
+  echo "  to-epoch <date-string>       Convert date string to Unix epoch"
+  echo "  countdown <future-timestamp> Show time remaining until a future timestamp"
+  echo "  ranges <start> <end>         Show duration between two timestamps"
+  echo "  version                      Show version"
+  echo "  help                         Show this help message"
+  echo ""
+  echo "Examples:"
+  echo "  ${SCRIPT_NAME} current"
+  echo "  ${SCRIPT_NAME} to-date 1700000000"
+  echo "  ${SCRIPT_NAME} to-epoch '2025-06-15 14:00:00'"
+  echo "  ${SCRIPT_NAME} countdown 1800000000"
+  echo "  ${SCRIPT_NAME} ranges 1700000000 1700086400"
+  echo ""
+  echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "" >> "$out"
-            echo "]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    echo "$name,$ts,$val" >> "$out"
-                done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Unixtime Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-                echo "" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
-    esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
+die() {
+  echo "ERROR: $*" >&2
+  exit 1
 }
 
-_status() {
-    echo "=== Unixtime Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    local last=$(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo "never")
-    echo "  Last activity: $last"
-    echo "  Status: OK"
+is_numeric() {
+  [[ "$1" =~ ^-?[0-9]+$ ]]
 }
 
-_search() {
-    local term="${1:?Usage: unixtime search <term>}"
-    echo "Searching for: $term"
-    local found=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local matches=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$matches" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$matches" | while read -r line; do
-                echo "    $line"
-                found=$((found + 1))
-            done
-        fi
-    done
-    [ $found -eq 0 ] && echo "  No matches found."
+format_duration_long() {
+  local total="$1"
+  local negative=0
+  if [[ "$total" -lt 0 ]]; then
+    negative=1
+    total=$(( -total ))
+  fi
+
+  local years=$(( total / 31536000 ))
+  local remainder=$(( total % 31536000 ))
+  local weeks=$(( remainder / 604800 ))
+  remainder=$(( remainder % 604800 ))
+  local days=$(( remainder / 86400 ))
+  remainder=$(( remainder % 86400 ))
+  local hours=$(( remainder / 3600 ))
+  remainder=$(( remainder % 3600 ))
+  local minutes=$(( remainder / 60 ))
+  local seconds=$(( remainder % 60 ))
+
+  local parts=()
+  [[ "$years" -gt 0 ]] && parts+=("${years}y")
+  [[ "$weeks" -gt 0 ]] && parts+=("${weeks}w")
+  [[ "$days" -gt 0 ]] && parts+=("${days}d")
+  [[ "$hours" -gt 0 ]] && parts+=("${hours}h")
+  [[ "$minutes" -gt 0 ]] && parts+=("${minutes}m")
+  parts+=("${seconds}s")
+
+  local result="${parts[*]}"
+  if [[ "$negative" -eq 1 ]]; then
+    echo "-${result}"
+  else
+    echo "${result}"
+  fi
 }
 
-_recent() {
-    echo "=== Recent Activity ==="
-    if [ -f "$DATA_DIR/history.log" ]; then
-        tail -20 "$DATA_DIR/history.log" | while IFS='' read -r line; do
-            echo "  $line"
-        done
-    else
-        echo "  No activity yet."
-    fi
+format_short_duration() {
+  local total="$1"
+  local abs="${total#-}"
+  [[ "$total" -lt 0 ]] && abs=$(( -total ))
+
+  local days=$(( abs / 86400 ))
+  local hours=$(( (abs % 86400) / 3600 ))
+  local minutes=$(( (abs % 3600) / 60 ))
+  local seconds=$(( abs % 60 ))
+
+  echo "${days}d ${hours}h ${minutes}m ${seconds}s"
 }
 
+epoch_to_human() {
+  local ts="$1"
+  date -d "@${ts}" '+%Y-%m-%d %H:%M:%S %Z' 2>/dev/null \
+    || date -r "${ts}" '+%Y-%m-%d %H:%M:%S %Z' 2>/dev/null \
+    || echo "N/A"
+}
+
+epoch_to_utc() {
+  local ts="$1"
+  TZ=UTC date -d "@${ts}" '+%Y-%m-%d %H:%M:%S UTC' 2>/dev/null \
+    || TZ=UTC date -r "${ts}" '+%Y-%m-%d %H:%M:%S UTC' 2>/dev/null \
+    || echo "N/A"
+}
+
+# ---------------------------------------------------------------------------
+# Commands
+# ---------------------------------------------------------------------------
+
+cmd_current() {
+  local now
+  now="$(date +%s)"
+  local now_local now_utc now_iso
+  now_local="$(epoch_to_human "$now")"
+  now_utc="$(epoch_to_utc "$now")"
+  now_iso="$(date -u '+%Y-%m-%dT%H:%M:%SZ' 2>/dev/null || echo 'N/A')"
+
+  local now_ms
+  if command -v python3 &>/dev/null; then
+    now_ms="$(python3 -c 'import time; print(int(time.time()*1000))')"
+  else
+    now_ms="${now}000"
+  fi
+
+  local day_of_year week_number day_name
+  day_of_year="$(date '+%-j' 2>/dev/null || echo 'N/A')"
+  week_number="$(date '+%V' 2>/dev/null || echo 'N/A')"
+  day_name="$(date '+%A' 2>/dev/null || echo 'N/A')"
+
+  echo "┌───────────────────────────────────────────────┐"
+  echo "│  Current Unix Time                            │"
+  echo "├───────────────────────────────────────────────┤"
+  printf "│  Epoch (s):   %-32s │\n" "${now}"
+  printf "│  Epoch (ms):  %-32s │\n" "${now_ms}"
+  printf "│  Local:       %-32s │\n" "${now_local}"
+  printf "│  UTC:         %-32s │\n" "${now_utc}"
+  printf "│  ISO 8601:    %-32s │\n" "${now_iso}"
+  echo "├───────────────────────────────────────────────┤"
+  printf "│  Day of year: %-32s │\n" "${day_of_year}/365"
+  printf "│  Week:        %-32s │\n" "${week_number}"
+  printf "│  Day:         %-32s │\n" "${day_name}"
+  echo "└───────────────────────────────────────────────┘"
+}
+
+cmd_to_date() {
+  local ts="${1:-}"
+  [[ -z "$ts" ]] && die "Usage: ${SCRIPT_NAME} to-date <timestamp>"
+  is_numeric "$ts" || die "Invalid timestamp: '${ts}' — must be a number"
+
+  # Detect if milliseconds (13+ digits)
+  local effective_ts="$ts"
+  local note=""
+  if [[ "${#ts}" -ge 13 ]]; then
+    effective_ts=$(( ts / 1000 ))
+    note="(detected milliseconds, divided by 1000)"
+  fi
+
+  local local_date utc_date iso_date
+  local_date="$(epoch_to_human "$effective_ts")"
+  utc_date="$(epoch_to_utc "$effective_ts")"
+  iso_date="$(TZ=UTC date -d "@${effective_ts}" '+%Y-%m-%dT%H:%M:%SZ' 2>/dev/null || echo 'N/A')"
+
+  local now age age_str
+  now="$(date +%s)"
+  age=$(( now - effective_ts ))
+  age_str="$(format_duration_long "$age")"
+
+  local relative
+  if [[ "$age" -gt 0 ]]; then
+    relative="${age_str} ago"
+  elif [[ "$age" -lt 0 ]]; then
+    relative="in $(format_duration_long $(( -age )))"
+  else
+    relative="right now"
+  fi
+
+  echo "┌───────────────────────────────────────────────────┐"
+  echo "│  Timestamp → Date                                 │"
+  echo "├───────────────────────────────────────────────────┤"
+  printf "│  Input:    %-39s │\n" "${ts} ${note}"
+  printf "│  Local:    %-39s │\n" "${local_date}"
+  printf "│  UTC:      %-39s │\n" "${utc_date}"
+  printf "│  ISO 8601: %-39s │\n" "${iso_date}"
+  printf "│  Relative: %-39s │\n" "${relative}"
+  echo "└───────────────────────────────────────────────────┘"
+}
+
+cmd_to_epoch() {
+  local datestr="${1:-}"
+  [[ -z "$datestr" ]] && die "Usage: ${SCRIPT_NAME} to-epoch <date-string>\n  Example: ${SCRIPT_NAME} to-epoch '2025-06-15 14:00:00'"
+
+  local epoch
+  epoch="$(date -d "${datestr}" '+%s' 2>/dev/null)" \
+    || die "Failed to parse date: '${datestr}'\n  Try formats like: '2025-01-15', '2025-01-15 10:30:00', 'Jan 15 2025'"
+
+  local human_back
+  human_back="$(epoch_to_human "$epoch")"
+
+  local now diff_sec relative
+  now="$(date +%s)"
+  diff_sec=$(( epoch - now ))
+  if [[ "$diff_sec" -gt 0 ]]; then
+    relative="$(format_duration_long "$diff_sec") from now"
+  elif [[ "$diff_sec" -lt 0 ]]; then
+    relative="$(format_duration_long $(( -diff_sec ))) ago"
+  else
+    relative="right now"
+  fi
+
+  echo "┌───────────────────────────────────────────────────┐"
+  echo "│  Date → Epoch                                     │"
+  echo "├───────────────────────────────────────────────────┤"
+  printf "│  Input:    %-39s │\n" "${datestr}"
+  printf "│  Epoch:    %-39s │\n" "${epoch}"
+  printf "│  Verified: %-39s │\n" "${human_back}"
+  printf "│  Relative: %-39s │\n" "${relative}"
+  echo "└───────────────────────────────────────────────────┘"
+}
+
+cmd_countdown() {
+  local target="${1:-}"
+  [[ -z "$target" ]] && die "Usage: ${SCRIPT_NAME} countdown <future-timestamp>"
+  is_numeric "$target" || die "Invalid timestamp: '${target}'"
+
+  local now remaining
+  now="$(date +%s)"
+  remaining=$(( target - now ))
+
+  local target_date
+  target_date="$(epoch_to_human "$target")"
+
+  if [[ "$remaining" -le 0 ]]; then
+    local elapsed=$(( -remaining ))
+    echo "┌───────────────────────────────────────────────────┐"
+    echo "│  ⏰ Countdown — ALREADY PASSED                    │"
+    echo "├───────────────────────────────────────────────────┤"
+    printf "│  Target:  %-40s │\n" "${target} (${target_date})"
+    printf "│  Status:  %-40s │\n" "Passed $(format_duration_long "$elapsed") ago"
+    echo "└───────────────────────────────────────────────────┘"
+  else
+    local pct
+    # percentage through the day
+    local dur_str
+    dur_str="$(format_duration_long "$remaining")"
+    echo "┌───────────────────────────────────────────────────┐"
+    echo "│  ⏳ Countdown                                     │"
+    echo "├───────────────────────────────────────────────────┤"
+    printf "│  Target:     %-37s │\n" "${target} (${target_date})"
+    printf "│  Now:        %-37s │\n" "${now}"
+    printf "│  Remaining:  %-37s │\n" "${dur_str}"
+    echo "├───────────────────────────────────────────────────┤"
+    printf "│  Seconds:    %-37s │\n" "${remaining}"
+    printf "│  Minutes:    %-37s │\n" "$(awk "BEGIN{printf \"%.1f\", ${remaining}/60}")"
+    printf "│  Hours:      %-37s │\n" "$(awk "BEGIN{printf \"%.2f\", ${remaining}/3600}")"
+    printf "│  Days:       %-37s │\n" "$(awk "BEGIN{printf \"%.3f\", ${remaining}/86400}")"
+    echo "└───────────────────────────────────────────────────┘"
+  fi
+}
+
+cmd_ranges() {
+  local start="${1:-}"
+  local end="${2:-}"
+  [[ -z "$start" || -z "$end" ]] && die "Usage: ${SCRIPT_NAME} ranges <start> <end>"
+  is_numeric "$start" || die "Invalid start timestamp: '${start}'"
+  is_numeric "$end" || die "Invalid end timestamp: '${end}'"
+
+  local diff=$(( end - start ))
+  local abs_diff="${diff#-}"
+  [[ "$diff" -lt 0 ]] && abs_diff=$(( -diff ))
+
+  local start_date end_date
+  start_date="$(epoch_to_human "$start")"
+  end_date="$(epoch_to_human "$end")"
+
+  local dur_str
+  dur_str="$(format_duration_long "$diff")"
+
+  echo "┌───────────────────────────────────────────────────────┐"
+  echo "│  Time Range Analysis                                  │"
+  echo "├───────────────────────────────────────────────────────┤"
+  printf "│  Start:    %-42s │\n" "${start} → ${start_date}"
+  printf "│  End:      %-42s │\n" "${end} → ${end_date}"
+  echo "├───────────────────────────────────────────────────────┤"
+  printf "│  Duration: %-42s │\n" "${dur_str}"
+  printf "│  Seconds:  %-42s │\n" "${diff}"
+  printf "│  Minutes:  %-42s │\n" "$(awk "BEGIN{printf \"%.2f\", ${abs_diff}/60}")"
+  printf "│  Hours:    %-42s │\n" "$(awk "BEGIN{printf \"%.2f\", ${abs_diff}/3600}")"
+  printf "│  Days:     %-42s │\n" "$(awk "BEGIN{printf \"%.4f\", ${abs_diff}/86400}")"
+  printf "│  Weeks:    %-42s │\n" "$(awk "BEGIN{printf \"%.4f\", ${abs_diff}/604800}")"
+  echo "└───────────────────────────────────────────────────────┘"
+}
+
+# ---------------------------------------------------------------------------
 # Main dispatch
-case "${1:-help}" in
-    scan)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent scan entries:"
-            tail -20 "$DATA_DIR/scan.log" 2>/dev/null || echo "  No entries yet. Use: unixtime scan <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/scan.log"
-            local total=$(wc -l < "$DATA_DIR/scan.log")
-            echo "  [Unixtime] scan: $input"
-            echo "  Saved. Total scan entries: $total"
-            _log "scan" "$input"
-        fi
-        ;;
-    monitor)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent monitor entries:"
-            tail -20 "$DATA_DIR/monitor.log" 2>/dev/null || echo "  No entries yet. Use: unixtime monitor <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/monitor.log"
-            local total=$(wc -l < "$DATA_DIR/monitor.log")
-            echo "  [Unixtime] monitor: $input"
-            echo "  Saved. Total monitor entries: $total"
-            _log "monitor" "$input"
-        fi
-        ;;
-    report)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent report entries:"
-            tail -20 "$DATA_DIR/report.log" 2>/dev/null || echo "  No entries yet. Use: unixtime report <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/report.log"
-            local total=$(wc -l < "$DATA_DIR/report.log")
-            echo "  [Unixtime] report: $input"
-            echo "  Saved. Total report entries: $total"
-            _log "report" "$input"
-        fi
-        ;;
-    alert)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent alert entries:"
-            tail -20 "$DATA_DIR/alert.log" 2>/dev/null || echo "  No entries yet. Use: unixtime alert <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/alert.log"
-            local total=$(wc -l < "$DATA_DIR/alert.log")
-            echo "  [Unixtime] alert: $input"
-            echo "  Saved. Total alert entries: $total"
-            _log "alert" "$input"
-        fi
-        ;;
-    top)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent top entries:"
-            tail -20 "$DATA_DIR/top.log" 2>/dev/null || echo "  No entries yet. Use: unixtime top <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/top.log"
-            local total=$(wc -l < "$DATA_DIR/top.log")
-            echo "  [Unixtime] top: $input"
-            echo "  Saved. Total top entries: $total"
-            _log "top" "$input"
-        fi
-        ;;
-    usage)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent usage entries:"
-            tail -20 "$DATA_DIR/usage.log" 2>/dev/null || echo "  No entries yet. Use: unixtime usage <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/usage.log"
-            local total=$(wc -l < "$DATA_DIR/usage.log")
-            echo "  [Unixtime] usage: $input"
-            echo "  Saved. Total usage entries: $total"
-            _log "usage" "$input"
-        fi
-        ;;
-    check)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent check entries:"
-            tail -20 "$DATA_DIR/check.log" 2>/dev/null || echo "  No entries yet. Use: unixtime check <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/check.log"
-            local total=$(wc -l < "$DATA_DIR/check.log")
-            echo "  [Unixtime] check: $input"
-            echo "  Saved. Total check entries: $total"
-            _log "check" "$input"
-        fi
-        ;;
-    fix)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent fix entries:"
-            tail -20 "$DATA_DIR/fix.log" 2>/dev/null || echo "  No entries yet. Use: unixtime fix <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/fix.log"
-            local total=$(wc -l < "$DATA_DIR/fix.log")
-            echo "  [Unixtime] fix: $input"
-            echo "  Saved. Total fix entries: $total"
-            _log "fix" "$input"
-        fi
-        ;;
-    cleanup)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent cleanup entries:"
-            tail -20 "$DATA_DIR/cleanup.log" 2>/dev/null || echo "  No entries yet. Use: unixtime cleanup <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/cleanup.log"
-            local total=$(wc -l < "$DATA_DIR/cleanup.log")
-            echo "  [Unixtime] cleanup: $input"
-            echo "  Saved. Total cleanup entries: $total"
-            _log "cleanup" "$input"
-        fi
-        ;;
-    backup)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent backup entries:"
-            tail -20 "$DATA_DIR/backup.log" 2>/dev/null || echo "  No entries yet. Use: unixtime backup <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/backup.log"
-            local total=$(wc -l < "$DATA_DIR/backup.log")
-            echo "  [Unixtime] backup: $input"
-            echo "  Saved. Total backup entries: $total"
-            _log "backup" "$input"
-        fi
-        ;;
-    restore)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent restore entries:"
-            tail -20 "$DATA_DIR/restore.log" 2>/dev/null || echo "  No entries yet. Use: unixtime restore <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/restore.log"
-            local total=$(wc -l < "$DATA_DIR/restore.log")
-            echo "  [Unixtime] restore: $input"
-            echo "  Saved. Total restore entries: $total"
-            _log "restore" "$input"
-        fi
-        ;;
-    log)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent log entries:"
-            tail -20 "$DATA_DIR/log.log" 2>/dev/null || echo "  No entries yet. Use: unixtime log <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/log.log"
-            local total=$(wc -l < "$DATA_DIR/log.log")
-            echo "  [Unixtime] log: $input"
-            echo "  Saved. Total log entries: $total"
-            _log "log" "$input"
-        fi
-        ;;
-    benchmark)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent benchmark entries:"
-            tail -20 "$DATA_DIR/benchmark.log" 2>/dev/null || echo "  No entries yet. Use: unixtime benchmark <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/benchmark.log"
-            local total=$(wc -l < "$DATA_DIR/benchmark.log")
-            echo "  [Unixtime] benchmark: $input"
-            echo "  Saved. Total benchmark entries: $total"
-            _log "benchmark" "$input"
-        fi
-        ;;
-    compare)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent compare entries:"
-            tail -20 "$DATA_DIR/compare.log" 2>/dev/null || echo "  No entries yet. Use: unixtime compare <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/compare.log"
-            local total=$(wc -l < "$DATA_DIR/compare.log")
-            echo "  [Unixtime] compare: $input"
-            echo "  Saved. Total compare entries: $total"
-            _log "compare" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown command: $1"
-        echo "Run 'unixtime help' for available commands."
-        exit 1
-        ;;
-esac
+# ---------------------------------------------------------------------------
+
+main() {
+  local cmd="${1:-help}"
+  shift || true
+
+  case "$cmd" in
+    current)   cmd_current "$@" ;;
+    to-date)   cmd_to_date "$@" ;;
+    to-epoch)  cmd_to_epoch "$@" ;;
+    countdown) cmd_countdown "$@" ;;
+    ranges)    cmd_ranges "$@" ;;
+    version)   echo "${SCRIPT_NAME} v${VERSION}" ;;
+    help|--help|-h) usage ;;
+    *)         die "Unknown command: '${cmd}'. Run '${SCRIPT_NAME} help' for usage." ;;
+  esac
+}
+
+main "$@"

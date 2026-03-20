@@ -1,0 +1,9 @@
+{
+  "name": "deploy-tool",
+  "description": "The PHP deployment tool with support for popular frameworks out of the box deploy-tool, php, deploy, deployment, php, provision.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

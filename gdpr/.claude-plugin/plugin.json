@@ -1,0 +1,9 @@
+{
+  "name": "gdpr",
+  "description": "Audit GDPR compliance, generate privacy policies, and document data flows. Use when auditing practices, drafting policies, or checking consent flows.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

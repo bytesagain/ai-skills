@@ -1,47 +1,138 @@
 ---
-version: "2.0.0"
-name: dashboard-builder
-description: "数据看板构建器。创建交互式HTML数据看板、添加图表组件、配置指标、布局管理、主题切换、导出分享。Dashboard builder with widgets, metrics, layouts, themes, and HTML export. Use when you need dashboard builder capabilities. Triggers on: dashboard builder."
+version: "3.3.0"
+name: Dashboard Builder
+description: "Build and render ASCII dashboards in terminal with bar charts, gauges, tables, and text panels. Use when visualizing metrics or monitoring data."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
+tags: [dashboard, terminal, ascii, chart, monitoring]
+category: "devtools"
 ---
+
 # dashboard-builder
 
-数据看板构建器。创建交互式HTML数据看板、添加图表组件、配置指标、布局管理、主题切换、导出分享。Dashboard builder with widgets, metrics, layouts, themes, and HTML export.
-
-## 为什么选择这个工具
-
-- ✅ 专为中文用户设计，理解中国市场和文化
-- ✅ 多种命令覆盖不同场景需求
-- ✅ 输出实用、可直接使用的内容
-- ✅ 持续更新，紧跟行业最新趋势
-
-## 命令速查
-
-```
-  bar             bar
-  line            line
-  pie             pie
-  number          number
-  progress        progress
-  table           table
-  up              up
-  down            down
-```
-
-## 专业建议
-
-- 先规划再创建** — 确定看板目标和受众，再选择组件
-- 少即是多** — 一个看板建议不超过6-8个组件，避免信息过载
-- KPI优先** — 把最重要的指标放在最上面，用大数字卡片展示
-- 配色统一** — 选择一个主题并保持一致，避免花哨
-- 响应式布局** — 使用grid布局让看板在不同屏幕上自适应
-
----
-*dashboard-builder by BytesAgain*
----
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
+Terminal dashboard toolkit — create dashboards with bar charts, gauges, tables, and text panels, all rendered as ASCII art in your terminal.
 
 ## Commands
 
-Run `dashboard-builder help` to see all available commands.
+### `create`
+
+Create a new dashboard configuration.
+
+```bash
+scripts/script.sh create server-metrics
+```
+
+### `add-widget`
+
+Add a widget to a dashboard. Types: bar, gauge, table, text.
+
+```bash
+scripts/script.sh add-widget server-metrics bar "Revenue:85,Costs:42,Profit:43"
+scripts/script.sh add-widget server-metrics gauge "CPU:72:100"
+scripts/script.sh add-widget server-metrics table "Service:Status|API:OK|DB:OK"
+scripts/script.sh add-widget server-metrics text "All systems operational"
+```
+
+### `render`
+
+Render a dashboard in the terminal with ASCII art charts.
+
+```bash
+scripts/script.sh render server-metrics
+```
+
+Output includes bordered frames, bar charts with `█░` characters, gauges with percentage and threshold labels, and formatted tables.
+
+### `list`
+
+List all dashboards with widget counts and sizes.
+
+```bash
+scripts/script.sh list
+```
+
+### `show`
+
+Show the raw JSON configuration of a dashboard.
+
+```bash
+scripts/script.sh show server-metrics
+```
+
+### `delete`
+
+Delete a dashboard.
+
+```bash
+scripts/script.sh delete old-dashboard
+```
+
+### `export`
+
+Export a dashboard to JSON, plain text, or HTML.
+
+```bash
+scripts/script.sh export server-metrics json
+scripts/script.sh export server-metrics html
+scripts/script.sh export server-metrics txt
+```
+
+### `import`
+
+Import a dashboard from a JSON file.
+
+```bash
+scripts/script.sh import backup.json
+```
+
+### `demo`
+
+Show a built-in demo dashboard with all widget types rendered.
+
+```bash
+scripts/script.sh demo
+```
+
+## Examples
+
+```bash
+# Full workflow
+scripts/script.sh create sales-q4
+scripts/script.sh add-widget sales-q4 bar "Jan:120,Feb:95,Mar:140,Apr:180"
+scripts/script.sh add-widget sales-q4 gauge "Target:340:500"
+scripts/script.sh add-widget sales-q4 table "Region:Revenue:Growth|US:2.4M:12%|EU:1.8M:8%|APAC:900K:22%"
+scripts/script.sh add-widget sales-q4 text "Q4 revenue on track"
+scripts/script.sh render sales-q4
+scripts/script.sh export sales-q4 html
+```
+
+## Configuration
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `DASHBOARD_BUILDER_DIR` | No | Data directory (default: `~/.dashboard-builder/`) |
+
+## Data Storage
+
+All dashboards saved in `~/.dashboard-builder/dashboards/` as JSON files.
+
+Each dashboard file contains:
+- `name` — Dashboard identifier
+- `created` — Creation timestamp
+- `widgets` — Array of widget objects with type, data, and ID
+
+Widget data format:
+- **bar**: `"Label1:Value1,Label2:Value2,..."` — comma-separated label:value pairs
+- **gauge**: `"Label:Current:Max"` — single gauge with threshold detection
+- **table**: `"H1:H2|R1C1:R1C2|R2C1:R2C2"` — pipe-separated rows, colon-separated columns
+- **text**: `"Any message text"` — displayed in a bordered panel
+
+## Requirements
+
+- bash 4.0+
+- Standard Unix tools (grep, sed, wc)
+
+---
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

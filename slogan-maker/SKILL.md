@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: slogan-maker
-description: "广告语生成器。品牌标语创作、行业广告语、押韵口号、中英翻译、效果测试、经典语库。Slogan maker with brand taglines, industry slogans, rhyming, translation, testing, and classic collection. Use when you need slogan maker capabilities. Triggers on: slogan maker."
+description: "广告语生成器。品牌标语创作、行业广告语、押韵口号、中英翻译、效果测试、经典语库。Slogan maker with brand taglines, industry slogans, rhyming, translation, testing."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # slogan-maker
 

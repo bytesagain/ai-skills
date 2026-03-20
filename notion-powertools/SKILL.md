@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: notion-powertools
-description: "Unknown: help. Use when you need notion powertools capabilities. Triggers on: notion powertools, token, database-id, page-id, title, content."
+description: "Manage Notion pages, databases, and blocks via API from the command line. Use when creating pages, querying databases, syncing Notion content via CLI."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Notion Powertools

@@ -1,0 +1,9 @@
+{
+  "name": "orm-builder",
+  "description": "\ud83d\udcbe Database Tools incl. ORM, Migrations and Admin UI (Postgres, MySQL & MongoDB) [deprecated] orm-builder, scala, dao, database, datamapper, graphql.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

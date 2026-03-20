@@ -204,7 +204,14 @@ cmd_compress() {
     local ratio="${2:-0.3}"
     [ -f "$file" ] || return 1
     local total=$(wc -l < "$file")
-    local keep=$(python3 -c "print(max(3, int($total * $ratio)))")
+    local keep
+    keep=$(TOTAL="$total" RATIO="$ratio" python3 << 'PYEOF'
+import os
+total = int(os.environ["TOTAL"])
+ratio = float(os.environ["RATIO"])
+print(max(3, int(total * ratio)))
+PYEOF
+    )
     echo "  Compressed ($ratio): keeping $keep of $total lines"
     head -"$keep" "$file" | sed 's/^/  /'
 }

@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: gcal-manager
-description: "Error: --action required. Use when you need gcal manager capabilities. Triggers on: gcal manager, token, calendar, event-id, title, start."
+description: "Manage Google Calendar events, check availability, and view daily agendas. Use when listing events, creating entries, or checking free time slots."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Google Calendar Manager

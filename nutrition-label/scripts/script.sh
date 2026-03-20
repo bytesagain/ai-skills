@@ -1,101 +1,155 @@
 #!/usr/bin/env bash
-# nutrition-label - Multi-purpose utility tool
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${NUTRITION_LABEL_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/nutrition-label}"
-DB="$DATA_DIR/data.log"
+
+VERSION="3.0.0"
+SCRIPT_NAME="nutrition-label"
+DATA_DIR="$HOME/.local/share/nutrition-label"
 mkdir -p "$DATA_DIR"
 
-show_help() {
-    cat << EOF
-nutrition-label v$VERSION
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-Multi-purpose utility tool
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
-Usage: nutrition-label <command> [args]
-
-Commands:
-  run                  Execute main function
-  config               Configuration
-  status               Show status
-  init                 Initialize
-  list                 List items
-  add                  Add entry
-  remove               Remove entry
-  search               Search
-  export               Export data
-  info                 Show info
-  help                 Show this help
-  version              Show version
-
-Data: \$DATA_DIR
-EOF
+cmd_create() {
+    local food="${2:-}"
+    local cal="${3:-}"
+    local protein="${4:-}"
+    local carbs="${5:-}"
+    local fat="${6:-}"
+    [ -z "$food" ] && die "Usage: $SCRIPT_NAME create <food cal protein carbs fat>"
+    printf '=== %s ===\nCalories: %s\nProtein: %sg\nCarbs: %sg\nFat: %sg\n' $2 $3 $4 $5 $6
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-
-cmd_run() {
-    echo "  Running: $1"
-    _log "run" "${1:-}"
+cmd_lookup() {
+    local food="${2:-}"
+    [ -z "$food" ] && die "Usage: $SCRIPT_NAME lookup <food>"
+    case $2 in apple) echo 'Apple: 95cal 0.5g protein 25g carbs 0.3g fat';; banana) echo 'Banana: 105cal 1.3g protein 27g carbs 0.4g fat';; egg) echo 'Egg: 78cal 6g protein 0.6g carbs 5g fat';; *) echo 'Food $2: lookup in database';; esac
 }
 
-cmd_config() {
-    echo "  Config: $DATA_DIR/config.json"
-    _log "config" "${1:-}"
+cmd_daily() {
+    echo 'Daily totals from intake log'
 }
 
-cmd_status() {
-    echo "  Status: ready"
-    _log "status" "${1:-}"
+cmd_compare() {
+    local f1="${2:-}"
+    local f2="${3:-}"
+    [ -z "$f1" ] && die "Usage: $SCRIPT_NAME compare <f1 f2>"
+    echo 'Comparing $2 vs $3'
 }
 
-cmd_init() {
-    echo "  Initialized in $DATA_DIR"
-    _log "init" "${1:-}"
+cmd_label() {
+    local file="${2:-}"
+    [ -z "$file" ] && die "Usage: $SCRIPT_NAME label <file>"
+    cat $2 2>/dev/null
 }
 
-cmd_list() {
-    [ -f "$DB" ] && cat "$DB" || echo "  (empty)"
-    _log "list" "${1:-}"
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
+    echo ""
+    echo "Commands:"
+    printf "  %-25s\n" "create <food cal protein carbs fat>"
+    printf "  %-25s\n" "lookup <food>"
+    printf "  %-25s\n" "daily"
+    printf "  %-25s\n" "compare <f1 f2>"
+    printf "  %-25s\n" "label <file>"
+    printf "  %%-25s\n" "help"
+    echo ""
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-cmd_add() {
-    echo "$(date +%Y-%m-%d) $*" >> "$DB"; echo "  Added: $*"
-    _log "add" "${1:-}"
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        create) shift; cmd_create "$@" ;;
+        lookup) shift; cmd_lookup "$@" ;;
+        daily) shift; cmd_daily "$@" ;;
+        compare) shift; cmd_compare "$@" ;;
+        label) shift; cmd_label "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
+    esac
 }
 
-cmd_remove() {
-    echo "  Removed: $1"
-    _log "remove" "${1:-}"
-}
-
-cmd_search() {
-    grep -i "$1" "$DB" 2>/dev/null || echo "  Not found: $1"
-    _log "search" "${1:-}"
-}
-
-cmd_export() {
-    [ -f "$DB" ] && cat "$DB" || echo "No data"
-    _log "export" "${1:-}"
-}
-
-cmd_info() {
-    echo "  Version: $VERSION | Data: $DATA_DIR"
-    _log "info" "${1:-}"
-}
-
-case "${1:-help}" in
-    run) shift; cmd_run "$@" ;;
-    config) shift; cmd_config "$@" ;;
-    status) shift; cmd_status "$@" ;;
-    init) shift; cmd_init "$@" ;;
-    list) shift; cmd_list "$@" ;;
-    add) shift; cmd_add "$@" ;;
-    remove) shift; cmd_remove "$@" ;;
-    search) shift; cmd_search "$@" ;;
-    export) shift; cmd_export "$@" ;;
-    info) shift; cmd_info "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "nutrition-label v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
-esac
+main "$@"

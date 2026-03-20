@@ -1,88 +1,112 @@
 ---
-name: redis
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [redis, tool, utility]
-description: "Redis - command-line tool for everyday use"
+name: "redis"
+version: "1.0.0"
+description: "Connect, query, and monitor Redis instances. Use when checking key health, validating data types, generating backups, formatting results, linting configs."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [redis, general, cli, tool]
+category: "general"
 ---
 
-# Redis
+# redis
 
-Redis toolkit — connect, query, monitor, backup, and manage Redis instances.
+Connect, query, and monitor Redis instances. Use when checking key health, validating data types, generating backups, formatting results, linting configs.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `redis help` | Show usage info |
-| `redis run` | Run main task |
-| `redis status` | Check current state |
-| `redis list` | List items |
-| `redis add <item>` | Add new item |
-| `redis export <fmt>` | Export data |
-
-## Usage
+### `status`
 
 ```bash
-redis help
-redis run
-redis status
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-# Get started
-redis help
-
-# Run default task
-redis run
-
-# Export as JSON
-redis export json
+scripts/script.sh add
 ```
 
-## Output
+Add new entry
 
-Results go to stdout. Save with `redis run > output.txt`.
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `REDIS_DIR` to change data directory. Default: `~/.local/share/redis/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `REDIS_DIR` | No | Data directory (default: ~/.redis/) |
+
+## Data Storage
+
+All data stored in `~/.redis/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
 
-
-## Features
-
-- Simple command-line interface for quick access
-- Local data storage with JSON/CSV export
-- History tracking and activity logs
-- Search across all entries
-
-## Quick Start
-
-```bash
-# Check status
-redis status
-
-# View help
-redis help
-
-# Export data
-redis export json
-```
-
-## How It Works
-
-Redis stores all data locally in `~/.local/share/redis/`. Each command logs activity with timestamps for full traceability.
-
-## Support
-
-- Feedback: https://bytesagain.com/feedback/
-- Website: https://bytesagain.com
-
-Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

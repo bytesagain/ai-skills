@@ -1,0 +1,9 @@
+{
+  "name": "gradient",
+  "description": "Generate CSS gradient code, preview gradient combinations, and build gradient palettes using bash and Python. Use when creating linear, radial,",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

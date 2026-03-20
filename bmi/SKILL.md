@@ -1,99 +1,112 @@
 ---
-name: "Bmi"
-description: "A focused health & wellness tool built for Bmi. Log entries, review trends, and export reports — all locally."
-version: "2.0.0"
+name: "bmi"
+version: "1.0.0"
+description: "Calculate BMI, log weight entries, and chart body composition trends. Use when tracking fitness progress, setting weight goals, or reviewing data."
 author: "BytesAgain"
-tags: ["fitness", "bmi", "tracking", "daily", "monitor"]
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [bmi, general, cli, tool]
+category: "general"
 ---
 
-# Bmi
+# bmi
 
-A focused health & wellness tool built for Bmi. Log entries, review trends, and export reports — all locally.
-
-## Why Bmi?
-
-- Works entirely offline — your data never leaves your machine
-- Simple command-line interface, no GUI needed
-- Export to JSON, CSV, or plain text anytime
-- Automatic history and activity logging
-
-## Getting Started
-
-```bash
-# See what you can do
-bmi help
-
-# Check current status
-bmi status
-
-# View your statistics
-bmi stats
-```
+Calculate BMI, log weight entries, and chart body composition trends. Use when tracking fitness progress, setting weight goals, or reviewing data.
 
 ## Commands
 
-| Command | What it does |
-|---------|-------------|
-| `bmi log` | Log |
-| `bmi track` | Track |
-| `bmi chart` | Chart |
-| `bmi goal` | Goal |
-| `bmi remind` | Remind |
-| `bmi weekly` | Weekly |
-| `bmi monthly` | Monthly |
-| `bmi compare` | Compare |
-| `bmi export` | Export |
-| `bmi streak` | Streak |
-| `bmi milestone` | Milestone |
-| `bmi trend` | Trend |
-| `bmi stats` | Summary statistics |
-| `bmi export` | <fmt>       Export (json|csv|txt) |
-| `bmi search` | <term>      Search entries |
-| `bmi recent` | Recent activity |
-| `bmi status` | Health check |
-| `bmi help` | Show this help |
-| `bmi version` | Show version |
-| `bmi $name:` | $c entries |
-| `bmi Total:` | $total entries |
-| `bmi Data` | size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1) |
-| `bmi Version:` | v2.0.0 |
-| `bmi Data` | dir: $DATA_DIR |
-| `bmi Entries:` | $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total |
-| `bmi Disk:` | $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1) |
-| `bmi Last:` | $(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo never) |
-| `bmi Status:` | OK |
-| `bmi [Bmi]` | log: $input |
-| `bmi Saved.` | Total log entries: $total |
-| `bmi [Bmi]` | track: $input |
-| `bmi Saved.` | Total track entries: $total |
-| `bmi [Bmi]` | chart: $input |
-| `bmi Saved.` | Total chart entries: $total |
-| `bmi [Bmi]` | goal: $input |
-| `bmi Saved.` | Total goal entries: $total |
-| `bmi [Bmi]` | remind: $input |
-| `bmi Saved.` | Total remind entries: $total |
-| `bmi [Bmi]` | weekly: $input |
-| `bmi Saved.` | Total weekly entries: $total |
-| `bmi [Bmi]` | monthly: $input |
-| `bmi Saved.` | Total monthly entries: $total |
-| `bmi [Bmi]` | compare: $input |
-| `bmi Saved.` | Total compare entries: $total |
-| `bmi [Bmi]` | export: $input |
-| `bmi Saved.` | Total export entries: $total |
-| `bmi [Bmi]` | streak: $input |
-| `bmi Saved.` | Total streak entries: $total |
-| `bmi [Bmi]` | milestone: $input |
-| `bmi Saved.` | Total milestone entries: $total |
-| `bmi [Bmi]` | trend: $input |
-| `bmi Saved.` | Total trend entries: $total |
+### `status`
+
+```bash
+scripts/script.sh status
+```
+
+Show current status
+
+### `add`
+
+```bash
+scripts/script.sh add
+```
+
+Add new entry
+
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
+
+## Configuration
+
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `BMI_DIR` | No | Data directory (default: ~/.bmi/) |
 
 ## Data Storage
 
-All data is stored locally at `~/.local/share/bmi/`. Each action is logged with timestamps. Use `export` to back up your data anytime.
+All data stored in `~/.bmi/` using JSONL format (one JSON object per line).
 
-## Feedback
+## Output
 
-Found a bug or have a suggestion? Let us know: https://bytesagain.com/feedback/
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

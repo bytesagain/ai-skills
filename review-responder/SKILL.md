@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: review-responder
-description: "评价回复助手。好评回复、差评处理、回复模板、评价分析、改进建议、批量回复。Review response assistant with positive, negative, templates, analysis, improvement, batch. 评价回复、好评、差评、客户评价、电商评价。Use when responding to customer reviews. Triggers on: review responder."
+description: "评价回复助手。好评回复、差评处理、回复模板、评价分析、改进建议、批量回复。Review response assistant with positive, negative, templates, analysis, improvement."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # review-responder
 

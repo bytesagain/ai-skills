@@ -1,63 +1,72 @@
 ---
 name: password
-version: "2.0.0"
+version: "3.0.1"
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 license: MIT-0
 tags: [password, tool, utility]
-description: "Password - command-line tool for everyday use"
+description: "Manage passwords with generation, strength checks, and storage. Use when creating credentials, auditing strength, rotating secrets, checking breaches."
 ---
 
-# Password
+# password
 
-Password manager — generate strong passwords, check strength, store credentials locally, breach checking, and secure export.
+Generate, check, and analyze passwords.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `password run` | Execute main function |
-| `password list` | List all items |
-| `password add <item>` | Add new item |
-| `password status` | Show current status |
-| `password export <format>` | Export data |
-| `password help` | Show help |
+### `generate`
 
-## Usage
+Generate a random password (default: 16 chars)
 
 ```bash
-# Show help
-password help
-
-# Quick start
-password run
+scripts/script.sh generate
 ```
 
-## Examples
+### `strength`
+
+Rate password strength (weak/fair/good/strong/excellent)
 
 ```bash
-# Run with defaults
-password run
-
-# Check status
-password status
-
-# Export results
-password export json
+scripts/script.sh strength
 ```
 
-- Run `password help` for all commands
-password/`
+### `entropy`
+
+Calculate Shannon entropy in bits
+
+```bash
+scripts/script.sh entropy
+```
+
+### `batch`
+
+Generate multiple passwords at once
+
+```bash
+scripts/script.sh batch
+```
+
+### `diceware`
+
+Generate a diceware-style passphrase
+
+```bash
+scripts/script.sh diceware
+```
+
+### `pin`
+
+Generate a numeric PIN
+
+```bash
+scripts/script.sh pin
+```
+
+## Requirements
+
+- curl
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
 
-- Run `password help` for all commands
-
-## Output
-
-Results go to stdout. Save with `password run > output.txt`.
-
-## Configuration
-
-Set `PASSWORD_DIR` to change data directory. Default: `~/.local/share/password/`
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: Meme Coin Scanner
-description: "Scan new meme coins for risks and opportunities — honeypot detection, liquidity analysis, holder concentration, and rug pull indicators using DexScreener and CoinGecko APIs. Use when you need meme coin scanner capabilities. Triggers on: meme coin scanner."
+description: "Scan meme coins for scam signals, rug-pull risk, and on-chain audit flags. Use when evaluating tokens, auditing contracts, checking liquidity lock status."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Meme Coin Scanner
@@ -36,3 +38,7 @@ bash scripts/meme.sh checklist                       # Safety checklist
 ---
 💬 Feedback & Feature Requests: https://bytesagain.com/feedback
 Powered by BytesAgain | bytesagain.com
+
+## Requirements
+- bash 4+
+- python3 (standard library only)

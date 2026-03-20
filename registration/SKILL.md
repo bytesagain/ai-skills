@@ -1,99 +1,112 @@
 ---
-name: "Registration"
-description: "Manage Registration data right from your terminal. Built for people who want organize your household without complex setup."
-version: "2.0.0"
+name: "registration"
+version: "1.0.0"
+description: "Manage registration records and attendee data. Use when logging sign-ups, checking capacity, converting export formats, generating confirmation reports."
 author: "BytesAgain"
-tags: ["organize", "maintenance", "domestic", "smart-home", "registration"]
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [registration, general, cli, tool]
+category: "general"
 ---
 
-# Registration
+# registration
 
-Manage Registration data right from your terminal. Built for people who want organize your household without complex setup.
-
-## Why Registration?
-
-- Works entirely offline — your data never leaves your machine
-- Simple command-line interface, no GUI needed
-- Export to JSON, CSV, or plain text anytime
-- Automatic history and activity logging
-
-## Getting Started
-
-```bash
-# See what you can do
-registration help
-
-# Check current status
-registration status
-
-# View your statistics
-registration stats
-```
+Manage registration records and attendee data. Use when logging sign-ups, checking capacity, converting export formats, generating confirmation reports.
 
 ## Commands
 
-| Command | What it does |
-|---------|-------------|
-| `registration run` | Run |
-| `registration check` | Check |
-| `registration convert` | Convert |
-| `registration analyze` | Analyze |
-| `registration generate` | Generate |
-| `registration preview` | Preview |
-| `registration batch` | Batch |
-| `registration compare` | Compare |
-| `registration export` | Export |
-| `registration config` | Config |
-| `registration status` | Status |
-| `registration report` | Report |
-| `registration stats` | Summary statistics |
-| `registration export` | <fmt>       Export (json|csv|txt) |
-| `registration search` | <term>      Search entries |
-| `registration recent` | Recent activity |
-| `registration status` | Health check |
-| `registration help` | Show this help |
-| `registration version` | Show version |
-| `registration $name:` | $c entries |
-| `registration Total:` | $total entries |
-| `registration Data` | size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1) |
-| `registration Version:` | v2.0.0 |
-| `registration Data` | dir: $DATA_DIR |
-| `registration Entries:` | $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total |
-| `registration Disk:` | $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1) |
-| `registration Last:` | $(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo never) |
-| `registration Status:` | OK |
-| `registration [Registration]` | run: $input |
-| `registration Saved.` | Total run entries: $total |
-| `registration [Registration]` | check: $input |
-| `registration Saved.` | Total check entries: $total |
-| `registration [Registration]` | convert: $input |
-| `registration Saved.` | Total convert entries: $total |
-| `registration [Registration]` | analyze: $input |
-| `registration Saved.` | Total analyze entries: $total |
-| `registration [Registration]` | generate: $input |
-| `registration Saved.` | Total generate entries: $total |
-| `registration [Registration]` | preview: $input |
-| `registration Saved.` | Total preview entries: $total |
-| `registration [Registration]` | batch: $input |
-| `registration Saved.` | Total batch entries: $total |
-| `registration [Registration]` | compare: $input |
-| `registration Saved.` | Total compare entries: $total |
-| `registration [Registration]` | export: $input |
-| `registration Saved.` | Total export entries: $total |
-| `registration [Registration]` | config: $input |
-| `registration Saved.` | Total config entries: $total |
-| `registration [Registration]` | status: $input |
-| `registration Saved.` | Total status entries: $total |
-| `registration [Registration]` | report: $input |
-| `registration Saved.` | Total report entries: $total |
+### `status`
+
+```bash
+scripts/script.sh status
+```
+
+Show current status
+
+### `add`
+
+```bash
+scripts/script.sh add
+```
+
+Add new entry
+
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
+
+## Configuration
+
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `REGISTRATION_DIR` | No | Data directory (default: ~/.registration/) |
 
 ## Data Storage
 
-All data is stored locally at `~/.local/share/registration/`. Each action is logged with timestamps. Use `export` to back up your data anytime.
+All data stored in `~/.registration/` using JSONL format (one JSON object per line).
 
-## Feedback
+## Output
 
-Found a bug or have a suggestion? Let us know: https://bytesagain.com/feedback/
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

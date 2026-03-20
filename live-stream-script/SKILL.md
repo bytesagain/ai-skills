@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Live Stream Script
-description: "Live Stream Script. Use when you need live stream script capabilities. Triggers on: live stream script."
-  直播脚本生成器。带货直播、娱乐直播、知识直播话术、互动设计、开场预热、逼单话术、互动话术库。Live stream script generator for e-commerce, entertainment, education, warmup scripts, closing techniques, interaction templates. 直播话术、带货脚本、直播间运营、前5分钟留人、逼单促单。Use when preparing for live streams.
+description: "Generate live-stream scripts for product pitches, hooks, and closing CTAs. Use when preparing sales scripts, writing product intros, crafting hooks."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # live-stream-script

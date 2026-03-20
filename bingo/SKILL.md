@@ -1,83 +1,112 @@
 ---
-name: bingo
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [bingo, tool, utility]
-description: "Bingo - command-line tool for everyday use"
+name: "bingo"
+version: "1.0.0"
+description: "Generate and play bingo cards with number calling and verification. Use when running bingo games."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [bingo, general, cli, tool]
+category: "general"
 ---
 
-# Bingo
+# bingo
 
-Bingo toolkit — card generator, number caller, pattern checking, and game management.
+Generate and play bingo cards with number calling and verification. Use when running bingo games.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `bingo help` | Show usage info |
-| `bingo run` | Run main task |
-| `bingo status` | Check state |
-| `bingo list` | List items |
-| `bingo add <item>` | Add item |
-| `bingo export <fmt>` | Export data |
-
-## Usage
+### `status`
 
 ```bash
-bingo help
-bingo run
-bingo status
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-bingo help
-bingo run
-bingo export json
+scripts/script.sh add
 ```
 
-## Output
+Add new entry
 
-Results go to stdout. Save with `bingo run > output.txt`.
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `BINGO_DIR` to change data directory. Default: `~/.local/share/bingo/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `BINGO_DIR` | No | Data directory (default: ~/.bingo/) |
+
+## Data Storage
+
+All data stored in `~/.bingo/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
 
-
-## Features
-
-- Simple command-line interface for quick access
-- Local data storage with JSON/CSV export
-- History tracking and activity logs
-- Search across all entries
-
-## Quick Start
-
-```bash
-# Check status
-bingo status
-
-# View help
-bingo help
-
-# Export data
-bingo export json
-```
-
-## How It Works
-
-Bingo stores all data locally in `~/.local/share/bingo/`. Each command logs activity with timestamps for full traceability.
-
-## Support
-
-- Feedback: https://bytesagain.com/feedback/
-- Website: https://bytesagain.com
-
-Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

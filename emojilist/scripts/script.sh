@@ -1,332 +1,659 @@
 #!/usr/bin/env bash
-# Emojilist — design tool
+# ============================================================================
+# EmojiList — Emoji Reference & Search Tool
 # Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+# ============================================================================
 set -euo pipefail
 
-DATA_DIR="${HOME}/.local/share/emojilist"
-mkdir -p "$DATA_DIR"
+VERSION="3.0.0"
+SCRIPT_NAME="emojilist"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+# --- Colors ----------------------------------------------------------------
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+BOLD='\033[1m'
+NC='\033[0m'
 
-_version() { echo "emojilist v2.0.0"; }
+# --- Helpers ---------------------------------------------------------------
+info()    { echo -e "${BLUE}ℹ${NC} $*"; }
+success() { echo -e "${GREEN}✔${NC} $*"; }
+warn()    { echo -e "${YELLOW}⚠${NC} $*"; }
+error()   { echo -e "${RED}✖${NC} $*" >&2; }
+die()     { error "$@"; exit 1; }
 
-_help() {
-    echo "Emojilist v2.0.0 — design toolkit"
+# --- Emoji Database -------------------------------------------------------
+# Format: "emoji|name|category"
+EMOJI_DB=(
+    # Faces - Smileys
+    "😀|grinning face|faces"
+    "😃|grinning face with big eyes|faces"
+    "😄|grinning face with smiling eyes|faces"
+    "😁|beaming face with smiling eyes|faces"
+    "😆|grinning squinting face|faces"
+    "😅|grinning face with sweat|faces"
+    "🤣|rolling on the floor laughing|faces"
+    "😂|face with tears of joy|faces"
+    "🙂|slightly smiling face|faces"
+    "🙃|upside down face|faces"
+    "😉|winking face|faces"
+    "😊|smiling face with smiling eyes|faces"
+    "😇|smiling face with halo|faces"
+    "🥰|smiling face with hearts|faces"
+    "😍|smiling face with heart eyes|faces"
+    "🤩|star struck|faces"
+    "😘|face blowing a kiss|faces"
+    "😗|kissing face|faces"
+    "😚|kissing face with closed eyes|faces"
+    "😙|kissing face with smiling eyes|faces"
+    "🥲|smiling face with tear|faces"
+    "😋|face savoring food|faces"
+    "😛|face with tongue|faces"
+    "😜|winking face with tongue|faces"
+    "🤪|zany face|faces"
+    "😝|squinting face with tongue|faces"
+    "🤑|money mouth face|faces"
+    "🤗|hugging face|faces"
+    "🤭|face with hand over mouth|faces"
+    "🤫|shushing face|faces"
+    "🤔|thinking face|faces"
+    "😐|neutral face|faces"
+    "😑|expressionless face|faces"
+    "😶|face without mouth|faces"
+    "😏|smirking face|faces"
+    "😒|unamused face|faces"
+    "🙄|face with rolling eyes|faces"
+    "😬|grimacing face|faces"
+    "😮‍💨|face exhaling|faces"
+    "🤥|lying face|faces"
+    "😌|relieved face|faces"
+    "😔|pensive face|faces"
+    "😪|sleepy face|faces"
+    "🤤|drooling face|faces"
+    "😴|sleeping face|faces"
+    "😷|face with medical mask|faces"
+    "🤒|face with thermometer|faces"
+    "🤕|face with head bandage|faces"
+    "🤢|nauseated face|faces"
+    "🤮|face vomiting|faces"
+    "🥴|woozy face|faces"
+    "😵|face with crossed out eyes|faces"
+    "🤯|exploding head|faces"
+    "😎|smiling face with sunglasses|faces"
+    "🥸|disguised face|faces"
+    "🤓|nerd face|faces"
+    "😱|face screaming in fear|faces"
+    "😨|fearful face|faces"
+    "😰|anxious face with sweat|faces"
+    "😥|sad but relieved face|faces"
+    "😢|crying face|faces"
+    "😭|loudly crying face|faces"
+    "🥺|pleading face|faces"
+    "😤|face with steam from nose|faces"
+    "😡|pouting face|faces"
+    "😠|angry face|faces"
+    "🤬|face with symbols on mouth|faces"
+
+    # Gestures / Hands
+    "👋|waving hand|gestures"
+    "🤚|raised back of hand|gestures"
+    "🖐️|hand with fingers splayed|gestures"
+    "✋|raised hand|gestures"
+    "🖖|vulcan salute|gestures"
+    "👌|ok hand|gestures"
+    "🤌|pinched fingers|gestures"
+    "🤏|pinching hand|gestures"
+    "✌️|victory hand|gestures"
+    "🤞|crossed fingers|gestures"
+    "🤟|love you gesture|gestures"
+    "🤘|sign of the horns|gestures"
+    "🤙|call me hand|gestures"
+    "👈|backhand index pointing left|gestures"
+    "👉|backhand index pointing right|gestures"
+    "👆|backhand index pointing up|gestures"
+    "👇|backhand index pointing down|gestures"
+    "☝️|index pointing up|gestures"
+    "👍|thumbs up|gestures"
+    "👎|thumbs down|gestures"
+    "✊|raised fist|gestures"
+    "👊|oncoming fist|gestures"
+    "🤛|left facing fist|gestures"
+    "🤜|right facing fist|gestures"
+    "👏|clapping hands|gestures"
+    "🙌|raising hands|gestures"
+    "👐|open hands|gestures"
+    "🤲|palms up together|gestures"
+    "🙏|folded hands|gestures"
+    "💪|flexed biceps|gestures"
+
+    # Hearts & Love
+    "❤️|red heart|hearts"
+    "🧡|orange heart|hearts"
+    "💛|yellow heart|hearts"
+    "💚|green heart|hearts"
+    "💙|blue heart|hearts"
+    "💜|purple heart|hearts"
+    "🖤|black heart|hearts"
+    "🤍|white heart|hearts"
+    "🤎|brown heart|hearts"
+    "💔|broken heart|hearts"
+    "💕|two hearts|hearts"
+    "💞|revolving hearts|hearts"
+    "💓|beating heart|hearts"
+    "💗|growing heart|hearts"
+    "💖|sparkling heart|hearts"
+    "💘|heart with arrow|hearts"
+    "💝|heart with ribbon|hearts"
+
+    # Animals
+    "🐶|dog face|animals"
+    "🐱|cat face|animals"
+    "🐭|mouse face|animals"
+    "🐹|hamster|animals"
+    "🐰|rabbit face|animals"
+    "🦊|fox|animals"
+    "🐻|bear|animals"
+    "🐼|panda|animals"
+    "🐨|koala|animals"
+    "🐯|tiger face|animals"
+    "🦁|lion|animals"
+    "🐮|cow face|animals"
+    "🐷|pig face|animals"
+    "🐸|frog|animals"
+    "🐵|monkey face|animals"
+    "🙈|see no evil monkey|animals"
+    "🙉|hear no evil monkey|animals"
+    "🙊|speak no evil monkey|animals"
+    "🐔|chicken|animals"
+    "🐧|penguin|animals"
+    "🐦|bird|animals"
+    "🦅|eagle|animals"
+    "🦆|duck|animals"
+    "🦉|owl|animals"
+    "🐺|wolf|animals"
+    "🐗|boar|animals"
+    "🐴|horse face|animals"
+    "🦄|unicorn|animals"
+    "🐝|honeybee|animals"
+    "🐛|bug|animals"
+    "🦋|butterfly|animals"
+    "🐌|snail|animals"
+    "🐙|octopus|animals"
+    "🦑|squid|animals"
+    "🦀|crab|animals"
+    "🐠|tropical fish|animals"
+    "🐟|fish|animals"
+    "🐬|dolphin|animals"
+    "🐳|spouting whale|animals"
+    "🐋|whale|animals"
+    "🦈|shark|animals"
+    "🐊|crocodile|animals"
+    "🐘|elephant|animals"
+    "🦏|rhinoceros|animals"
+    "🦒|giraffe|animals"
+    "🐪|camel|animals"
+    "🐫|two hump camel|animals"
+    "🦙|llama|animals"
+    "🐍|snake|animals"
+    "🦎|lizard|animals"
+    "🐢|turtle|animals"
+    "🦖|t-rex dinosaur|animals"
+    "🦕|sauropod dinosaur|animals"
+
+    # Food & Drink
+    "🍎|red apple|food"
+    "🍐|pear|food"
+    "🍊|tangerine orange|food"
+    "🍋|lemon|food"
+    "🍌|banana|food"
+    "🍉|watermelon|food"
+    "🍇|grapes|food"
+    "🍓|strawberry|food"
+    "🫐|blueberries|food"
+    "🍈|melon|food"
+    "🍒|cherries|food"
+    "🍑|peach|food"
+    "🥭|mango|food"
+    "🍍|pineapple|food"
+    "🥝|kiwi fruit|food"
+    "🍅|tomato|food"
+    "🥑|avocado|food"
+    "🥦|broccoli|food"
+    "🥬|leafy green|food"
+    "🥒|cucumber|food"
+    "🌶️|hot pepper chili|food"
+    "🫑|bell pepper|food"
+    "🌽|corn|food"
+    "🥕|carrot|food"
+    "🧄|garlic|food"
+    "🧅|onion|food"
+    "🥔|potato|food"
+    "🍠|sweet potato|food"
+    "🍕|pizza|food"
+    "🍔|hamburger burger|food"
+    "🍟|french fries|food"
+    "🌭|hot dog|food"
+    "🥪|sandwich|food"
+    "🌮|taco|food"
+    "🌯|burrito|food"
+    "🍣|sushi|food"
+    "🍱|bento box|food"
+    "🥟|dumpling|food"
+    "🍜|steaming bowl noodles ramen|food"
+    "🍝|spaghetti pasta|food"
+    "🍛|curry rice|food"
+    "🍲|pot of food stew|food"
+    "🥗|green salad|food"
+    "🍿|popcorn|food"
+    "🧈|butter|food"
+    "🥞|pancakes|food"
+    "🧇|waffle|food"
+    "🍞|bread|food"
+    "🥐|croissant|food"
+    "🥖|baguette bread|food"
+    "🧁|cupcake|food"
+    "🍰|shortcake cake|food"
+    "🎂|birthday cake|food"
+    "🍩|doughnut donut|food"
+    "🍪|cookie|food"
+    "🍫|chocolate bar|food"
+    "🍬|candy|food"
+    "🍭|lollipop|food"
+    "🍮|custard pudding|food"
+    "☕|hot beverage coffee|food"
+    "🍵|teacup tea|food"
+    "🥤|cup with straw|food"
+    "🧃|beverage box juice|food"
+    "🍺|beer mug|food"
+    "🍻|clinking beer mugs cheers|food"
+    "🥂|clinking glasses champagne|food"
+    "🍷|wine glass|food"
+    "🍸|cocktail glass martini|food"
+    "🥃|tumbler glass whiskey|food"
+    "🧋|bubble tea boba|food"
+
+    # Nature & Weather
+    "🌸|cherry blossom|nature"
+    "🌹|rose|nature"
+    "🌺|hibiscus|nature"
+    "🌻|sunflower|nature"
+    "🌷|tulip|nature"
+    "🌱|seedling|nature"
+    "🌲|evergreen tree|nature"
+    "🌳|deciduous tree|nature"
+    "🌴|palm tree|nature"
+    "🍀|four leaf clover|nature"
+    "🍁|maple leaf|nature"
+    "🍂|fallen leaf|nature"
+    "🍃|leaf fluttering in wind|nature"
+    "🌍|globe earth|nature"
+    "🌙|crescent moon|nature"
+    "⭐|star|nature"
+    "🌟|glowing star|nature"
+    "✨|sparkles|nature"
+    "⚡|lightning zap|nature"
+    "🔥|fire flame hot|nature"
+    "💧|droplet water|nature"
+    "🌊|ocean wave|nature"
+    "☀️|sun|nature"
+    "🌈|rainbow|nature"
+    "❄️|snowflake|nature"
+    "🌪️|tornado|nature"
+
+    # Objects & Tech
+    "💻|laptop computer|tech"
+    "🖥️|desktop computer|tech"
+    "⌨️|keyboard|tech"
+    "🖱️|computer mouse|tech"
+    "📱|mobile phone|tech"
+    "📞|telephone|tech"
+    "📧|email|tech"
+    "💾|floppy disk|tech"
+    "💿|optical disk cd|tech"
+    "🔌|electric plug|tech"
+    "🔋|battery|tech"
+    "💡|light bulb idea|tech"
+    "🔧|wrench tool|tech"
+    "🔨|hammer|tech"
+    "⚙️|gear settings|tech"
+    "🔒|locked|tech"
+    "🔓|unlocked|tech"
+    "🔑|key|tech"
+    "🗝️|old key|tech"
+    "📦|package box|tech"
+    "🗑️|wastebasket trash|tech"
+    "📋|clipboard|tech"
+    "📝|memo note|tech"
+    "📎|paperclip|tech"
+    "📊|bar chart|tech"
+    "📈|chart increasing|tech"
+    "📉|chart decreasing|tech"
+
+    # Travel & Places
+    "🚗|automobile car|travel"
+    "🚕|taxi|travel"
+    "🚌|bus|travel"
+    "🚎|trolleybus|travel"
+    "🏎️|racing car|travel"
+    "🚓|police car|travel"
+    "🚑|ambulance|travel"
+    "🚒|fire engine|travel"
+    "✈️|airplane|travel"
+    "🚀|rocket|travel"
+    "🛸|flying saucer ufo|travel"
+    "🚁|helicopter|travel"
+    "🚂|locomotive train|travel"
+    "🚢|ship boat|travel"
+    "🏠|house|travel"
+    "🏢|office building|travel"
+    "🏥|hospital|travel"
+    "🏫|school|travel"
+    "🏰|castle|travel"
+    "⛪|church|travel"
+    "🗼|tokyo tower|travel"
+    "🗽|statue of liberty|travel"
+
+    # Activities & Sports
+    "⚽|soccer ball football|sports"
+    "🏀|basketball|sports"
+    "🏈|american football|sports"
+    "⚾|baseball|sports"
+    "🎾|tennis|sports"
+    "🏐|volleyball|sports"
+    "🏓|table tennis ping pong|sports"
+    "🏸|badminton|sports"
+    "🥊|boxing glove|sports"
+    "🏊|person swimming|sports"
+    "🚴|person biking|sports"
+    "🏃|person running|sports"
+    "🧗|person climbing|sports"
+    "🎯|bullseye target|sports"
+    "🎮|video game controller|sports"
+    "🎲|game die dice|sports"
+    "♟️|chess pawn|sports"
+    "🎳|bowling|sports"
+    "🏆|trophy winner|sports"
+    "🥇|gold medal first|sports"
+    "🥈|silver medal second|sports"
+    "🥉|bronze medal third|sports"
+
+    # Symbols & Signs
+    "✅|check mark button|symbols"
+    "❌|cross mark|symbols"
+    "❓|question mark|symbols"
+    "❗|exclamation mark|symbols"
+    "⚠️|warning|symbols"
+    "🚫|prohibited|symbols"
+    "♻️|recycling symbol|symbols"
+    "✏️|pencil|symbols"
+    "📌|pushpin|symbols"
+    "🏷️|label tag|symbols"
+    "🔴|red circle|symbols"
+    "🟠|orange circle|symbols"
+    "🟡|yellow circle|symbols"
+    "🟢|green circle|symbols"
+    "🔵|blue circle|symbols"
+    "🟣|purple circle|symbols"
+    "⚫|black circle|symbols"
+    "⚪|white circle|symbols"
+    "🟥|red square|symbols"
+    "🟧|orange square|symbols"
+    "🟨|yellow square|symbols"
+    "🟩|green square|symbols"
+    "🟦|blue square|symbols"
+    "🟪|purple square|symbols"
+    "⬛|black large square|symbols"
+    "⬜|white large square|symbols"
+    "▶️|play button|symbols"
+    "⏸️|pause button|symbols"
+    "⏹️|stop button|symbols"
+    "🔀|shuffle|symbols"
+    "🔁|repeat|symbols"
+    "💯|hundred points|symbols"
+    "➕|plus|symbols"
+    "➖|minus|symbols"
+    "➗|divide|symbols"
+    "✖️|multiply|symbols"
+    "♾️|infinity|symbols"
+    "💲|dollar sign money|symbols"
+    "©️|copyright|symbols"
+    "®️|registered|symbols"
+    "™️|trade mark|symbols"
+
+    # Flags (popular)
+    "🇺🇸|united states usa flag|flags"
+    "🇬🇧|united kingdom uk flag|flags"
+    "🇨🇳|china flag|flags"
+    "🇯🇵|japan flag|flags"
+    "🇰🇷|south korea flag|flags"
+    "🇫🇷|france flag|flags"
+    "🇩🇪|germany flag|flags"
+    "🇪🇸|spain flag|flags"
+    "🇮🇹|italy flag|flags"
+    "🇧🇷|brazil flag|flags"
+    "🇷🇺|russia flag|flags"
+    "🇮🇳|india flag|flags"
+    "🇦🇺|australia flag|flags"
+    "🇨🇦|canada flag|flags"
+    "🇲🇽|mexico flag|flags"
+    "🏳️‍🌈|rainbow flag pride|flags"
+    "🏴‍☠️|pirate flag|flags"
+    "🏁|checkered flag racing|flags"
+)
+
+# All categories
+CATEGORIES=("faces" "gestures" "hearts" "animals" "food" "nature" "tech" "travel" "sports" "symbols" "flags")
+
+# --- Usage -----------------------------------------------------------------
+usage() {
+    cat <<EOF
+${BOLD}EmojiList v${VERSION}${NC} — Emoji Reference & Search Tool
+Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+
+${BOLD}Usage:${NC}
+  ${SCRIPT_NAME} <command> [arguments]
+
+${BOLD}Commands:${NC}
+  search   <keyword>       Search emoji by name/keyword
+  category <name>          List emoji in a category
+  random   [count]         Show random emoji (default: 5)
+  popular                  Show most commonly used emoji
+  list                     List all categories
+
+${BOLD}Options:${NC}
+  -h, --help               Show this help
+  -v, --version            Show version
+
+${BOLD}Categories:${NC}
+  faces, gestures, hearts, animals, food,
+  nature, tech, travel, sports, symbols, flags
+
+${BOLD}Examples:${NC}
+  ${SCRIPT_NAME} search heart
+  ${SCRIPT_NAME} search fire
+  ${SCRIPT_NAME} category animals
+  ${SCRIPT_NAME} random 10
+  ${SCRIPT_NAME} popular
+  ${SCRIPT_NAME} list
+EOF
+}
+
+# --- Commands --------------------------------------------------------------
+
+cmd_search() {
+    [[ -z "${1:-}" ]] && die "Missing argument: <keyword>"
+    local keyword
+    keyword=$(echo "$1" | tr '[:upper:]' '[:lower:]')
+
+    info "Searching for: ${CYAN}${keyword}${NC}"
     echo ""
-    echo "Usage: emojilist <command> [args]"
-    echo ""
-    echo "Commands:"
-    echo "  palette            Palette"
-    echo "  preview            Preview"
-    echo "  generate           Generate"
-    echo "  convert            Convert"
-    echo "  harmonize          Harmonize"
-    echo "  contrast           Contrast"
-    echo "  export             Export"
-    echo "  random             Random"
-    echo "  browse             Browse"
-    echo "  mix                Mix"
-    echo "  gradient           Gradient"
-    echo "  swatch             Swatch"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
-}
 
-_stats() {
-    echo "=== Emojilist Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Since: $(head -1 "$DATA_DIR/history.log" 2>/dev/null | cut -d'|' -f1 || echo 'N/A')"
-}
-
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "" >> "$out"
-            echo "]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    echo "$name,$ts,$val" >> "$out"
-                done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Emojilist Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-                echo "" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
-    esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
-}
-
-_status() {
-    echo "=== Emojilist Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    local last=$(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo "never")
-    echo "  Last activity: $last"
-    echo "  Status: OK"
-}
-
-_search() {
-    local term="${1:?Usage: emojilist search <term>}"
-    echo "Searching for: $term"
-    local found=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local matches=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$matches" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$matches" | while read -r line; do
-                echo "    $line"
-                found=$((found + 1))
-            done
+    local count=0
+    for entry in "${EMOJI_DB[@]}"; do
+        IFS='|' read -r emoji name category <<< "$entry"
+        local name_lower
+        name_lower=$(echo "$name" | tr '[:upper:]' '[:lower:]')
+        if [[ "$name_lower" == *"$keyword"* ]]; then
+            printf "  %s  %-40s  [%s]\n" "$emoji" "$name" "$category"
+            count=$((count + 1))
         fi
     done
-    [ $found -eq 0 ] && echo "  No matches found."
-}
 
-_recent() {
-    echo "=== Recent Activity ==="
-    if [ -f "$DATA_DIR/history.log" ]; then
-        tail -20 "$DATA_DIR/history.log" | while IFS='' read -r line; do
-            echo "  $line"
-        done
+    echo ""
+    if [[ $count -eq 0 ]]; then
+        warn "No emoji found matching '${keyword}'"
+        info "Try broader terms like: face, heart, animal, food, star, hand"
+        return 1
     else
-        echo "  No activity yet."
+        success "Found ${count} emoji matching '${keyword}'"
     fi
 }
 
-# Main dispatch
-case "${1:-help}" in
-    palette)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent palette entries:"
-            tail -20 "$DATA_DIR/palette.log" 2>/dev/null || echo "  No entries yet. Use: emojilist palette <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/palette.log"
-            local total=$(wc -l < "$DATA_DIR/palette.log")
-            echo "  [Emojilist] palette: $input"
-            echo "  Saved. Total palette entries: $total"
-            _log "palette" "$input"
+cmd_category() {
+    [[ -z "${1:-}" ]] && die "Missing argument: <category> (use 'list' to see categories)"
+    local cat
+    cat=$(echo "$1" | tr '[:upper:]' '[:lower:]')
+
+    # Check if category exists
+    local found=0
+    for c in "${CATEGORIES[@]}"; do
+        [[ "$c" == "$cat" ]] && found=1 && break
+    done
+    [[ $found -eq 0 ]] && die "Unknown category '${cat}'. Use '${SCRIPT_NAME} list' to see available categories."
+
+    info "Category: ${CYAN}${cat}${NC}"
+    echo ""
+
+    local count=0
+    for entry in "${EMOJI_DB[@]}"; do
+        IFS='|' read -r emoji name category <<< "$entry"
+        if [[ "$category" == "$cat" ]]; then
+            printf "  %s  %s\n" "$emoji" "$name"
+            count=$((count + 1))
         fi
-        ;;
-    preview)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent preview entries:"
-            tail -20 "$DATA_DIR/preview.log" 2>/dev/null || echo "  No entries yet. Use: emojilist preview <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/preview.log"
-            local total=$(wc -l < "$DATA_DIR/preview.log")
-            echo "  [Emojilist] preview: $input"
-            echo "  Saved. Total preview entries: $total"
-            _log "preview" "$input"
-        fi
-        ;;
-    generate)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent generate entries:"
-            tail -20 "$DATA_DIR/generate.log" 2>/dev/null || echo "  No entries yet. Use: emojilist generate <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/generate.log"
-            local total=$(wc -l < "$DATA_DIR/generate.log")
-            echo "  [Emojilist] generate: $input"
-            echo "  Saved. Total generate entries: $total"
-            _log "generate" "$input"
-        fi
-        ;;
-    convert)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent convert entries:"
-            tail -20 "$DATA_DIR/convert.log" 2>/dev/null || echo "  No entries yet. Use: emojilist convert <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/convert.log"
-            local total=$(wc -l < "$DATA_DIR/convert.log")
-            echo "  [Emojilist] convert: $input"
-            echo "  Saved. Total convert entries: $total"
-            _log "convert" "$input"
-        fi
-        ;;
-    harmonize)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent harmonize entries:"
-            tail -20 "$DATA_DIR/harmonize.log" 2>/dev/null || echo "  No entries yet. Use: emojilist harmonize <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/harmonize.log"
-            local total=$(wc -l < "$DATA_DIR/harmonize.log")
-            echo "  [Emojilist] harmonize: $input"
-            echo "  Saved. Total harmonize entries: $total"
-            _log "harmonize" "$input"
-        fi
-        ;;
-    contrast)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent contrast entries:"
-            tail -20 "$DATA_DIR/contrast.log" 2>/dev/null || echo "  No entries yet. Use: emojilist contrast <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/contrast.log"
-            local total=$(wc -l < "$DATA_DIR/contrast.log")
-            echo "  [Emojilist] contrast: $input"
-            echo "  Saved. Total contrast entries: $total"
-            _log "contrast" "$input"
-        fi
-        ;;
-    export)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent export entries:"
-            tail -20 "$DATA_DIR/export.log" 2>/dev/null || echo "  No entries yet. Use: emojilist export <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/export.log"
-            local total=$(wc -l < "$DATA_DIR/export.log")
-            echo "  [Emojilist] export: $input"
-            echo "  Saved. Total export entries: $total"
-            _log "export" "$input"
-        fi
-        ;;
-    random)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent random entries:"
-            tail -20 "$DATA_DIR/random.log" 2>/dev/null || echo "  No entries yet. Use: emojilist random <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/random.log"
-            local total=$(wc -l < "$DATA_DIR/random.log")
-            echo "  [Emojilist] random: $input"
-            echo "  Saved. Total random entries: $total"
-            _log "random" "$input"
-        fi
-        ;;
-    browse)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent browse entries:"
-            tail -20 "$DATA_DIR/browse.log" 2>/dev/null || echo "  No entries yet. Use: emojilist browse <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/browse.log"
-            local total=$(wc -l < "$DATA_DIR/browse.log")
-            echo "  [Emojilist] browse: $input"
-            echo "  Saved. Total browse entries: $total"
-            _log "browse" "$input"
-        fi
-        ;;
-    mix)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent mix entries:"
-            tail -20 "$DATA_DIR/mix.log" 2>/dev/null || echo "  No entries yet. Use: emojilist mix <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/mix.log"
-            local total=$(wc -l < "$DATA_DIR/mix.log")
-            echo "  [Emojilist] mix: $input"
-            echo "  Saved. Total mix entries: $total"
-            _log "mix" "$input"
-        fi
-        ;;
-    gradient)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent gradient entries:"
-            tail -20 "$DATA_DIR/gradient.log" 2>/dev/null || echo "  No entries yet. Use: emojilist gradient <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/gradient.log"
-            local total=$(wc -l < "$DATA_DIR/gradient.log")
-            echo "  [Emojilist] gradient: $input"
-            echo "  Saved. Total gradient entries: $total"
-            _log "gradient" "$input"
-        fi
-        ;;
-    swatch)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent swatch entries:"
-            tail -20 "$DATA_DIR/swatch.log" 2>/dev/null || echo "  No entries yet. Use: emojilist swatch <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/swatch.log"
-            local total=$(wc -l < "$DATA_DIR/swatch.log")
-            echo "  [Emojilist] swatch: $input"
-            echo "  Saved. Total swatch entries: $total"
-            _log "swatch" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown command: $1"
-        echo "Run 'emojilist help' for available commands."
-        exit 1
-        ;;
-esac
+    done
+
+    echo ""
+    success "Total: ${count} emoji in '${cat}'"
+}
+
+cmd_random() {
+    local count="${1:-5}"
+    # Validate count is a number
+    [[ "$count" =~ ^[0-9]+$ ]] || die "Count must be a number"
+    [[ "$count" -lt 1 ]] && count=1
+    [[ "$count" -gt 50 ]] && count=50
+
+    local db_size=${#EMOJI_DB[@]}
+    info "Random ${count} emoji (from ${db_size} total):"
+    echo ""
+
+    # Generate random indices
+    local selected=0
+    local used_indices=()
+    while [[ $selected -lt $count ]] && [[ $selected -lt $db_size ]]; do
+        local idx=$((RANDOM % db_size))
+        # Check if already used
+        local already=0
+        for used in "${used_indices[@]+"${used_indices[@]}"}"; do
+            [[ "$used" -eq "$idx" ]] && already=1 && break
+        done
+        [[ $already -eq 1 ]] && continue
+
+        used_indices+=("$idx")
+        IFS='|' read -r emoji name category <<< "${EMOJI_DB[$idx]}"
+        printf "  %s  %-40s  [%s]\n" "$emoji" "$name" "$category"
+        selected=$((selected + 1))
+    done
+    echo ""
+}
+
+cmd_popular() {
+    info "Most commonly used emoji:"
+    echo ""
+
+    local popular_emoji=(
+        "😂|face with tears of joy|Most used on social media"
+        "❤️|red heart|Universal love symbol"
+        "🤣|rolling on the floor laughing|Top reaction emoji"
+        "👍|thumbs up|Quick approval"
+        "😭|loudly crying face|Emotional reactions"
+        "🙏|folded hands|Please/thank you/prayer"
+        "😘|face blowing a kiss|Affection"
+        "🥰|smiling face with hearts|Love and warmth"
+        "😍|smiling face with heart eyes|Adoration"
+        "😊|smiling face with smiling eyes|Friendly positivity"
+        "🔥|fire|Trending/hot/awesome"
+        "😁|beaming face with smiling eyes|Joyful"
+        "💕|two hearts|Love"
+        "🥺|pleading face|Puppy eyes / begging"
+        "😅|grinning face with sweat|Nervous/relief"
+        "🤗|hugging face|Warm embrace"
+        "🤔|thinking face|Pondering/questioning"
+        "😎|smiling face with sunglasses|Cool"
+        "👏|clapping hands|Applause/well done"
+        "✨|sparkles|Magic/excitement/new"
+        "💯|hundred points|Perfect score"
+        "🎉|party popper|Celebration"
+        "💪|flexed biceps|Strength/power"
+        "🤷|person shrugging|Who knows"
+        "👀|eyes|Looking/attention"
+    )
+
+    local rank=0
+    for entry in "${popular_emoji[@]}"; do
+        rank=$((rank + 1))
+        IFS='|' read -r emoji name note <<< "$entry"
+        printf "  %2d. %s  %-35s  ${CYAN}%s${NC}\n" "$rank" "$emoji" "$name" "$note"
+    done
+    echo ""
+    success "Top ${rank} most popular emoji worldwide"
+}
+
+cmd_list() {
+    info "Available emoji categories:"
+    echo ""
+
+    for cat in "${CATEGORIES[@]}"; do
+        local count=0
+        local sample=""
+        local sample_count=0
+        for entry in "${EMOJI_DB[@]}"; do
+            IFS='|' read -r emoji name category <<< "$entry"
+            if [[ "$category" == "$cat" ]]; then
+                count=$((count + 1))
+                if [[ $sample_count -lt 5 ]]; then
+                    sample+="$emoji "
+                    sample_count=$((sample_count + 1))
+                fi
+            fi
+        done
+        printf "  ${BOLD}%-12s${NC} (%3d emoji)  %s\n" "$cat" "$count" "$sample"
+    done
+
+    echo ""
+    local total=${#EMOJI_DB[@]}
+    success "Total: ${total} emoji across ${#CATEGORIES[@]} categories"
+    echo ""
+    info "Usage: ${SCRIPT_NAME} category <name>"
+}
+
+# --- Main ------------------------------------------------------------------
+main() {
+    [[ $# -eq 0 ]] && { usage; exit 0; }
+
+    case "${1}" in
+        -h|--help)      usage ;;
+        -v|--version)   echo "${SCRIPT_NAME} v${VERSION}" ;;
+        search)         shift; cmd_search "${1:-}" ;;
+        category)       shift; cmd_category "${1:-}" ;;
+        random)         shift; cmd_random "${1:-}" ;;
+        popular)        cmd_popular ;;
+        list)           cmd_list ;;
+        *)              die "Unknown command: $1 (try --help)" ;;
+    esac
+}
+
+main "$@"

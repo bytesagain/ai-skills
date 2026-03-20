@@ -1,103 +1,155 @@
 #!/usr/bin/env bash
-# onchain-analyzer - AI and prompt engineering assistant
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${ONCHAIN_ANALYZER_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/onchain-analyzer}"
-DB="$DATA_DIR/data.log"
+
+VERSION="3.0.0"
+SCRIPT_NAME="onchain-analyzer"
+DATA_DIR="$HOME/.local/share/onchain-analyzer"
 mkdir -p "$DATA_DIR"
 
-show_help() {
-    cat << EOF
-onchain-analyzer v$VERSION
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-AI and prompt engineering assistant
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
-Usage: onchain-analyzer <command> [args]
-
-Commands:
-  prompt               Generate prompt
-  system               System prompt
-  chain                Prompt chain
-  template             Prompt templates
-  compare              Compare models
-  cost                 Cost estimator
-  optimize             Optimize prompt
-  #                 Evaluate output
-  safety               Safety guidelines
-  tools                AI tool list
-  help                 Show this help
-  version              Show version
-
-Data: \$DATA_DIR
-EOF
+cmd_balance() {
+    local addr="${2:-}"
+    [ -z "$addr" ] && die "Usage: $SCRIPT_NAME balance <addr>"
+    curl -s 'https://blockstream.info/api/address/$2' 2>/dev/null | python3 -c 'import json,sys;d=json.load(sys.stdin);cs=d.get("chain_stats",{});print("Balance:",(cs.get("funded_txo_sum",0)-cs.get("spent_txo_sum",0))/1e8,"BTC")' 2>/dev/null
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-
-cmd_prompt() {
-    echo "  Role: $1
-      Task: ${2:-assist}
-      Format: ${3:-text}"
-    _log "prompt" "${1:-}"
+cmd_tx() {
+    local hash="${2:-}"
+    [ -z "$hash" ] && die "Usage: $SCRIPT_NAME tx <hash>"
+    curl -s 'https://blockstream.info/api/tx/$2' 2>/dev/null | python3 -c 'import json,sys;d=json.load(sys.stdin);print("Confirmations:",d.get("status",{}).get("confirmed",False))' 2>/dev/null
 }
 
-cmd_system() {
-    echo "  You are an expert $1. Be precise, helpful, and concise."
-    _log "system" "${1:-}"
+cmd_address() {
+    local addr="${2:-}"
+    [ -z "$addr" ] && die "Usage: $SCRIPT_NAME address <addr>"
+    curl -s 'https://blockstream.info/api/address/$2' 2>/dev/null
 }
 
-cmd_chain() {
-    echo "  Step 1: Understand | Step 2: Plan | Step 3: Execute | Step 4: Verify"
-    _log "chain" "${1:-}"
+cmd_gas() {
+    curl -s 'https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd' 2>/dev/null
 }
 
-cmd_template() {
-    echo "  1. Zero-shot | 2. Few-shot | 3. Chain-of-thought | 4. Role-play"
-    _log "template" "${1:-}"
+cmd_block() {
+    local number="${2:-}"
+    [ -z "$number" ] && die "Usage: $SCRIPT_NAME block <number>"
+    curl -s 'https://blockstream.info/api/blocks/tip/height' 2>/dev/null
 }
 
-cmd_compare() {
-    echo "  GPT-4 vs Claude vs Gemini: benchmark comparison"
-    _log "compare" "${1:-}"
+cmd_token() {
+    local addr="${2:-}"
+    [ -z "$addr" ] && die "Usage: $SCRIPT_NAME token <addr>"
+    echo 'Token lookup for $2'
 }
 
-cmd_cost() {
-    echo "  Tokens: ~$1 | Cost: ~\$$(python3 -c "print("{:.4f}".format(${1:-1000} * 0.00003))" 2>/dev/null || echo "?")"
-    _log "cost" "${1:-}"
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
+    echo ""
+    echo "Commands:"
+    printf "  %-25s\n" "balance <addr>"
+    printf "  %-25s\n" "tx <hash>"
+    printf "  %-25s\n" "address <addr>"
+    printf "  %-25s\n" "gas"
+    printf "  %-25s\n" "block <number>"
+    printf "  %-25s\n" "token <addr>"
+    printf "  %%-25s\n" "help"
+    echo ""
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-cmd_optimize() {
-    echo "  Tips: Be specific | Add examples | Set format | Constrain length"
-    _log "optimize" "${1:-}"
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        balance) shift; cmd_balance "$@" ;;
+        tx) shift; cmd_tx "$@" ;;
+        address) shift; cmd_address "$@" ;;
+        gas) shift; cmd_gas "$@" ;;
+        block) shift; cmd_block "$@" ;;
+        token) shift; cmd_token "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
+    esac
 }
 
-cmd_evaluate() {
-    echo "  Check: accuracy | relevance | completeness | tone"
-    _log "evaluate" "${1:-}"
-}
-
-cmd_safety() {
-    echo "  1. No harmful content | 2. No personal data | 3. Cite sources"
-    _log "safety" "${1:-}"
-}
-
-cmd_tools() {
-    echo "  ChatGPT | Claude | Gemini | Perplexity | Midjourney"
-    _log "tools" "${1:-}"
-}
-
-case "${1:-help}" in
-    prompt) shift; cmd_prompt "$@" ;;
-    system) shift; cmd_system "$@" ;;
-    chain) shift; cmd_chain "$@" ;;
-    template) shift; cmd_template "$@" ;;
-    compare) shift; cmd_compare "$@" ;;
-    cost) shift; cmd_cost "$@" ;;
-    optimize) shift; cmd_optimize "$@" ;;
-    evaluate) shift; cmd_"$@" ;;
-    safety) shift; cmd_safety "$@" ;;
-    tools) shift; cmd_tools "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "onchain-analyzer v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
-esac
+main "$@"

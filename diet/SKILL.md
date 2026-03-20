@@ -1,66 +1,85 @@
 ---
 name: diet
-version: "2.0.0"
+description: "Track food and nutrition. Use when logging meals, checking calories, tracking protein/carbs/fat, or generating diet reports."
+version: "3.4.0"
 author: BytesAgain
-license: MIT-0
-tags: [diet, tool, utility]
-description: "Diet - command-line tool for everyday use"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
+tags:
+  - nutrition
+  - calories
+  - meal-tracking
+  - health
+  - diet-plan
 ---
 
-# Diet
+# Diet — Meal & Nutrition Tracker
 
-Diet and nutrition tracker — log meals, calorie counting, macro tracking, meal planning, grocery lists, and nutritional analysis.
+Track what you eat, monitor macros, plan meals, and review nutrition trends.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `diet log` | <food> [qty] |
-| `diet today` | Today |
-| `diet macros` | Macros |
-| `diet plan` | [days] |
-| `diet grocery` | Grocery |
-| `diet analyze` | [period] |
-
-## Usage
+### log — Record a meal
 
 ```bash
-# Show help
-diet help
-
-# Quick start
-diet log <food> [qty]
+bash scripts/script.sh log "<food_item>" <calories> <protein_g> <carbs_g> <fat_g> [meal_type]
 ```
 
-## Examples
+Records a food entry with calorie and macro data. `meal_type` defaults to `snack`. Options: `breakfast`, `lunch`, `dinner`, `snack`.
+
+### calories — Query calorie totals
 
 ```bash
-# Example 1
-diet log <food> [qty]
-
-# Example 2
-diet today
+bash scripts/script.sh calories [YYYY-MM-DD]
 ```
 
-- Run `diet help` for all available commands
+Shows total calories consumed for a given date. Defaults to today.
+
+### plan — Generate a meal plan
+
+```bash
+bash scripts/script.sh plan <target_calories> <days>
+```
+
+Generates a simple meal plan for the specified number of days targeting the given daily calorie goal, based on previously logged foods.
+
+### macros — Macronutrient breakdown
+
+```bash
+bash scripts/script.sh macros [YYYY-MM-DD]
+```
+
+Shows protein, carbs, and fat totals and percentages for a given date. Defaults to today.
+
+### water — Log water intake
+
+```bash
+bash scripts/script.sh water <ml> [YYYY-MM-DD]
+```
+
+Records water intake in milliliters. Defaults to today.
+
+### report — Nutrition report
+
+```bash
+bash scripts/script.sh report [daily|weekly] [YYYY-MM-DD]
+```
+
+Produces a nutrition summary. `daily` shows one day; `weekly` shows 7-day trends. Defaults to daily report for today.
+
+## Output
+
+All commands print plain text to stdout. Data is stored in `~/.diet/` as JSON files (`meals.json`, `water.json`).
+
+
+## Requirements
+- bash 4+
+- python3 (standard library only)
+
+## Feedback
+
+Report issues or suggestions: [https://bytesagain.com/feedback/](https://bytesagain.com/feedback/)
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
 
-## Output
-
-Results go to stdout. Save with `diet run > output.txt`.
-
-## Configuration
-
-Set `DIET_DIR` to change data directory. Default: `~/.local/share/diet/`
-
-## When to Use
-
-- Quick diet tasks from terminal
-- Automation pipelines
-
-## Output
-
-Results go to stdout. Save with `diet run > output.txt`.
+Powered by BytesAgain | bytesagain.com

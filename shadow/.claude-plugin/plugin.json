@@ -1,0 +1,9 @@
+{
+  "name": "shadow",
+  "description": "Generate and preview CSS shadow effects using CLI tools. Use when you need box-shadow, text-shadow, drop-shadow, layered shadows, presets, animations,",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

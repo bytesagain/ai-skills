@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: funnel-analyzer
-description: "漏斗分析工具。创建转化漏斗、诊断流失环节、行业对标、优化建议、分析报告、漏斗对比。Funnel analyzer with conversion funnels, diagnostics, benchmarks, optimization, reports, and comparison. Use when you need funnel analyzer capabilities. Triggers on: funnel analyzer."
+description: "漏斗分析工具。创建转化漏斗、诊断流失环节、行业对标、优化建议、分析报告、漏斗对比。Funnel analyzer with conversion funnels, diagnostics, benchmarks, optimization, reports."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # funnel-analyzer
 

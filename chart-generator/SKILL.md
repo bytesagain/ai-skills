@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: chart-generator
-description: "Data visualization tool producing SVG charts. Use when you need bar charts, line charts, pie charts, tables, sparklines, gauges, or any data visualization from raw numbers. Triggers on: chart, graph, visualization, bar chart, pie chart, line chart, data plot, SVG."
+description: "Generate ASCII and HTML charts from data with bar, pie, and line plots. Use when visualizing CSV data, creating dashboards, or embedding charts."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Chart Generator

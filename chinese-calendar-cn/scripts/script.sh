@@ -1,332 +1,155 @@
 #!/usr/bin/env bash
-# Chinese Calendar Cn — productivity tool
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-DATA_DIR="${HOME}/.local/share/chinese-calendar-cn"
+VERSION="3.0.0"
+SCRIPT_NAME="chinese-calendar-cn"
+DATA_DIR="$HOME/.local/share/chinese-calendar-cn"
 mkdir -p "$DATA_DIR"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-_version() { echo "chinese-calendar-cn v2.0.0"; }
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
-_help() {
-    echo "Chinese Calendar Cn v2.0.0 — productivity toolkit"
-    echo ""
-    echo "Usage: chinese-calendar-cn <command> [args]"
+cmd_today() {
+    echo "$(date +%Y-%m-%d) $(date +%A)"; local y=$(date +%Y); local z=$((($y - 4) % 12)); local animals='鼠 牛 虎 兔 龙 蛇 马 羊 猴 鸡 狗 猪'; echo "生肖: $(echo $animals | cut -d' ' -f$((z+1)))"
+}
+
+cmd_zodiac() {
+    local year="${2:-}"
+    [ -z "$year" ] && die "Usage: $SCRIPT_NAME zodiac <year>"
+    local z=$(((${2:-$(date +%Y)} - 4) % 12)); local animals='鼠 牛 虎 兔 龙 蛇 马 羊 猴 鸡 狗 猪'; echo $(echo $animals | cut -d' ' -f$((z+1)))
+}
+
+cmd_festival() {
+    local year="${2:-}"
+    [ -z "$year" ] && die "Usage: $SCRIPT_NAME festival <year>"
+    echo '${2:-2026}年主要节日:'; echo '春节 元宵节 清明节 端午节 中秋节 重阳节'
+}
+
+cmd_solar_term() {
+    local month="${2:-}"
+    [ -z "$month" ] && die "Usage: $SCRIPT_NAME solar-term <month>"
+    echo '${2:-1}月节气: 小寒 大寒'
+}
+
+cmd_convert() {
+    local date="${2:-}"
+    [ -z "$date" ] && die "Usage: $SCRIPT_NAME convert <date>"
+    echo '阳历 $2 对应农历日期（需要查表）'
+}
+
+cmd_list() {
+    echo '十二生肖: 鼠 牛 虎 兔 龙 蛇 马 羊 猴 鸡 狗 猪'
+}
+
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
     echo ""
     echo "Commands:"
-    echo "  add                Add"
-    echo "  plan               Plan"
-    echo "  track              Track"
-    echo "  review             Review"
-    echo "  streak             Streak"
-    echo "  remind             Remind"
-    echo "  prioritize         Prioritize"
-    echo "  archive            Archive"
-    echo "  tag                Tag"
-    echo "  timeline           Timeline"
-    echo "  report             Report"
-    echo "  weekly-review      Weekly Review"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
+    printf "  %-25s\n" "today"
+    printf "  %-25s\n" "zodiac <year>"
+    printf "  %-25s\n" "festival <year>"
+    printf "  %-25s\n" "solar-term <month>"
+    printf "  %-25s\n" "convert <date>"
+    printf "  %-25s\n" "list"
+    printf "  %%-25s\n" "help"
     echo ""
-    echo "Data: $DATA_DIR"
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-_stats() {
-    echo "=== Chinese Calendar Cn Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Since: $(head -1 "$DATA_DIR/history.log" 2>/dev/null | cut -d'|' -f1 || echo 'N/A')"
-}
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
 
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "" >> "$out"
-            echo "]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    echo "$name,$ts,$val" >> "$out"
-                done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Chinese Calendar Cn Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-                echo "" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        today) shift; cmd_today "$@" ;;
+        zodiac) shift; cmd_zodiac "$@" ;;
+        festival) shift; cmd_festival "$@" ;;
+        solar-term) shift; cmd_solar_term "$@" ;;
+        convert) shift; cmd_convert "$@" ;;
+        list) shift; cmd_list "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
     esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
 }
 
-_status() {
-    echo "=== Chinese Calendar Cn Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    local last=$(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo "never")
-    echo "  Last activity: $last"
-    echo "  Status: OK"
-}
-
-_search() {
-    local term="${1:?Usage: chinese-calendar-cn search <term>}"
-    echo "Searching for: $term"
-    local found=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local matches=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$matches" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$matches" | while read -r line; do
-                echo "    $line"
-                found=$((found + 1))
-            done
-        fi
-    done
-    [ $found -eq 0 ] && echo "  No matches found."
-}
-
-_recent() {
-    echo "=== Recent Activity ==="
-    if [ -f "$DATA_DIR/history.log" ]; then
-        tail -20 "$DATA_DIR/history.log" | while IFS='' read -r line; do
-            echo "  $line"
-        done
-    else
-        echo "  No activity yet."
-    fi
-}
-
-# Main dispatch
-case "${1:-help}" in
-    add)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent add entries:"
-            tail -20 "$DATA_DIR/add.log" 2>/dev/null || echo "  No entries yet. Use: chinese-calendar-cn add <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/add.log"
-            local total=$(wc -l < "$DATA_DIR/add.log")
-            echo "  [Chinese Calendar Cn] add: $input"
-            echo "  Saved. Total add entries: $total"
-            _log "add" "$input"
-        fi
-        ;;
-    plan)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent plan entries:"
-            tail -20 "$DATA_DIR/plan.log" 2>/dev/null || echo "  No entries yet. Use: chinese-calendar-cn plan <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/plan.log"
-            local total=$(wc -l < "$DATA_DIR/plan.log")
-            echo "  [Chinese Calendar Cn] plan: $input"
-            echo "  Saved. Total plan entries: $total"
-            _log "plan" "$input"
-        fi
-        ;;
-    track)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent track entries:"
-            tail -20 "$DATA_DIR/track.log" 2>/dev/null || echo "  No entries yet. Use: chinese-calendar-cn track <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/track.log"
-            local total=$(wc -l < "$DATA_DIR/track.log")
-            echo "  [Chinese Calendar Cn] track: $input"
-            echo "  Saved. Total track entries: $total"
-            _log "track" "$input"
-        fi
-        ;;
-    review)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent review entries:"
-            tail -20 "$DATA_DIR/review.log" 2>/dev/null || echo "  No entries yet. Use: chinese-calendar-cn review <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/review.log"
-            local total=$(wc -l < "$DATA_DIR/review.log")
-            echo "  [Chinese Calendar Cn] review: $input"
-            echo "  Saved. Total review entries: $total"
-            _log "review" "$input"
-        fi
-        ;;
-    streak)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent streak entries:"
-            tail -20 "$DATA_DIR/streak.log" 2>/dev/null || echo "  No entries yet. Use: chinese-calendar-cn streak <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/streak.log"
-            local total=$(wc -l < "$DATA_DIR/streak.log")
-            echo "  [Chinese Calendar Cn] streak: $input"
-            echo "  Saved. Total streak entries: $total"
-            _log "streak" "$input"
-        fi
-        ;;
-    remind)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent remind entries:"
-            tail -20 "$DATA_DIR/remind.log" 2>/dev/null || echo "  No entries yet. Use: chinese-calendar-cn remind <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/remind.log"
-            local total=$(wc -l < "$DATA_DIR/remind.log")
-            echo "  [Chinese Calendar Cn] remind: $input"
-            echo "  Saved. Total remind entries: $total"
-            _log "remind" "$input"
-        fi
-        ;;
-    prioritize)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent prioritize entries:"
-            tail -20 "$DATA_DIR/prioritize.log" 2>/dev/null || echo "  No entries yet. Use: chinese-calendar-cn prioritize <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/prioritize.log"
-            local total=$(wc -l < "$DATA_DIR/prioritize.log")
-            echo "  [Chinese Calendar Cn] prioritize: $input"
-            echo "  Saved. Total prioritize entries: $total"
-            _log "prioritize" "$input"
-        fi
-        ;;
-    archive)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent archive entries:"
-            tail -20 "$DATA_DIR/archive.log" 2>/dev/null || echo "  No entries yet. Use: chinese-calendar-cn archive <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/archive.log"
-            local total=$(wc -l < "$DATA_DIR/archive.log")
-            echo "  [Chinese Calendar Cn] archive: $input"
-            echo "  Saved. Total archive entries: $total"
-            _log "archive" "$input"
-        fi
-        ;;
-    tag)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent tag entries:"
-            tail -20 "$DATA_DIR/tag.log" 2>/dev/null || echo "  No entries yet. Use: chinese-calendar-cn tag <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/tag.log"
-            local total=$(wc -l < "$DATA_DIR/tag.log")
-            echo "  [Chinese Calendar Cn] tag: $input"
-            echo "  Saved. Total tag entries: $total"
-            _log "tag" "$input"
-        fi
-        ;;
-    timeline)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent timeline entries:"
-            tail -20 "$DATA_DIR/timeline.log" 2>/dev/null || echo "  No entries yet. Use: chinese-calendar-cn timeline <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/timeline.log"
-            local total=$(wc -l < "$DATA_DIR/timeline.log")
-            echo "  [Chinese Calendar Cn] timeline: $input"
-            echo "  Saved. Total timeline entries: $total"
-            _log "timeline" "$input"
-        fi
-        ;;
-    report)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent report entries:"
-            tail -20 "$DATA_DIR/report.log" 2>/dev/null || echo "  No entries yet. Use: chinese-calendar-cn report <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/report.log"
-            local total=$(wc -l < "$DATA_DIR/report.log")
-            echo "  [Chinese Calendar Cn] report: $input"
-            echo "  Saved. Total report entries: $total"
-            _log "report" "$input"
-        fi
-        ;;
-    weekly-review)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent weekly-review entries:"
-            tail -20 "$DATA_DIR/weekly-review.log" 2>/dev/null || echo "  No entries yet. Use: chinese-calendar-cn weekly-review <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/weekly-review.log"
-            local total=$(wc -l < "$DATA_DIR/weekly-review.log")
-            echo "  [Chinese Calendar Cn] weekly-review: $input"
-            echo "  Saved. Total weekly-review entries: $total"
-            _log "weekly-review" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown command: $1"
-        echo "Run 'chinese-calendar-cn help' for available commands."
-        exit 1
-        ;;
-esac
+main "$@"

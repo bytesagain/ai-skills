@@ -1,332 +1,517 @@
 #!/usr/bin/env bash
-# Link Checker — productivity tool
+# ============================================================
+# Link Checker — check URLs for HTTP status, find broken links
 # Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+# ============================================================
 set -euo pipefail
 
-DATA_DIR="${HOME}/.local/share/link-checker"
-mkdir -p "$DATA_DIR"
+VERSION="2.1.0"
+DATA_DIR="${HOME}/.link-checker"
+RESULTS_FILE="$DATA_DIR/results.log"
+HISTORY_FILE="$DATA_DIR/history.log"
+CONFIG_FILE="$DATA_DIR/config"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+# Defaults
+DEFAULT_TIMEOUT=10
+DEFAULT_RETRIES=2
+DEFAULT_USER_AGENT="LinkChecker/${VERSION}"
 
-_version() { echo "link-checker v2.0.0"; }
-
-_help() {
-    echo "Link Checker v2.0.0 — productivity toolkit"
-    echo ""
-    echo "Usage: link-checker <command> [args]"
-    echo ""
-    echo "Commands:"
-    echo "  add                Add"
-    echo "  plan               Plan"
-    echo "  track              Track"
-    echo "  review             Review"
-    echo "  streak             Streak"
-    echo "  remind             Remind"
-    echo "  prioritize         Prioritize"
-    echo "  archive            Archive"
-    echo "  tag                Tag"
-    echo "  timeline           Timeline"
-    echo "  report             Report"
-    echo "  weekly-review      Weekly Review"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
-}
-
-_stats() {
-    echo "=== Link Checker Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Since: $(head -1 "$DATA_DIR/history.log" 2>/dev/null | cut -d'|' -f1 || echo 'N/A')"
-}
-
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "" >> "$out"
-            echo "]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    echo "$name,$ts,$val" >> "$out"
-                done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Link Checker Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-                echo "" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
-    esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
-}
-
-_status() {
-    echo "=== Link Checker Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    local last=$(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo "never")
-    echo "  Last activity: $last"
-    echo "  Status: OK"
-}
-
-_search() {
-    local term="${1:?Usage: link-checker search <term>}"
-    echo "Searching for: $term"
-    local found=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local matches=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$matches" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$matches" | while read -r line; do
-                echo "    $line"
-                found=$((found + 1))
-            done
-        fi
-    done
-    [ $found -eq 0 ] && echo "  No matches found."
-}
-
-_recent() {
-    echo "=== Recent Activity ==="
-    if [ -f "$DATA_DIR/history.log" ]; then
-        tail -20 "$DATA_DIR/history.log" | while IFS='' read -r line; do
-            echo "  $line"
-        done
-    else
-        echo "  No activity yet."
+# ------------------------------------------------------------
+# Init & Config helpers
+# ------------------------------------------------------------
+_init() {
+    mkdir -p "$DATA_DIR"
+    if [ ! -f "$CONFIG_FILE" ]; then
+        echo "timeout=${DEFAULT_TIMEOUT}" > "$CONFIG_FILE"
+        echo "retries=${DEFAULT_RETRIES}" >> "$CONFIG_FILE"
+        echo "user_agent=${DEFAULT_USER_AGENT}" >> "$CONFIG_FILE"
     fi
 }
 
-# Main dispatch
+_get_config() {
+    local key="$1"
+    local fallback="${2:-}"
+    if [ -f "$CONFIG_FILE" ]; then
+        local val
+        val=$(grep "^${key}=" "$CONFIG_FILE" 2>/dev/null | head -1 | cut -d'=' -f2-)
+        if [ -n "$val" ]; then
+            echo "$val"
+            return
+        fi
+    fi
+    echo "$fallback"
+}
+
+_set_config() {
+    local key="$1"
+    local val="$2"
+    if grep -q "^${key}=" "$CONFIG_FILE" 2>/dev/null; then
+        sed -i "s|^${key}=.*|${key}=${val}|" "$CONFIG_FILE"
+    else
+        echo "${key}=${val}" >> "$CONFIG_FILE"
+    fi
+    echo "  Set ${key} = ${val}"
+}
+
+# ------------------------------------------------------------
+# Core: check a single URL
+# Returns: status_code (or TIMEOUT / ERROR)
+# ------------------------------------------------------------
+_check_url() {
+    local url="$1"
+    local timeout
+    timeout=$(_get_config "timeout" "$DEFAULT_TIMEOUT")
+    local retries
+    retries=$(_get_config "retries" "$DEFAULT_RETRIES")
+    local ua
+    ua=$(_get_config "user_agent" "$DEFAULT_USER_AGENT")
+
+    local attempt=0
+    local code=""
+    while [ $attempt -le "$retries" ]; do
+        code=$(curl -sI -o /dev/null -w "%{http_code}" \
+            --connect-timeout "$timeout" \
+            --max-time "$((timeout * 2))" \
+            -A "$ua" \
+            -L "$url" 2>/dev/null) || code="ERROR"
+
+        if [ "$code" = "000" ]; then
+            code="TIMEOUT"
+        fi
+
+        # If we got a valid response (not timeout/error), stop retrying
+        if [ "$code" != "TIMEOUT" ] && [ "$code" != "ERROR" ]; then
+            break
+        fi
+        attempt=$((attempt + 1))
+    done
+
+    echo "$code"
+}
+
+# Classify status code
+_status_label() {
+    local code="$1"
+    case "$code" in
+        2[0-9][0-9]) echo "OK" ;;
+        3[0-9][0-9]) echo "REDIRECT" ;;
+        4[0-9][0-9]) echo "CLIENT_ERROR" ;;
+        5[0-9][0-9]) echo "SERVER_ERROR" ;;
+        TIMEOUT)     echo "TIMEOUT" ;;
+        *)           echo "ERROR" ;;
+    esac
+}
+
+_status_icon() {
+    local code="$1"
+    case "$code" in
+        2[0-9][0-9]) echo "✅" ;;
+        3[0-9][0-9]) echo "🔄" ;;
+        4[0-9][0-9]) echo "❌" ;;
+        5[0-9][0-9]) echo "⚠️" ;;
+        TIMEOUT)     echo "⏱️" ;;
+        *)           echo "🚫" ;;
+    esac
+}
+
+# Record a result to history
+_record() {
+    local url="$1"
+    local code="$2"
+    local label
+    label=$(_status_label "$code")
+    local ts
+    ts=$(date '+%Y-%m-%d %H:%M:%S')
+    echo "${ts}|${url}|${code}|${label}" >> "$RESULTS_FILE"
+    echo "${ts}|${url}|${code}|${label}" >> "$HISTORY_FILE"
+}
+
+# ------------------------------------------------------------
+# Commands
+# ------------------------------------------------------------
+
+cmd_check() {
+    local url="${1:?Usage: link-checker check <url>}"
+    echo "Checking: ${url}"
+    local code
+    code=$(_check_url "$url")
+    local icon
+    icon=$(_status_icon "$code")
+    local label
+    label=$(_status_label "$code")
+    echo "  ${icon} ${code} — ${label}"
+    _record "$url" "$code"
+}
+
+cmd_scan() {
+    local file="${1:?Usage: link-checker scan <file>}"
+    if [ ! -f "$file" ]; then
+        echo "Error: file not found: ${file}"
+        exit 1
+    fi
+
+    echo "Scanning file: ${file}"
+    echo "Extracting URLs..."
+
+    # Extract URLs using grep — matches http:// and https://
+    local urls
+    urls=$(grep -oE 'https?://[^ "'"'"'<>()]+' "$file" | sort -u) || true
+
+    if [ -z "$urls" ]; then
+        echo "  No URLs found in ${file}"
+        return
+    fi
+
+    local count
+    count=$(echo "$urls" | wc -l)
+    echo "Found ${count} unique URL(s)"
+    echo ""
+
+    local ok=0 fail=0
+    while IFS= read -r url; do
+        local code
+        code=$(_check_url "$url")
+        local icon
+        icon=$(_status_icon "$code")
+        echo "  ${icon} ${code}  ${url}"
+        _record "$url" "$code"
+        case "$code" in
+            2[0-9][0-9]|3[0-9][0-9]) ok=$((ok + 1)) ;;
+            *) fail=$((fail + 1)) ;;
+        esac
+    done <<< "$urls"
+
+    echo ""
+    echo "Summary: ${ok} OK, ${fail} failed out of ${count} URLs"
+}
+
+cmd_batch() {
+    if [ $# -eq 0 ]; then
+        echo "Usage: link-checker batch <url1> <url2> ..."
+        exit 1
+    fi
+
+    echo "Batch checking ${#} URL(s)..."
+    echo ""
+
+    local ok=0 fail=0 total=0
+    for url in "$@"; do
+        total=$((total + 1))
+        local code
+        code=$(_check_url "$url")
+        local icon
+        icon=$(_status_icon "$code")
+        echo "  ${icon} ${code}  ${url}"
+        _record "$url" "$code"
+        case "$code" in
+            2[0-9][0-9]|3[0-9][0-9]) ok=$((ok + 1)) ;;
+            *) fail=$((fail + 1)) ;;
+        esac
+    done
+
+    echo ""
+    echo "Summary: ${ok} OK, ${fail} failed out of ${total} URLs"
+}
+
+cmd_report() {
+    local fmt="${1:-txt}"
+
+    if [ ! -f "$RESULTS_FILE" ]; then
+        echo "No results yet. Run 'check', 'scan', or 'batch' first."
+        return
+    fi
+
+    local outfile="$DATA_DIR/report.${fmt}"
+
+    case "$fmt" in
+        txt)
+            {
+                echo "=== Link Checker Report ==="
+                echo "Generated: $(date '+%Y-%m-%d %H:%M:%S')"
+                echo ""
+                printf "%-20s  %-6s  %-14s  %s\n" "TIMESTAMP" "CODE" "STATUS" "URL"
+                printf "%-20s  %-6s  %-14s  %s\n" "-------------------" "------" "--------------" "---"
+                while IFS='|' read -r ts url code label; do
+                    printf "%-20s  %-6s  %-14s  %s\n" "$ts" "$code" "$label" "$url"
+                done < "$RESULTS_FILE"
+            } > "$outfile"
+            ;;
+        csv)
+            {
+                echo "timestamp,url,status_code,status"
+                while IFS='|' read -r ts url code label; do
+                    echo "${ts},${url},${code},${label}"
+                done < "$RESULTS_FILE"
+            } > "$outfile"
+            ;;
+        json)
+            {
+                echo "["
+                local first=1
+                while IFS='|' read -r ts url code label; do
+                    [ $first -eq 1 ] && first=0 || echo ","
+                    printf '  {"timestamp":"%s","url":"%s","status_code":"%s","status":"%s"}' \
+                        "$ts" "$url" "$code" "$label"
+                done < "$RESULTS_FILE"
+                echo ""
+                echo "]"
+            } > "$outfile"
+            ;;
+        *)
+            echo "Unknown format: ${fmt}"
+            echo "Supported: txt, csv, json"
+            return 1
+            ;;
+    esac
+
+    local size
+    size=$(wc -c < "$outfile")
+    echo "Report saved: ${outfile} (${size} bytes)"
+}
+
+cmd_history() {
+    if [ ! -f "$HISTORY_FILE" ]; then
+        echo "No history yet."
+        return
+    fi
+
+    echo "=== Check History ==="
+    echo ""
+    local count
+    count=$(wc -l < "$HISTORY_FILE")
+    echo "Showing last 50 of ${count} entries:"
+    echo ""
+    printf "%-20s  %-6s  %-14s  %s\n" "TIMESTAMP" "CODE" "STATUS" "URL"
+    printf "%-20s  %-6s  %-14s  %s\n" "-------------------" "------" "--------------" "---"
+    tail -50 "$HISTORY_FILE" | while IFS='|' read -r ts url code label; do
+        printf "%-20s  %-6s  %-14s  %s\n" "$ts" "$code" "$label" "$url"
+    done
+}
+
+cmd_broken() {
+    if [ ! -f "$RESULTS_FILE" ]; then
+        echo "No results yet."
+        return
+    fi
+
+    echo "=== Broken Links ==="
+    echo ""
+    local found=0
+    while IFS='|' read -r ts url code label; do
+        case "$code" in
+            4[0-9][0-9]|5[0-9][0-9]|TIMEOUT|ERROR)
+                local icon
+                icon=$(_status_icon "$code")
+                echo "  ${icon} ${code}  ${url}  (${ts})"
+                found=$((found + 1))
+                ;;
+        esac
+    done < "$RESULTS_FILE"
+
+    if [ $found -eq 0 ]; then
+        echo "  No broken links found. All checks passed."
+    else
+        echo ""
+        echo "${found} broken link(s) found."
+    fi
+}
+
+cmd_stats() {
+    if [ ! -f "$HISTORY_FILE" ]; then
+        echo "No data yet."
+        return
+    fi
+
+    local total ok redirect client_err server_err timeout_count error_count
+    total=$(wc -l < "$HISTORY_FILE")
+    ok=$(grep -c '|OK$' "$HISTORY_FILE" 2>/dev/null || echo 0)
+    redirect=$(grep -c '|REDIRECT$' "$HISTORY_FILE" 2>/dev/null || echo 0)
+    client_err=$(grep -c '|CLIENT_ERROR$' "$HISTORY_FILE" 2>/dev/null || echo 0)
+    server_err=$(grep -c '|SERVER_ERROR$' "$HISTORY_FILE" 2>/dev/null || echo 0)
+    timeout_count=$(grep -c '|TIMEOUT$' "$HISTORY_FILE" 2>/dev/null || echo 0)
+    error_count=$(grep -c '|ERROR$' "$HISTORY_FILE" 2>/dev/null || echo 0)
+
+    local success_rate=0
+    if [ "$total" -gt 0 ]; then
+        success_rate=$(( (ok + redirect) * 100 / total ))
+    fi
+
+    echo "=== Link Checker Stats ==="
+    echo ""
+    echo "  Total checks:   ${total}"
+    echo "  ✅ OK (2xx):     ${ok}"
+    echo "  🔄 Redirect:     ${redirect}"
+    echo "  ❌ Client (4xx): ${client_err}"
+    echo "  ⚠️  Server (5xx): ${server_err}"
+    echo "  ⏱️  Timeout:      ${timeout_count}"
+    echo "  🚫 Error:        ${error_count}"
+    echo ""
+    echo "  Success rate:   ${success_rate}%"
+    echo ""
+
+    # Top error codes
+    echo "  Common status codes:"
+    awk -F'|' '{print $3}' "$HISTORY_FILE" | sort | uniq -c | sort -rn | head -10 | while read -r cnt code; do
+        printf "    %-8s  %s occurrences\n" "$code" "$cnt"
+    done
+
+    echo ""
+    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
+    echo "  First check: $(head -1 "$HISTORY_FILE" | cut -d'|' -f1)"
+    echo "  Last check:  $(tail -1 "$HISTORY_FILE" | cut -d'|' -f1)"
+}
+
+cmd_export() {
+    local fmt="${1:?Usage: link-checker export <format> (csv|json|txt)}"
+
+    if [ ! -f "$HISTORY_FILE" ]; then
+        echo "No data to export."
+        return
+    fi
+
+    local outfile="$DATA_DIR/export_$(date '+%Y%m%d_%H%M%S').${fmt}"
+
+    case "$fmt" in
+        csv)
+            {
+                echo "timestamp,url,status_code,status"
+                while IFS='|' read -r ts url code label; do
+                    echo "${ts},${url},${code},${label}"
+                done < "$HISTORY_FILE"
+            } > "$outfile"
+            ;;
+        json)
+            {
+                echo "["
+                local first=1
+                while IFS='|' read -r ts url code label; do
+                    [ $first -eq 1 ] && first=0 || echo ","
+                    printf '  {"timestamp":"%s","url":"%s","status_code":"%s","status":"%s"}' \
+                        "$ts" "$url" "$code" "$label"
+                done < "$HISTORY_FILE"
+                echo ""
+                echo "]"
+            } > "$outfile"
+            ;;
+        txt)
+            {
+                echo "=== Link Checker Export ==="
+                echo "Exported: $(date '+%Y-%m-%d %H:%M:%S')"
+                echo "Total entries: $(wc -l < "$HISTORY_FILE")"
+                echo ""
+                printf "%-20s  %-6s  %-14s  %s\n" "TIMESTAMP" "CODE" "STATUS" "URL"
+                printf "%-20s  %-6s  %-14s  %s\n" "-------------------" "------" "--------------" "---"
+                while IFS='|' read -r ts url code label; do
+                    printf "%-20s  %-6s  %-14s  %s\n" "$ts" "$code" "$label" "$url"
+                done < "$HISTORY_FILE"
+            } > "$outfile"
+            ;;
+        *)
+            echo "Unknown format: ${fmt}"
+            echo "Supported: csv, json, txt"
+            return 1
+            ;;
+    esac
+
+    local size
+    size=$(wc -c < "$outfile")
+    echo "Exported ${fmt} to: ${outfile} (${size} bytes)"
+}
+
+cmd_config() {
+    if [ $# -eq 0 ]; then
+        echo "=== Link Checker Config ==="
+        echo ""
+        echo "  timeout    = $(_get_config timeout "$DEFAULT_TIMEOUT") seconds"
+        echo "  retries    = $(_get_config retries "$DEFAULT_RETRIES")"
+        echo "  user_agent = $(_get_config user_agent "$DEFAULT_USER_AGENT")"
+        echo ""
+        echo "  Config file: ${CONFIG_FILE}"
+        echo ""
+        echo "  Set a value:  link-checker config set <key> <value>"
+        echo "  Keys: timeout, retries, user_agent"
+        return
+    fi
+
+    local action="$1"
+    case "$action" in
+        set)
+            local key="${2:?Usage: link-checker config set <key> <value>}"
+            local val="${3:?Usage: link-checker config set <key> <value>}"
+            case "$key" in
+                timeout|retries|user_agent)
+                    _set_config "$key" "$val"
+                    ;;
+                *)
+                    echo "Unknown config key: ${key}"
+                    echo "Valid keys: timeout, retries, user_agent"
+                    return 1
+                    ;;
+            esac
+            ;;
+        *)
+            echo "Usage: link-checker config [set <key> <value>]"
+            return 1
+            ;;
+    esac
+}
+
+cmd_help() {
+    cat <<EOF
+Link Checker v${VERSION} — find broken links, check URL status
+
+Usage: link-checker <command> [arguments]
+
+Commands:
+  check <url>            Check a single URL and show its HTTP status
+  scan <file>            Extract all URLs from a file and check each one
+  batch <url1> <url2>    Check multiple URLs at once
+  report [format]        Generate a report from results (txt/csv/json)
+  history                Show past check results
+  broken                 Show only broken links (4xx/5xx/timeout)
+  stats                  Show statistics: total checks, success rate, error codes
+  export <format>        Export all history (csv/json/txt)
+  config                 View or set configuration (timeout, retries)
+  help                   Show this help
+  version                Show version
+
+Examples:
+  link-checker check https://example.com
+  link-checker scan ./README.md
+  link-checker batch https://a.com https://b.com https://c.com
+  link-checker report json
+  link-checker broken
+  link-checker config set timeout 15
+  link-checker export csv
+
+Data directory: ${DATA_DIR}
+EOF
+}
+
+cmd_version() {
+    echo "link-checker v${VERSION}"
+}
+
+# ------------------------------------------------------------
+# Init & Dispatch
+# ------------------------------------------------------------
+_init
+
 case "${1:-help}" in
-    add)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent add entries:"
-            tail -20 "$DATA_DIR/add.log" 2>/dev/null || echo "  No entries yet. Use: link-checker add <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/add.log"
-            local total=$(wc -l < "$DATA_DIR/add.log")
-            echo "  [Link Checker] add: $input"
-            echo "  Saved. Total add entries: $total"
-            _log "add" "$input"
-        fi
-        ;;
-    plan)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent plan entries:"
-            tail -20 "$DATA_DIR/plan.log" 2>/dev/null || echo "  No entries yet. Use: link-checker plan <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/plan.log"
-            local total=$(wc -l < "$DATA_DIR/plan.log")
-            echo "  [Link Checker] plan: $input"
-            echo "  Saved. Total plan entries: $total"
-            _log "plan" "$input"
-        fi
-        ;;
-    track)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent track entries:"
-            tail -20 "$DATA_DIR/track.log" 2>/dev/null || echo "  No entries yet. Use: link-checker track <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/track.log"
-            local total=$(wc -l < "$DATA_DIR/track.log")
-            echo "  [Link Checker] track: $input"
-            echo "  Saved. Total track entries: $total"
-            _log "track" "$input"
-        fi
-        ;;
-    review)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent review entries:"
-            tail -20 "$DATA_DIR/review.log" 2>/dev/null || echo "  No entries yet. Use: link-checker review <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/review.log"
-            local total=$(wc -l < "$DATA_DIR/review.log")
-            echo "  [Link Checker] review: $input"
-            echo "  Saved. Total review entries: $total"
-            _log "review" "$input"
-        fi
-        ;;
-    streak)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent streak entries:"
-            tail -20 "$DATA_DIR/streak.log" 2>/dev/null || echo "  No entries yet. Use: link-checker streak <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/streak.log"
-            local total=$(wc -l < "$DATA_DIR/streak.log")
-            echo "  [Link Checker] streak: $input"
-            echo "  Saved. Total streak entries: $total"
-            _log "streak" "$input"
-        fi
-        ;;
-    remind)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent remind entries:"
-            tail -20 "$DATA_DIR/remind.log" 2>/dev/null || echo "  No entries yet. Use: link-checker remind <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/remind.log"
-            local total=$(wc -l < "$DATA_DIR/remind.log")
-            echo "  [Link Checker] remind: $input"
-            echo "  Saved. Total remind entries: $total"
-            _log "remind" "$input"
-        fi
-        ;;
-    prioritize)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent prioritize entries:"
-            tail -20 "$DATA_DIR/prioritize.log" 2>/dev/null || echo "  No entries yet. Use: link-checker prioritize <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/prioritize.log"
-            local total=$(wc -l < "$DATA_DIR/prioritize.log")
-            echo "  [Link Checker] prioritize: $input"
-            echo "  Saved. Total prioritize entries: $total"
-            _log "prioritize" "$input"
-        fi
-        ;;
-    archive)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent archive entries:"
-            tail -20 "$DATA_DIR/archive.log" 2>/dev/null || echo "  No entries yet. Use: link-checker archive <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/archive.log"
-            local total=$(wc -l < "$DATA_DIR/archive.log")
-            echo "  [Link Checker] archive: $input"
-            echo "  Saved. Total archive entries: $total"
-            _log "archive" "$input"
-        fi
-        ;;
-    tag)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent tag entries:"
-            tail -20 "$DATA_DIR/tag.log" 2>/dev/null || echo "  No entries yet. Use: link-checker tag <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/tag.log"
-            local total=$(wc -l < "$DATA_DIR/tag.log")
-            echo "  [Link Checker] tag: $input"
-            echo "  Saved. Total tag entries: $total"
-            _log "tag" "$input"
-        fi
-        ;;
-    timeline)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent timeline entries:"
-            tail -20 "$DATA_DIR/timeline.log" 2>/dev/null || echo "  No entries yet. Use: link-checker timeline <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/timeline.log"
-            local total=$(wc -l < "$DATA_DIR/timeline.log")
-            echo "  [Link Checker] timeline: $input"
-            echo "  Saved. Total timeline entries: $total"
-            _log "timeline" "$input"
-        fi
-        ;;
-    report)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent report entries:"
-            tail -20 "$DATA_DIR/report.log" 2>/dev/null || echo "  No entries yet. Use: link-checker report <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/report.log"
-            local total=$(wc -l < "$DATA_DIR/report.log")
-            echo "  [Link Checker] report: $input"
-            echo "  Saved. Total report entries: $total"
-            _log "report" "$input"
-        fi
-        ;;
-    weekly-review)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent weekly-review entries:"
-            tail -20 "$DATA_DIR/weekly-review.log" 2>/dev/null || echo "  No entries yet. Use: link-checker weekly-review <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/weekly-review.log"
-            local total=$(wc -l < "$DATA_DIR/weekly-review.log")
-            echo "  [Link Checker] weekly-review: $input"
-            echo "  Saved. Total weekly-review entries: $total"
-            _log "weekly-review" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
+    check)       shift; cmd_check "$@" ;;
+    scan)        shift; cmd_scan "$@" ;;
+    batch)       shift; cmd_batch "$@" ;;
+    report)      shift; cmd_report "$@" ;;
+    history)     cmd_history ;;
+    broken)      cmd_broken ;;
+    stats)       cmd_stats ;;
+    export)      shift; cmd_export "$@" ;;
+    config)      shift; cmd_config "$@" ;;
+    help|--help|-h)       cmd_help ;;
+    version|--version|-v) cmd_version ;;
     *)
         echo "Unknown command: $1"
-        echo "Run 'link-checker help' for available commands."
+        echo "Run 'link-checker help' for usage."
         exit 1
         ;;
 esac

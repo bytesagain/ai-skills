@@ -1,314 +1,168 @@
 #!/usr/bin/env bash
-# Redis — devtools tool
+# redis -- Connect, query, and monitor Redis instances. Use when checking key health, validating data types, generating backups, formatting results, linting configs.
 # Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-DATA_DIR="${HOME}/.local/share/redis"
-mkdir -p "$DATA_DIR"
+VERSION="1.0.0"
+DATA_DIR="${REDIS_DIR:-$HOME/.redis}"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-_version() { echo "redis v2.0.0"; }
+_ensure_dirs() { mkdir -p "$DATA_DIR"; }
 
-_help() {
-    echo "Redis v2.0.0 — devtools toolkit"
-    echo ""
-    echo "Usage: redis <command> [args]"
-    echo ""
-    echo "Commands:"
-    echo "  check              Check"
-    echo "  validate           Validate"
-    echo "  generate           Generate"
-    echo "  format             Format"
-    echo "  lint               Lint"
-    echo "  explain            Explain"
-    echo "  convert            Convert"
-    echo "  template           Template"
-    echo "  diff               Diff"
-    echo "  preview            Preview"
-    echo "  fix                Fix"
-    echo "  report             Report"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  search <term>      Search entries"
-    echo "  recent             Recent activity"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
+_save_entry() {
+    _ensure_dirs
+    local cmd="$1" val="$2"
+    local ts=$(date '+%Y-%m-%d %H:%M:%S')
+    printf '{"ts":"%s","cmd":"%s","val":"%s"}\n' "$ts" "$cmd" "$val" >> "$DATA_DIR/data.jsonl"
 }
 
-_stats() {
-    echo "=== Redis Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
+show_help() {
+    cat << EOF
+redis v$VERSION -- Connect, query, and monitor Redis instances. Use when checking key health, validating data types, generating backups, formatting results, linting configs.
+
+Usage: redis <command> [args]
+
+Commands:
+  status          Show current status
+  add             Add new entry
+  list            List all entries
+  search          Search entries
+  remove          Remove entry by number
+  export          Export data to file
+  stats           Show statistics
+  config          View or set config
+  help              Show this help
+  version           Show version
+
+Data: $DATA_DIR
+Powered by BytesAgain | bytesagain.com
+EOF
 }
 
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "\n]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do echo "$name,$ts,$val" >> "$out"; done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Redis Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
-    esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
-}
-
-_status() {
-    echo "=== Redis Status ==="
-    echo "  Version: v2.0.0"
+cmd_status() {
+    echo "=== redis Status ==="
+    echo "  Version: $VERSION"
     echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Last: $(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo never)"
-    echo "  Status: OK"
+    local entries=$(cat "$DATA_DIR"/*.jsonl 2>/dev/null | wc -l || echo 0)
+    echo "  Entries: $entries"
+    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1 || echo empty)"
 }
 
-_search() {
+cmd_add() {
+    local value="${1:?Usage: redis add <entry>}"
+    shift || true
+    _save_entry "add" "$value $*"
+    local count=$(wc -l < "$DATA_DIR/data.jsonl" 2>/dev/null || echo 0)
+    echo "Added: $value (entry #$count)"
+}
+
+cmd_list() {
+    echo "=== Redis Entries ==="
+    if [ -f "$DATA_DIR/data.jsonl" ]; then
+        local count=$(wc -l < "$DATA_DIR/data.jsonl")
+        echo "Total: $count"
+        echo "---"
+        tail -20 "$DATA_DIR/data.jsonl" | while IFS= read -r line; do
+            local ts=$(echo "$line" | grep -o '"ts":"[^"]*' | cut -d'"' -f4)
+            local cmd=$(echo "$line" | grep -o '"cmd":"[^"]*' | cut -d'"' -f4)
+            local val=$(echo "$line" | grep -o '"val":"[^"]*' | cut -d'"' -f4)
+            echo "  [$ts] $cmd: $val"
+        done
+    else
+        echo "No entries yet."
+    fi
+}
+
+cmd_search() {
     local term="${1:?Usage: redis search <term>}"
-    echo "Searching for: $term"
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local m=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$m" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$m" | sed 's/^/    /'
-        fi
-    done
+    if [ -f "$DATA_DIR/data.jsonl" ]; then
+        local matches=$(grep -ic "$term" "$DATA_DIR/data.jsonl" 2>/dev/null || echo 0)
+        echo "Found: $matches matches"
+        grep -i "$term" "$DATA_DIR/data.jsonl" 2>/dev/null | head -20 | while IFS= read -r line; do
+            local val=$(echo "$line" | grep -o '"val":"[^"]*' | cut -d'"' -f4)
+            local ts=$(echo "$line" | grep -o '"ts":"[^"]*' | cut -d'"' -f4)
+            echo "  [$ts] $val"
+        done
+    else
+        echo "No data to search."
+    fi
 }
 
-_recent() {
-    echo "=== Recent Activity ==="
-    tail -20 "$DATA_DIR/history.log" 2>/dev/null | sed 's/^/  /' || echo "  No activity yet."
+cmd_remove() {
+    local num="${1:?Usage: redis remove <line-number>}"
+    if [ -f "$DATA_DIR/data.jsonl" ]; then
+        local total=$(wc -l < "$DATA_DIR/data.jsonl")
+        if [ "$num" -ge 1 ] 2>/dev/null && [ "$num" -le "$total" ] 2>/dev/null; then
+            sed -i "${num}d" "$DATA_DIR/data.jsonl"
+            echo "Removed #$num ($((total-1)) remaining)"
+        else echo "Invalid: $num (total: $total)"; fi
+    else echo "No data."; fi
 }
 
-case "${1:-help}" in
-    check)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent check entries:"
-            tail -20 "$DATA_DIR/check.log" 2>/dev/null || echo "  No entries yet. Use: redis check <input>"
+cmd_export() {
+    local fmt="${1:-json}"
+    local out="redis-export.$fmt"
+    if [ ! -f "$DATA_DIR/data.jsonl" ]; then echo "No data."; return 0; fi
+    case "$fmt" in
+        json) cp "$DATA_DIR/data.jsonl" "$out" ;;
+        csv)
+            echo "timestamp,command,value" > "$out"
+            while IFS= read -r line; do
+                ts=$(echo "$line" | grep -o '"ts":"[^"]*' | cut -d'"' -f4)
+                c2=$(echo "$line" | grep -o '"cmd":"[^"]*' | cut -d'"' -f4)
+                vl=$(echo "$line" | grep -o '"val":"[^"]*' | cut -d'"' -f4)
+                echo "$ts,$c2,$vl" >> "$out"
+            done < "$DATA_DIR/data.jsonl"
+            ;;
+        *) echo "Formats: json, csv"; return 1 ;;
+    esac
+    echo "Exported: $out ($(wc -c < "$out") bytes)"
+}
+
+cmd_stats() {
+    echo "=== Redis Stats ==="
+    if [ -f "$DATA_DIR/data.jsonl" ]; then
+        local total=$(wc -l < "$DATA_DIR/data.jsonl")
+        local bytes=$(wc -c < "$DATA_DIR/data.jsonl")
+        echo "  Entries: $total"
+        echo "  Size: $bytes bytes"
+        echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
+    else echo "  No data yet."; fi
+}
+
+cmd_config() {
+    local key="${1:-}" val="${2:-}"
+    local cfg="$DATA_DIR/config.txt"
+    if [ -z "$key" ]; then
+        echo "=== Config ==="
+        if [ -f "$cfg" ]; then
+            while IFS="=" read -r k v; do echo "  $k=$v"; done < "$cfg"
+        else echo "  (empty — use config <key> <value>)"; fi
+    elif [ -z "$val" ]; then
+        grep "^${key}=" "$cfg" 2>/dev/null | cut -d= -f2- || echo "(not set)"
+    else
+        if [ -f "$cfg" ] && grep -q "^${key}=" "$cfg" 2>/dev/null; then
+            sed -i "s|^${key}=.*|${key}=${val}|" "$cfg"
         else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/check.log"
-            local total=$(wc -l < "$DATA_DIR/check.log")
-            echo "  [Redis] check: $input"
-            echo "  Saved. Total check entries: $total"
-            _log "check" "$input"
+            echo "${key}=${val}" >> "$cfg"
         fi
-        ;;
-    validate)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent validate entries:"
-            tail -20 "$DATA_DIR/validate.log" 2>/dev/null || echo "  No entries yet. Use: redis validate <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/validate.log"
-            local total=$(wc -l < "$DATA_DIR/validate.log")
-            echo "  [Redis] validate: $input"
-            echo "  Saved. Total validate entries: $total"
-            _log "validate" "$input"
-        fi
-        ;;
-    generate)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent generate entries:"
-            tail -20 "$DATA_DIR/generate.log" 2>/dev/null || echo "  No entries yet. Use: redis generate <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/generate.log"
-            local total=$(wc -l < "$DATA_DIR/generate.log")
-            echo "  [Redis] generate: $input"
-            echo "  Saved. Total generate entries: $total"
-            _log "generate" "$input"
-        fi
-        ;;
-    format)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent format entries:"
-            tail -20 "$DATA_DIR/format.log" 2>/dev/null || echo "  No entries yet. Use: redis format <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/format.log"
-            local total=$(wc -l < "$DATA_DIR/format.log")
-            echo "  [Redis] format: $input"
-            echo "  Saved. Total format entries: $total"
-            _log "format" "$input"
-        fi
-        ;;
-    lint)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent lint entries:"
-            tail -20 "$DATA_DIR/lint.log" 2>/dev/null || echo "  No entries yet. Use: redis lint <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/lint.log"
-            local total=$(wc -l < "$DATA_DIR/lint.log")
-            echo "  [Redis] lint: $input"
-            echo "  Saved. Total lint entries: $total"
-            _log "lint" "$input"
-        fi
-        ;;
-    explain)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent explain entries:"
-            tail -20 "$DATA_DIR/explain.log" 2>/dev/null || echo "  No entries yet. Use: redis explain <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/explain.log"
-            local total=$(wc -l < "$DATA_DIR/explain.log")
-            echo "  [Redis] explain: $input"
-            echo "  Saved. Total explain entries: $total"
-            _log "explain" "$input"
-        fi
-        ;;
-    convert)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent convert entries:"
-            tail -20 "$DATA_DIR/convert.log" 2>/dev/null || echo "  No entries yet. Use: redis convert <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/convert.log"
-            local total=$(wc -l < "$DATA_DIR/convert.log")
-            echo "  [Redis] convert: $input"
-            echo "  Saved. Total convert entries: $total"
-            _log "convert" "$input"
-        fi
-        ;;
-    template)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent template entries:"
-            tail -20 "$DATA_DIR/template.log" 2>/dev/null || echo "  No entries yet. Use: redis template <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/template.log"
-            local total=$(wc -l < "$DATA_DIR/template.log")
-            echo "  [Redis] template: $input"
-            echo "  Saved. Total template entries: $total"
-            _log "template" "$input"
-        fi
-        ;;
-    diff)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent diff entries:"
-            tail -20 "$DATA_DIR/diff.log" 2>/dev/null || echo "  No entries yet. Use: redis diff <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/diff.log"
-            local total=$(wc -l < "$DATA_DIR/diff.log")
-            echo "  [Redis] diff: $input"
-            echo "  Saved. Total diff entries: $total"
-            _log "diff" "$input"
-        fi
-        ;;
-    preview)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent preview entries:"
-            tail -20 "$DATA_DIR/preview.log" 2>/dev/null || echo "  No entries yet. Use: redis preview <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/preview.log"
-            local total=$(wc -l < "$DATA_DIR/preview.log")
-            echo "  [Redis] preview: $input"
-            echo "  Saved. Total preview entries: $total"
-            _log "preview" "$input"
-        fi
-        ;;
-    fix)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent fix entries:"
-            tail -20 "$DATA_DIR/fix.log" 2>/dev/null || echo "  No entries yet. Use: redis fix <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/fix.log"
-            local total=$(wc -l < "$DATA_DIR/fix.log")
-            echo "  [Redis] fix: $input"
-            echo "  Saved. Total fix entries: $total"
-            _log "fix" "$input"
-        fi
-        ;;
-    report)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent report entries:"
-            tail -20 "$DATA_DIR/report.log" 2>/dev/null || echo "  No entries yet. Use: redis report <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/report.log"
-            local total=$(wc -l < "$DATA_DIR/report.log")
-            echo "  [Redis] report: $input"
-            echo "  Saved. Total report entries: $total"
-            _log "report" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown: $1 — run 'redis help'"
-        exit 1
-        ;;
+        echo "Set: $key=$val"
+    fi
+}
+
+CMD="${1:-help}"
+shift 2>/dev/null || true
+_ensure_dirs
+
+case "$CMD" in
+    status) cmd_status "$@" ;;
+    add) cmd_add "$@" ;;
+    list) cmd_list "$@" ;;
+    search) cmd_search "$@" ;;
+    remove) cmd_remove "$@" ;;
+    export) cmd_export "$@" ;;
+    stats) cmd_stats "$@" ;;
+    config) cmd_config "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "redis v$VERSION -- Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: redis help"; exit 1 ;;
 esac

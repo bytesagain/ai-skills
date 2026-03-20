@@ -1,56 +1,112 @@
 ---
-name: survey
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [survey, tool, utility]
-description: "Survey - command-line tool for everyday use"
+name: "survey"
+version: "1.0.0"
+description: "Build surveys, collect responses, and analyze results. Use when creating forms, checking responses, converting data, analyzing trends, generating reports."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [survey, general, cli, tool]
+category: "general"
 ---
 
-# Survey
+# survey
 
-Survey builder — create questionnaires, collect responses, analyze results, export data.
+Build surveys, collect responses, and analyze results. Use when creating forms, checking responses, converting data, analyzing trends, generating reports.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `survey help` | Show usage info |
-| `survey run` | Run main task |
-| `survey status` | Check current state |
-| `survey list` | List items |
-| `survey add <item>` | Add new item |
-| `survey export <fmt>` | Export data |
-
-## Usage
+### `status`
 
 ```bash
-survey help
-survey run
-survey status
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-# Get started
-survey help
-
-# Run default task
-survey run
-
-# Export as JSON
-survey export json
+scripts/script.sh add
 ```
 
-## Output
+Add new entry
 
-Results go to stdout. Save with `survey run > output.txt`.
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `SURVEY_DIR` to change data directory. Default: `~/.local/share/survey/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `SURVEY_DIR` | No | Data directory (default: ~/.survey/) |
+
+## Data Storage
+
+All data stored in `~/.survey/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

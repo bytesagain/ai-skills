@@ -1,0 +1,9 @@
+{
+  "name": "genai-toolkit",
+  "description": "Bridge AI models to databases through MCP with config and evaluation tools. Use when setting up DB tools, comparing engines, or evaluating prompt quality.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

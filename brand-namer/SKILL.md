@@ -1,54 +1,134 @@
 ---
-version: "2.0.0"
-name: Brand Namer
-description: "Brand Namer. Use when you need brand namer capabilities. Triggers on: brand namer."
-  品牌命名引擎。中英文品牌名生成、域名检查、商标初筛、品牌故事。Brand name generator with Chinese/English names, domain check, trademark screening. 取名字、公司起名、品牌策划。Use when naming a brand or product.
+version: "3.0.3"
+name: brand-namer
+description: "Generate brand names with domain checks and analysis. Use when naming a startup, checking domain availability, or brainstorming product names."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # brand-namer
 
-品牌命名和Slogan生成器。品牌名、广告语、域名建议。中英双语。
-
-## Description
-
-为产品/公司生成品牌名称、广告语、域名建议和品牌故事。支持中英双语输出，覆盖品牌建设全流程。
+Brand name generator — create name candidates by industry, check domain availability via DNS lookup, analyze name quality, and combine words into brand variants.
 
 ## Commands
 
-| 命令 | 用法 | 说明 |
-|------|------|------|
-| `name` | `brand.sh name "行业" "调性关键词"` | 生成10个品牌名（中英双语） |
-| `slogan` | `brand.sh slogan "品牌名" "行业"` | 生成5条广告语 |
-| `domain` | `brand.sh domain "品牌名"` | 域名建议（含后缀推荐） |
-| `story` | `brand.sh story "品牌名" "行业"` | 生成品牌故事 |
-| `help` | `brand.sh help` | 显示帮助信息 |
+### `generate`
 
-## Usage
-
-当用户需要品牌命名、广告语、域名或品牌故事时，运行对应脚本命令，将输出结果展示给用户。
+Generate brand name candidates for an industry. Uses built-in word banks with prefix + root + suffix combinations.
 
 ```bash
-# 生成品牌名
-bash {{SKILL_DIR}}/scripts/brand.sh name "咖啡" "高端,简约"
-
-# 生成广告语
-bash {{SKILL_DIR}}/scripts/brand.sh slogan "星沐" "咖啡"
-
-# 域名建议
-bash {{SKILL_DIR}}/scripts/brand.sh domain "星沐"
-
-# 品牌故事
-bash {{SKILL_DIR}}/scripts/brand.sh story "星沐" "咖啡"
+scripts/script.sh generate tech 10
 ```
 
-## Notes
+Industries: tech, food, fashion, health, finance.
 
-- 纯本地生成，无需API
-- Python 3.6+ 兼容
-- 输出中英双语
+### `check`
+
+Check domain availability by running DNS A-record lookups for .com, .io, and .co TLDs.
+
+```bash
+scripts/script.sh check "nexaflow"
+```
+
+Requires: `dig` command (part of bind-utils / dnsutils).
+
+### `analyze`
+
+Analyze a brand name — character count, estimated syllable count, readability score (1-10), and language adaptability notes.
+
+```bash
+scripts/script.sh analyze "ByteForge"
+```
+
+### `combine`
+
+Combine two words into brand name variants using CamelCase, blending, separators, abbreviations, and overlap detection.
+
+```bash
+scripts/script.sh combine "cloud" "forge"
+```
+
+### `prefix`
+
+Generate variants with common brand prefixes (re, un, pro, super, meta, neo, hyper, ultra, omni, zen).
+
+```bash
+scripts/script.sh prefix "launch"
+```
+
+### `suffix`
+
+Generate variants with common brand suffixes (ly, ify, hub, lab, io, ai, ful, ist, ware, bit).
+
+```bash
+scripts/script.sh suffix "code"
+```
+
+### `save`
+
+Save a name to your shortlist for later review.
+
+```bash
+scripts/script.sh save "NexaFlow"
+```
+
+### `list`
+
+Show all names on your shortlist.
+
+```bash
+scripts/script.sh list
+```
+
+### `export`
+
+Export your shortlist in txt, csv, or json format.
+
+```bash
+scripts/script.sh export csv
+```
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
+
+## Examples
+
+```bash
+# Full naming workflow
+scripts/script.sh generate tech 10
+scripts/script.sh analyze "CodeNova"
+scripts/script.sh check "codenova"
+scripts/script.sh combine "byte" "stream"
+scripts/script.sh save "ByteStream"
+scripts/script.sh export csv
+```
+
+## Configuration
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `BRAND_NAMER_DIR` | No | Data directory (default: `~/.brand-namer/`) |
+
+## Data Storage
+
+All data saved in `~/.brand-namer/`:
+- `shortlist.json` — Saved name candidates
+
+## Requirements
+
+- bash 4.0+
+- dig (from `bind-utils` or `dnsutils` package, used by the `check` command for DNS A-record lookups)
+
 ---
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
 
-- Run `brand-namer help` for all commands
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: macro-helper
-description: "Excel宏与VBA助手。生成VBA代码、解释宏、调试错误、模板库、格式转换、性能优化。Excel macro and VBA helper with generate, explain, debug, template, convert, and optimize. Use when you need macro helper capabilities. Triggers on: macro helper."
+description: "Excel宏与VBA助手。生成VBA代码、解释宏、调试错误、模板库、格式转换、性能优化。Excel macro and VBA helper with generate, explain, debug, template, convert."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # macro-helper
 

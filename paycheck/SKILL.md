@@ -1,83 +1,120 @@
 ---
-name: paycheck
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [paycheck, tool, utility]
-description: "Paycheck - command-line tool for everyday use"
+name: "paycheck"
+version: "1.0.0"
+description: "Calculate salary breakdowns with taxes and deductions. Use when estimating take-home pay, checking withholdings, comparing deductions, analyzing components."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [paycheck, general, cli, tool]
+category: "general"
 ---
 
-# Paycheck
+# paycheck
 
-Paycheck calculator — salary breakdown, tax estimates, deductions, and net pay.
+Calculate salary breakdowns with taxes and deductions. Use when estimating take-home pay, checking withholdings, comparing deductions, analyzing components.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `paycheck help` | Show usage info |
-| `paycheck run` | Run main task |
-| `paycheck status` | Check state |
-| `paycheck list` | List items |
-| `paycheck add <item>` | Add item |
-| `paycheck export <fmt>` | Export data |
-
-## Usage
+### `status`
 
 ```bash
-paycheck help
-paycheck run
-paycheck status
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-paycheck help
-paycheck run
-paycheck export json
+scripts/script.sh add
 ```
 
-## Output
+Add new entry
 
-Results go to stdout. Save with `paycheck run > output.txt`.
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `check`
+
+```bash
+scripts/script.sh check
+```
+
+Validate input
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `PAYCHECK_DIR` to change data directory. Default: `~/.local/share/paycheck/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `PAYCHECK_DIR` | No | Data directory (default: ~/.paycheck/) |
+
+## Data Storage
+
+All data stored in `~/.paycheck/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
 
-
-## Features
-
-- Simple command-line interface for quick access
-- Local data storage with JSON/CSV export
-- History tracking and activity logs
-- Search across all entries
-
-## Quick Start
-
-```bash
-# Check status
-paycheck status
-
-# View help
-paycheck help
-
-# Export data
-paycheck export json
-```
-
-## How It Works
-
-Paycheck stores all data locally in `~/.local/share/paycheck/`. Each command logs activity with timestamps for full traceability.
-
-## Support
-
-- Feedback: https://bytesagain.com/feedback/
-- Website: https://bytesagain.com
-
-Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

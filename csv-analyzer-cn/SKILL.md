@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: CSV Data Analyzer
-description: "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━. Use when you need csv analyzer cn capabilities. Triggers on: csv analyzer cn."
-  CSV数据分析工具。数据统计摘要、SVG图表生成、条件筛选、文件合并、数据清洗、格式转换(JSON/HTML/Markdown/SQL)、HTML分析报告。CSV analyzer with stats, SVG charts, filtering, merging, cleaning, format conversion, HTML reports. 数据分析、数据清洗、可视化。Use when analyzing CSV data.
+description: "Analyze CSV files with stats, SVG charts, merging, and format export. Use when generating summaries, creating charts, merging CSV files."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # CSV Data Analyzer
 

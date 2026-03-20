@@ -1,64 +1,89 @@
 ---
 name: icon
-version: "2.0.0"
+description: "Generate and convert icons. Use when creating SVGs, building sprite sheets, converting ICO/PNG/SVG, or generating favicon sets."
+version: "3.4.0"
 author: BytesAgain
-license: MIT-0
-tags: [icon, tool, utility]
-description: "Icon - command-line tool for everyday use"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
+tags:
+  - icon
+  - svg
+  - favicon
+  - sprite
+  - design
 ---
 
 # Icon
 
-Icon management toolkit — search icon libraries, generate icon sets, convert formats, create favicons, SVG optimization, and sprite sheet generation.
+Generate, convert, and manage icons for web and app projects.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `icon search` | <query> |
-| `icon set` | <style> |
-| `icon convert` | <file> <format> |
-| `icon favicon` | <image> |
-| `icon optimize` | <svg> |
-| `icon sprite` | <dir> |
+### generate
 
-## Usage
+Generate an SVG icon from a name and optional style parameters.
 
 ```bash
-# Show help
-icon help
-
-# Quick start
-icon search <query>
+bash scripts/script.sh generate --name "arrow-right" --size 24 --color "#333" --output icons/
 ```
 
-## Examples
+### sprite
+
+Combine multiple SVG icons into a single SVG sprite sheet.
 
 ```bash
-# Example 1
-icon search <query>
-
-# Example 2
-icon set <style>
+bash scripts/script.sh sprite --input icons/ --output sprite.svg --prefix "icon-"
 ```
 
-- Run `icon help` for all available commands
+### convert
 
----
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
+Convert icons between ICO, PNG, and SVG formats.
 
-- Run `icon help` for all commands
+```bash
+bash scripts/script.sh convert --input icon.svg --format png --sizes "16,32,64"
+```
 
-## Configuration
+### search
 
-Set `ICON_DIR` to change data directory. Default: `~/.local/share/icon/`
+Search available icon names by keyword.
 
-## When to Use
+```bash
+bash scripts/script.sh search --query "arrow" --style outline
+```
 
-- Quick icon tasks from terminal
-- Automation pipelines
+### resize
+
+Batch resize icons to specified dimensions.
+
+```bash
+bash scripts/script.sh resize --input icons/ --sizes "16,24,32,48" --output resized/
+```
+
+### favicon
+
+Generate a full favicon set (ICO, PNG, Apple Touch, manifest) from a source image.
+
+```bash
+bash scripts/script.sh favicon --input logo.svg --output favicons/
+```
 
 ## Output
 
-Results go to stdout. Save with `icon run > output.txt`.
+- `generate`: SVG file written to output directory
+- `sprite`: Single SVG sprite sheet with `<symbol>` elements
+- `convert`: Converted files in target format and sizes
+- `search`: List of matching icon names printed to stdout
+- `resize`: Resized icon files in output directory
+- `favicon`: favicon.ico, apple-touch-icon.png, android-chrome PNGs, site.webmanifest
+
+
+## Requirements
+- bash 4+
+
+## Feedback
+
+https://bytesagain.com/feedback/
+
+---
+
+Powered by BytesAgain | bytesagain.com

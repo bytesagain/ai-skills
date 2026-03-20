@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: code-generator
-description: "Multi-language code generator. Generate functions, classes, API endpoints, CRUD operations, test code, refactoring suggestions, language conversion guides, and project boilerplate. Supports Python, JavaScript, TypeScript, Go, Java, and more. Use when scaffolding code, generating templates, or converting between languages. Triggers on: code generator."
+description: "Multi-language code generator. Generate functions, classes, API endpoints, CRUD operations, test code, refactoring suggestions, language conversion guides."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # ⚡ Code Generator — Multi-Language Code Scaffolding
@@ -45,3 +47,7 @@ Powered by BytesAgain | bytesagain.com
 ## Commands
 
 Run `code-generator help` to see all available commands.
+
+## Requirements
+- bash 4+
+- python3 (standard library only)

@@ -1,47 +1,57 @@
 ---
-version: "2.0.0"
-name: Simianarmy
-description: "Tools for keeping your cloud operating in top form. Chaos Monkey is a resiliency tool that helps app chaos-testing, java. Use when you need chaos-testing capabilities. Triggers on: chaos-testing."
-author: BytesAgain
+name: "chaos-testing"
+version: "3.0.0"
+description: "Run controlled chaos and stress tests on your system. Use when testing resilience or load capacity."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
 ---
 
-# Simianarmy
+# chaos-testing
 
-Tools for keeping your cloud operating in top form. Chaos Monkey is a resiliency tool that helps applications tolerate random instance failures. ## Commands
+Run controlled chaos and stress tests on your system. Use when testing resilience or load capacity.
 
-- `help` - Help
-- `run` - Run
-- `info` - Info
-- `status` - Status
+## Commands
 
-## Features
-
-- Core functionality from Netflix/SimianArmy
-
-## Usage
-
-Run any command: `chaos-testing <command> [args]`
----
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
-
-## Examples
+### `cpu-stress`
 
 ```bash
-# Show help
-chaos-testing help
-
-# Run
-chaos-testing run
+scripts/script.sh cpu-stress <seconds>
 ```
 
-- Run `chaos-testing help` for all commands
+### `mem-stress`
 
-## When to Use
+```bash
+scripts/script.sh mem-stress <mb>
+```
 
-- when you need quick chaos testing from the command line
-- to automate chaos tasks in your workflow
+### `disk-fill`
 
-## Output
+```bash
+scripts/script.sh disk-fill <mb dir>
+```
 
-Returns logs to stdout. Redirect to a file with `chaos-testing run > output.txt`.
+### `io-stress`
+
+```bash
+scripts/script.sh io-stress <seconds>
+```
+
+### `report`
+
+```bash
+scripts/script.sh report
+```
+
+### `status`
+
+```bash
+scripts/script.sh status
+```
+
+## Data Storage
+
+Data stored in `~/.local/share/chaos-testing/`.
+
+---
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

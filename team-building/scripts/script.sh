@@ -1,101 +1,155 @@
 #!/usr/bin/env bash
-# team-building - Design reference and helper tool
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${TEAM_BUILDING_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/team-building}"
-DB="$DATA_DIR/data.log"
+
+VERSION="3.0.0"
+SCRIPT_NAME="team-building"
+DATA_DIR="$HOME/.local/share/team-building"
 mkdir -p "$DATA_DIR"
 
-show_help() {
-    cat << EOF
-team-building v$VERSION
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-Design reference and helper tool
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
-Usage: team-building <command> [args]
-
-Commands:
-  palette              Color palette
-  font                 Font pairing
-  layout               Layout template
-  icon                 Icon reference
-  spacing              Spacing guide
-  breakpoint           Responsive breakpoints
-  contrast             Contrast checker
-  shadow               Shadow presets
-  mockup               Mockup template
-  checklist            Design checklist
-  help                 Show this help
-  version              Show version
-
-Data: \$DATA_DIR
-EOF
+cmd_icebreaker() {
+    local qs=('Two truths and a lie' 'Desert island: 3 items?' 'Superpower for a day?' 'Best vacation ever?' 'Hidden talent?'); echo ${qs[$((RANDOM % 5))]}
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-
-cmd_palette() {
-    echo "  Primary: #2563EB | Secondary: #7C3AED | Accent: #F59E0B"
-    _log "palette" "${1:-}"
+cmd_activity() {
+    local size="${2:-}"
+    [ -z "$size" ] && die "Usage: $SCRIPT_NAME activity <size>"
+    echo 'Group of ${2:-10}: try a collaborative puzzle or escape room'
 }
 
-cmd_font() {
-    echo "  Heading: Inter/Poppins | Body: Open Sans/Lato"
-    _log "font" "${1:-}"
+cmd_quiz() {
+    local topic="${2:-}"
+    [ -z "$topic" ] && die "Usage: $SCRIPT_NAME quiz <topic>"
+    echo 'Team quiz topic: ${2:-general knowledge}'
 }
 
-cmd_layout() {
-    echo "  Grid: 12-col | Spacing: 8px base | Max-width: 1200px"
-    _log "layout" "${1:-}"
+cmd_random_team() {
+    local names="${2:-}"
+    local count="${3:-}"
+    [ -z "$names" ] && die "Usage: $SCRIPT_NAME random-team <names count>"
+    echo '$2' | tr ',' '\n' | shuf | awk 'NR%'${3:-2}'==1{t++}{print "Team "t": "$0}'
 }
 
-cmd_icon() {
-    echo "  Libraries: Heroicons | Lucide | Phosphor | Tabler"
-    _log "icon" "${1:-}"
+cmd_pairs() {
+    local file="${2:-}"
+    [ -z "$file" ] && die "Usage: $SCRIPT_NAME pairs <file>"
+    cat $2 | shuf | paste - - 2>/dev/null
 }
 
-cmd_spacing() {
-    echo "  xs:4 sm:8 md:16 lg:24 xl:32 2xl:48"
-    _log "spacing" "${1:-}"
+cmd_vote() {
+    local options="${2:-}"
+    [ -z "$options" ] && die "Usage: $SCRIPT_NAME vote <options>"
+    echo 'Vote options: $2' | tr ',' '\n' | cat -n
 }
 
-cmd_breakpoint() {
-    echo "  sm:640 md:768 lg:1024 xl:1280 2xl:1536"
-    _log "breakpoint" "${1:-}"
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
+    echo ""
+    echo "Commands:"
+    printf "  %-25s\n" "icebreaker"
+    printf "  %-25s\n" "activity <size>"
+    printf "  %-25s\n" "quiz <topic>"
+    printf "  %-25s\n" "random-team <names count>"
+    printf "  %-25s\n" "pairs <file>"
+    printf "  %-25s\n" "vote <options>"
+    printf "  %%-25s\n" "help"
+    echo ""
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-cmd_contrast() {
-    echo "  Check: webaim.org/resources/contrastchecker"
-    _log "contrast" "${1:-}"
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        icebreaker) shift; cmd_icebreaker "$@" ;;
+        activity) shift; cmd_activity "$@" ;;
+        quiz) shift; cmd_quiz "$@" ;;
+        random-team) shift; cmd_random_team "$@" ;;
+        pairs) shift; cmd_pairs "$@" ;;
+        vote) shift; cmd_vote "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
+    esac
 }
 
-cmd_shadow() {
-    echo "  sm: 0 1px 2px | md: 0 4px 6px | lg: 0 10px 15px"
-    _log "shadow" "${1:-}"
-}
-
-cmd_mockup() {
-    echo "  Tool: Figma | Sketch | Adobe XD"
-    _log "mockup" "${1:-}"
-}
-
-cmd_checklist() {
-    echo "  [ ] Consistent spacing | [ ] Color contrast | [ ] Mobile responsive"
-    _log "checklist" "${1:-}"
-}
-
-case "${1:-help}" in
-    palette) shift; cmd_palette "$@" ;;
-    font) shift; cmd_font "$@" ;;
-    layout) shift; cmd_layout "$@" ;;
-    icon) shift; cmd_icon "$@" ;;
-    spacing) shift; cmd_spacing "$@" ;;
-    breakpoint) shift; cmd_breakpoint "$@" ;;
-    contrast) shift; cmd_contrast "$@" ;;
-    shadow) shift; cmd_shadow "$@" ;;
-    mockup) shift; cmd_mockup "$@" ;;
-    checklist) shift; cmd_checklist "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "team-building v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
-esac
+main "$@"

@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Changelog Writer
-description: "Changelog Writer - CHANGELOG管理工具. Use when you need changelog writer capabilities. Triggers on: changelog writer."
-  CHANGELOG生成器。变更日志、版本发布、语义化版本、差异对比、模板。Changelog writer with release notes, semver, diff, templates. CHANGELOG、版本管理。
+description: "Generate changelogs with release notes, semver, and diff comparisons. Use when documenting releases, comparing versions, or exporting update logs."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # Changelog Writer
 

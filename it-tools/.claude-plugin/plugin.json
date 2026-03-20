@@ -1,0 +1,9 @@
+{
+  "name": "it-tools",
+  "description": "Access handy dev utilities for encoding, hashing, formatting, and converting. Use when encoding Base64, generating UUIDs, formatting JSON, or converting.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

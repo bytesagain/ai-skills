@@ -2,9 +2,11 @@
 name: changelog
 version: "2.0.0"
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 license: MIT-0
 tags: [changelog, tool, utility]
-description: "Changelog - command-line tool for everyday use"
+description: "Parse commits and generate versioned changelogs in Markdown format. Use when preparing releases, formatting commit history, or detecting breaking changes."
 ---
 
 # Changelog
@@ -52,7 +54,6 @@ changelog export json
 *Powered by BytesAgain | bytesagain.com*
 *Feedback & Feature Requests: https://bytesagain.com/feedback*
 
-- Run `changelog help` for all commands
 
 ## When to Use
 

@@ -1,0 +1,9 @@
+{
+  "name": "readme-maker",
+  "description": "Design beautiful GitHub profile READMEs with templates. Use when styling profiles, validating badges, generating stat widgets, formatting bio sections.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

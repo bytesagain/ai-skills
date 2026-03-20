@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: symptom-checker
-description: "症状自查工具。症状分析、就医建议、预防措施、生活方式改善、症状追踪、急症识别。Symptom checker with analysis, when to see doctor, prevention, lifestyle tips, tracking, emergency recognition. ⚠️ 非医疗诊断工具。. Use when you need symptom checker capabilities. Triggers on: symptom checker."
+description: "症状自查工具。症状分析、就医建议、预防措施、生活方式改善、症状追踪、急症识别。Symptom checker with analysis, when to see doctor, prevention, lifestyle tips, tracking."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # symptom-checker
 

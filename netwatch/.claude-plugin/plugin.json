@@ -1,0 +1,9 @@
+{
+  "name": "netwatch",
+  "description": "Monitor internet traffic in real time with per-process bandwidth dashboards. Use when watching bandwidth, finding traffic hogs, monitoring network activity.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

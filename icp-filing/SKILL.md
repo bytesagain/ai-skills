@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: ICP Filing Guide
-description: "ICP Filing Assistant. Use when you need icp filing capabilities. Triggers on: icp filing."
-  ICP备案指南。备案流程、材料清单、服务商选择、时间线、常见问题。ICP filing guide for China websites. ICP备案、网站备案。
+description: "Guide through China ICP filing with checklists, timelines, and provider tips. Use when preparing materials, choosing providers, or tracking filing status."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # ICP Filing Guide
 

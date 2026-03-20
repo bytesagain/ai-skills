@@ -1,0 +1,9 @@
+{
+  "name": "etf",
+  "description": "Analyze ETF holdings, compare fund metrics, and review sector allocation data. Use when screening ETFs, comparing ratios, or tracking allocations.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "base64",
+  "description": "Encode and decode Base64 strings and files from the terminal. Use when encoding binary data, decoding API payloads, or converting file content.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

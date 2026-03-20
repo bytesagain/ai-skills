@@ -1,0 +1,9 @@
+{
+  "name": "markpad",
+  "description": "Preview, convert, and validate Markdown with TOC generation and HTML export. Use when previewing MD, generating TOC, converting Markdown to HTML.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

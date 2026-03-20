@@ -1,0 +1,9 @@
+{
+  "name": "social-scraper",
+  "description": "An advanced Twitter scraping & OSINT tool written in Python that doesn",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

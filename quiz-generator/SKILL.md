@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: quiz-generator
-description: "考试题目生成器。选择题/填空题/简答题生成、模拟考试、答案解析、难度分级、格式化输出、题库管理。Quiz generator with multiple choice, fill-in-blank, short answer, mock exams, explanations, difficulty levels. Use when you need quiz generator capabilities. Triggers on: quiz generator."
+description: "考试题目生成器。选择题/填空题/简答题生成、模拟考试、答案解析、难度分级、格式化输出、题库管理。Quiz generator with multiple choice, fill-in-blank, short answer, mock exams, explanations."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # quiz-generator
 

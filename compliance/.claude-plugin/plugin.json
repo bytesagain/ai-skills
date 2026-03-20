@@ -1,0 +1,9 @@
+{
+  "name": "compliance",
+  "description": "Track compliance requirements and generate audit trail reports. Use when auditing controls, checking policies, generating audit trails.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

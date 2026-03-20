@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: email-template
-description: "邮件模板库。欢迎邮件、Newsletter、事务邮件、冷启动邮件、跟进邮件、催款邮件模板生成。Email template library with welcome, newsletter, transactional, cold outreach, follow-up, and collection templates. Use when you need email template capabilities. Triggers on: email template."
+description: "邮件模板库。欢迎邮件、Newsletter、事务邮件、冷启动邮件、跟进邮件、催款邮件模板生成。Email template library with welcome, newsletter, transactional, cold outreach, follow-up."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # email-template
 
@@ -54,3 +56,7 @@ email-template run
 ## Commands
 
 Run `email-template help` to see all available commands.
+
+## Requirements
+- bash 4+
+- python3 (standard library only)

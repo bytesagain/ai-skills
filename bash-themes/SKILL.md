@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: Oh My Bash
-description: "A delightful community-driven framework for managing your bash configuration, and an auto-update too oh my bash, shell, bash-configuration, bash-themes, productivity, shell, terminal. Use when you need oh my bash capabilities. Triggers on: oh my bash."
+description: "A delightful community-driven framework for managing your bash configuration, and an auto-update too oh my bash, shell, bash-configuration, bash-themes."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Oh My Bash
@@ -37,7 +39,6 @@ bash-themes run
 
 - Run `bash-themes help` for all commands
 
-- Run `bash-themes help` for all commands
 
 ## Configuration
 

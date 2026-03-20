@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: paraphraser
-description: "文本改写/降重、学术改写、简化表达、正式化、扩写、前后对比。Paraphrase, rewrite for academic tone, simplify, formalize, expand, and compare text versions. Use when you need paraphraser capabilities. Triggers on: paraphraser."
+description: "Rewrite text for tone, clarity, or originality. Use when paraphrasing paragraphs, simplifying jargon, formalizing drafts, comparing versions."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # paraphraser
 

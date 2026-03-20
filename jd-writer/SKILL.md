@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Jd Writer
-description: "招聘JD撰写助手。职位描述、任职要求、公司介绍、福利亮点、薪资市场参考、JD包容性检查。. Use when you need jd writer capabilities. Triggers on: jd writer."
-  招聘JD生成器。职位描述、任职要求、公司介绍、福利待遇、薪资参考、包容性检查。Job description writer for hiring with requirements, benefits, salary benchmark, inclusivity check. 招聘文案、岗位描述、HR工具。Use when writing job descriptions.
+description: "Write job descriptions with requirements, perks, and inclusivity language. Use when drafting postings, writing requirements, or checking JD inclusivity."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # jd-writer

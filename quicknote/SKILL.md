@@ -1,8 +1,10 @@
 ---
 name: QuickNote
-description: "Lightning-fast note-taking tool. Capture thoughts instantly, pin important notes, search across all entries, and export to markdown. Zero config, local storage, instant access. Perfect for quick ideas, reminders, and knowledge snippets."
+description: "Jot down ideas, reminders, and snippets instantly. Use when adding thoughts, planning outlines, tracking daily notes, reviewing captured ideas."
 version: "2.0.0"
 author: "BytesAgain"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 tags: ["notes","quick","capture","memo","ideas","productivity","writing"]
 categories: ["Productivity", "Personal Management"]
 ---

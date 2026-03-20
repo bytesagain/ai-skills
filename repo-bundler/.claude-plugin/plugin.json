@@ -1,0 +1,9 @@
+{
+  "name": "repo-bundler",
+  "description": "\ud83d\udce6 Repomix is a powerful tool that packs your entire repository into a single, AI-friendly file. Perf repo-bundler, typescript, ai, anthropic.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

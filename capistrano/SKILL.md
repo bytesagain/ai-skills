@@ -1,56 +1,121 @@
 ---
 version: "2.0.0"
 name: Capistrano
-description: "A deployment automation tool built on Ruby, Rake, and SSH. capistrano, ruby, capistrano, deployment, ruby, ssh. Use when you need capistrano capabilities. Triggers on: capistrano."
+description: "Automate deployments over SSH with Ruby-based release workflows. Use when deploying Rails apps, managing releases, or configuring multi-stage deploys."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Capistrano
 
-A deployment automation tool built on Ruby, Rake, and SSH. ## Commands
+Capistrano is a developer workflow automation tool that helps you initialize projects, run checks, build, test, deploy, and manage configuration — all from the terminal. It logs every action with timestamps for full auditability.
 
-- `help` - Help
-- `run` - Run
-- `info` - Info
-- `status` - Status
+## Commands
 
-## Features
+| Command | Description |
+|---------|-------------|
+| `capistrano init` | Initialize a new project in the current directory |
+| `capistrano check` | Run lint, type checks, and tests |
+| `capistrano build` | Build the project |
+| `capistrano test` | Run the full test suite |
+| `capistrano deploy` | Show the deploy pipeline: build → test → stage → prod |
+| `capistrano config` | Show or edit configuration (stored in `config.json`) |
+| `capistrano status` | Check project health status |
+| `capistrano template <name>` | Generate a code template for the given name |
+| `capistrano docs` | Generate project documentation |
+| `capistrano clean` | Remove build artifacts |
+| `capistrano help` | Show help with all available commands |
+| `capistrano version` | Show current version |
 
-- Core functionality from capistrano/capistrano
+## How It Works
 
-## Usage
+Every command is dispatched via a `case` statement in the shell script. Each action prints a summary to stdout and appends a timestamped entry to `history.log` in the data directory. This gives you a persistent audit trail of every operation you've run.
 
-Run any command: `capistrano <command> [args]`
----
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
+The deploy pipeline follows a clear progression: **build → test → stage → prod**, ensuring each phase passes before moving forward.
+
+## Data Storage
+
+All data is stored locally in `~/.local/share/capistrano/` by default:
+
+- `history.log` — Timestamped log of every command executed
+- `config.json` — Project configuration (via `capistrano config`)
+
+Override the storage location by setting the `CAPISTRANO_DIR` environment variable:
+
+```bash
+export CAPISTRANO_DIR="$HOME/my-project/.capistrano"
+```
+
+## Requirements
+
+- **bash 4+** (uses `set -euo pipefail` for strict mode)
+- No external dependencies — pure bash
+- No API keys needed
+
+## When to Use
+
+1. **Bootstrapping a new project** — Run `capistrano init` to set up project scaffolding in the current working directory
+2. **Pre-commit quality gates** — Use `capistrano check` to run lint, type checks, and tests before committing code
+3. **Building and testing in CI** — Chain `capistrano build` and `capistrano test` in your CI/CD pipeline for consistent workflows
+4. **Guided deployments** — Run `capistrano deploy` to follow the build → test → stage → prod pipeline step by step
+5. **Cleaning up between builds** — Use `capistrano clean` to remove stale build artifacts and start fresh
 
 ## Examples
 
 ```bash
-# Show help
-capistrano help
+# Initialize a project in the current directory
+capistrano init
 
-# Run
-capistrano run
+# Run all checks (lint + type check + tests)
+capistrano check
+
+# Build the project
+capistrano build
+
+# Run the test suite
+capistrano test
+
+# Show the deploy pipeline
+capistrano deploy
 ```
 
-- Run `capistrano help` for commands
-- No API keys needed
+```bash
+# Generate documentation
+capistrano docs
 
-- Run `capistrano help` for all commands
+# Generate a code template
+capistrano template api-controller
 
-- Run `capistrano help` for all commands
+# Check project health
+capistrano status
+```
+
+```bash
+# View or edit configuration
+capistrano config
+
+# Clean build artifacts
+capistrano clean
+
+# Show version
+capistrano version
+```
 
 ## Output
 
-Results go to stdout. Save with `capistrano run > output.txt`.
+All command output goes to stdout. The history log is always written to `$DATA_DIR/history.log`. You can redirect output as needed:
+
+```bash
+capistrano status > project-health.txt
+```
 
 ## Configuration
 
-Set `CAPISTRANO_DIR` to change data directory. Default: `~/.local/share/capistrano/`
+| Variable | Purpose | Default |
+|----------|---------|---------|
+| `CAPISTRANO_DIR` | Override data/config directory | `~/.local/share/capistrano/` |
 
-## When to Use
+---
 
-- Quick capistrano tasks from terminal
-- Automation pipelines
+Powered by BytesAgain | bytesagain.com | hello@bytesagain.com

@@ -1,0 +1,9 @@
+{
+  "name": "sqlformat",
+  "description": "Format, lint, and pretty-print SQL with dialect conversion. Use when checking style, validating syntax, formatting queries, generating clean SQL.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

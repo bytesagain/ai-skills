@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: grammar-check
-description: "语法检查助手。英语纠错、语法解释、难度分级、语法练习题、中英对比分析。Grammar checker with error correction, explanations, difficulty levels, practice exercises, Chinese-English comparison. Use when you need grammar check capabilities. Triggers on: grammar check."
+description: "语法检查助手。英语纠错、语法解释、难度分级、语法练习题、中英对比分析。Grammar checker with error correction, explanations, difficulty levels, practice exercises."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # grammar-check
 

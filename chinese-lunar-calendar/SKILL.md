@@ -1,53 +1,113 @@
 ---
-version: "2.0.0"
+version: "3.0.1"
 name: Chinese Calendar
-description: "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━. Use when you need chinese lunar calendar capabilities. Triggers on: chinese lunar calendar."
-  中国农历助手。今日黄历、节假日、农历转换、生肖、传统节日、宜忌查询。Chinese lunar calendar with holidays, zodiac, festivals. 农历、黄历、节假日。
+description: "Chinese content writing and editing toolkit. Use when generating articles, polishing copy, creating outlines, tracking trends, or adapting content for Chinese platforms."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
+tags: [chinese, content, writing, translation]
+category: "text"
 ---
-# Chinese Calendar
 
-中国农历助手。今日黄历、节假日、农历转换、生肖、传统节日、宜忌查询。Chinese lunar calendar with holidays, zodiac, festivals. 农历、黄历、节假日。
+# chinese-lunar-calendar
 
-## 常见问题
+CLI tool for chinese lunar calendar
 
-**Q: 这个工具适合谁用？**
-A: 任何需要chinese calendar的人，无论是个人还是企业用户。
+## Commands
 
-**Q: 输出格式是什么？**
-A: 主要输出Markdown格式，方便复制和编辑。
+### `write`
 
-## 可用命令
+```bash
+scripts/script.sh write
+```
 
-- **today** — today
-- **holiday** — holiday
-- **lunar** — lunar
-- **zodiac** — zodiac
-- **festival** — festival
-- **auspicious** — auspicious
+### `title`
 
----
-*Chinese Calendar by BytesAgain*
----
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
+```bash
+scripts/script.sh title
+```
+
+### `outline`
+
+```bash
+scripts/script.sh outline
+```
+
+### `polish`
+
+```bash
+scripts/script.sh polish
+```
+
+### `hashtag`
+
+```bash
+scripts/script.sh hashtag
+```
+
+### `platform`
+
+```bash
+scripts/script.sh platform
+```
+
+### `hot`
+
+```bash
+scripts/script.sh hot
+```
+
+### `template`
+
+```bash
+scripts/script.sh template
+```
+
+### `translate`
+
+```bash
+scripts/script.sh translate
+```
+
+### `proofread`
+
+```bash
+scripts/script.sh proofread
+```
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Examples
 
 ```bash
-# Quick start
-chinese-lunar-calendar help
-
-# Run main function
-chinese-lunar-calendar run
+scripts/script.sh help
+scripts/script.sh write
 ```
 
-This tool reads your input, processes it using built-in templates, and outputs structured results.
+## Configuration
 
-- Run `chinese-lunar-calendar help` for all available commands
-- Check the scripts/ directory for implementation details
-, no API keys needed
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `CHINESE_LUNAR_CALENDAR_DIR` | No | Data directory (default: `~/.chinese-lunar-calendar/`) |
 
-## Commands
+## Data Storage
 
-Run `chinese-lunar-calendar help` to see all available commands.
+All data saved in `~/.chinese-lunar-calendar/`. Runs on your machine without external calls.
+
+## Requirements
+
+- bash 4.0+
+
+---
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

@@ -1,364 +1,317 @@
 #!/usr/bin/env bash
-# Deadlink — sysops tool
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
+###############################################################################
+# DeadLink — Dead Link Checker
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+###############################################################################
 
-DATA_DIR="${HOME}/.local/share/deadlink"
-mkdir -p "$DATA_DIR"
+VERSION="3.0.0"
+SCRIPT_NAME="deadlink"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+# Colors
+RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'
+CYAN='\033[0;36m'; BOLD='\033[1m'; NC='\033[0m'
 
-_version() { echo "deadlink v2.0.0"; }
+err()  { echo -e "${RED}[ERROR]${NC} $*" >&2; }
+info() { echo -e "${CYAN}[INFO]${NC} $*"; }
+ok()   { echo -e "${GREEN}[OK]${NC} $*"; }
+warn() { echo -e "${YELLOW}[WARN]${NC} $*"; }
 
-_help() {
-    echo "Deadlink v2.0.0 — sysops toolkit"
-    echo ""
-    echo "Usage: deadlink <command> [args]"
-    echo ""
-    echo "Commands:"
-    echo "  scan               Scan"
-    echo "  monitor            Monitor"
-    echo "  report             Report"
-    echo "  alert              Alert"
-    echo "  top                Top"
-    echo "  usage              Usage"
-    echo "  check              Check"
-    echo "  fix                Fix"
-    echo "  cleanup            Cleanup"
-    echo "  backup             Backup"
-    echo "  restore            Restore"
-    echo "  log                Log"
-    echo "  benchmark          Benchmark"
-    echo "  compare            Compare"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
+TIMEOUT=10
+USER_AGENT="Mozilla/5.0 (compatible; DeadLink/${VERSION}; +https://bytesagain.com)"
+
+usage() {
+  cat <<EOF
+${BOLD}DeadLink v${VERSION}${NC} — Dead Link Checker
+Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+
+${BOLD}Usage:${NC}
+  $SCRIPT_NAME check <url>             Check single URL
+  $SCRIPT_NAME scan <file>             Check all URLs in a file
+  $SCRIPT_NAME site <url> [depth]      Crawl site for broken links
+  $SCRIPT_NAME report <file>           Generate report from URL file
+
+${BOLD}Examples:${NC}
+  $SCRIPT_NAME check https://example.com
+  $SCRIPT_NAME scan urls.txt
+  $SCRIPT_NAME site https://example.com 2
+  $SCRIPT_NAME report links.txt
+EOF
 }
 
-_stats() {
-    echo "=== Deadlink Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Since: $(head -1 "$DATA_DIR/history.log" 2>/dev/null | cut -d'|' -f1 || echo 'N/A')"
+require_curl() {
+  if ! command -v curl &>/dev/null; then
+    err "curl is required but not found."
+    exit 1
+  fi
 }
 
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "" >> "$out"
-            echo "]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    echo "$name,$ts,$val" >> "$out"
-                done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Deadlink Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-                echo "" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
-    esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
+# Check a single URL, return status code
+check_url() {
+  local url="$1"
+  local code
+  code=$(curl -sL -o /dev/null -w '%{http_code}' \
+    --max-time "$TIMEOUT" \
+    --connect-timeout 5 \
+    -A "$USER_AGENT" \
+    "$url" 2>/dev/null || echo "000")
+  echo "$code"
 }
 
-_status() {
-    echo "=== Deadlink Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    local last=$(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo "never")
-    echo "  Last activity: $last"
-    echo "  Status: OK"
+# Classify HTTP status
+status_label() {
+  local code="$1"
+  case "$code" in
+    2[0-9][0-9]) echo -e "${GREEN}OK${NC}" ;;
+    3[0-9][0-9]) echo -e "${YELLOW}REDIRECT${NC}" ;;
+    4[0-9][0-9]) echo -e "${RED}CLIENT ERROR${NC}" ;;
+    5[0-9][0-9]) echo -e "${RED}SERVER ERROR${NC}" ;;
+    000)         echo -e "${RED}TIMEOUT/DNS${NC}" ;;
+    *)           echo -e "${RED}UNKNOWN${NC}" ;;
+  esac
 }
 
-_search() {
-    local term="${1:?Usage: deadlink search <term>}"
-    echo "Searching for: $term"
-    local found=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local matches=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$matches" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$matches" | while read -r line; do
-                echo "    $line"
-                found=$((found + 1))
-            done
-        fi
-    done
-    [ $found -eq 0 ] && echo "  No matches found."
+is_dead() {
+  local code="$1"
+  case "$code" in
+    2[0-9][0-9]|3[0-9][0-9]) return 1 ;;  # alive
+    *) return 0 ;;  # dead
+  esac
 }
 
-_recent() {
-    echo "=== Recent Activity ==="
-    if [ -f "$DATA_DIR/history.log" ]; then
-        tail -20 "$DATA_DIR/history.log" | while IFS='' read -r line; do
-            echo "  $line"
-        done
+cmd_check() {
+  local url="${1:?Usage: $SCRIPT_NAME check <url>}"
+  info "Checking: ${url}"
+
+  local code
+  code=$(check_url "$url")
+  local label
+  label=$(status_label "$code")
+
+  echo -e "  ${BOLD}URL:${NC}    ${url}"
+  echo -e "  ${BOLD}Status:${NC} ${code} ${label}"
+
+  # Extra info
+  if [[ "$code" == "000" ]]; then
+    echo -e "  ${RED}Could not connect (DNS failure, timeout, or invalid URL)${NC}"
+  elif [[ "$code" =~ ^3 ]]; then
+    local redirect_url
+    redirect_url=$(curl -sL -o /dev/null -w '%{url_effective}' \
+      --max-time "$TIMEOUT" -A "$USER_AGENT" "$url" 2>/dev/null || echo "(unknown)")
+    echo -e "  ${BOLD}Redirects to:${NC} ${redirect_url}"
+  fi
+
+  if is_dead "$code"; then
+    return 1
+  fi
+  return 0
+}
+
+# Extract URLs from text
+extract_urls() {
+  grep -oEi 'https?://[^ "'"'"'<>]+' "$1" 2>/dev/null | sort -u
+}
+
+cmd_scan() {
+  local file="${1:?Usage: $SCRIPT_NAME scan <file>}"
+
+  if [[ ! -f "$file" ]]; then
+    err "File not found: $file"
+    exit 1
+  fi
+
+  local urls
+  urls=$(extract_urls "$file")
+  local total
+  total=$(echo "$urls" | grep -c . || echo 0)
+
+  if [[ "$total" -eq 0 ]]; then
+    warn "No URLs found in $file"
+    exit 0
+  fi
+
+  info "Scanning ${total} URLs from ${file}..."
+  echo ""
+
+  local alive=0 dead=0 count=0
+
+  while IFS= read -r url; do
+    count=$((count + 1))
+    local code
+    code=$(check_url "$url")
+    local label
+    label=$(status_label "$code")
+
+    printf "  [%d/%d] %-6s %b  %s\n" "$count" "$total" "$code" "$label" "$url"
+
+    if is_dead "$code"; then
+      dead=$((dead + 1))
     else
-        echo "  No activity yet."
+      alive=$((alive + 1))
     fi
+  done <<< "$urls"
+
+  echo ""
+  echo -e "${BOLD}Results:${NC}"
+  echo -e "  ${GREEN}Alive:${NC} ${alive}"
+  echo -e "  ${RED}Dead:${NC}  ${dead}"
+  echo -e "  ${BOLD}Total:${NC} ${total}"
+}
+
+cmd_site() {
+  local url="${1:?Usage: $SCRIPT_NAME site <url> [depth]}"
+  local max_depth="${2:-1}"
+
+  info "Crawling ${url} (depth: ${max_depth})..."
+  echo ""
+
+  # Fetch page and extract links
+  local page_content
+  page_content=$(curl -sL --max-time 15 -A "$USER_AGENT" "$url" 2>/dev/null || echo "")
+
+  if [[ -z "$page_content" ]]; then
+    err "Could not fetch: $url"
+    exit 1
+  fi
+
+  # Extract href and src links
+  local links
+  links=$(echo "$page_content" | grep -oEi '(href|src)="[^"]*"' | \
+    sed -E 's/(href|src)="([^"]*)"/\2/' | sort -u)
+
+  # Resolve relative URLs
+  local base_domain
+  base_domain=$(echo "$url" | grep -oE 'https?://[^/]+')
+
+  local all_urls=()
+  while IFS= read -r link; do
+    [[ -z "$link" ]] && continue
+    # Skip anchors, javascript, mailto
+    [[ "$link" =~ ^(#|javascript:|mailto:|tel:|data:) ]] && continue
+
+    if [[ "$link" =~ ^https?:// ]]; then
+      all_urls+=("$link")
+    elif [[ "$link" =~ ^// ]]; then
+      all_urls+=("https:${link}")
+    elif [[ "$link" =~ ^/ ]]; then
+      all_urls+=("${base_domain}${link}")
+    fi
+  done <<< "$links"
+
+  # Deduplicate
+  local unique_urls
+  unique_urls=$(printf '%s\n' "${all_urls[@]}" 2>/dev/null | sort -u)
+  local total
+  total=$(echo "$unique_urls" | grep -c . || echo 0)
+
+  info "Found ${total} links on page"
+  echo ""
+
+  local alive=0 dead=0 count=0
+
+  while IFS= read -r link_url; do
+    [[ -z "$link_url" ]] && continue
+    count=$((count + 1))
+    local code
+    code=$(check_url "$link_url")
+    local label
+    label=$(status_label "$code")
+
+    if is_dead "$code"; then
+      dead=$((dead + 1))
+      printf "  ${RED}✗${NC} [%d/%d] %-6s %b  %s\n" "$count" "$total" "$code" "$label" "$link_url"
+    else
+      alive=$((alive + 1))
+      printf "  ${GREEN}✓${NC} [%d/%d] %-6s %b  %s\n" "$count" "$total" "$code" "$label" "$link_url"
+    fi
+  done <<< "$unique_urls"
+
+  echo ""
+  echo -e "${BOLD}Crawl Results for ${url}:${NC}"
+  echo -e "  ${GREEN}Alive:${NC} ${alive}"
+  echo -e "  ${RED}Dead:${NC}  ${dead}"
+  echo -e "  ${BOLD}Total:${NC} ${total}"
+}
+
+cmd_report() {
+  local file="${1:?Usage: $SCRIPT_NAME report <file>}"
+
+  if [[ ! -f "$file" ]]; then
+    err "File not found: $file"
+    exit 1
+  fi
+
+  local urls
+  urls=$(extract_urls "$file")
+  local total
+  total=$(echo "$urls" | grep -c . || echo 0)
+
+  if [[ "$total" -eq 0 ]]; then
+    warn "No URLs found in $file"
+    exit 0
+  fi
+
+  local report_file="deadlink-report-$(date +%Y%m%d-%H%M%S).txt"
+
+  info "Generating report for ${total} URLs..."
+
+  {
+    echo "============================================================"
+    echo " DeadLink Report — $(date '+%Y-%m-%d %H:%M:%S')"
+    echo " Source: ${file}"
+    echo " Powered by BytesAgain | bytesagain.com"
+    echo "============================================================"
+    echo ""
+
+    local alive=0 dead=0 redirects=0
+
+    while IFS= read -r url; do
+      local code
+      code=$(check_url "$url")
+
+      local status_text
+      case "$code" in
+        2[0-9][0-9]) status_text="OK"; alive=$((alive + 1)) ;;
+        3[0-9][0-9]) status_text="REDIRECT"; redirects=$((redirects + 1)); alive=$((alive + 1)) ;;
+        4[0-9][0-9]) status_text="CLIENT_ERROR"; dead=$((dead + 1)) ;;
+        5[0-9][0-9]) status_text="SERVER_ERROR"; dead=$((dead + 1)) ;;
+        000)         status_text="UNREACHABLE"; dead=$((dead + 1)) ;;
+        *)           status_text="UNKNOWN"; dead=$((dead + 1)) ;;
+      esac
+
+      printf "%-12s %-6s %s\n" "$status_text" "$code" "$url"
+      # Progress to stderr
+      printf "\r  Checked: %d/%d" "$((alive + dead))" "$total" >&2
+    done <<< "$urls"
+
+    echo "" >&2
+    echo ""
+    echo "============================================================"
+    echo " Summary"
+    echo "============================================================"
+    echo " Total URLs:  ${total}"
+    echo " Alive:       ${alive} (including ${redirects} redirects)"
+    echo " Dead:        ${dead}"
+    echo "============================================================"
+  } > "$report_file"
+
+  ok "Report saved to: ${report_file}"
+  echo ""
+  tail -8 "$report_file"
 }
 
 # Main dispatch
-case "${1:-help}" in
-    scan)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent scan entries:"
-            tail -20 "$DATA_DIR/scan.log" 2>/dev/null || echo "  No entries yet. Use: deadlink scan <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/scan.log"
-            local total=$(wc -l < "$DATA_DIR/scan.log")
-            echo "  [Deadlink] scan: $input"
-            echo "  Saved. Total scan entries: $total"
-            _log "scan" "$input"
-        fi
-        ;;
-    monitor)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent monitor entries:"
-            tail -20 "$DATA_DIR/monitor.log" 2>/dev/null || echo "  No entries yet. Use: deadlink monitor <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/monitor.log"
-            local total=$(wc -l < "$DATA_DIR/monitor.log")
-            echo "  [Deadlink] monitor: $input"
-            echo "  Saved. Total monitor entries: $total"
-            _log "monitor" "$input"
-        fi
-        ;;
-    report)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent report entries:"
-            tail -20 "$DATA_DIR/report.log" 2>/dev/null || echo "  No entries yet. Use: deadlink report <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/report.log"
-            local total=$(wc -l < "$DATA_DIR/report.log")
-            echo "  [Deadlink] report: $input"
-            echo "  Saved. Total report entries: $total"
-            _log "report" "$input"
-        fi
-        ;;
-    alert)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent alert entries:"
-            tail -20 "$DATA_DIR/alert.log" 2>/dev/null || echo "  No entries yet. Use: deadlink alert <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/alert.log"
-            local total=$(wc -l < "$DATA_DIR/alert.log")
-            echo "  [Deadlink] alert: $input"
-            echo "  Saved. Total alert entries: $total"
-            _log "alert" "$input"
-        fi
-        ;;
-    top)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent top entries:"
-            tail -20 "$DATA_DIR/top.log" 2>/dev/null || echo "  No entries yet. Use: deadlink top <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/top.log"
-            local total=$(wc -l < "$DATA_DIR/top.log")
-            echo "  [Deadlink] top: $input"
-            echo "  Saved. Total top entries: $total"
-            _log "top" "$input"
-        fi
-        ;;
-    usage)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent usage entries:"
-            tail -20 "$DATA_DIR/usage.log" 2>/dev/null || echo "  No entries yet. Use: deadlink usage <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/usage.log"
-            local total=$(wc -l < "$DATA_DIR/usage.log")
-            echo "  [Deadlink] usage: $input"
-            echo "  Saved. Total usage entries: $total"
-            _log "usage" "$input"
-        fi
-        ;;
-    check)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent check entries:"
-            tail -20 "$DATA_DIR/check.log" 2>/dev/null || echo "  No entries yet. Use: deadlink check <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/check.log"
-            local total=$(wc -l < "$DATA_DIR/check.log")
-            echo "  [Deadlink] check: $input"
-            echo "  Saved. Total check entries: $total"
-            _log "check" "$input"
-        fi
-        ;;
-    fix)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent fix entries:"
-            tail -20 "$DATA_DIR/fix.log" 2>/dev/null || echo "  No entries yet. Use: deadlink fix <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/fix.log"
-            local total=$(wc -l < "$DATA_DIR/fix.log")
-            echo "  [Deadlink] fix: $input"
-            echo "  Saved. Total fix entries: $total"
-            _log "fix" "$input"
-        fi
-        ;;
-    cleanup)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent cleanup entries:"
-            tail -20 "$DATA_DIR/cleanup.log" 2>/dev/null || echo "  No entries yet. Use: deadlink cleanup <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/cleanup.log"
-            local total=$(wc -l < "$DATA_DIR/cleanup.log")
-            echo "  [Deadlink] cleanup: $input"
-            echo "  Saved. Total cleanup entries: $total"
-            _log "cleanup" "$input"
-        fi
-        ;;
-    backup)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent backup entries:"
-            tail -20 "$DATA_DIR/backup.log" 2>/dev/null || echo "  No entries yet. Use: deadlink backup <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/backup.log"
-            local total=$(wc -l < "$DATA_DIR/backup.log")
-            echo "  [Deadlink] backup: $input"
-            echo "  Saved. Total backup entries: $total"
-            _log "backup" "$input"
-        fi
-        ;;
-    restore)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent restore entries:"
-            tail -20 "$DATA_DIR/restore.log" 2>/dev/null || echo "  No entries yet. Use: deadlink restore <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/restore.log"
-            local total=$(wc -l < "$DATA_DIR/restore.log")
-            echo "  [Deadlink] restore: $input"
-            echo "  Saved. Total restore entries: $total"
-            _log "restore" "$input"
-        fi
-        ;;
-    log)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent log entries:"
-            tail -20 "$DATA_DIR/log.log" 2>/dev/null || echo "  No entries yet. Use: deadlink log <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/log.log"
-            local total=$(wc -l < "$DATA_DIR/log.log")
-            echo "  [Deadlink] log: $input"
-            echo "  Saved. Total log entries: $total"
-            _log "log" "$input"
-        fi
-        ;;
-    benchmark)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent benchmark entries:"
-            tail -20 "$DATA_DIR/benchmark.log" 2>/dev/null || echo "  No entries yet. Use: deadlink benchmark <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/benchmark.log"
-            local total=$(wc -l < "$DATA_DIR/benchmark.log")
-            echo "  [Deadlink] benchmark: $input"
-            echo "  Saved. Total benchmark entries: $total"
-            _log "benchmark" "$input"
-        fi
-        ;;
-    compare)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent compare entries:"
-            tail -20 "$DATA_DIR/compare.log" 2>/dev/null || echo "  No entries yet. Use: deadlink compare <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/compare.log"
-            local total=$(wc -l < "$DATA_DIR/compare.log")
-            echo "  [Deadlink] compare: $input"
-            echo "  Saved. Total compare entries: $total"
-            _log "compare" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown command: $1"
-        echo "Run 'deadlink help' for available commands."
-        exit 1
-        ;;
+require_curl
+
+case "${1:-}" in
+  check)  shift; cmd_check "$@" ;;
+  scan)   shift; cmd_scan "$@" ;;
+  site)   shift; cmd_site "$@" ;;
+  report) shift; cmd_report "$@" ;;
+  -h|--help|"") usage ;;
+  *)
+    err "Unknown command: $1"
+    usage
+    exit 1
+    ;;
 esac

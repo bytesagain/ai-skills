@@ -1,67 +1,86 @@
 ---
 name: orders
-version: "2.0.0"
+description: "Track orders locally. Use when creating orders, checking status, updating quantities, canceling, or generating sales reports."
+version: "3.4.0"
 author: BytesAgain
-license: MIT-0
-tags: [orders, tool, utility]
-description: "Orders - command-line tool for everyday use"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
+tags:
+  - orders
+  - management
+  - ecommerce
+  - tracking
+  - inventory
+  - report
 ---
 
-# Orders
+# Orders Skill
 
-Order management toolkit — track orders, manage inventory, process returns, generate invoices, shipping status, and sales analytics.
+Create, track, update, cancel, and report on orders.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `orders list` | [status] |
-| `orders track` | <id> |
-| `orders create` | <item> |
-| `orders return` | <id> |
-| `orders invoice` | <id> |
-| `orders stats` | [period] |
+### create
 
-## Usage
+Create a new order.
 
 ```bash
-# Show help
-orders help
-
-# Quick start
-orders list [status]
+bash scripts/script.sh create <customer> <item> <quantity> <unit_price> [--note <text>]
 ```
 
-## Examples
+### list
+
+List all orders or filter by status.
 
 ```bash
-# Example 1
-orders list [status]
-
-# Example 2
-orders track <id>
+bash scripts/script.sh list [--status pending|shipped|delivered|cancelled] [--format table|json|csv]
 ```
 
-- Run `orders help` for all available commands
+### status
 
----
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
+Query the status of a specific order.
 
-## When to Use
+```bash
+bash scripts/script.sh status <order_id>
+```
 
-- Quick orders tasks from terminal
-- Automation pipelines
+### update
+
+Update an existing order (status, quantity, or note).
+
+```bash
+bash scripts/script.sh update <order_id> [--status <new_status>] [--quantity <num>] [--note <text>]
+```
+
+### cancel
+
+Cancel an order by ID.
+
+```bash
+bash scripts/script.sh cancel <order_id> [--reason <text>]
+```
+
+### report
+
+Generate a summary report of all orders.
+
+```bash
+bash scripts/script.sh report [--period today|week|month|all] [--format table|json]
+```
 
 ## Output
 
-Results go to stdout. Save with `orders run > output.txt`.
+All commands print to stdout. Order data is stored in `~/.orders/orders.json`. Order IDs are auto-generated. Use `--format json` for machine-readable output where supported.
 
-## Configuration
 
-Set `ORDERS_DIR` to change data directory. Default: `~/.local/share/orders/`
+## Requirements
+- bash 4+
+- python3 (standard library only)
 
-## When to Use
+## Feedback
 
-- Quick orders tasks from terminal
-- Automation pipelines
+Questions or suggestions? → [https://bytesagain.com/feedback/](https://bytesagain.com/feedback/)
+
+---
+
+Powered by BytesAgain | bytesagain.com

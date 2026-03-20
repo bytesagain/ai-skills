@@ -1,67 +1,112 @@
 ---
-name: erp
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [erp, tool, utility]
-description: "Erp - command-line tool for everyday use"
+name: "erp"
+version: "1.0.0"
+description: "Plan resources, track inventory, and coordinate departments with reporting. Use when allocating resources, managing stock, or tracking department KPIs."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [erp, general, cli, tool]
+category: "general"
 ---
 
-# ERP
+# erp
 
-Enterprise resource planning toolkit — manage business processes, track resources, inventory planning, department coordination, and reporting.
+Plan resources, track inventory, and coordinate departments with reporting. Use when allocating resources, managing stock, or tracking department KPIs.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `erp run` | Execute main function |
-| `erp list` | List all items |
-| `erp add <item>` | Add new item |
-| `erp status` | Show current status |
-| `erp export <format>` | Export data |
-| `erp help` | Show help |
-
-## Usage
+### `status`
 
 ```bash
-# Show help
-erp help
-
-# Quick start
-erp run
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-# Run with defaults
-erp run
-
-# Check status
-erp status
-
-# Export results
-erp export json
+scripts/script.sh add
 ```
 
-- Run `erp help` for all commands
-- Data stored in `~/.local/share/erp/`
+Add new entry
 
----
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
+### `list`
 
-- Run `erp help` for all commands
+```bash
+scripts/script.sh list
+```
 
-## Output
+List all entries
 
-Results go to stdout. Save with `erp run > output.txt`.
+### `search`
 
-## Output
+```bash
+scripts/script.sh search
+```
 
-Results go to stdout. Save with `erp run > output.txt`.
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `ERP_DIR` to change data directory. Default: `~/.local/share/erp/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `ERP_DIR` | No | Data directory (default: ~/.erp/) |
+
+## Data Storage
+
+All data stored in `~/.erp/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
+
+---
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

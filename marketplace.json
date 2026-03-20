@@ -1,6 +1,6 @@
 {
   "name": "bytesagain-skills",
-  "description": "700+ AI Agent Skills by BytesAgain \u2014 the largest open-source skill collection for Claude Code and SKILL.md-compatible platforms.",
+  "description": "700+ AI Agent Skills by BytesAgain. The largest open-source skill collection for Claude Code and SKILL.md-compatible platforms.",
   "owner": {
     "name": "BytesAgain",
     "url": "https://bytesagain.com",
@@ -98,6 +98,18 @@
       "version": "2.0.0"
     },
     {
+      "name": "amortize",
+      "source": "./amortize",
+      "description": "Calculate amortize financial metrics and business data. Use when tracking expenses, analyzing investments, or generating financial reports.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "animation",
+      "source": "./animation",
+      "description": "Generate CSS and SVG animation code snippets using bash and Python. Use when building UI animations, keyframes, or transition effects.",
+      "version": "1.0.0"
+    },
+    {
       "name": "ansible-ui",
       "source": "./ansible-ui",
       "description": "Modern UI and powerful API for Ansible, Terraform/OpenTofu/Terragrunt, PowerShell and other DevOps t ansible-ui, go, ansible, awx, ci, cicd.",
@@ -150,6 +162,12 @@
       "source": "./apm-monitor",
       "description": "APM, (Application Performance Management) tool for large-scale distributed systems. apm-monitor, java, agent, apm, distributed-tracing, monitoring.",
       "version": "2.0.0"
+    },
+    {
+      "name": "apollo-client",
+      "source": "./apollo-client",
+      "description": "Manage GraphQL queries, caching, and state with Apollo Client. Use when building React apps, debugging cache, or optimizing GraphQL fetches.",
+      "version": "1.0.0"
     },
     {
       "name": "appsmith",
@@ -206,10 +224,28 @@
       "version": "2.0.0"
     },
     {
+      "name": "backuptool",
+      "source": "./backuptool",
+      "description": "Create timestamped backups with compression, rotation, and scheduling. Use when archiving directories, restoring snapshots, or managing retention.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "badge",
+      "source": "./badge",
+      "description": "Generate badge UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages.",
+      "version": "1.0.0"
+    },
+    {
       "name": "banner",
       "source": "./banner",
       "description": "Create ASCII art banners and styled text for terminal displays. Use when decorating CLI output, generating headers, or adding flair to scripts.",
       "version": "2.0.0"
+    },
+    {
+      "name": "base64",
+      "source": "./base64",
+      "description": "Encode and decode Base64 strings and files from the terminal. Use when encoding binary data, decoding API payloads, or converting file content.",
+      "version": "1.0.0"
     },
     {
       "name": "bash-themes",
@@ -242,6 +278,24 @@
       "version": "2.0.0"
     },
     {
+      "name": "beat",
+      "source": "./beat",
+      "description": "Track, analyze, and manage music and audio files from the command line. Use when organizing playlists, converting formats, or analyzing metadata.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "beer",
+      "source": "./beer",
+      "description": "Catalog beers, log tasting notes, and track brewing recipes locally. Use when rating craft beers, recording homebrew batches, or browsing styles.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "benchmark",
+      "source": "./benchmark",
+      "description": "Run performance benchmarks and stress tests using Python profiling tools. Use when you need to measure, compare, or analyze system and application performance.",
+      "version": "1.0.0"
+    },
+    {
       "name": "benchmark-tool",
       "source": "./benchmark-tool",
       "description": "Benchmark CPU, memory, disk I/O, and network on your system. Use when measuring server performance.",
@@ -272,6 +326,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "bizplanner",
+      "source": "./bizplanner",
+      "description": "Create business plans, lean canvases, and financial projections. Use when pitching investors, planning startups, or modeling revenue scenarios.",
+      "version": "1.0.0"
+    },
+    {
       "name": "blog",
       "source": "./blog",
       "description": "Manage blog posts with drafts, scheduling, and SEO optimization. Use when creating articles, optimizing metadata, or scheduling publication dates.",
@@ -296,6 +356,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "blur",
+      "source": "./blur",
+      "description": "Apply image blur effects and privacy masks using Python PIL processing. Use when you need to blur, redact faces, or mask sensitive regions in images.",
+      "version": "1.0.0"
+    },
+    {
       "name": "bmi",
       "source": "./bmi",
       "description": "Calculate BMI, log weight entries, and chart body composition trends. Use when tracking fitness progress, setting weight goals, or reviewing data.",
@@ -312,6 +378,12 @@
       "source": "./boilerplates",
       "description": "This is my personal template collection. Here you",
       "version": "2.0.0"
+    },
+    {
+      "name": "bonds",
+      "source": "./bonds",
+      "description": "Record bond holdings, analyze yields, and track maturity dates. Use when managing fixed-income portfolios, comparing yields, or exporting data.",
+      "version": "1.0.0"
     },
     {
       "name": "book-recommend",
@@ -342,6 +414,12 @@
       "source": "./bookworm",
       "description": "Log books, track reading habits, and review reading streaks over time. Use when recording reads, maintaining goals, or analyzing genre preferences.",
       "version": "2.0.0"
+    },
+    {
+      "name": "border",
+      "source": "./border",
+      "description": "Generate CSS border styles including radius, shadow, and animations using templates. Use when you need to create, preview,",
+      "version": "1.0.0"
     },
     {
       "name": "brand-namer",
@@ -384,6 +462,12 @@
       "source": "./business-plan-cn",
       "description": "Generate Chinese business plans with lean canvas, SWOT, and financials. Use when writing investor decks, analyzing markets, or modeling revenue.",
       "version": "2.0.0"
+    },
+    {
+      "name": "cache",
+      "source": "./cache",
+      "description": "Manage a local key-value cache store using bash and Python. Use when caching API responses, session data, or computed results with TTL support.",
+      "version": "1.0.0"
     },
     {
       "name": "calctool",
@@ -494,6 +578,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "chartmaker",
+      "source": "./chartmaker",
+      "description": "Visualize data with bar charts, sparklines, and progress bars in terminal. Use when plotting metrics, rendering inline charts, or transforming data.",
+      "version": "1.0.0"
+    },
+    {
       "name": "checklist-maker",
       "source": "./checklist-maker",
       "description": "Generate Markdown checklists for life and work scenarios from templates. Use when creating packing lists, onboarding guides, or launch checklists.",
@@ -536,6 +626,18 @@
       "version": "2.0.0"
     },
     {
+      "name": "classify",
+      "source": "./classify",
+      "description": "Train and run text classification models using keyword-based and TF-IDF methods. Use when you need to categorize, label,",
+      "version": "1.0.0"
+    },
+    {
+      "name": "clean",
+      "source": "./clean",
+      "description": "Scan and clean up files including duplicates, temp files, and caches using system tools. Use when you need to find and remove junk files,",
+      "version": "1.0.0"
+    },
+    {
       "name": "cleaning",
       "source": "./cleaning",
       "description": "Schedule and track household cleaning tasks with inventory management. Use when planning cleaning rotations, restocking supplies, or making checklists.",
@@ -560,10 +662,22 @@
       "version": "3.0.0"
     },
     {
+      "name": "clipbox",
+      "source": "./clipbox",
+      "description": "Save and organize reusable text snippets for quick retrieval. Use when storing code fragments, saving command templates, or building snippet libraries.",
+      "version": "1.0.0"
+    },
+    {
       "name": "cloud-sdk",
       "source": "./cloud-sdk",
       "description": "The Go Cloud Development Kit (Go CDK): A library and tools for open cloud development in Go. go cloud, go, aws, azure, cloud, gcp.",
       "version": "2.0.0"
+    },
+    {
+      "name": "cluster",
+      "source": "./cluster",
+      "description": "Perform data clustering analysis using k-means and hierarchical algorithms. Use when you need to group, classify, or segment datasets.",
+      "version": "1.0.0"
     },
     {
       "name": "cms",
@@ -614,6 +728,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "coffee",
+      "source": "./coffee",
+      "description": "Track coffee brewing logs and tasting notes locally. Use when logging espresso shots, comparing brew methods, reviewing bean origins.",
+      "version": "1.0.0"
+    },
+    {
       "name": "color-palette-cn",
       "source": "./color-palette-cn",
       "description": "\u914d\u8272\u65b9\u6848\u751f\u6210\u3001\u8272\u5f69\u548c\u8c10(\u4e92\u8865/\u7c7b\u4f3c/\u4e09\u8272)\u3001\u54c1\u724c\u914d\u8272\u3001\u5bf9\u6bd4\u5ea6\u68c0\u67e5(WCAG)\u3001\u989c\u8272\u683c\u5f0f\u8f6c\u6362(HEX/RGB/HSL)\u3001\u6d41\u884c\u8272\u63a8\u8350\u3002Color palette generator with harmony, brand colors, WCAG contrast check, format conversion.",
@@ -636,6 +756,12 @@
       "source": "./comic-script",
       "description": "Draft comic storyboards with panels, dialogue, and scene pacing. Use when designing panels, writing dialogue, structuring comic chapters.",
       "version": "2.0.0"
+    },
+    {
+      "name": "comment",
+      "source": "./comment",
+      "description": "Organize comment data with filtering, analysis, and export tools. Use when collecting feedback, analyzing sentiment, exporting threads.",
+      "version": "1.0.0"
     },
     {
       "name": "commit-helper",
@@ -668,10 +794,40 @@
       "version": "2.0.0"
     },
     {
+      "name": "compass",
+      "source": "./compass",
+      "description": "Audit security posture and manage credential rotation schedules. Use when auditing passwords, rotating credentials, generating secure tokens.",
+      "version": "1.0.0"
+    },
+    {
       "name": "compensation-calc",
       "source": "./compensation-calc",
       "description": "Calculate total compensation with salary, bonus, equity, and benchmarks. Use when designing pay bands, estimating equity, benchmarking offers.",
       "version": "2.0.0"
+    },
+    {
+      "name": "compile",
+      "source": "./compile",
+      "description": "Validate, lint, and format source code across multiple languages. Use when checking syntax, formatting files, running lint passes, validating builds.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "compliance",
+      "source": "./compliance",
+      "description": "Track compliance requirements and generate audit trail reports. Use when auditing controls, checking policies, generating audit trails.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "compose",
+      "source": "./compose",
+      "description": "Create music compositions with chords, melodies, and audio analysis. Use when writing progressions, arranging parts, analyzing audio tracks.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "compound",
+      "source": "./compound",
+      "description": "Calculate compound interest and investment growth using financial formulas. Use when you need to plan savings, compare rates, or project wealth.",
+      "version": "1.0.0"
     },
     {
       "name": "config",
@@ -692,6 +848,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "container-analyzer",
+      "source": "./container-analyzer",
+      "description": "Inspect Docker image layers and find size optimization opportunities. Use when auditing image sizes, comparing layers, benchmarking builds.",
+      "version": "1.0.0"
+    },
+    {
       "name": "container-desktop",
       "source": "./container-desktop",
       "description": "Podman Desktop is the best free and open source tool to work with Containers and Kubernetes for deve podman desktop, typescript, container, containers.",
@@ -702,6 +864,12 @@
       "source": "./container-inspect",
       "description": "Explore Docker image layers and diagnose container build issues. Use when inspecting layers, debugging failures, checking configurations.",
       "version": "2.0.0"
+    },
+    {
+      "name": "container-labs",
+      "source": "./container-labs",
+      "description": "This is a collection of tutorials for learning how to use Docker with various tools. Contributions w docker-labs, php, containers, docker, docker-compose.",
+      "version": "1.0.0"
     },
     {
       "name": "container-runner",
@@ -720,6 +888,18 @@
       "source": "./contract-template",
       "description": "Contract and agreement template generator. \u5408\u540c\u6a21\u677f\u3001\u5408\u540c\u8303\u672c\u3001\u534f\u8bae\u4e66\u3001contract template\u3001\u52b3\u52a8\u5408\u540c\u3001employment contract\u3001\u52b3\u52a8\u534f\u8bae\u3001\u4fdd\u5bc6\u534f\u8baeNDA\u3001non-disclosure agreement\u3001\u79df\u8d41\u5408\u540c\u3001\u79df\u623f\u5408\u540c\u3001lease agr.",
       "version": "2.0.0"
+    },
+    {
+      "name": "convert",
+      "source": "./convert",
+      "description": "Convert between file formats, units, currencies, encodings, and color codes using Python. Use when you need universal data transformation.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "cookbook",
+      "source": "./cookbook",
+      "description": "Track cookbook personal activities and daily routines. Use when managing health goals, organizing tasks, or building productive habits.",
+      "version": "1.0.0"
     },
     {
       "name": "copywriter-cn",
@@ -770,6 +950,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "cpuwatch",
+      "source": "./cpuwatch",
+      "description": "Watch real-time CPU utilization with per-core breakdown and alerts. Use when monitoring spikes, identifying runaway processes, tracking cores.",
+      "version": "1.0.0"
+    },
+    {
       "name": "crawler",
       "source": "./crawler",
       "description": "Crawl websites, extract links, and scrape content with rate limiting. Use when scraping pages, extracting links, generating sitemaps.",
@@ -798,6 +984,12 @@
       "source": "./cronjob",
       "description": "Manage cron jobs with execution logging and failure alert tracking. Use when adding tasks, monitoring execution, debugging failed crons.",
       "version": "2.0.0"
+    },
+    {
+      "name": "crypt",
+      "source": "./crypt",
+      "description": "Encrypt, decrypt, hash, and sign data using standard cryptographic algorithms. Use when you need data protection or integrity verification.",
+      "version": "1.0.0"
     },
     {
       "name": "crypto-defi",
@@ -848,10 +1040,28 @@
       "version": "2.0.0"
     },
     {
+      "name": "ctxkeeper",
+      "source": "./ctxkeeper",
+      "description": "Manage conversation context with saving, loading, and pruning tools. Use when preserving context, loading sessions, pruning old history.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "curl",
+      "source": "./curl",
+      "description": "Send HTTP requests and test API endpoints using Python urllib. Use when you need to debug, test, or interact with web services.",
+      "version": "1.0.0"
+    },
+    {
       "name": "currconv",
       "source": "./currconv",
       "description": "Convert currencies using frankfurter.app free API. Use when converting amounts, checking exchange rates, or viewing rate history. Requires curl.",
       "version": "3.0.1"
+    },
+    {
+      "name": "currency",
+      "source": "./currency",
+      "description": "Plan travel budgets with currency conversion and expense tracking. Use when converting travel money, budgeting trips, comparing destination costs.",
+      "version": "1.0.0"
     },
     {
       "name": "customer-service-reply",
@@ -872,6 +1082,24 @@
       "version": "3.3.0"
     },
     {
+      "name": "data-analytics",
+      "source": "./data-analytics",
+      "description": "The easy-to-use open source Business Intelligence and Embedded Analytics tool that lets everyone wor data-analytics, clojure, analytics, bi.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "data-dashboard",
+      "source": "./data-dashboard",
+      "description": "\ud83d\udd25 \u4eba\u4eba\u53ef\u7528\u7684\u5f00\u6e90 BI \u5de5\u5177\uff0c\u6570\u636e\u53ef\u89c6\u5316\u795e\u5668\u3002An open-source BI tool alternative to Tableau. data-dashboard, java, apache-doris, business-intelligence, data-analysis.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "data-labeler",
+      "source": "./data-labeler",
+      "description": "Label Studio is a multi-type data labeling and annotation tool with standardized output format label studio, typescript, annotation, annotation-tool.",
+      "version": "1.0.0"
+    },
+    {
       "name": "data-visualizer",
       "source": "./data-visualizer",
       "description": "Terminal ASCII chart toolkit. Create bar charts, sparklines, histograms, and gauges from CSV or JSON data in the terminal.",
@@ -884,10 +1112,52 @@
       "version": "2.0.0"
     },
     {
+      "name": "dataset-loader",
+      "source": "./dataset-loader",
+      "description": "\ud83e\udd17 The largest hub of ready-to-use dataset-loader for AI models with fast, easy-to-use and efficient data m dataset-loader, python, ai.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "datasets",
+      "source": "./datasets",
+      "description": "Browse and load ready-to-use AI/ML datasets with fast manipulation. Use when searching datasets, loading training data, transforming formats.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "dataview",
+      "source": "./dataview",
+      "description": "Explore CSV and JSON files with quick queries, filters, and aggregation. Use when inspecting data, running queries, filtering rows, aggregating.",
+      "version": "1.0.0"
+    },
+    {
       "name": "daybook",
       "source": "./daybook",
       "description": "Write daily journal entries with tagging, search, and monthly reviews. Use when journaling daily, searching entries, tagging themes.",
       "version": "2.0.0"
+    },
+    {
+      "name": "dayplanner",
+      "source": "./dayplanner",
+      "description": "\u65e5\u7a0b\u89c4\u5212\u5de5\u5177\u3002\u5468\u8ba1\u5212\u3001\u6708\u8ba1\u5212\u3001\u65f6\u95f4\u5757\u3001\u4f1a\u8bae\u5b89\u6392\u3001\u622a\u6b62\u65e5\u671f\u7ba1\u7406\u3001\u5de5\u4f5c\u751f\u6d3b\u5e73\u8861\u3002Calendar planner with weekly, monthly, time-blocking, meeting scheduling, deadline management.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "db-chat",
+      "source": "./db-chat",
+      "description": "AI-driven database tool and SQL client, The hottest GUI client, supporting MySQL, Oracle, PostgreSQL db-chat, java, ai, bi, chatgpt, clickhouse.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "db-explorer",
+      "source": "./db-explorer",
+      "description": "Browse database tables and run SQL queries across multiple engines. Use when exploring schemas, running queries, comparing databases.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "dbeaver",
+      "source": "./dbeaver",
+      "description": "Connect to databases with a universal SQL client for major engines. Use when querying databases, browsing schemas, exporting results.",
+      "version": "1.0.0"
     },
     {
       "name": "deadline",
@@ -932,10 +1202,76 @@
       "version": "1.0.0"
     },
     {
+      "name": "deepfocus",
+      "source": "./deepfocus",
+      "description": "Run Pomodoro sessions with break timers and productivity tracking. Use when starting focus sessions, tracking streaks, reviewing productivity.",
+      "version": "1.0.0"
+    },
+    {
       "name": "deploy-helper",
       "source": "./deploy-helper",
       "description": "One-command deployment assistant. Generate Dockerfiles, docker-compose configs, Nginx configs, CI/CD pipelines, Vercel/Netlify configs, Kubernetes manifests.",
       "version": "2.0.0"
+    },
+    {
+      "name": "deploy-tool",
+      "source": "./deploy-tool",
+      "description": "The PHP deployment tool with support for popular frameworks out of the box deploy-tool, php, deploy, deployment, php, provision.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "deployer",
+      "source": "./deployer",
+      "description": "Deploy PHP apps with zero-downtime releases and framework support. Use when deploying Laravel, running releases, configuring recipes.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "depreciation",
+      "source": "./depreciation",
+      "description": "Calculate depreciation financial metrics and business data. Use when tracking expenses, analyzing investments, or generating financial reports.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "design-tool",
+      "source": "./design-tool",
+      "description": "Penpot: The open-source design tool for design and code collaboration design-tool, clojure, clojure, clojurescript, design, prototyping.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "dev-environment",
+      "source": "./dev-environment",
+      "description": "macOS development environment setup: Easy-to-understand instructions with automated setup scripts f dev setup, python, android-development, aws, bash, cli.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "dev-setup",
+      "source": "./dev-setup",
+      "description": "Set up macOS dev environments with automated install scripts for tools. Use when provisioning Macs, installing dev tools, configuring shells.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "dev-utilities",
+      "source": "./dev-utilities",
+      "description": "Collection of handy online tools for developers, with great UX. it tools, vue, converter, developer-productivity, developer-tools, frontend.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "devops-bash-tools",
+      "source": "./devops-bash-tools",
+      "description": "Run 1000+ DevOps scripts for AWS, GCP, K8s, Docker, and CI/CD tasks. Use when automating cloud ops, managing clusters, scripting pipelines.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "devops-journey",
+      "source": "./devops-journey",
+      "description": "This repository started out as a learning in public project for myself and has now become a structur devops-journey, shell, ansible, backup, containers.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "devops-scripts",
+      "source": "./devops-scripts",
+      "description": "1000+ DevOps Bash Scripts - AWS, GCP, Kubernetes, Docker, CI/CD, APIs, SQL, PostgreSQL, MySQL, Hive, devops bash tools, shell, api, aws, bash, ci.",
+      "version": "1.0.0"
     },
     {
       "name": "dex-aggregator",
@@ -944,10 +1280,28 @@
       "version": "3.0.0"
     },
     {
+      "name": "dialog",
+      "source": "./dialog",
+      "description": "Generate dialog UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages.",
+      "version": "1.0.0"
+    },
+    {
       "name": "diary",
       "source": "./diary",
       "description": "Write diary entries with mood tracking, photos, and monthly summaries. Use when recording thoughts, tracking moods, reviewing monthly patterns.",
       "version": "2.0.0"
+    },
+    {
+      "name": "dice",
+      "source": "./dice",
+      "description": "Roll dice, track scores, and manage game stats for tabletop gaming. Use when rolling dice, tracking scores, ranking players, reviewing history.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "dictionary",
+      "source": "./dictionary",
+      "description": "Look up definitions, synonyms, etymology, and usage examples fast. Use when checking meanings, finding synonyms, exploring etymology.",
+      "version": "1.0.0"
     },
     {
       "name": "diet",
@@ -986,10 +1340,22 @@
       "version": "2.0.0"
     },
     {
+      "name": "diskview",
+      "source": "./diskview",
+      "description": "Display disk usage and free space across mounted filesystems clearly. Use when checking mounts, comparing utilization, monitoring capacity.",
+      "version": "1.0.0"
+    },
+    {
       "name": "dispute-letter",
       "source": "./dispute-letter",
       "description": "Generate dispute letters for consumer, landlord, labor, and insurance cases. Use when filing complaints, disputing charges, drafting grievances.",
       "version": "2.0.0"
+    },
+    {
+      "name": "dividend",
+      "source": "./dividend",
+      "description": "Track dividend income, view yield stats, and export payment history. Use when logging payments, calculating yields, tracking payout schedules.",
+      "version": "1.0.0"
     },
     {
       "name": "dnscheck",
@@ -1020,6 +1386,12 @@
       "source": "./dockerfile-builder",
       "description": "Generate and lint Dockerfiles for common languages and frameworks. Use when creating container configs.",
       "version": "3.0.0"
+    },
+    {
+      "name": "dockerlabs",
+      "source": "./dockerlabs",
+      "description": "Learn Docker hands-on with tutorials on containers and orchestration. Use when studying Docker, practicing networking, exploring swarm mode.",
+      "version": "1.0.0"
     },
     {
       "name": "dockerps",
@@ -1058,6 +1430,12 @@
       "version": "3.0.0"
     },
     {
+      "name": "dropfinder",
+      "source": "./dropfinder",
+      "description": "Aggregate and track crypto airdrops \u2014 find eligible drops, set reminders, and generate participation checklists across EVM and Solana systems. Use when you n.",
+      "version": "1.0.0"
+    },
+    {
       "name": "dropship-helper",
       "source": "./dropship-helper",
       "description": "Calculate dropshipping margins, ROI, and breakeven points. Use when evaluating product profitability.",
@@ -1070,10 +1448,22 @@
       "version": "2.0.0"
     },
     {
+      "name": "ebook",
+      "source": "./ebook",
+      "description": "Manage ebook collections, track reading progress, and export highlights using bash and Python. Use when cataloging books, logging reading sessions,",
+      "version": "1.0.0"
+    },
+    {
       "name": "education",
       "source": "./education",
       "description": "Generate study materials. Use when creating study plans, quizzes, flashcards, tracking progress, or scheduling review sessions.",
       "version": "3.4.0"
+    },
+    {
+      "name": "email-marketer",
+      "source": "./email-marketer",
+      "description": "Plan email campaigns with segmentation, A/B testing, and benchmarking. Use when designing campaigns, segmenting lists, benchmarking rates.",
+      "version": "1.0.0"
     },
     {
       "name": "email-template",
@@ -1086,6 +1476,12 @@
       "source": "./email-writer",
       "description": "Email writing assistant. \u90ae\u4ef6\u5199\u4f5c\u3001\u90ae\u4ef6\u52a9\u624b\u3001\u5546\u52a1\u90ae\u4ef6\u3001business email\u3001\u82f1\u6587\u90ae\u4ef6\u3001English email\u3001\u6c42\u804c\u90ae\u4ef6\u3001job application email\u3001\u8ddf\u8fdb\u90ae\u4ef6\u3001follow-up email\u3001\u51b7\u542f\u52a8\u90ae\u4ef6\u3001cold email\u3001\u9053\u6b49\u90ae\u4ef6\u3001apology email.",
       "version": "2.0.0"
+    },
+    {
+      "name": "embed",
+      "source": "./embed",
+      "description": "Generate and search text embedding vectors using TF-IDF and cosine similarity. Use when you need semantic search or text similarity analysis.",
+      "version": "1.0.0"
     },
     {
       "name": "emojilist",
@@ -1112,10 +1508,22 @@
       "version": "2.0.0"
     },
     {
+      "name": "env",
+      "source": "./env",
+      "description": "Manage environment variables with profiles, validation, and templating using bash. Use when you need to organize, switch, or audit env configs.",
+      "version": "1.0.0"
+    },
+    {
       "name": "env-config",
       "source": "./env-config",
       "description": "Generate .env templates, validate variables, and merge environment configs. Use when scaffolding .env files, validating vars, merging configs.",
       "version": "2.0.0"
+    },
+    {
+      "name": "envcheck",
+      "source": "./envcheck",
+      "description": "Validate .env files with missing-key detection and format linting. Use when auditing envs, detecting missing vars, comparing environments.",
+      "version": "1.0.0"
     },
     {
       "name": "epoch",
@@ -1140,6 +1548,18 @@
       "source": "./error-analysis",
       "description": "Analyze wrong answers and generate variant practice problems from mistakes. Use when diagnosing errors, locating gaps, or drilling weak topics.",
       "version": "2.0.0"
+    },
+    {
+      "name": "essay",
+      "source": "./essay",
+      "description": "Draft and polish essays with outlines, argument structure, and paragraph edits. Use when writing papers, structuring arguments, or editing prose.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "etf",
+      "source": "./etf",
+      "description": "Analyze ETF holdings, compare fund metrics, and review sector allocation data. Use when screening ETFs, comparing ratios, or tracking allocations.",
+      "version": "1.0.0"
     },
     {
       "name": "etl",
@@ -1196,16 +1616,58 @@
       "version": "2.1.0"
     },
     {
+      "name": "file-converter-pro",
+      "source": "./file-converter-pro",
+      "description": "\ud83d\udcbe Self-hosted online file converter. Supports 1000+ formats \u2699\ufe0f file converter pro, typescript, bun, conversion, convert, converter.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "filewatch",
+      "source": "./filewatch",
+      "description": "Monitor files for changes and trigger actions on modification events. Use when watching config changes, triggering rebuilds, or tracking file versions.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "financial-machine-learning",
+      "source": "./financial-machine-learning",
+      "description": "Explore curated financial ML tools for trading, risk models, and predictions. Use when building models, benchmarking accuracy, or researching quant tools.",
+      "version": "1.0.0"
+    },
+    {
       "name": "finder",
       "source": "./finder",
       "description": "Find files by name, size, date, and type with deduplication. Use when searching filesystems.",
       "version": "3.0.0"
     },
     {
+      "name": "finetune",
+      "source": "./finetune",
+      "description": "Manage model fine-tuning datasets using CLI tools. Use when preparing, validating, or transforming training data for LLM fine-tuning.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "finml-toolkit",
+      "source": "./finml-toolkit",
+      "description": "A curated list of practical financial machine learning tools and applications. financial machine learning, python, algorithmic-trading, cryptocurrency.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "firewall-manager",
+      "source": "./firewall-manager",
+      "description": "Simple tool to configure Windows Filtering Platform (WFP) which can configure network activity on yo firewall-manager, c, arm64, firewall, foss, network.",
+      "version": "1.0.0"
+    },
+    {
       "name": "first-aid",
       "source": "./first-aid",
       "description": "First aid reference guide with emergency procedures and kit checklists. Use when looking up first aid instructions.",
       "version": "3.0.0"
+    },
+    {
+      "name": "fish",
+      "source": "./fish",
+      "description": "Configure Fish shell abbreviations, completions, and prompt themes easily. Use when setting aliases, writing functions, customizing prompts, or adding plugins.",
+      "version": "1.0.0"
     },
     {
       "name": "fitlog",
@@ -1220,16 +1682,40 @@
       "version": "2.0.0"
     },
     {
+      "name": "fixture",
+      "source": "./fixture",
+      "description": "Generate and manage test data fixtures using CLI templates. Use when creating seed data, mock records, or reproducible test datasets.",
+      "version": "1.0.0"
+    },
+    {
       "name": "flashcard",
       "source": "./flashcard",
       "description": "Study with spaced-repetition cards that surface hard items more often. Use when memorizing vocabulary, reviewing material, or drilling key concepts.",
       "version": "2.0.0"
     },
     {
+      "name": "flex",
+      "source": "./flex",
+      "description": "Generate CSS Flexbox layouts using interactive CLI commands. Use when building responsive flex containers, rows, columns, or alignment configurations.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "flip",
+      "source": "./flip",
+      "description": "Generate flip UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages.",
+      "version": "1.0.0"
+    },
+    {
       "name": "flowdo",
       "source": "./flowdo",
       "description": "Manage tasks in kanban columns with priorities and workflow tracking. Use when organizing tasks, moving items through stages, or tracking completion.",
       "version": "2.0.0"
+    },
+    {
+      "name": "focus",
+      "source": "./focus",
+      "description": "Log focus sessions, track productivity streaks, and plan deep work blocks. Use when timing sessions, logging tasks, or maintaining daily streaks.",
+      "version": "1.0.0"
     },
     {
       "name": "followers",
@@ -1254,6 +1740,24 @@
       "source": "./fontpick",
       "description": "Pick font pairings and generate type scales for design projects quickly. Use when choosing fonts, generating scales, or previewing type combinations.",
       "version": "2.0.0"
+    },
+    {
+      "name": "fontpreview",
+      "source": "./fontpreview",
+      "description": "Preview installed fonts, list typefaces, and check typography details. Use when browsing system fonts, previewing rendering, or comparing font styles.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "forecast",
+      "source": "./forecast",
+      "description": "Calculate forecast financial metrics and business data. Use when tracking expenses, analyzing investments, or generating financial reports.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "forecast-model",
+      "source": "./forecast-model",
+      "description": "Tool for producing high quality forecasts for time series data that has multiple seasonality with li forecast-model, python, forecasting, python.",
+      "version": "1.0.0"
     },
     {
       "name": "format",
@@ -1292,15 +1796,33 @@
       "version": "2.0.0"
     },
     {
+      "name": "fund-invest-advisor",
+      "source": "./fund-invest-advisor",
+      "description": "Advise on fund picks with DCA projections, simulations, and rebalancing tips. Use when evaluating funds, projecting returns, or reviewing holdings balance.",
+      "version": "1.0.0"
+    },
+    {
       "name": "funnel-analyzer",
       "source": "./funnel-analyzer",
       "description": "\u6f0f\u6597\u5206\u6790\u5de5\u5177\u3002\u521b\u5efa\u8f6c\u5316\u6f0f\u6597\u3001\u8bca\u65ad\u6d41\u5931\u73af\u8282\u3001\u884c\u4e1a\u5bf9\u6807\u3001\u4f18\u5316\u5efa\u8bae\u3001\u5206\u6790\u62a5\u544a\u3001\u6f0f\u6597\u5bf9\u6bd4\u3002Funnel analyzer with conversion funnels, diagnostics, benchmarks, optimization, reports.",
       "version": "2.0.0"
     },
     {
+      "name": "funnlp",
+      "source": "./funnlp",
+      "description": "Detect sensitive words, extract phone/ID numbers, and run Chinese NLP tasks. Use when filtering content, extracting entities, or detecting text language.",
+      "version": "1.0.0"
+    },
+    {
       "name": "furniture",
       "source": "./furniture",
       "description": "Track home furniture, schedule maintenance, and manage warranty details. Use when cataloging furniture, scheduling cleaning, or tracking warranty expiry dates.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "gallery",
+      "source": "./gallery",
+      "description": "Generate gallery UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages.",
       "version": "1.0.0"
     },
     {
@@ -1316,10 +1838,34 @@
       "version": "2.0.0"
     },
     {
+      "name": "gdpr",
+      "source": "./gdpr",
+      "description": "Audit GDPR compliance, generate privacy policies, and document data flows. Use when auditing practices, drafting policies, or checking consent flows.",
+      "version": "1.0.0"
+    },
+    {
       "name": "gdpr-checker",
       "source": "./gdpr-checker",
       "description": "Check GDPR compliance with audits, consent reviews, and breach prep plans. Use when running audits, verifying consent, or preparing breach responses.",
       "version": "2.0.0"
+    },
+    {
+      "name": "genai-toolbox",
+      "source": "./genai-toolbox",
+      "description": "Connect AI agents to databases via MCP with schema-aware query support. Use when querying DBs from agents, configuring connections, or benchmarking.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "genai-toolkit",
+      "source": "./genai-toolkit",
+      "description": "Bridge AI models to databases through MCP with config and evaluation tools. Use when setting up DB tools, comparing engines, or evaluating prompt quality.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "generate",
+      "source": "./generate",
+      "description": "generate tool for creating outputs",
+      "version": "1.0.0"
     },
     {
       "name": "generator",
@@ -1340,10 +1886,28 @@
       "version": "2.0.0"
     },
     {
+      "name": "gitbuddy",
+      "source": "./gitbuddy",
+      "description": "Extend Git with utilities for changelogs, branch cleanup, and repo stats. Use when generating changelogs, squashing branches, or viewing repo statistics.",
+      "version": "1.0.0"
+    },
+    {
       "name": "github-actions-gen",
       "source": "./github-actions-gen",
       "description": "Generate GitHub Actions workflow YAML files for CI/CD. Use when setting up automated pipelines.",
       "version": "3.0.0"
+    },
+    {
+      "name": "gitignore",
+      "source": "./gitignore",
+      "description": "Generate .gitignore files from templates for any language or framework fast. Use when starting repos, adding ignores, or checking ignored patterns.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "gitlog",
+      "source": "./gitlog",
+      "description": "View formatted commit history, author stats, and commit frequency patterns. Use when reviewing logs, comparing contributions, or generating repo reports.",
+      "version": "1.0.0"
     },
     {
       "name": "golang",
@@ -1352,10 +1916,28 @@
       "version": "1.0.0"
     },
     {
+      "name": "gpio",
+      "source": "./gpio",
+      "description": "Control GPIO pins on Raspberry Pi or embedded boards with logging support. Use when reading sensors, toggling relays, or logging pin state changes.",
+      "version": "1.0.0"
+    },
+    {
       "name": "gpt",
       "source": "./gpt",
       "description": "Generate GPT API request payloads. Use when building chat completions, embeddings, fine-tuning data, or estimating API costs.",
       "version": "3.4.0"
+    },
+    {
+      "name": "gpu-helper",
+      "source": "./gpu-helper",
+      "description": "Lightweight, open-source control tool for ASUS laptops and ROG Ally. Manage performance modes, fans, g helper, c#, ally, amd, armoury, armoury-crate.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "gradient",
+      "source": "./gradient",
+      "description": "Generate CSS gradient code, preview gradient combinations, and build gradient palettes using bash and Python. Use when creating linear, radial,",
+      "version": "1.0.0"
     },
     {
       "name": "grammar-check",
@@ -1370,10 +1952,28 @@
       "version": "3.0.0"
     },
     {
+      "name": "graphql-client",
+      "source": "./graphql-client",
+      "description": "The industry-leading GraphQL client for TypeScript, JavaScript, React, Vue, Angular, and more. Apoll apollo client, typescript, graphql-client.",
+      "version": "1.0.0"
+    },
+    {
       "name": "guided-learning-cn",
       "source": "./guided-learning-cn",
       "description": "\u4e2d\u6587\u5f15\u5bfc\u5f0f\u5b66\u4e60\u52a9\u624b\u3002\u5b66\u4e60\u52a9\u624b\u3001\u77e5\u8bc6\u5b66\u4e60\u3001\u5b66\u4e60\u8ba1\u5212\u3001\u5b66\u4e60\u8def\u7ebf\u3001\u6982\u5ff5\u8bb2\u89e3\u3001\u590d\u4e60\u5907\u8003\u3001\u8003\u8bd5\u590d\u4e60\u3001\u8d39\u66fc\u5b66\u4e60\u6cd5\u3001\u5faa\u5e8f\u6e10\u8fdb\u5b66\u4e60\u3001\u5b66\u79d1\u8f85\u5bfc\u3001\u81ea\u5b66\u3001\u6559\u7a0b\u3001\u8bfe\u7a0b\u5b66\u4e60\u3001\u6559\u6750\u5b66\u4e60\u3001\u77e5\u8bc6\u70b9\u603b\u7ed3\u3001\u8bb0\u5fc6\u5361\u7247\u3001\u95ea\u5361\u3001Anki\u3001\u5b66\u4e60\u65b9\u6cd5\u3001\u4e00\u5bf9\u4e00\u8f85\u5bfc\u3001\u81ea\u6d4b\u8bd5\u5377\u3001\u9009\u62e9\u9898\u3001\u7b80\u7b54\u9898\u3002Chinese guided learning assistant w.",
       "version": "2.0.0"
+    },
+    {
+      "name": "gymlog",
+      "source": "./gymlog",
+      "description": "Log workouts, track sets and reps, and chart training progress over time. Use when recording sessions, tracking PRs, or reviewing weekly volume.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "habit",
+      "source": "./habit",
+      "description": "Build daily habits with streak tracking, reminders, and progress charts. Use when starting habits, maintaining streaks, or analyzing completion rates.",
+      "version": "1.0.0"
     },
     {
       "name": "habithero",
@@ -1398,6 +1998,18 @@
       "source": "./hashtag",
       "description": "Research trending hashtags, score relevance, and generate optimized tag sets. Use when finding trends, scoring tags, or analyzing competitor hashtags.",
       "version": "2.0.0"
+    },
+    {
+      "name": "headless-browser",
+      "source": "./headless-browser",
+      "description": "Automate browser tasks with scriptable headless browsing for tests and scraping. Use when scraping pages, running tests, or capturing screenshots.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "headline",
+      "source": "./headline",
+      "description": "Create and optimize marketing headlines using scoring and A/B testing tools. Use when writing blog titles, ad copy, or comparing headline variations.",
+      "version": "1.0.0"
     },
     {
       "name": "heartrate",
@@ -1448,6 +2060,12 @@
       "version": "3.0.0"
     },
     {
+      "name": "http-client",
+      "source": "./http-client",
+      "description": "A command line tool and library for transferring data with URL syntax, supporting DICT, FILE, FTP, F http-client, c, c, client, http-client, ftp.",
+      "version": "1.0.0"
+    },
+    {
       "name": "hydration-tracker",
       "source": "./hydration-tracker",
       "description": "Track daily water intake, set hydration goals, and get drink reminders. Use when logging water, setting targets, or reviewing weekly intake trends.",
@@ -1472,10 +2090,34 @@
       "version": "2.0.0"
     },
     {
+      "name": "image-labeler",
+      "source": "./image-labeler",
+      "description": "LabelImg is now part of the Label Studio community. The popular image annotation tool created by Tzu image-labeler, python, annotations, deep-learning.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "image-processor",
+      "source": "./image-processor",
+      "description": "ImageMagick is a free, open-source software suite for creating, editing, converting, and displaying image-processor, c, command-line-image-tool.",
+      "version": "1.0.0"
+    },
+    {
       "name": "image-prompt",
       "source": "./image-prompt",
       "description": "AI image prompt optimizer. Generate and enhance prompts for Midjourney, DALL-E, and Stable Diffusion. Includes prompt enhancement.",
       "version": "2.1.0"
+    },
+    {
+      "name": "infra-importer",
+      "source": "./infra-importer",
+      "description": "CLI tool to generate terraform files from existing infrastructure (reverse Terraform). Infrastructur infra-importer, go, aws, cloud, gcp, golang.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "infra-wrapper",
+      "source": "./infra-wrapper",
+      "description": "Terragrunt is a flexible orchestration tool that allows Infrastructure as Code written in OpenTofu/T terraform-wrapper, go, aws, cli, developer-tools.",
+      "version": "1.0.0"
     },
     {
       "name": "instagram-caption",
@@ -1514,10 +2156,28 @@
       "version": "3.0.0"
     },
     {
+      "name": "iperf",
+      "source": "./iperf",
+      "description": "Measure TCP/UDP/SCTP bandwidth between hosts with detailed throughput data. Use when benchmarking speed, testing links, or diagnosing network bottlenecks.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "it-tools",
+      "source": "./it-tools",
+      "description": "Access handy dev utilities for encoding, hashing, formatting, and converting. Use when encoding Base64, generating UUIDs, formatting JSON, or converting.",
+      "version": "1.0.0"
+    },
+    {
       "name": "jd-writer",
       "source": "./jd-writer",
       "description": "Write job descriptions with requirements, perks, and inclusivity language. Use when drafting postings, writing requirements, or checking JD inclusivity.",
       "version": "2.0.0"
+    },
+    {
+      "name": "job-scheduler",
+      "source": "./job-scheduler",
+      "description": "Enable Self-Service Operations: Give specific users access to your existing tools, services, and scr job-scheduler, groovy, ansible, audit, automation.",
+      "version": "1.0.0"
     },
     {
       "name": "job-search-assistant",
@@ -1532,15 +2192,39 @@
       "version": "2.0.0"
     },
     {
+      "name": "js-compiler",
+      "source": "./js-compiler",
+      "description": "Compile, bundle, and optimize JavaScript with high-performance build tools. Use when bundling modules, minifying builds, or analyzing bundle output sizes.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "json-visualizer",
+      "source": "./json-visualizer",
+      "description": "\u2728 practical and open-source visualization application that transforms various data formats, such as json-visualizer, typescript, csv, diagrams, graph, json.",
+      "version": "1.0.0"
+    },
+    {
       "name": "jsonlint",
       "source": "./jsonlint",
       "description": "Validate and pretty-print JSON files from the terminal. Use when linting config files, formatting API payloads, checking syntax before deployment.",
       "version": "3.0.0"
     },
     {
+      "name": "jwtdecode",
+      "source": "./jwtdecode",
+      "description": "Decode and inspect JWT tokens showing header, payload, and expiry. Use when debugging auth tokens, inspecting claims, checking token expiration.",
+      "version": "1.0.0"
+    },
+    {
       "name": "kafka",
       "source": "./kafka",
       "description": "Produce, consume, and manage Kafka topics with lag monitoring and data export. Use when publishing messages, consuming topics, monitoring consumer lag.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "keyvault",
+      "source": "./keyvault",
+      "description": "Generate and manage passwords with strength auditing and secure vault storage. Use when creating strong passwords, rotating credentials, auditing vaults.",
       "version": "1.0.0"
     },
     {
@@ -1592,10 +2276,28 @@
       "version": "2.0.0"
     },
     {
+      "name": "license",
+      "source": "./license",
+      "description": "Manage software license keys with generation, rotation, and audit tracking. Use when generating keys, auditing licenses, rotating expired credentials.",
+      "version": "1.0.0"
+    },
+    {
       "name": "license-picker",
       "source": "./license-picker",
       "description": "Choose and generate open source license files for projects. Use when selecting project licenses.",
       "version": "3.0.0"
+    },
+    {
+      "name": "lifegoals",
+      "source": "./lifegoals",
+      "description": "Define goals, break them into milestones, and track progress step by step. Use when setting life goals, planning milestones, tracking long-term progress.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "linecount",
+      "source": "./linecount",
+      "description": "Count source lines by language, exclude comments, and compare codebase sizes. Use when measuring codebase size, comparing projects, reporting LOC stats.",
+      "version": "1.0.0"
     },
     {
       "name": "link-checker",
@@ -1640,6 +2342,30 @@
       "version": "3.4.0"
     },
     {
+      "name": "llm-chain",
+      "source": "./llm-chain",
+      "description": "LangChain4j is an open-source Java library that simplifies the integration of LLMs into Java applica llm-chain, java, anthropic, chatgpt, chroma, embeddings.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "llm-flow",
+      "source": "./llm-flow",
+      "description": "Langflow is a powerful tool for building and deploying AI-powered agents and workflows. llm-flow, python, agents, chatgpt, generative-ai.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "load-balancer",
+      "source": "./load-balancer",
+      "description": "Manage load balancer configurations and server pools using CLI tools. Use when you need to create, test, or rotate backend server pools.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "load-tester",
+      "source": "./load-tester",
+      "description": "Run HTTP load tests to benchmark throughput, latency, and error rates under stress. Use when stress-testing APIs, benchmarking performance, simulating load.",
+      "version": "1.0.0"
+    },
+    {
       "name": "loan-calculator",
       "source": "./loan-calculator",
       "description": "\u8d37\u6b3e\u8ba1\u7b97\u5668\u3002\u7b49\u989d\u672c\u606f/\u7b49\u989d\u672c\u91d1\u8ba1\u7b97\u3001\u65b9\u6848\u5bf9\u6bd4\u3001\u63d0\u524d\u8fd8\u6b3e\u5206\u6790\u3001\u8d37\u6b3e\u80fd\u529b\u8bc4\u4f30\u3001\u8fd8\u6b3e\u8ba1\u5212\u8868\u3001\u518d\u878d\u8d44\u5206\u6790\u3002Loan calculator with equal installment/principal, comparison, prepayment analysis, affordability, schedule.",
@@ -1652,9 +2378,33 @@
       "version": "2.0.0"
     },
     {
+      "name": "login",
+      "source": "./login",
+      "description": "Store, retrieve, and manage login credentials securely using bash and Python with local encryption. Use when saving website logins, API keys,",
+      "version": "1.0.0"
+    },
+    {
+      "name": "logrotate",
+      "source": "./logrotate",
+      "description": "Rotate, compress, and clean old log files to keep directories tidy automatically. Use when rotating logs, compressing old files, freeing disk space.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "logscope",
+      "source": "./logscope",
+      "description": "Analyze web server logs with real-time dashboards and traffic breakdowns. Use when reviewing access logs, identifying top pages, monitoring visitor stats.",
+      "version": "1.0.0"
+    },
+    {
       "name": "lottery",
       "source": "./lottery",
       "description": "Generate lottery numbers and check results. Use when picking numbers for draws.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "lunardate",
+      "source": "./lunardate",
+      "description": "Look up Chinese lunar dates, zodiac signs, festivals, and daily auspiciousness. Use when converting dates, checking festivals, looking up zodiac years.",
       "version": "1.0.0"
     },
     {
@@ -1664,15 +2414,39 @@
       "version": "3.0.0"
     },
     {
+      "name": "machine-learning-roadmap",
+      "source": "./machine-learning-roadmap",
+      "description": "Follow a structured ML roadmap connecting concepts, tools, and learning resources. Use when planning study paths, discovering resources, mapping skills.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "macos-toolkit",
+      "source": "./macos-toolkit",
+      "description": "macOS command line tool for developers \u2013 The ultimate tool to manage your Mac. It provides a huge mac cli, shell, bash, cli, command-line-tool, linux.",
+      "version": "1.0.0"
+    },
+    {
       "name": "macro-helper",
       "source": "./macro-helper",
       "description": "Excel\u5b8f\u4e0eVBA\u52a9\u624b\u3002\u751f\u6210VBA\u4ee3\u7801\u3001\u89e3\u91ca\u5b8f\u3001\u8c03\u8bd5\u9519\u8bef\u3001\u6a21\u677f\u5e93\u3001\u683c\u5f0f\u8f6c\u6362\u3001\u6027\u80fd\u4f18\u5316\u3002Excel macro and VBA helper with generate, explain, debug, template, convert.",
       "version": "2.0.0"
     },
     {
+      "name": "mailcheck",
+      "source": "./mailcheck",
+      "description": "Validate emails by checking MX, SPF/DKIM records, and SMTP connectivity. Use when verifying addresses, diagnosing delivery failures, checking DNS mail.",
+      "version": "1.0.0"
+    },
+    {
       "name": "maintenance",
       "source": "./maintenance",
       "description": "Log home maintenance tasks, set reminders, and track repair history with checklists. Use when scheduling repairs, tracking appliance upkeep, inventorying.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "maker",
+      "source": "./maker",
+      "description": "maker tool for creating outputs",
       "version": "1.0.0"
     },
     {
@@ -1682,10 +2456,28 @@
       "version": "1.0.0"
     },
     {
+      "name": "markpad",
+      "source": "./markpad",
+      "description": "Preview, convert, and validate Markdown with TOC generation and HTML export. Use when previewing MD, generating TOC, converting Markdown to HTML.",
+      "version": "1.0.0"
+    },
+    {
       "name": "math-solver",
       "source": "./math-solver",
       "description": "\u6570\u5b66\u9898\u89e3\u6790\u4e0e\u5b66\u4e60\u5de5\u5177\u3002\u5206\u6b65\u9aa4\u89e3\u7b54\u3001\u51fd\u6570\u56fe\u5f62ASCII\u63cf\u8ff0\u3001\u516c\u5f0f\u901f\u67e5\u3001\u5355\u4f4d\u6362\u7b97\u3001\u7ec3\u4e60\u9898\u751f\u6210\u3002Math solver with step-by-step solutions, function graphing, formula reference, unit conversion.",
       "version": "2.0.0"
+    },
+    {
+      "name": "mathbox",
+      "source": "./mathbox",
+      "description": "Solve math \u2014 statistics, primes, sequences, formulas \u2014 in the terminal. Use when computing stats, checking primes, evaluating formulas, exploring sequences.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "md-convert",
+      "source": "./md-convert",
+      "description": "Convert PDF, DOCX, HTML, and PPTX files to clean Markdown via Markitdown. Use when converting PDFs to MD, extracting DOCX text, migrating to Markdown.",
+      "version": "1.0.0"
     },
     {
       "name": "mealplan",
@@ -1718,6 +2510,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "meeting-minutes",
+      "source": "./meeting-minutes",
+      "description": "Capture meeting notes for standups, retros, brainstorms, and 1-on-1 sessions. Use when taking notes, organizing discussions, following up on action items.",
+      "version": "1.0.0"
+    },
+    {
       "name": "meme-coin-scanner",
       "source": "./meme-coin-scanner",
       "description": "Scan meme coins for scam signals, rug-pull risk, and on-chain audit flags. Use when evaluating tokens, auditing contracts, checking liquidity lock status.",
@@ -1748,6 +2546,18 @@
       "version": "1.0.0"
     },
     {
+      "name": "mesh-network",
+      "source": "./mesh-network",
+      "description": "Configure encrypted overlay mesh networks focused on performance and simplicity. Use when setting up VPN meshes, connecting nodes, managing tunnels.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "microservice-gen",
+      "source": "./microservice-gen",
+      "description": "A cloud-native Go microservices framework with cli tool for productivity. go zero, go, ai-native, ai-native-development, cloud-native, code-generation.",
+      "version": "1.0.0"
+    },
+    {
       "name": "mileage",
       "source": "./mileage",
       "description": "Log vehicle mileage, review driving trends, and export trip reports for tracking. Use when logging trips, tracking fuel economy, exporting mileage data.",
@@ -1764,6 +2574,36 @@
       "source": "./mindmap",
       "description": "Create and visualize mind maps in the terminal with branching and export. Use when brainstorming ideas, organizing thoughts, exporting mind map structures.",
       "version": "2.0.0"
+    },
+    {
+      "name": "mix",
+      "source": "./mix",
+      "description": "Record, search, and analyze music and audio sessions with playback tracking. Use when logging audio sessions, searching metadata, analyzing listening data.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "ml-roadmap",
+      "source": "./ml-roadmap",
+      "description": "A roadmap connecting many of the most important concepts in machine learning, how to learn them and machine learning roadmap, python, data, data-science.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "ml-visualizer",
+      "source": "./ml-visualizer",
+      "description": "Visual analysis and diagnostic tools to help machine learning model selection. ml-visualizer, python, anaconda, estimator, machine-learning, matplotlib.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "mlfinlab",
+      "source": "./mlfinlab",
+      "description": "Apply ML to finance with portfolio optimization, signals, and backtesting tools. Use when building trading models, optimizing portfolios, backtesting.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "mock",
+      "source": "./mock",
+      "description": "Generate mock data and simulate API endpoints using CLI tools. Use when prototyping APIs or testing integrations.",
+      "version": "1.0.0"
     },
     {
       "name": "mockdata",
@@ -1796,6 +2636,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "mychef",
+      "source": "./mychef",
+      "description": "Manage recipes, plan daily meals, and organize ingredients with a kitchen helper. Use when looking up recipes, planning cooking, organizing shopping lists.",
+      "version": "1.0.0"
+    },
+    {
       "name": "name-generator",
       "source": "./name-generator",
       "description": "Generate names for babies, brands, and pen names with meaning analysis. Use when brainstorming names, picking brand names, choosing names with meanings.",
@@ -1818,6 +2664,30 @@
       "source": "./netstat",
       "description": "Display network connections, listening ports, and routing tables. Use when diagnosing network issues.",
       "version": "3.0.0"
+    },
+    {
+      "name": "netwatch",
+      "source": "./netwatch",
+      "description": "Monitor internet traffic in real time with per-process bandwidth dashboards. Use when watching bandwidth, finding traffic hogs, monitoring network activity.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "network-config",
+      "source": "./network-config",
+      "description": "A powerful open-source tool for managing networks and troubleshooting network problems! network-config, c#, aws-ssm, dns, dns-lookup, icmp.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "network-speed",
+      "source": "./network-speed",
+      "description": "Measure TCP, UDP, and SCTP bandwidth between hosts with throughput benchmarks. Use when testing speed, benchmarking links, comparing protocol performance.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "networkmanager",
+      "source": "./networkmanager",
+      "description": "Manage Wi-Fi, VPN, and network connections on Linux with troubleshooting tools. Use when configuring Wi-Fi, managing VPNs, troubleshooting connectivity.",
+      "version": "1.0.0"
     },
     {
       "name": "newsletter-writer",
@@ -1844,6 +2714,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "notelane",
+      "source": "./notelane",
+      "description": "Organize notes as a personal knowledge base with tagging and full-text search. Use when capturing notes, searching entries, building a knowledge base.",
+      "version": "1.0.0"
+    },
+    {
       "name": "notification",
       "source": "./notification",
       "description": "Manage terminal notifications with scheduling, filtering, and delivery tracking. Use when sending alerts, filtering notifications, confirming delivery.",
@@ -1862,10 +2738,22 @@
       "version": "2.0.0"
     },
     {
+      "name": "novel",
+      "source": "./novel",
+      "description": "Manage novel data \u2014 chapters, characters, plots \u2014 from the terminal fast. Use when outlining chapters, tracking characters, organizing plot timelines.",
+      "version": "1.0.0"
+    },
+    {
       "name": "nutrition-label",
       "source": "./nutrition-label",
       "description": "Generate nutrition labels and track daily intake. Use when analyzing food nutrition.",
       "version": "3.0.0"
+    },
+    {
+      "name": "observability",
+      "source": "./observability",
+      "description": "SigNoz is an open-source observability platform native to OpenTelemetry with logs, traces and metric observability, typescript, apm, application-monitoring.",
+      "version": "1.0.0"
     },
     {
       "name": "official-doc",
@@ -1880,6 +2768,24 @@
       "version": "2.0.0"
     },
     {
+      "name": "omni",
+      "source": "./omni",
+      "description": "Boost productivity with an all-in-one terminal toolkit for tasks and automation. Use when running utilities, automating tasks, streamlining workflows.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "omni-tool",
+      "source": "./omni-tool",
+      "description": "The all-in-one tool to boost your productivity \u2328\ufe0f omni-tool, javascript, bookmark, bookmarks, bookmarks-manager, chrome.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "omni-tools",
+      "source": "./omni-tools",
+      "description": "Self-hosted collection of powerful web-based tools for everyday tasks. No ads, no tracking, just fas omni tools, typescript, alternative, converter.",
+      "version": "1.0.0"
+    },
+    {
       "name": "onchain-analyzer",
       "source": "./onchain-analyzer",
       "description": "Analyze blockchain data with address lookups and transaction inspection. Use when investigating on-chain activity. Requires curl.",
@@ -1892,10 +2798,22 @@
       "version": "2.4.0"
     },
     {
+      "name": "options",
+      "source": "./options",
+      "description": "Log and review options trades with trend analysis and exportable position reports. Use when tracking trades, reviewing positions, exporting trade summaries.",
+      "version": "1.0.0"
+    },
+    {
       "name": "orders",
       "source": "./orders",
       "description": "Track orders locally. Use when creating orders, checking status, updating quantities, canceling, or generating sales reports.",
       "version": "3.4.0"
+    },
+    {
+      "name": "orm-builder",
+      "source": "./orm-builder",
+      "description": "\ud83d\udcbe Database Tools incl. ORM, Migrations and Admin UI (Postgres, MySQL & MongoDB) [deprecated] orm-builder, scala, dao, database, datamapper, graphql.",
+      "version": "1.0.0"
     },
     {
       "name": "outline",
@@ -1910,10 +2828,28 @@
       "version": "1.0.0"
     },
     {
+      "name": "page-builder",
+      "source": "./page-builder",
+      "description": "Free and Open source Web Builder Framework. Next generation tool for building templates without codi page-builder, typescript, drag-and-drop, framework.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "page-saver",
+      "source": "./page-saver",
+      "description": "\u2b1b\ufe0f CLI tool and library for saving complete web pages as a single HTML file page-saver, rust, come-and-take-it, e-hoarding, its-mine.",
+      "version": "1.0.0"
+    },
+    {
       "name": "paint",
       "source": "./paint",
       "description": "Generate color palettes, gradients, and textures. Use when creating harmonized palettes, previewing schemes, converting color spaces, making patterns.",
       "version": "2.0.0"
+    },
+    {
+      "name": "palette",
+      "source": "./palette",
+      "description": "Create and manage color palettes using color theory algorithms. Use when designing UIs or building brand color systems.",
+      "version": "1.0.0"
     },
     {
       "name": "pantry",
@@ -1946,6 +2882,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "passport",
+      "source": "./passport",
+      "description": "Validate and format passport or identity document data. Use when checking fields, validating numbers, generating fixtures, linting records.",
+      "version": "1.0.0"
+    },
+    {
       "name": "password",
       "source": "./password",
       "description": "Manage passwords with generation, strength checks, and storage. Use when creating credentials, auditing strength, rotating secrets, checking breaches.",
@@ -1964,6 +2906,24 @@
       "version": "3.0.1"
     },
     {
+      "name": "pension",
+      "source": "./pension",
+      "description": "Track pension contributions, balances, and growth forecasts. Use when recording deposits, categorizing funds, reviewing balances, forecasting payouts.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "perf-analyzer",
+      "source": "./perf-analyzer",
+      "description": "Profile Linux performance with perf_events and ftrace. Use when scanning CPU hotspots, monitoring syscalls, reporting flame graphs, alerting on spikes.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "perf-tools",
+      "source": "./perf-tools",
+      "description": "Trace Linux system performance bottlenecks in real time. Use when scanning disk I/O, monitoring latency, reporting CPU usage, alerting on memory leaks.",
+      "version": "1.0.0"
+    },
+    {
       "name": "performance-review",
       "source": "./performance-review",
       "description": "Draft performance reviews and KPI summaries. Use when writing self-assessments, composing manager feedback, setting SMART goals, preparing promotions.",
@@ -1974,6 +2934,12 @@
       "source": "./perftest",
       "description": "Run HTTP performance tests with latency and throughput measurement. Use when benchmarking web services. Requires curl.",
       "version": "3.0.0"
+    },
+    {
+      "name": "persona-forge",
+      "source": "./persona-forge",
+      "description": "\u89d2\u8272\u8bbe\u8ba1\u5de5\u5177\u3002\u521b\u5efa\u89d2\u8272\u6863\u6848\u3001\u80cc\u666f\u6545\u4e8b\u3001\u6027\u683c\u7279\u5f81\u3001\u4eba\u7269\u5173\u7cfb\u3001\u89d2\u8272\u5f27\u5149\u3001\u89d2\u8272\u5361\u3002Character creator with profiles, backstories, personality traits, relationships, character arcs.",
+      "version": "1.0.0"
     },
     {
       "name": "personal-bookkeeper",
@@ -1988,6 +2954,12 @@
       "version": "3.0.0"
     },
     {
+      "name": "php-analyzer",
+      "source": "./php-analyzer",
+      "description": "PHP Static Analysis Tool - discover bugs in your code without running it! php-analyzer, php, php, php7, php-analyzer, static-analysis.",
+      "version": "1.0.0"
+    },
+    {
       "name": "pickup-lines",
       "source": "./pickup-lines",
       "description": "Generate witty romantic lines for any occasion. Use when drafting confessions, writing humorous openers, composing anniversary notes, crafting farewells.",
@@ -2000,10 +2972,22 @@
       "version": "2.0.0"
     },
     {
+      "name": "ping",
+      "source": "./ping",
+      "description": "Monitor network connectivity and diagnose latency issues using ping and traceroute. Use when troubleshooting network problems or checking host availability.",
+      "version": "1.0.0"
+    },
+    {
       "name": "pitch-deck",
       "source": "./pitch-deck",
       "description": "Build investor pitch decks with slide structure. Use when outlining narratives, preparing demo day talks, drafting investor Q&A, refining proposals.",
       "version": "2.0.0"
+    },
+    {
+      "name": "plant",
+      "source": "./plant",
+      "description": "Manage houseplant care with watering and fertilizer schedules. Use when adding plants, tracking watering, scheduling fertilizing, setting care reminders.",
+      "version": "1.0.0"
     },
     {
       "name": "podcast-notes",
@@ -2012,10 +2996,22 @@
       "version": "2.0.0"
     },
     {
+      "name": "poem",
+      "source": "./poem",
+      "description": "Compose and refine poems across multiple styles. Use when drafting verse, checking meter and rhyme, converting prose to poetry, generating themed poems.",
+      "version": "1.0.0"
+    },
+    {
       "name": "poem-generator",
       "source": "./poem-generator",
       "description": "Generate poems as haiku, couplets, acrostic, or free verse. Use when drafting poetry, composing haiku, writing couplets, translating classical verse.",
       "version": "2.0.0"
+    },
+    {
+      "name": "policy",
+      "source": "./policy",
+      "description": "Audit and enforce security policy baselines. Use when generating policy docs, checking compliance strength, rotating access controls, auditing configs.",
+      "version": "1.0.0"
     },
     {
       "name": "policy-reader",
@@ -2028,6 +3024,12 @@
       "source": "./polymarket-screener",
       "description": "Filter Polymarket prediction markets and track probabilities. Use when screening bets, drafting analyses, outlining trends, tracking price movements.",
       "version": "2.0.0"
+    },
+    {
+      "name": "portcheck",
+      "source": "./portcheck",
+      "description": "Scan open ports and validate network services. Use when checking port availability, validating firewall rules, generating reports, linting configs.",
+      "version": "1.0.0"
     },
     {
       "name": "portfolio",
@@ -2048,6 +3050,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "privacy",
+      "source": "./privacy",
+      "description": "Audit and harden privacy settings across systems. Use when generating reports, checking data exposure, rotating encryption keys, auditing access logs.",
+      "version": "1.0.0"
+    },
+    {
       "name": "privacy-policy",
       "source": "./privacy-policy",
       "description": "Generate GDPR/CCPA-compliant privacy policies. Use when scanning data practices, auditing consent flows, checking compliance, drafting policy documents.",
@@ -2057,6 +3065,12 @@
       "name": "process",
       "source": "./process",
       "description": "List, filter, and manage system processes. Use when scanning running tasks, monitoring CPU usage, reporting memory hogs, alerting on runaway processes.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "process-viewer",
+      "source": "./process-viewer",
+      "description": "A free, powerful, multi-purpose tool that helps you monitor system resources, debug software and det process-viewer, c, administrator, benchmarking.",
       "version": "1.0.0"
     },
     {
@@ -2078,6 +3092,18 @@
       "version": "2.0.0"
     },
     {
+      "name": "profile",
+      "source": "./profile",
+      "description": "Analyze code and system performance profiles using profiling tools. Use when identifying bottlenecks, hotspots, or memory issues in applications.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "profit",
+      "source": "./profit",
+      "description": "Calculate profit margins, breakeven points, and revenue forecasts using CLI tools. Use when analyzing business financials.",
+      "version": "1.0.0"
+    },
+    {
       "name": "prompt-generator",
       "source": "./prompt-generator",
       "description": "AI prompt generator for image and text. AI\u7ed8\u753b\u63d0\u793a\u8bcd\u3001AI\u753b\u56fe\u3001Midjourney\u63d0\u793a\u8bcd\u3001MJ\u63d0\u793a\u8bcd\u3001Stable Diffusion\u63d0\u793a\u8bcd\u3001SD\u63d0\u793a\u8bcd\u3001DALL-E\u63d0\u793a\u8bcd\u3001AI\u7ed8\u56fe\u3001AI\u751f\u56fe\u3001AI\u753b\u753b\u3001\u6587\u751f\u56fe\u63d0\u793a\u8bcd\u3001text-to-image prompt\u3001\u5199\u4f5c\u63d0\u793a\u8bcd.",
@@ -2088,6 +3114,12 @@
       "source": "./proofreader",
       "description": "\u6821\u5bf9/\u9519\u522b\u5b57\u68c0\u67e5\u3001\u8bed\u6cd5\u7ea0\u9519\u3001\u6587\u98ce\u7edf\u4e00\u3001\u4e00\u81f4\u6027\u68c0\u67e5\u3001\u53ef\u8bfb\u6027\u8bc4\u5206\u3001\u6821\u5bf9\u62a5\u544a\u3002Proofreading with typo detection, grammar correction, style consistency, readability scoring.",
       "version": "2.0.0"
+    },
+    {
+      "name": "prophet",
+      "source": "./prophet",
+      "description": "Forecast time-series data with seasonal trend modeling. Use when predicting sales, checking model accuracy, converting frequencies, analyzing growth.",
+      "version": "1.0.0"
     },
     {
       "name": "prototype",
@@ -2102,10 +3134,28 @@
       "version": "1.0.0"
     },
     {
+      "name": "quant-finance",
+      "source": "./quant-finance",
+      "description": "MlFinLab helps portfolio managers and traders who want to use the power of machine learning by quant-finance, python, algorithmic-trading, finance.",
+      "version": "1.0.0"
+    },
+    {
       "name": "queue",
       "source": "./queue",
       "description": "Manage message queues with priorities and retry logic. Use when adding jobs, planning retry strategies, tracking delivery status, reviewing failed items.",
       "version": "2.0.1"
+    },
+    {
+      "name": "quick-memo",
+      "source": "./quick-memo",
+      "description": "Capture and search short notes from the terminal. Use when scanning memos, monitoring note updates, reporting tagged entries, viewing recent notes.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "quickfind",
+      "source": "./quickfind",
+      "description": "Search files and directories faster than find. Use when locating nested files, planning directory cleanups, tracking recent changes, reviewing metadata.",
+      "version": "1.0.0"
     },
     {
       "name": "quicknote",
@@ -2118,6 +3168,18 @@
       "source": "./quiz-generator",
       "description": "\u8003\u8bd5\u9898\u76ee\u751f\u6210\u5668\u3002\u9009\u62e9\u9898/\u586b\u7a7a\u9898/\u7b80\u7b54\u9898\u751f\u6210\u3001\u6a21\u62df\u8003\u8bd5\u3001\u7b54\u6848\u89e3\u6790\u3001\u96be\u5ea6\u5206\u7ea7\u3001\u683c\u5f0f\u5316\u8f93\u51fa\u3001\u9898\u5e93\u7ba1\u7406\u3002Quiz generator with multiple choice, fill-in-blank, short answer, mock exams, explanations.",
       "version": "2.0.0"
+    },
+    {
+      "name": "quote",
+      "source": "./quote",
+      "description": "Record, search, and display quotes and sayings. Use when saving favorites, checking attribution, converting collections, analyzing themes, generating picks.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "rag-evaluator",
+      "source": "./rag-evaluator",
+      "description": "Python SDK for Agent AI Observability, Monitoring and Evaluation Framework. Includes features like a ragaai catalyst, python, agentic-ai.",
+      "version": "1.0.0"
     },
     {
       "name": "raspberry-pi-manager",
@@ -2138,6 +3200,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "readme-maker",
+      "source": "./readme-maker",
+      "description": "Design beautiful GitHub profile READMEs with templates. Use when styling profiles, validating badges, generating stat widgets, formatting bio sections.",
+      "version": "1.0.0"
+    },
+    {
       "name": "readme-template",
       "source": "./readme-template",
       "description": "Apply polished README templates to any project. Use when initializing repos, configuring doc structure, listing feature sections, adding guidelines.",
@@ -2156,10 +3224,28 @@
       "version": "1.0.0"
     },
     {
+      "name": "refactor",
+      "source": "./refactor",
+      "description": "Analyze code quality and suggest refactoring improvements using static analysis. Use when cleaning up or improving codebases.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "regex-builder",
+      "source": "./regex-builder",
+      "description": "Construct and test regex patterns with visual reference. Use when building expressions, scoring efficiency, ranking match results, reviewing history.",
+      "version": "1.0.0"
+    },
+    {
       "name": "regexpal",
       "source": "./regexpal",
       "description": "Test and debug regex patterns against sample text. Use when checking match groups, validating patterns, generating replacements, linting syntax.",
       "version": "3.0.0"
+    },
+    {
+      "name": "regexr",
+      "source": "./regexr",
+      "description": "Create, test, and learn regular expressions with live matching. Use when validating patterns, checking groups, generating regex, linting syntax.",
+      "version": "1.0.0"
     },
     {
       "name": "registration",
@@ -2168,10 +3254,28 @@
       "version": "1.0.0"
     },
     {
+      "name": "render-debugger",
+      "source": "./render-debugger",
+      "description": "render-debugger by Welldone Software monkey patches React to notify you about potentially avoidab why did you render, javascript, component, hooks-tracking.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "repo-bundler",
+      "source": "./repo-bundler",
+      "description": "\ud83d\udce6 Repomix is a powerful tool that packs your entire repository into a single, AI-friendly file. Perf repo-bundler, typescript, ai, anthropic.",
+      "version": "1.0.0"
+    },
+    {
       "name": "resignation-letter",
       "source": "./resignation-letter",
       "description": "Generate professional resignation letters from templates. Use when preparing to resign.",
       "version": "3.0.0"
+    },
+    {
+      "name": "responsive-tester",
+      "source": "./responsive-tester",
+      "description": "A modified web browser that helps in responsive web development. A web developer",
+      "version": "1.0.0"
     },
     {
       "name": "retirement-planner",
@@ -2198,6 +3302,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "rivalwatch",
+      "source": "./rivalwatch",
+      "description": "Generate competitor analysis with SWOT and market positioning. Use when comparing features, checking market share, analyzing differentiation strategies.",
+      "version": "1.0.0"
+    },
+    {
       "name": "roadmap",
       "source": "./roadmap",
       "description": "Plan product roadmaps with milestones and dependencies. Use when adding features, planning sprints, tracking milestone progress, reviewing priorities.",
@@ -2208,6 +3318,12 @@
       "source": "./roast-generator",
       "description": "Generate comedic roasts in gentle or savage mode. Use when writing friendly jabs, composing rap battles, crafting celebrity roasts, listing self-burns.",
       "version": "2.0.0"
+    },
+    {
+      "name": "roi",
+      "source": "./roi",
+      "description": "Calculate and compare return on investment across projects using financial models. Use when evaluating investment decisions.",
+      "version": "1.0.0"
     },
     {
       "name": "room",
@@ -2228,6 +3344,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "schema",
+      "source": "./schema",
+      "description": "Design and manage database schemas using CLI tools. Use when you need to create tables, columns, indexes, relations, validate, migrate, diff,",
+      "version": "1.0.0"
+    },
+    {
       "name": "schema-builder",
       "source": "./schema-builder",
       "description": "Build database schemas with SQL generation and relationship modeling. Use when designing databases.",
@@ -2240,10 +3362,76 @@
       "version": "1.0.0"
     },
     {
+      "name": "secret-encrypt",
+      "source": "./secret-encrypt",
+      "description": "Encrypt, rotate, and manage application secrets securely. Use when scanning exposed credentials, monitoring expiry, reporting access, alerting on violations.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "secret-sealer",
+      "source": "./secret-sealer",
+      "description": "A Kubernetes controller and tool for one-way encrypted Secrets sealed secrets, go, devops-workflow, encrypt-secrets, gitops, kubernetes.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "security-roadmap",
+      "source": "./security-roadmap",
+      "description": "A collection of hacking tools, resources and references to practice ethical hacking. hacker roadmap, python, exploitation, frameworks, hacking, hacking-tool.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "security-suite",
+      "source": "./security-suite",
+      "description": "security-suite Hacking Tools Pack \u2013 A Penetration Testing Framework security-suite, python, brute-force-attacks, desktop, exploitation, finder.",
+      "version": "1.0.0"
+    },
+    {
       "name": "seedgen",
       "source": "./seedgen",
       "description": "Generate reproducible seeds and deterministic test data. Use when creating random seeds, rotating salt values, auditing randomness, storing seed records.",
       "version": "3.0.1"
+    },
+    {
+      "name": "sensor",
+      "source": "./sensor",
+      "description": "Read and manage IoT sensor data from the terminal. Use when polling readings, checking device connectivity, converting units, analyzing telemetry trends.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "server-dashboard",
+      "source": "./server-dashboard",
+      "description": "Build and deploy software across server fleets with pipelines. Use when orchestrating deploys, monitoring services, aggregating metrics.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "serverless-runner",
+      "source": "./serverless-runner",
+      "description": "Laf is a vibrant cloud development platform that provides essential tools like cloud functions, data serverless-runner, typescript, cloudbase, faas.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "session",
+      "source": "./session",
+      "description": "Manage session state and lifecycle using JSONL storage. Use when tracking user sessions, expiring stale data, or auditing session activity.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "shadow",
+      "source": "./shadow",
+      "description": "Generate and preview CSS shadow effects using CLI tools. Use when you need box-shadow, text-shadow, drop-shadow, layered shadows, presets, animations,",
+      "version": "1.0.0"
+    },
+    {
+      "name": "shell-ai",
+      "source": "./shell-ai",
+      "description": "A command-line productivity tool powered by AI large language models like GPT-5, will help you accom shell gpt, python, chatgpt, cheat-sheet, cli, commands.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "shell-gpt",
+      "source": "./shell-gpt",
+      "description": "Run AI-powered shell commands and prompts for faster terminal workflows. Use when generating scripts, comparing outputs, evaluating prompts.",
+      "version": "1.0.0"
     },
     {
       "name": "shell-script",
@@ -2276,10 +3464,40 @@
       "version": "2.0.0"
     },
     {
+      "name": "signup",
+      "source": "./signup",
+      "description": "Organize and track signups with simple terminal commands and export. Use when logging registrations, checking status, analyzing trends, generating reports.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "site-change-alert",
+      "source": "./site-change-alert",
+      "description": "Best and simplest tool for website change detection, web page monitoring, and website change alerts. site-change-alert, python, back-in-stock, change-alert.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "site-inspector",
+      "source": "./site-inspector",
+      "description": "Analyze websites with OSINT reconnaissance and security scanning. Use when inspecting headers, checking DNS, analyzing SSL certs, generating reports.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "sitemapper",
+      "source": "./sitemapper",
+      "description": "Generate and analyze XML sitemaps for SEO audits. Use when creating sitemaps, planning site structure, validating format, searching indexed pages.",
+      "version": "1.0.0"
+    },
+    {
       "name": "sketch",
       "source": "./sketch",
       "description": "Generate ASCII art including boxes, tables, trees, and banners. Use when creating text diagrams.",
       "version": "3.0.0"
+    },
+    {
+      "name": "sketch-board",
+      "source": "./sketch-board",
+      "description": "\u5f00\u6e90\u767d\u677f\u5de5\u5177\uff08SaaS\uff09\uff0c\u4e00\u4f53\u5316\u767d\u677f\uff0c\u5305\u542b\u601d\u7ef4\u5bfc\u56fe\u3001\u6d41\u7a0b\u56fe\u3001\u81ea\u7531\u753b\u7b49\u3002All in one open-source whiteboard tool with mind, flowchart, free sketch-board, typescript, collaboration, drawing.",
+      "version": "1.0.0"
     },
     {
       "name": "skill-template",
@@ -2306,16 +3524,34 @@
       "version": "2.0.0"
     },
     {
+      "name": "slide",
+      "source": "./slide",
+      "description": "Create and manage presentation slides using JSONL storage. Use when building slide decks, applying themes, or exporting to HTML presentations.",
+      "version": "1.0.0"
+    },
+    {
       "name": "slide-maker",
       "source": "./slide-maker",
       "description": "Presentation and slide deck generator. Create outlines, full slide decks, speaker notes, pitch decks, training slides, report presentations.",
       "version": "2.0.0"
     },
     {
+      "name": "slideshow-generator",
+      "source": "./slideshow-generator",
+      "description": "Create HTML slideshows from Markdown with live preview. Use when drafting slides, editing decks, optimizing layouts, scheduling talks, repurposing content.",
+      "version": "1.0.0"
+    },
+    {
       "name": "slogan-maker",
       "source": "./slogan-maker",
       "description": "\u5e7f\u544a\u8bed\u751f\u6210\u5668\u3002\u54c1\u724c\u6807\u8bed\u521b\u4f5c\u3001\u884c\u4e1a\u5e7f\u544a\u8bed\u3001\u62bc\u97f5\u53e3\u53f7\u3001\u4e2d\u82f1\u7ffb\u8bd1\u3001\u6548\u679c\u6d4b\u8bd5\u3001\u7ecf\u5178\u8bed\u5e93\u3002Slogan maker with brand taglines, industry slogans, rhyming, translation, testing.",
       "version": "2.0.0"
+    },
+    {
+      "name": "smart-lights",
+      "source": "./smart-lights",
+      "description": "Control Philips Hue lights with colors, effects, and schedules. Use when setting scenes, running effects, checking bulbs, analyzing energy, generating presets.",
+      "version": "1.0.0"
     },
     {
       "name": "sms",
@@ -2330,10 +3566,22 @@
       "version": "3.0.1"
     },
     {
+      "name": "social-automator",
+      "source": "./social-automator",
+      "description": "\ud83d\udcf7 Instagram Bot - Tool for automated Instagram interactions social-automator, python, automation, bot, clarifai, instagram.",
+      "version": "1.0.0"
+    },
+    {
       "name": "social-copywriter",
       "source": "./social-copywriter",
       "description": "Social media copywriter. \u793e\u4ea4\u5a92\u4f53\u6587\u6848\u3001\u670b\u53cb\u5708\u6587\u6848\u3001\u670b\u53cb\u5708\u600e\u4e48\u53d1\u3001\u5fae\u535a\u6587\u6848\u3001\u5fae\u535a\u6bb5\u5b50\u3001Twitter\u6587\u6848\u3001tweet\u3001Instagram\u6587\u6848\u3001IG caption\u3001\u793e\u4ea4\u5a92\u4f53\u6587\u6848\u751f\u6210\u3001\u8282\u65e5\u795d\u798f\u3001\u751f\u65e5\u795d\u798f\u6587\u6848\u3001\u7f8e\u98df\u6587\u6848\u3001\u65c5\u884c\u6587\u6848\u3001\u5fc3\u7075\u9e21\u6c64\u3001\u65e5\u5e38\u6587\u6848\u3001\u6652\u7167\u6587\u6848\u3001show off\u3001\u5fc3\u60c5\u6587\u6848\u3001\u641e\u7b11\u6587.",
       "version": "2.0.0"
+    },
+    {
+      "name": "social-scraper",
+      "source": "./social-scraper",
+      "description": "An advanced Twitter scraping & OSINT tool written in Python that doesn",
+      "version": "1.0.0"
     },
     {
       "name": "sop-writer",
@@ -2348,10 +3596,34 @@
       "version": "1.0.0"
     },
     {
+      "name": "spec-workflow",
+      "source": "./spec-workflow",
+      "description": "Drive spec-driven dev workflows with planning, tracking, and review. Use when adding specs, planning sprints, tracking progress, reviewing deliverables.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "spec-workflow-mcp",
+      "source": "./spec-workflow-mcp",
+      "description": "Serve spec-driven dev tools via MCP for AI-assisted workflows. Use when adding tasks, planning iterations, tracking completion, reviewing quality.",
+      "version": "1.0.0"
+    },
+    {
       "name": "speech-writer",
       "source": "./speech-writer",
       "description": "\u6f14\u8bb2\u7a3f(TED\u98ce\u683c)\u3001\u5a5a\u793c\u81f4\u8f9e\u3001\u5546\u52a1\u6f14\u8bb2\u3001\u52b1\u5fd7\u6f14\u8bb2\u3001\u795d\u9152\u8bcd\u3001\u6f14\u8bb2\u5927\u7eb2\u3002Speech writing for TED-style talks, wedding speeches, business presentations, motivational speeches, toasts.",
       "version": "2.0.0"
+    },
+    {
+      "name": "spell",
+      "source": "./spell",
+      "description": "Log anything fast and find it later with search and export. Use when running lookups, checking entries, converting formats, generating summaries.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "spend-tracker",
+      "source": "./spend-tracker",
+      "description": "Track expenses, categorize spending, and generate finance reports. Use when logging purchases, checking balances, converting currencies, analyzing trends.",
+      "version": "1.0.0"
     },
     {
       "name": "sql-generator",
@@ -2360,10 +3632,28 @@
       "version": "2.0.0"
     },
     {
+      "name": "sql-scanner",
+      "source": "./sql-scanner",
+      "description": "Detect SQL injection vulnerabilities and assess DB security. Use when checking queries, validating sanitization, generating tests, formatting reports.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "sqlformat",
+      "source": "./sqlformat",
+      "description": "Format, lint, and pretty-print SQL with dialect conversion. Use when checking style, validating syntax, formatting queries, generating clean SQL.",
+      "version": "1.0.0"
+    },
+    {
       "name": "sshkey",
       "source": "./sshkey",
       "description": "Generate, list, copy, and test SSH keys without complex flags. Use when scanning keys, monitoring expiry, reporting fingerprints, alerting weak algorithms.",
       "version": "3.0.1"
+    },
+    {
+      "name": "ssl-cert-manager",
+      "source": "./ssl-cert-manager",
+      "description": "A pure Unix shell script ACME client for SSL / TLS certificate automation ssl cert manager, shell, acme, acme-challenge, acme-protocol, acme-v2.",
+      "version": "1.0.0"
     },
     {
       "name": "ssl-checker",
@@ -2390,10 +3680,28 @@
       "version": "1.0.0"
     },
     {
+      "name": "stopwatch",
+      "source": "./stopwatch",
+      "description": "Run stopwatch, timer, and lap tracking with precision in terminal. Use when timing tasks, checking durations, running countdowns, analyzing splits.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "story",
+      "source": "./story",
+      "description": "Draft, edit, and schedule creative stories with content optimization. Use when drafting chapters, editing narratives, optimizing readability, scheduling posts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "story-writer",
       "source": "./story-writer",
       "description": "\u5c0f\u8bf4\u521b\u4f5c\u3001\u89d2\u8272\u8bbe\u8ba1\u3001\u60c5\u8282\u8bbe\u8ba1(\u4e09\u5e55\u5f0f)\u3001\u5bf9\u8bdd\u751f\u6210\u3001\u4e16\u754c\u89c2\u6784\u5efa\u3001\u7eed\u5199\u3002Story writing with character design, three-act plot structure, dialogue generation, worldbuilding.",
       "version": "2.0.0"
+    },
+    {
+      "name": "streakup",
+      "source": "./streakup",
+      "description": "Build better habits by tracking daily streaks and progress. Use when logging habits, checking streaks, analyzing consistency, generating reports.",
+      "version": "1.0.0"
     },
     {
       "name": "stripe-manager",
@@ -2414,6 +3722,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "subtitle-translator",
+      "source": "./subtitle-translator",
+      "description": "Video translation and dubbing tool powered by LLMs. The video translator offers 100 language transla subtitle-translator, go, dubbing, localization, tts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "succession-plan",
       "source": "./succession-plan",
       "description": "Design succession plans with role mapping and transition roadmaps. Use when adding positions, listing candidates, prioritizing paths, planning transfers.",
@@ -2430,6 +3744,12 @@
       "source": "./survey-designer",
       "description": "Design surveys with question types, skip logic, and templates. Use when adding questions, setting logic, laying out forms, checking contrast, spacing elements.",
       "version": "2.0.0"
+    },
+    {
+      "name": "svg-optimizer",
+      "source": "./svg-optimizer",
+      "description": "Optimize SVG files by removing metadata and minifying paths. Use when previewing output, generating assets, converting formats, cleaning vectors.",
+      "version": "1.0.0"
     },
     {
       "name": "swagger-generator",
@@ -2450,10 +3770,28 @@
       "version": "2.0.0"
     },
     {
+      "name": "sysadmin-handbook",
+      "source": "./sysadmin-handbook",
+      "description": "A collection of inspiring lists, manuals, cheatsheets, blogs, hacks, one-liners, cli/web tools and m the book of secret knowledge, python, awesome.",
+      "version": "1.0.0"
+    },
+    {
       "name": "syscheck",
       "source": "./syscheck",
       "description": "Check system health with CPU, memory, disk, and process stats. Use when scanning resources, monitoring load, reporting disk usage, alerting thresholds.",
       "version": "2.0.0"
+    },
+    {
+      "name": "sysinfo-fetch",
+      "source": "./sysinfo-fetch",
+      "description": "A maintained, feature-rich and performance oriented, neofetch like system information tool. sysinfo-fetch, c, bsdfetch, command-line, sysinfo-fetch, fetch.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "system-hardener",
+      "source": "./system-hardener",
+      "description": "Lynis - Security auditing tool for Linux, macOS, and UNIX-based systems. Assists with compliance tes system-hardener, shell, auditing, compliance, devops.",
+      "version": "1.0.0"
     },
     {
       "name": "taobao-listing",
@@ -2492,6 +3830,18 @@
       "version": "3.0.0"
     },
     {
+      "name": "terminal-dashboard",
+      "source": "./terminal-dashboard",
+      "description": "Tool for shell commands execution, visualization and alerting. Configured with a simple YAML file. terminal-dashboard, go, alerting, charts, cmd.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "terms",
+      "source": "./terms",
+      "description": "Store, rotate, and audit API keys and tokens securely. Use when generating keys, checking strength, rotating tokens, auditing credentials.",
+      "version": "1.0.0"
+    },
+    {
       "name": "terms-of-service",
       "source": "./terms-of-service",
       "description": "Generate terms of service for SaaS, e-commerce, and apps. Use when drafting agreements, configuring clauses, listing requirements, searching templates.",
@@ -2522,10 +3872,52 @@
       "version": "2.0.0"
     },
     {
+      "name": "text-annotator",
+      "source": "./text-annotator",
+      "description": "Open source annotation tool for machine learning practitioners. text-annotator, python, annotation-tool, data-labeling, dataset, datasets.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "text-mining",
+      "source": "./text-mining",
+      "description": "Web mining module for Python, with tools for scraping, natural language processing, machine learning text-mining, python, machine-learning.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "theme",
+      "source": "./theme",
+      "description": "Generate and manage UI color themes using CLI tools. Use when you need to create, preview, apply, import, or export dark/light mode themes, palettes,",
+      "version": "1.0.0"
+    },
+    {
+      "name": "thesaurus",
+      "source": "./thesaurus",
+      "description": "Look up synonyms, antonyms, and related words with history and export. Use when finding alternatives, checking usage, running drills, analyzing frequency.",
+      "version": "1.0.0"
+    },
+    {
       "name": "thesis-helper",
       "source": "./thesis-helper",
       "description": "\u8bba\u6587\u5199\u4f5c\u52a9\u624b\u3002\u8bba\u6587\u5927\u7eb2\u751f\u6210\u3001\u6587\u732e\u7efc\u8ff0\u6846\u67b6\u3001\u6458\u8981\u751f\u6210\u3001\u5f15\u7528\u683c\u5f0f\u8f6c\u6362\u3001\u683c\u5f0f\u89c4\u8303\u68c0\u67e5\u3001\u7b54\u8fa9\u51c6\u5907\u3002Thesis helper with outline generation, literature review, abstract writing, citation formatting, style guide.",
       "version": "2.0.0"
+    },
+    {
+      "name": "tidyfiles",
+      "source": "./tidyfiles",
+      "description": "Sort and organize files into folders by type, date, or rules. Use when decluttering dirs, checking structure, running cleanup, generating reports.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "tidyup",
+      "source": "./tidyup",
+      "description": "Find duplicates, reclaim disk space, and clean storage. Use when scanning dupes, checking usage, running cleanup, analyzing age, generating reports.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "time-logger",
+      "source": "./time-logger",
+      "description": "Log time entries and see where your hours go each day. Use when scanning hours, monitoring totals, reporting summaries, ranking categories.",
+      "version": "1.0.0"
     },
     {
       "name": "time-tracker",
@@ -2534,9 +3926,27 @@
       "version": "2.0.0"
     },
     {
+      "name": "timeblock",
+      "source": "./timeblock",
+      "description": "Plan your day hour-by-hour with intentional time blocking. Use when blocking sessions, checking plans, analyzing allocation, generating agendas.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "timezone",
+      "source": "./timezone",
+      "description": "Convert times across world timezones and compare availability. Use when converting meetings, checking offsets, comparing zones, generating tables.",
+      "version": "1.0.0"
+    },
+    {
       "name": "tire",
       "source": "./tire",
       "description": "Track tire maintenance, rotation, and tread wear for vehicles. Use when logging changes, checking wear, running reminders, generating reports.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "todo-planner",
+      "source": "./todo-planner",
+      "description": "Organize todos with priorities, deadlines, and weekly views. Use when adding tasks, planning agendas, tracking progress, reviewing overdue items.",
       "version": "1.0.0"
     },
     {
@@ -2546,10 +3956,28 @@
       "version": "3.0.0"
     },
     {
+      "name": "trace",
+      "source": "./trace",
+      "description": "Track and debug application logs using CLI tracing tools. Use when you need to start trace sessions, search logs, filter by level, tail output,",
+      "version": "1.0.0"
+    },
+    {
+      "name": "traceroute-visual",
+      "source": "./traceroute-visual",
+      "description": "Visualize network paths with hop latency and geo mapping. Use when ingesting traces, transforming hops, querying routes, aggregating stats.",
+      "version": "1.0.0"
+    },
+    {
       "name": "trademark-helper",
       "source": "./trademark-helper",
       "description": "Check trademark availability and Nice classification codes. Use when registering brands.",
       "version": "3.0.0"
+    },
+    {
+      "name": "traffic-replay",
+      "source": "./traffic-replay",
+      "description": "GoReplay is an open-source tool for capturing and replaying live HTTP traffic into a test environmen traffic-replay, go, devops, go, qa, testing.",
+      "version": "1.0.0"
     },
     {
       "name": "training-plan",
@@ -2560,6 +3988,12 @@
     {
       "name": "translator-pro",
       "source": "./translator-pro",
+      "description": "Test translation quality with built-in dictionaries and comparison tools. Use when evaluating translations.",
+      "version": "3.0.0"
+    },
+    {
+      "name": "translator-pro-test",
+      "source": "./translator-pro-test",
       "description": "Test translation quality with built-in dictionaries and comparison tools. Use when evaluating translations.",
       "version": "3.0.0"
     },
@@ -2594,6 +4028,18 @@
       "version": "2.0.0"
     },
     {
+      "name": "twitch",
+      "source": "./twitch",
+      "description": "Manage Twitch channel data, scores, and rankings from CLI. Use when rolling highlights, scoring streams, ranking metrics, tracking stats.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "typescript-backend-toolkit",
+      "source": "./typescript-backend-toolkit",
+      "description": "Production-ready Express.js/TypeScript framework with auto-generated OpenAPI, Artisan-style CLI, plu typescript backend toolkit, typescript, boilerplate.",
+      "version": "1.0.0"
+    },
+    {
       "name": "ui-component",
       "source": "./ui-component",
       "description": "Generate standalone HTML/CSS components: forms, cards, modals. Use when picking palettes, choosing fonts, laying out grids, adjusting spacing.",
@@ -2624,6 +4070,18 @@
       "version": "3.0.0"
     },
     {
+      "name": "usb",
+      "source": "./usb",
+      "description": "List and manage USB devices and storage from the terminal. Use when enumerating devices, formatting drives, mounting volumes, or diagnosing connections.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "useragent-parser",
+      "source": "./useragent-parser",
+      "description": "UAParser.js - The Essential Web Development Tool for User-Agent Detection. Detect Browsers, OS, Devi ua parser js, javascript, analytics, bot-detection.",
+      "version": "1.0.0"
+    },
+    {
       "name": "uuidgen",
       "source": "./uuidgen",
       "description": "Generate UUIDs, short IDs, and nano IDs. Use when creating database keys, minting session tokens, generating unique filenames, or producing batch IDs.",
@@ -2639,6 +4097,18 @@
       "name": "valuation",
       "source": "./valuation",
       "description": "Build DCF models and run comparable analysis for company valuation. Use when modeling cash flows, benchmarking peers, projecting growth, or pitching.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "vector",
+      "source": "./vector",
+      "description": "Perform vector math and similarity operations using CLI tools. Use when you need dot products, cosine similarity, distance metrics, normalization,",
+      "version": "1.0.0"
+    },
+    {
+      "name": "video-fetcher",
+      "source": "./video-fetcher",
+      "description": "\ud83d\udc7e Fast and simple video download library and CLI tool written in Go video-fetcher, go, bilibili, crawler, download, downloader.",
       "version": "1.0.0"
     },
     {
@@ -2672,6 +4142,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "wakatime-lite",
+      "source": "./wakatime-lite",
+      "description": "Track coding time and review productivity stats. Use when logging dev hours, analyzing time per project, setting focus goals, or reviewing summaries.",
+      "version": "1.0.0"
+    },
+    {
       "name": "wallet-tracker",
       "source": "./wallet-tracker",
       "description": "Track crypto wallet balances and transactions using Blockstream API. Use when monitoring wallets. Requires curl.",
@@ -2681,6 +4157,42 @@
       "name": "warehouse",
       "source": "./warehouse",
       "description": "Design data warehouse schemas and optimize query pipelines. Use when ingesting datasets, transforming tables, tuning queries, or building aggregations.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "watch",
+      "source": "./watch",
+      "description": "Monitor file and directory changes using CLI watchers. Use when you need to watch for file modifications, track change history, filter events,",
+      "version": "1.0.0"
+    },
+    {
+      "name": "weathernow",
+      "source": "./weathernow",
+      "description": "Fetch current weather and forecasts for any city. Use when checking temperature, planning outdoor activities, comparing forecasts, or packing for trips.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "web-check",
+      "source": "./web-check",
+      "description": "Analyze websites with OSINT: DNS, SSL, headers, and tech detection. Use when auditing domains, inspecting headers, fingerprinting stacks, or reviewing DNS.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "web-module-runner",
+      "source": "./web-module-runner",
+      "description": "\ud83d\udc69\u200d\ud83d\ude80 The tiny all-in-one development tool for modern web apps. web-module-runner, javascript, build-tool, esmodules, preact.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "web-profiler",
+      "source": "./web-profiler",
+      "description": "Provides a development tool that gives detailed information about the execution of any request web profiler bundle, twig, component, dev, php, symfony.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "web-profiler-bundle",
+      "source": "./web-profiler-bundle",
+      "description": "Profile HTTP requests with timing, memory, and query breakdowns. Use when debugging slow routes, analyzing queries, inspecting middleware, or optimizing.",
       "version": "1.0.0"
     },
     {
@@ -2714,10 +4226,28 @@
       "version": "3.0.0"
     },
     {
+      "name": "windows-setup",
+      "source": "./windows-setup",
+      "description": "PowerShell script for automation of routine tasks done after fresh installations of Windows 10 / Ser win10 initial setup script, powershell, powershell.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "wine",
+      "source": "./wine",
+      "description": "Record, search, and analyze your wine collection and tasting notes. Use when logging tastings, searching vintages, comparing ratings, or tracking inventory.",
+      "version": "1.0.0"
+    },
+    {
       "name": "wireframe",
       "source": "./wireframe",
       "description": "Generate wireframes, component sketches, and user flow diagrams. Use when prototyping layouts, sketching pages, diagramming flows, or drafting UI specs.",
       "version": "3.4.0"
+    },
+    {
+      "name": "wordcraft",
+      "source": "./wordcraft",
+      "description": "Analyze text, build outlines, and craft polished writing. Use when outlining articles, scoring readability, counting words, ranking keywords, or editing.",
+      "version": "1.0.0"
     },
     {
       "name": "work-report-writer",
@@ -2742,6 +4272,12 @@
       "source": "./wp-manager",
       "description": "Manage WordPress sites with cookie auth, page CRUD, duplicate detection, and batch cleanup. Requires curl.",
       "version": "4.0.0"
+    },
+    {
+      "name": "xhs-viral-note-writer",
+      "source": "./xhs-viral-note-writer",
+      "description": "Generate viral Xiaohongshu notes with titles, tags, and covers. Use when drafting seed posts, writing reviews, crafting tutorials, or boosting engagement.",
+      "version": "4.0.4"
     },
     {
       "name": "yamlcheck",
@@ -2771,6 +4307,12 @@
       "name": "zip",
       "source": "./zip",
       "description": "Compress, extract, list, and encrypt ZIP archives in batch. Use when archiving files, extracting packages, listing contents, encrypting backups, or batching.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "zsh-themes",
+      "source": "./zsh-themes",
+      "description": "\ud83d\ude43 A delightful community-driven (with 2,400+ contributors) framework for managing your zsh configu zsh-themes, shell, cli, cli-app, oh-my-zsh.",
       "version": "1.0.0"
     }
   ]

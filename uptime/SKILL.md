@@ -1,42 +1,45 @@
 ---
 name: Uptime
-description: "Website and service uptime checker. Monitor URLs for availability, measure response times, check HTTP status codes, verify SSL certificates, and track uptime history. Quick website health monitoring from your terminal without complex monitoring setup."
-version: "2.0.0"
+description: "Monitor website availability and response times. Use when checking site status, benchmarking latency, tracking uptime history, or alerting on outages."
+version: "3.0.0"
 author: "BytesAgain"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 tags: ["uptime","monitoring","website","http","ssl","availability","health","devops"]
 categories: ["Developer Tools", "System Tools"]
 ---
+
 # Uptime
-Check if websites are up. Measure response times. Monitor availability.
+
+System and website uptime monitor. Check system load, test URL reachability with timing, log uptime history, and set up outage alerts.
+
 ## Commands
-- `check <url>` — Check URL status and response time
-- `batch <file>` — Check multiple URLs from a file
-- `ssl <domain>` — Check SSL certificate expiry
-- `history` — View check history
-## Usage Examples
+
+| Command | Description |
+|---------|-------------|
+| `uptime status` | Show system uptime, load average, CPU count, and logged-in users |
+| `uptime check <url>` | Check if a URL is reachable (HTTP status, connect time, TTFB) |
+| `uptime log` | Log current system uptime snapshot to `~/.uptime-monitor/uptime.log` |
+| `uptime history` | Show uptime log history (last 30 entries) |
+| `uptime alert <url> <email>` | Check URL and send email alert if down |
+| `uptime since` | Show system boot time |
+| `uptime multi <url1> <url2> ...` | Check multiple URLs at once with summary |
+| `uptime version` | Show version |
+
+## Examples
+
 ```bash
-uptime check [configured-endpoint]
-uptime check [configured-endpoint]
-uptime ssl github.com
+uptime status                    # → uptime, load, users, hostname
+uptime check https://example.com # → HTTP 200, connect 0.1s, TTFB 0.2s
+uptime log                       # → saves snapshot to log file
+uptime history                   # → shows recent log entries
+uptime alert https://mysite.com admin@example.com  # → alerts if down
+uptime since                     # → boot time
+uptime multi https://google.com https://github.com # → batch check
 ```
----
-Powered by BytesAgain | bytesagain.com
 
-- Run `uptime help` for all commands
+## Requirements
 
-## When to Use
-
-- to automate uptime tasks in your workflow
-- for batch processing uptime operations
-
-## Output
-
-Returns reports to stdout. Redirect to a file with `uptime run > output.txt`.
-
-## Configuration
-
-Set `UPTIME_DIR` environment variable to change the data directory. Default: `~/.local/share/uptime/`
-
----
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
+- `/proc/uptime`, `/proc/loadavg` (Linux)
+- `curl` (for URL checks)
+- `mail` (optional, for email alerts)

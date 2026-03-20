@@ -1,52 +1,57 @@
 ---
-version: "2.0.0"
-name: The Silver Searcher
-description: "A code-searching tool similar to ack, but faster. the silver searcher, c, ag, c, command-line-tool, pcre, search-in-text. Use when you need the silver searcher capabilities. Triggers on: the silver searcher."
-author: BytesAgain
+name: "code-searcher"
+version: "3.0.0"
+description: "Search codebases for patterns, symbols, and TODOs. Use when navigating large codebases."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
 ---
 
-# The Silver Searcher
+# code-searcher
 
-A code-searching tool similar to ack, but faster. ## Commands
+Search codebases for patterns, symbols, and TODOs. Use when navigating large codebases.
 
-- `help` - Help
-- `run` - Run
-- `info` - Info
-- `status` - Status
+## Commands
 
-## Features
-
-- Core functionality from ggreer/the_silver_searcher
-
-## Usage
-
-Run any command: `code-searcher <command> [args]`
----
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
-
-## Examples
+### `find`
 
 ```bash
-# Show help
-code-searcher help
-
-# Run
-code-searcher run
+scripts/script.sh find <pattern dir>
 ```
 
-- Run `code-searcher help` for commands
-- No API keys needed
+### `todo`
 
-- Run `code-searcher help` for all commands
+```bash
+scripts/script.sh todo <dir>
+```
 
-- Run `code-searcher help` for all commands
+### `refs`
 
-## When to Use
+```bash
+scripts/script.sh refs <symbol dir>
+```
 
-- Quick code tasks from terminal
-- Automation pipelines
+### `stats`
 
-## Output
+```bash
+scripts/script.sh stats <dir>
+```
 
-Results go to stdout. Save with `code-searcher run > output.txt`.
+### `recent`
+
+```bash
+scripts/script.sh recent <dir days>
+```
+
+### `grep`
+
+```bash
+scripts/script.sh grep <text dir>
+```
+
+## Data Storage
+
+Data stored in `~/.local/share/code-searcher/`.
+
+---
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

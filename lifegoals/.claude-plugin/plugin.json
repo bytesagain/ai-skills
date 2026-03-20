@@ -1,0 +1,9 @@
+{
+  "name": "lifegoals",
+  "description": "Define goals, break them into milestones, and track progress step by step. Use when setting life goals, planning milestones, tracking long-term progress.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

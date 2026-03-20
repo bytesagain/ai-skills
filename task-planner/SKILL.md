@@ -1,49 +1,111 @@
 ---
-version: "2.0.0"
+version: "3.0.1"
 name: task-planner
-description: "- **name**: Task Planner. Use when you need task planner capabilities. Triggers on: task planner."
+description: "Plan and prioritize tasks with due dates and reminders. Use when adding tasks, listing priorities, tracking completion, planning schedules."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
-# Task Planner
+# task-planner
 
-- **name**: Task Planner
-- **description**: AI task decomposition and planning. Break tasks into subtasks, estimate complexity, find dependencies, and track progress. Commands: plan, estimate, dependencies, prioritize, parallel, risk, progress, retrospective. Use for AI task planning, project decomposition, or workflow management.
-
-## Comparison: Manual vs AI-Assisted Planning
-
-| Aspect | Manual Planning | Task Planner |
-|--------|----------------|--------------|
-| Decomposition | Intuition-based | Structured analysis |
-| Estimates | Gut feeling | Data-driven scoring |
-| Dependencies | Often missed | Systematically identified |
-| Parallelism | Hard to spot | Automatically detected |
-| Risk Assessment | Ad-hoc | Categorized and scored |
-| Progress | Spreadsheet tracking | Built-in monitoring |
-| Retrospective | Usually skipped | Guided review process |
+CLI tool for task planner
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `plan` | Break task into subtasks |
-| `estimate` | Time/complexity estimation |
-| `dependencies` | Identify task dependencies |
-| `prioritize` | Rank by remaining work |
-| `parallel` | Find parallelizable tasks |
-| `risk` | Risk assessment per task |
-| `progress` | Track completion |
-| `retrospective` | Retrospective |
----
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
+### `add`
+
+```bash
+scripts/script.sh add
+```
+
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+### `done`
+
+```bash
+scripts/script.sh done
+```
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+### `edit`
+
+```bash
+scripts/script.sh edit
+```
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+### `today`
+
+```bash
+scripts/script.sh today
+```
+
+### `overdue`
+
+```bash
+scripts/script.sh overdue
+```
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Examples
 
 ```bash
-# Show help
-task-planner help
-
-# Run
-task-planner run
+scripts/script.sh help
+scripts/script.sh add
 ```
+
+## Configuration
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `TASK_PLANNER_DIR` | No | Data directory (default: `~/.task-planner/`) |
+
+## Data Storage
+
+All data saved in `~/.task-planner/`. Runs on your machine without external calls.
+
+## Requirements
+
+- bash 4.0+
+
+---
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

@@ -1,0 +1,9 @@
+{
+  "name": "timeblock",
+  "description": "Plan your day hour-by-hour with intentional time blocking. Use when blocking sessions, checking plans, analyzing allocation, generating agendas.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "rivalwatch",
+  "description": "Generate competitor analysis with SWOT and market positioning. Use when comparing features, checking market share, analyzing differentiation strategies.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

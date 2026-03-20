@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Pinduoduo Listing
-description: "拼多多商品文案。标题优化、详情页、SKU描述、百亿补贴文案、价格战策略、评价回复、秒杀文案。Pinduoduo listing generator with title optimization, d. Use when you need pinduoduo listing capabilities. Triggers on: pinduoduo listing."
-  拼多多商品文案。标题优化、详情页、SKU描述、百亿补贴文案、价格战策略、评价回复、秒杀文案。Pinduoduo listing generator with title optimization, detail page, SKU descriptions, pricing strategy, review replies, seckill copy. 拼多多运营、电商文案、商品上架、价格策略、凑单满减。Use when listing products on Pinduoduo.
+description: "Write Pinduoduo product listings with SEO titles. Use when drafting headlines, optimizing detail pages, writing SKU copy, planning flash sale text."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # Pinduoduo Listing
 

@@ -1,44 +1,57 @@
 ---
-version: "2.0.0"
-name: Dream Interpreter
-description: "解梦助手。梦境解析、符号含义、反复梦境、清醒梦、梦境日记、心理分析。Dream interpreter with symbols, psychology. 解梦、梦境、周公解梦。. Use when you need dream interpreter capabilities. Triggers on: dream interpreter."
-  解梦助手。梦境解析、符号含义、反复梦境、清醒梦、梦境日记、心理分析。Dream interpreter with symbols, psychology. 解梦、梦境、周公解梦。
-author: BytesAgain
+name: "dream-interpreter"
+version: "3.0.0"
+description: "Interpret dream symbols and maintain a dream journal. Use when analyzing dreams."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
 ---
-# Dream Interpreter
 
-解梦助手。梦境解析、符号含义、反复梦境、清醒梦、梦境日记、心理分析。Dream interpreter with symbols, psychology. 解梦、梦境、周公解梦。
+# dream-interpreter
 
-## 常见问题
-
-**Q: 这个工具适合谁用？**
-A: 任何需要dream interpreter的人，无论是个人还是企业用户。
-
-**Q: 输出格式是什么？**
-A: 主要输出Markdown格式，方便复制和编辑。
-
-## 命令速查
-
-```
-  interpret       interpret
-  symbol          symbol
-  recurring       recurring
-  lucid           lucid
-  journal         journal
-  psychology      psychology
-```
-
----
-*Dream Interpreter by BytesAgain*
----
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
-
-- Run `dream-interpreter help` for commands
-- No API keys needed
+Interpret dream symbols and maintain a dream journal. Use when analyzing dreams.
 
 ## Commands
 
-Run `dream-interpreter help` to see all available commands.
+### `interpret`
 
-- Run `dream-interpreter help` for all commands
+```bash
+scripts/script.sh interpret <symbol>
+```
+
+### `journal`
+
+```bash
+scripts/script.sh journal <text>
+```
+
+### `history`
+
+```bash
+scripts/script.sh history
+```
+
+### `search`
+
+```bash
+scripts/script.sh search <keyword>
+```
+
+### `categories`
+
+```bash
+scripts/script.sh categories
+```
+
+### `random`
+
+```bash
+scripts/script.sh random
+```
+
+## Data Storage
+
+Data stored in `~/.local/share/dream-interpreter/`.
+
+---
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

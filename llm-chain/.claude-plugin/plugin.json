@@ -1,0 +1,9 @@
+{
+  "name": "llm-chain",
+  "description": "LangChain4j is an open-source Java library that simplifies the integration of LLMs into Java applica llm-chain, java, anthropic, chatgpt, chroma, embeddings.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

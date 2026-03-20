@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Test & Publish Checker
-description: "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━. Use when you need test publish check capabilities. Triggers on: test publish check."
-  项目发布前检查工具。代码质量检查、API测试、部署检查清单、版本管理、上线前审查、回归测试。Pre-publish quality checker for code, API, deployment, versioning, launch review, regression testing. 发布检查、上线审查、质量保证、QA、测试、部署。Use before releasing any software, website, app, or content to production.
+description: "Run pre-publish checks on code quality, API status, and deploy config. Use when validating releases, configuring gates, checking status, listing blockers."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # Test & Publish Checker
 

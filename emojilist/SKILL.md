@@ -1,36 +1,64 @@
 ---
 name: EmojiList
-description: "Emoji search and reference tool. Search emojis by name or keyword, browse categories, copy emoji to use in messages and code, view emoji as Unicode codepoints, and discover related emojis. Find the perfect emoji without leaving your terminal."
-version: "2.0.0"
+description: "Search emojis by name or category and copy them for instant use. Use when finding emojis, browsing categories, copying codes."
+version: "3.0.0"
 author: "BytesAgain"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 tags: ["emoji","unicode","search","reference","symbols","text","chat","developer"]
 categories: ["Utility", "Productivity"]
 ---
+
 # EmojiList
-Find emojis fast. Search by name, browse by category, copy and use.
+
+A built-in emoji reference and search tool with a database of 390+ emoji. Search by keyword, browse by category, get random emoji, or see the most popular ones — all from the terminal. No external dependencies required.
+
 ## Commands
-- `search <keyword>` — Search emojis by name/keyword
-- `category <name>` — Browse by category (faces/animals/food/nature/objects/symbols)
-- `random [n]` — Random emojis
-- `info <emoji>` — Show emoji details and Unicode
-- `popular` — Most commonly used emojis
-## Usage Examples
+
+| Command | Description |
+|---------|-------------|
+| `emojilist search <keyword>` | Search emoji by name/keyword — matches against names and aliases (e.g. "fire", "heart", "cat") |
+| `emojilist category <name>` | List all emoji in a specific category with their names |
+| `emojilist random [count]` | Show random emoji (default: 5, max: 50) with names and categories |
+| `emojilist popular` | Top 25 most commonly used emoji worldwide, with usage context |
+| `emojilist list` | List all available categories with emoji count and sample preview |
+
+## Categories
+
+| Category | Description |
+|----------|-------------|
+| `faces` | Smileys, expressions, emotions (~67 emoji) |
+| `gestures` | Hand signs, thumbs, pointing (~30 emoji) |
+| `hearts` | Hearts in all colors and styles (~17 emoji) |
+| `animals` | Animals, insects, sea creatures (~53 emoji) |
+| `food` | Food, drinks, fruits, meals (~70 emoji) |
+| `nature` | Plants, weather, celestial (~26 emoji) |
+| `tech` | Computers, devices, tools (~27 emoji) |
+| `travel` | Vehicles, buildings, places (~22 emoji) |
+| `sports` | Sports, games, trophies (~22 emoji) |
+| `symbols` | Signs, shapes, colors, marks (~41 emoji) |
+| `flags` | Country and specialty flags (~18 emoji) |
+
+## Requirements
+
+- Bash 4+ (uses arrays)
+- Terminal with Unicode/emoji support
+
+## Examples
+
 ```bash
+# Find fire-related emoji
 emojilist search fire
-emojilist category faces
-emojilist random 5
+
+# Browse all animal emoji
+emojilist category animals
+
+# Get 10 random emoji for inspiration
+emojilist random 10
+
+# See what's most popular
 emojilist popular
+
+# See all categories at a glance
+emojilist list
 ```
----
-Powered by BytesAgain | bytesagain.com
-
-- Run `emojilist help` for all commands
-
-## When to Use
-
-- Quick emojilist tasks from terminal
-- Automation pipelines
-
----
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*

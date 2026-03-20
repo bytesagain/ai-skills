@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Intern Report
-description: "实习报告和实习总结生成器。日报、周报、实习总结、心得体会、答辩PPT大纲、深度反思与职业规划。. Use when you need intern report capabilities. Triggers on: intern report."
-  实习报告生成器。实习总结、周记、心得体会、答辩PPT大纲、深度反思。Intern report generator with weekly logs, summaries, defense outlines, deep reflection. 实习周记、实习心得、毕业实习。Use when writing internship reports.
+description: "Generate internship reports, daily logs, weekly summaries, and reflections. Use when writing logs, composing summaries, or drafting final intern reports."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # intern-report

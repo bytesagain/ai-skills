@@ -1,0 +1,9 @@
+{
+  "name": "deployer",
+  "description": "Deploy PHP apps with zero-downtime releases and framework support. Use when deploying Laravel, running releases, configuring recipes.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

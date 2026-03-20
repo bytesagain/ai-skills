@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: math-solver
-description: "数学题解析与学习工具。分步骤解答、函数图形ASCII描述、公式速查、单位换算、练习题生成。Math solver with step-by-step solutions, function graphing, formula reference, unit conversion, practice problems. Use when you need math solver capabilities. Triggers on: math solver."
+description: "数学题解析与学习工具。分步骤解答、函数图形ASCII描述、公式速查、单位换算、练习题生成。Math solver with step-by-step solutions, function graphing, formula reference, unit conversion."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # math-solver
 

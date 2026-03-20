@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: checklist-maker
-description: "清单生成器。旅行清单、项目清单、每日清单、搬家清单、应急清单(Markdown输出)。Checklist maker with travel, project, daily, moving, emergency checklists in Markdown. Use when you need checklist maker capabilities. Triggers on: checklist maker."
+description: "Generate Markdown checklists for life and work scenarios from templates. Use when creating packing lists, onboarding guides, or launch checklists."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Checklist Maker ✅

@@ -1,0 +1,9 @@
+{
+  "name": "cpuwatch",
+  "description": "Watch real-time CPU utilization with per-core breakdown and alerts. Use when monitoring spikes, identifying runaway processes, tracking cores.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "file-converter-pro",
+  "description": "\ud83d\udcbe Self-hosted online file converter. Supports 1000+ formats \u2699\ufe0f file converter pro, typescript, bun, conversion, convert, converter.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

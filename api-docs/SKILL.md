@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: Showdoc
-description: "ShowDoc is a tool greatly applicable for an IT team to share documents online一个非常适合IT团队的在线API文档、技术文档 api-docs, php, api, document, documentation-tool, api-docs. Use when you need api-docs capabilities. Triggers on: api-docs."
+description: "ShowDoc is a tool greatly applicable for an IT team to share documents online一个非常适合IT团队的在线API文档、技术文档 api-docs, php, api, document, documentation-tool."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Showdoc

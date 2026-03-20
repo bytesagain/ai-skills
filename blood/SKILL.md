@@ -1,99 +1,112 @@
 ---
-name: "Blood"
-description: "Blood — a fast health & wellness tool. Log anything, find it later, export when needed."
-version: "2.0.0"
+name: "blood"
+version: "1.0.0"
+description: "Log blood pressure, glucose, and health metrics with trend charts. Use when recording vitals, reviewing health trends, or exporting medical logs."
 author: "BytesAgain"
-tags: ["health", "wellness", "fitness", "blood", "personal"]
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [blood, general, cli, tool]
+category: "general"
 ---
 
-# Blood
+# blood
 
-Blood — a fast health & wellness tool. Log anything, find it later, export when needed.
-
-## Why Blood?
-
-- Works entirely offline — your data never leaves your machine
-- Simple command-line interface, no GUI needed
-- Export to JSON, CSV, or plain text anytime
-- Automatic history and activity logging
-
-## Getting Started
-
-```bash
-# See what you can do
-blood help
-
-# Check current status
-blood status
-
-# View your statistics
-blood stats
-```
+Log blood pressure, glucose, and health metrics with trend charts. Use when recording vitals, reviewing health trends, or exporting medical logs.
 
 ## Commands
 
-| Command | What it does |
-|---------|-------------|
-| `blood log` | Log |
-| `blood track` | Track |
-| `blood chart` | Chart |
-| `blood goal` | Goal |
-| `blood remind` | Remind |
-| `blood weekly` | Weekly |
-| `blood monthly` | Monthly |
-| `blood compare` | Compare |
-| `blood export` | Export |
-| `blood streak` | Streak |
-| `blood milestone` | Milestone |
-| `blood trend` | Trend |
-| `blood stats` | Summary statistics |
-| `blood export` | <fmt>       Export (json|csv|txt) |
-| `blood search` | <term>      Search entries |
-| `blood recent` | Recent activity |
-| `blood status` | Health check |
-| `blood help` | Show this help |
-| `blood version` | Show version |
-| `blood $name:` | $c entries |
-| `blood Total:` | $total entries |
-| `blood Data` | size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1) |
-| `blood Version:` | v2.0.0 |
-| `blood Data` | dir: $DATA_DIR |
-| `blood Entries:` | $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total |
-| `blood Disk:` | $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1) |
-| `blood Last:` | $(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo never) |
-| `blood Status:` | OK |
-| `blood [Blood]` | log: $input |
-| `blood Saved.` | Total log entries: $total |
-| `blood [Blood]` | track: $input |
-| `blood Saved.` | Total track entries: $total |
-| `blood [Blood]` | chart: $input |
-| `blood Saved.` | Total chart entries: $total |
-| `blood [Blood]` | goal: $input |
-| `blood Saved.` | Total goal entries: $total |
-| `blood [Blood]` | remind: $input |
-| `blood Saved.` | Total remind entries: $total |
-| `blood [Blood]` | weekly: $input |
-| `blood Saved.` | Total weekly entries: $total |
-| `blood [Blood]` | monthly: $input |
-| `blood Saved.` | Total monthly entries: $total |
-| `blood [Blood]` | compare: $input |
-| `blood Saved.` | Total compare entries: $total |
-| `blood [Blood]` | export: $input |
-| `blood Saved.` | Total export entries: $total |
-| `blood [Blood]` | streak: $input |
-| `blood Saved.` | Total streak entries: $total |
-| `blood [Blood]` | milestone: $input |
-| `blood Saved.` | Total milestone entries: $total |
-| `blood [Blood]` | trend: $input |
-| `blood Saved.` | Total trend entries: $total |
+### `status`
+
+```bash
+scripts/script.sh status
+```
+
+Show current status
+
+### `add`
+
+```bash
+scripts/script.sh add
+```
+
+Add new entry
+
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
+
+## Configuration
+
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `BLOOD_DIR` | No | Data directory (default: ~/.blood/) |
 
 ## Data Storage
 
-All data is stored locally at `~/.local/share/blood/`. Each action is logged with timestamps. Use `export` to back up your data anytime.
+All data stored in `~/.blood/` using JSONL format (one JSON object per line).
 
-## Feedback
+## Output
 
-Found a bug or have a suggestion? Let us know: https://bytesagain.com/feedback/
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

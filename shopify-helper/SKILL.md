@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: shopify-helper
-description: "Shopify建站助手。店铺搭建、主题定制、产品管理、SEO优化、应用推荐、上线检查。Shopify store builder with setup, theme, product, SEO, apps, launch checklist. Shopify、独立站、DTC品牌、电商建站。Use when building or optimizing Shopify stores. Triggers on: shopify helper."
+description: "Set up Shopify stores with theme, product, and SEO management. Use when building storefronts, customizing themes, managing products, optimizing SEO."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # shopify-helper
 

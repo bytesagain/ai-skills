@@ -1,99 +1,112 @@
 ---
-name: "Room"
-description: "Terminal-first Room manager. Keep your home management data organized with simple commands."
-version: "2.0.0"
+name: "room"
+version: "1.0.0"
+description: "Organize room inventory and maintenance schedules. Use when adding furniture items, tracking appliances, scheduling deep cleans, setting repair reminders."
 author: "BytesAgain"
-tags: ["organize", "domestic", "room", "inventory", "home"]
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [room, general, cli, tool]
+category: "general"
 ---
 
-# Room
+# room
 
-Terminal-first Room manager. Keep your home management data organized with simple commands.
-
-## Why Room?
-
-- Works entirely offline — your data never leaves your machine
-- Simple command-line interface, no GUI needed
-- Export to JSON, CSV, or plain text anytime
-- Automatic history and activity logging
-
-## Getting Started
-
-```bash
-# See what you can do
-room help
-
-# Check current status
-room status
-
-# View your statistics
-room stats
-```
+Organize room inventory and maintenance schedules. Use when adding furniture items, tracking appliances, scheduling deep cleans, setting repair reminders.
 
 ## Commands
 
-| Command | What it does |
-|---------|-------------|
-| `room add` | Add |
-| `room inventory` | Inventory |
-| `room schedule` | Schedule |
-| `room remind` | Remind |
-| `room checklist` | Checklist |
-| `room usage` | Usage |
-| `room cost` | Cost |
-| `room maintain` | Maintain |
-| `room log` | Log |
-| `room report` | Report |
-| `room seasonal` | Seasonal |
-| `room tips` | Tips |
-| `room stats` | Summary statistics |
-| `room export` | <fmt>       Export (json|csv|txt) |
-| `room search` | <term>      Search entries |
-| `room recent` | Recent activity |
-| `room status` | Health check |
-| `room help` | Show this help |
-| `room version` | Show version |
-| `room $name:` | $c entries |
-| `room Total:` | $total entries |
-| `room Data` | size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1) |
-| `room Version:` | v2.0.0 |
-| `room Data` | dir: $DATA_DIR |
-| `room Entries:` | $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total |
-| `room Disk:` | $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1) |
-| `room Last:` | $(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo never) |
-| `room Status:` | OK |
-| `room [Room]` | add: $input |
-| `room Saved.` | Total add entries: $total |
-| `room [Room]` | inventory: $input |
-| `room Saved.` | Total inventory entries: $total |
-| `room [Room]` | schedule: $input |
-| `room Saved.` | Total schedule entries: $total |
-| `room [Room]` | remind: $input |
-| `room Saved.` | Total remind entries: $total |
-| `room [Room]` | checklist: $input |
-| `room Saved.` | Total checklist entries: $total |
-| `room [Room]` | usage: $input |
-| `room Saved.` | Total usage entries: $total |
-| `room [Room]` | cost: $input |
-| `room Saved.` | Total cost entries: $total |
-| `room [Room]` | maintain: $input |
-| `room Saved.` | Total maintain entries: $total |
-| `room [Room]` | log: $input |
-| `room Saved.` | Total log entries: $total |
-| `room [Room]` | report: $input |
-| `room Saved.` | Total report entries: $total |
-| `room [Room]` | seasonal: $input |
-| `room Saved.` | Total seasonal entries: $total |
-| `room [Room]` | tips: $input |
-| `room Saved.` | Total tips entries: $total |
+### `status`
+
+```bash
+scripts/script.sh status
+```
+
+Show current status
+
+### `add`
+
+```bash
+scripts/script.sh add
+```
+
+Add new entry
+
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
+
+## Configuration
+
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `ROOM_DIR` | No | Data directory (default: ~/.room/) |
 
 ## Data Storage
 
-All data is stored locally at `~/.local/share/room/`. Each action is logged with timestamps. Use `export` to back up your data anytime.
+All data stored in `~/.room/` using JSONL format (one JSON object per line).
 
-## Feedback
+## Output
 
-Found a bug or have a suggestion? Let us know: https://bytesagain.com/feedback/
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

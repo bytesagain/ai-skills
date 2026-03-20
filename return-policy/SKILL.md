@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Return Policy
-description: "Return Policy Generator. Use when you need return policy capabilities. Triggers on: return policy."
-  退换货政策生成。电商退货政策、实体店政策、国际退货、退款流程、模板库、FAQ。Return policy generator. 退换货、退款政策。
+description: "Generate return and refund policies for online stores. Use when drafting refund terms, listing exceptions, adding international rules, creating FAQs."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # Return Policy
 

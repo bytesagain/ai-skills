@@ -1,83 +1,112 @@
 ---
-name: puzzle
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [puzzle, tool, utility]
-description: "Puzzle - command-line tool for everyday use"
+name: "puzzle"
+version: "1.0.0"
+description: "Brain teasers, riddles, and logic puzzles with streak tracking. Use when exercising your brain."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [puzzle, general, cli, tool]
+category: "general"
 ---
 
-# Puzzle
+# puzzle
 
-Puzzle generator — crosswords, sudoku, word search, and logic puzzles.
+Brain teasers, riddles, and logic puzzles with streak tracking. Use when exercising your brain.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `puzzle help` | Show usage info |
-| `puzzle run` | Run main task |
-| `puzzle status` | Check state |
-| `puzzle list` | List items |
-| `puzzle add <item>` | Add item |
-| `puzzle export <fmt>` | Export data |
-
-## Usage
+### `status`
 
 ```bash
-puzzle help
-puzzle run
-puzzle status
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-puzzle help
-puzzle run
-puzzle export json
+scripts/script.sh add
 ```
 
-## Output
+Add new entry
 
-Results go to stdout. Save with `puzzle run > output.txt`.
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `PUZZLE_DIR` to change data directory. Default: `~/.local/share/puzzle/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `PUZZLE_DIR` | No | Data directory (default: ~/.puzzle/) |
+
+## Data Storage
+
+All data stored in `~/.puzzle/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
 
-
-## Features
-
-- Simple command-line interface for quick access
-- Local data storage with JSON/CSV export
-- History tracking and activity logs
-- Search across all entries
-
-## Quick Start
-
-```bash
-# Check status
-puzzle status
-
-# View help
-puzzle help
-
-# Export data
-puzzle export json
-```
-
-## How It Works
-
-Puzzle stores all data locally in `~/.local/share/puzzle/`. Each command logs activity with timestamps for full traceability.
-
-## Support
-
-- Feedback: https://bytesagain.com/feedback/
-- Website: https://bytesagain.com
-
-Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

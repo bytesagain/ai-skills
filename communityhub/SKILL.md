@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Community Manager
-description: "Community Manager. Use when you need communityhub capabilities. Triggers on: communityhub."
-  社群运营。社群搭建、活跃度提升、内容规划、用户增长、变现策略、危机处理。Community management toolkit. 社群、运营、私域。
+description: "Manage community operations including growth, content, and moderation. Use when onboarding members, scheduling events, moderating discussions."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # Community Manager
 

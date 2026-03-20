@@ -1,57 +1,113 @@
 ---
 version: "2.0.0"
 name: Mortgage Calculator
-description: "房贷计算器。等额本息、等额本金、提前还款、两种方式对比、贷款能力评估。. Use when you need mortgage calculator capabilities. Triggers on: mortgage calculator."
-  房贷计算器。等额本息、等额本金、提前还款、利率对比、月供计算、贷款能力评估。Mortgage calculator with equal principal, prepayment analysis, rate comparison, affordability assessment. 房贷计算、买房、月供、公积金贷款、我能贷多少。Use when calculating mortgage payments.
+description: "Calculate mortgage payments with equal-principal and equal-interest comparisons. Use when comparing loans, calculating payments, evaluating prepayment."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
-# mortgage-calculator
+# Mortgage Calculator
 
-房贷计算器。等额本息、等额本金、提前还款、两种方式对比、贷款能力评估。
+Multi-purpose utility tool for managing structured data entries related to mortgage and financial calculations. Add, list, search, remove, and export data items — all stored locally in a simple log-based format with full history tracking.
 
 ## Commands
 
-All commands via `scripts/mortgage.sh`:
+All commands are invoked via `mortgage-calculator <command> [args]`.
 
-| Command | Usage | Description |
-|---------|-------|-------------|
-| `equal-payment` | `mortgage.sh equal-payment "总额万" "年限" "利率%"` | 等额本息计算（月供固定） |
-| `equal-principal` | `mortgage.sh equal-principal "总额万" "年限" "利率%"` | 等额本金计算（月供递减） |
-| `prepay` | `mortgage.sh prepay "剩余本金万" "已还月数" "提前还款万"` | 提前还款节省利息计算 |
-| `compare` | `mortgage.sh compare "总额万" "年限" "利率%"` | 等额本息 vs 等额本金全面对比 |
-| `afford` | `mortgage.sh afford "月收入" "月支出"` | 我能贷多少？（反算贷款能力） |
-| `help` | `mortgage.sh help` | 显示帮助信息 |
+| Command | Description |
+|---------|-------------|
+| `run <args>` | Execute the main function — logs and confirms execution of the specified operation |
+| `config` | Show the configuration file path (`$DATA_DIR/config.json`) |
+| `status` | Show current status (reports "ready" when the tool is operational) |
+| `init` | Initialize the data directory (creates the data folder if it doesn't exist) |
+| `list` | List all data entries from the data log file |
+| `add <text>` | Add a new dated entry to the data log (auto-prefixed with `YYYY-MM-DD`) |
+| `remove <item>` | Remove an entry and log the removal |
+| `search <term>` | Search the data log for a keyword (case-insensitive match via `grep -i`) |
+| `export` | Export all data from the data log to stdout |
+| `info` | Show current version number and data directory path |
+| `help` | Show the built-in help message with all available commands |
+| `version` | Print version string (`mortgage-calculator v2.0.0`) |
+
+## Data Storage
+
+- **Location:** `~/.local/share/mortgage-calculator/` (override with `MORTGAGE_CALCULATOR_DIR` environment variable, or `XDG_DATA_HOME`)
+- **Data log:** `data.log` — stores all entries added via `add`, one per line, prefixed with `YYYY-MM-DD`
+- **History:** `history.log` — every command execution is recorded with a timestamp (`MM-DD HH:MM command: details`) for auditing
+- **Format:** Plain text, one entry per line, human-readable
+
+## Requirements
+
+- Bash 4+
+- Standard Unix utilities (`date`, `grep`, `cat`, `echo`)
+- No external dependencies, no API keys, no network access needed
+
+## When to Use
+
+1. **Financial record keeping** — Use `mortgage-calculator add` to log mortgage-related events (payments made, rate changes, lender communications) and build a local history
+2. **Payment tracking** — Record monthly payments, extra payments, or escrow changes with `add`, then review the full log with `list`
+3. **Comparison notes** — Store notes from different loan scenarios or lender quotes using `add`, then `search` to find specific terms or rates
+4. **Data export for spreadsheets** — Use `mortgage-calculator export` to dump all entries to stdout and redirect to a file for import into Excel or Google Sheets
+5. **Automation and scripting** — Integrate `mortgage-calculator add` and `mortgage-calculator export` into shell scripts or cron jobs for automated financial logging workflows
 
 ## Examples
 
 ```bash
-# 贷款100万，30年，利率3.5%（等额本息）
-bash scripts/mortgage.sh equal-payment 100 30 3.5
+# Initialize the data directory
+mortgage-calculator init
 
-# 贷款80万，20年，利率3.5%（等额本金）
-bash scripts/mortgage.sh equal-principal 80 20 3.5
+# Add a mortgage payment record
+mortgage-calculator add "Monthly payment: ¥4,235.00 — principal ¥2,100 + interest ¥2,135"
 
-# 剩余本金60万，已还60个月，提前还20万
-bash scripts/mortgage.sh prepay 60 60 20
+# Add a rate change note
+mortgage-calculator add "Rate adjusted from 3.85% to 3.50% effective 2025-01-01"
 
-# 对比两种还款方式
-bash scripts/mortgage.sh compare 100 30 3.5
+# Add a prepayment record
+mortgage-calculator add "Prepayment: ¥50,000 applied to principal, new balance ¥680,000"
 
-# 月收入2万，月支出5千，能贷多少？
-bash scripts/mortgage.sh afford 20000 5000
+# List all entries
+mortgage-calculator list
+
+# Search for entries about rate changes
+mortgage-calculator search "rate"
+
+# Search for prepayment records
+mortgage-calculator search "prepayment"
+
+# Export all data to a file
+mortgage-calculator export > mortgage-history.txt
+
+# Check current status
+mortgage-calculator status
+
+# Show version and data path
+mortgage-calculator info
+
+# Run a custom operation
+mortgage-calculator run "quarterly review"
 ```
 
-## Reference
+## Output
 
-- 参考文档: `tips.md` — 房贷实用指南（提前还款攻略、利率知识、买房避坑）
+All command output goes to stdout. Redirect to save:
 
-## Notes
+```bash
+mortgage-calculator list > all-records.txt
+mortgage-calculator export > backup.txt
+```
 
-- 金额单位：万元
-- 利率单位：年利率百分比（如3.5表示3.5%）
-- 纯本地计算，无需联网
-- Python 3.6+ 兼容
+## Configuration
+
+Set the `MORTGAGE_CALCULATOR_DIR` environment variable to change the data directory:
+
+```bash
+export MORTGAGE_CALCULATOR_DIR="$HOME/my-mortgage-data"
+mortgage-calculator init
+```
+
+Default location: `~/.local/share/mortgage-calculator/`
+
 ---
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

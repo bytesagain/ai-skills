@@ -1,332 +1,155 @@
 #!/usr/bin/env bash
-# Video Toolbox — utility tool
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-DATA_DIR="${HOME}/.local/share/video-toolbox"
+VERSION="3.0.0"
+SCRIPT_NAME="video-toolbox"
+DATA_DIR="$HOME/.local/share/video-toolbox"
 mkdir -p "$DATA_DIR"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-_version() { echo "video-toolbox v2.0.0"; }
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
-_help() {
-    echo "Video Toolbox v2.0.0 — utility toolkit"
-    echo ""
-    echo "Usage: video-toolbox <command> [args]"
+cmd_info() {
+    local file="${2:-}"
+    [ -z "$file" ] && die "Usage: $SCRIPT_NAME info <file>"
+    ffprobe -v quiet -print_format json -show_format -show_streams $2 2>/dev/null | python3 -c 'import json,sys;d=json.load(sys.stdin);f=d["format"];print("Duration:",f.get("duration","?"),"Size:",f.get("size","?"))' 2>/dev/null || file $2
+}
+
+cmd_convert() {
+    local in="${2:-}"
+    local out="${3:-}"
+    [ -z "$in" ] && die "Usage: $SCRIPT_NAME convert <in out>"
+    ffmpeg -i $2 $3 2>/dev/null && echo 'Converted to $3' || echo 'ffmpeg required'
+}
+
+cmd_trim() {
+    local file="${2:-}"
+    local start="${3:-}"
+    local end="${4:-}"
+    local out="${5:-}"
+    [ -z "$file" ] && die "Usage: $SCRIPT_NAME trim <file start end out>"
+    ffmpeg -i $2 -ss $3 -to $4 -c copy $5 2>/dev/null && echo 'Trimmed' || echo 'ffmpeg required'
+}
+
+cmd_thumbnail() {
+    local file="${2:-}"
+    local timestamp="${3:-}"
+    [ -z "$file" ] && die "Usage: $SCRIPT_NAME thumbnail <file timestamp>"
+    ffmpeg -i $2 -ss ${3:-00:00:01} -vframes 1 thumb.jpg 2>/dev/null && echo 'Created thumb.jpg' || echo 'ffmpeg required'
+}
+
+cmd_compress() {
+    local file="${2:-}"
+    local out="${3:-}"
+    [ -z "$file" ] && die "Usage: $SCRIPT_NAME compress <file out>"
+    ffmpeg -i $2 -crf 28 -preset fast $3 2>/dev/null && echo 'Compressed' || echo 'ffmpeg required'
+}
+
+cmd_merge() {
+    local f1="${2:-}"
+    local f2="${3:-}"
+    local out="${4:-}"
+    [ -z "$f1" ] && die "Usage: $SCRIPT_NAME merge <f1 f2 out>"
+    echo 'file $2' > /tmp/merge_list.txt && echo 'file $3' >> /tmp/merge_list.txt && ffmpeg -f concat -i /tmp/merge_list.txt -c copy $4 2>/dev/null || echo 'ffmpeg required'
+}
+
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
     echo ""
     echo "Commands:"
-    echo "  run                Run"
-    echo "  check              Check"
-    echo "  convert            Convert"
-    echo "  analyze            Analyze"
-    echo "  generate           Generate"
-    echo "  preview            Preview"
-    echo "  batch              Batch"
-    echo "  compare            Compare"
-    echo "  export             Export"
-    echo "  config             Config"
-    echo "  status             Status"
-    echo "  report             Report"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
+    printf "  %-25s\n" "info <file>"
+    printf "  %-25s\n" "convert <in out>"
+    printf "  %-25s\n" "trim <file start end out>"
+    printf "  %-25s\n" "thumbnail <file timestamp>"
+    printf "  %-25s\n" "compress <file out>"
+    printf "  %-25s\n" "merge <f1 f2 out>"
+    printf "  %%-25s\n" "help"
     echo ""
-    echo "Data: $DATA_DIR"
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-_stats() {
-    echo "=== Video Toolbox Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Since: $(head -1 "$DATA_DIR/history.log" 2>/dev/null | cut -d'|' -f1 || echo 'N/A')"
-}
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
 
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "" >> "$out"
-            echo "]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    echo "$name,$ts,$val" >> "$out"
-                done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Video Toolbox Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-                echo "" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        info) shift; cmd_info "$@" ;;
+        convert) shift; cmd_convert "$@" ;;
+        trim) shift; cmd_trim "$@" ;;
+        thumbnail) shift; cmd_thumbnail "$@" ;;
+        compress) shift; cmd_compress "$@" ;;
+        merge) shift; cmd_merge "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
     esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
 }
 
-_status() {
-    echo "=== Video Toolbox Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    local last=$(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo "never")
-    echo "  Last activity: $last"
-    echo "  Status: OK"
-}
-
-_search() {
-    local term="${1:?Usage: video-toolbox search <term>}"
-    echo "Searching for: $term"
-    local found=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local matches=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$matches" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$matches" | while read -r line; do
-                echo "    $line"
-                found=$((found + 1))
-            done
-        fi
-    done
-    [ $found -eq 0 ] && echo "  No matches found."
-}
-
-_recent() {
-    echo "=== Recent Activity ==="
-    if [ -f "$DATA_DIR/history.log" ]; then
-        tail -20 "$DATA_DIR/history.log" | while IFS='' read -r line; do
-            echo "  $line"
-        done
-    else
-        echo "  No activity yet."
-    fi
-}
-
-# Main dispatch
-case "${1:-help}" in
-    run)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent run entries:"
-            tail -20 "$DATA_DIR/run.log" 2>/dev/null || echo "  No entries yet. Use: video-toolbox run <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/run.log"
-            local total=$(wc -l < "$DATA_DIR/run.log")
-            echo "  [Video Toolbox] run: $input"
-            echo "  Saved. Total run entries: $total"
-            _log "run" "$input"
-        fi
-        ;;
-    check)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent check entries:"
-            tail -20 "$DATA_DIR/check.log" 2>/dev/null || echo "  No entries yet. Use: video-toolbox check <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/check.log"
-            local total=$(wc -l < "$DATA_DIR/check.log")
-            echo "  [Video Toolbox] check: $input"
-            echo "  Saved. Total check entries: $total"
-            _log "check" "$input"
-        fi
-        ;;
-    convert)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent convert entries:"
-            tail -20 "$DATA_DIR/convert.log" 2>/dev/null || echo "  No entries yet. Use: video-toolbox convert <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/convert.log"
-            local total=$(wc -l < "$DATA_DIR/convert.log")
-            echo "  [Video Toolbox] convert: $input"
-            echo "  Saved. Total convert entries: $total"
-            _log "convert" "$input"
-        fi
-        ;;
-    analyze)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent analyze entries:"
-            tail -20 "$DATA_DIR/analyze.log" 2>/dev/null || echo "  No entries yet. Use: video-toolbox analyze <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/analyze.log"
-            local total=$(wc -l < "$DATA_DIR/analyze.log")
-            echo "  [Video Toolbox] analyze: $input"
-            echo "  Saved. Total analyze entries: $total"
-            _log "analyze" "$input"
-        fi
-        ;;
-    generate)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent generate entries:"
-            tail -20 "$DATA_DIR/generate.log" 2>/dev/null || echo "  No entries yet. Use: video-toolbox generate <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/generate.log"
-            local total=$(wc -l < "$DATA_DIR/generate.log")
-            echo "  [Video Toolbox] generate: $input"
-            echo "  Saved. Total generate entries: $total"
-            _log "generate" "$input"
-        fi
-        ;;
-    preview)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent preview entries:"
-            tail -20 "$DATA_DIR/preview.log" 2>/dev/null || echo "  No entries yet. Use: video-toolbox preview <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/preview.log"
-            local total=$(wc -l < "$DATA_DIR/preview.log")
-            echo "  [Video Toolbox] preview: $input"
-            echo "  Saved. Total preview entries: $total"
-            _log "preview" "$input"
-        fi
-        ;;
-    batch)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent batch entries:"
-            tail -20 "$DATA_DIR/batch.log" 2>/dev/null || echo "  No entries yet. Use: video-toolbox batch <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/batch.log"
-            local total=$(wc -l < "$DATA_DIR/batch.log")
-            echo "  [Video Toolbox] batch: $input"
-            echo "  Saved. Total batch entries: $total"
-            _log "batch" "$input"
-        fi
-        ;;
-    compare)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent compare entries:"
-            tail -20 "$DATA_DIR/compare.log" 2>/dev/null || echo "  No entries yet. Use: video-toolbox compare <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/compare.log"
-            local total=$(wc -l < "$DATA_DIR/compare.log")
-            echo "  [Video Toolbox] compare: $input"
-            echo "  Saved. Total compare entries: $total"
-            _log "compare" "$input"
-        fi
-        ;;
-    export)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent export entries:"
-            tail -20 "$DATA_DIR/export.log" 2>/dev/null || echo "  No entries yet. Use: video-toolbox export <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/export.log"
-            local total=$(wc -l < "$DATA_DIR/export.log")
-            echo "  [Video Toolbox] export: $input"
-            echo "  Saved. Total export entries: $total"
-            _log "export" "$input"
-        fi
-        ;;
-    config)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent config entries:"
-            tail -20 "$DATA_DIR/config.log" 2>/dev/null || echo "  No entries yet. Use: video-toolbox config <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/config.log"
-            local total=$(wc -l < "$DATA_DIR/config.log")
-            echo "  [Video Toolbox] config: $input"
-            echo "  Saved. Total config entries: $total"
-            _log "config" "$input"
-        fi
-        ;;
-    status)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent status entries:"
-            tail -20 "$DATA_DIR/status.log" 2>/dev/null || echo "  No entries yet. Use: video-toolbox status <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/status.log"
-            local total=$(wc -l < "$DATA_DIR/status.log")
-            echo "  [Video Toolbox] status: $input"
-            echo "  Saved. Total status entries: $total"
-            _log "status" "$input"
-        fi
-        ;;
-    report)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent report entries:"
-            tail -20 "$DATA_DIR/report.log" 2>/dev/null || echo "  No entries yet. Use: video-toolbox report <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/report.log"
-            local total=$(wc -l < "$DATA_DIR/report.log")
-            echo "  [Video Toolbox] report: $input"
-            echo "  Saved. Total report entries: $total"
-            _log "report" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown command: $1"
-        echo "Run 'video-toolbox help' for available commands."
-        exit 1
-        ;;
-esac
+main "$@"

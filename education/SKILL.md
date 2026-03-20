@@ -1,57 +1,86 @@
 ---
 name: education
-version: "2.0.0"
+description: "Generate study materials. Use when creating study plans, quizzes, flashcards, tracking progress, or scheduling review sessions."
+version: "3.4.0"
 author: BytesAgain
-license: MIT-0
-tags: [education, tool, utility]
-description: "Education - command-line tool for everyday use"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
+tags:
+  - education
+  - learning
+  - study
+  - quiz
+  - flashcard
+  - review
 ---
 
-# Education
+# Education Skill
 
-Education toolkit — create lesson plans, generate quizzes, track student progress, manage curriculum, build study schedules, and export course materials.
+Generate study plans, quizzes, flashcards, and review materials for any topic. Track progress and schedule sessions.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `education lesson` | <topic> |
-| `education quiz` | <topic> [n] |
-| `education progress` | <student> |
-| `education curriculum` | Curriculum |
-| `education schedule` | Schedule |
-| `education export` | <format> |
+### plan
 
-## Usage
+Generate a structured learning plan for a topic.
 
 ```bash
-# Show help
-education help
-
-# Quick start
-education lesson <topic>
+bash scripts/script.sh plan <topic> [--weeks <num>] [--level beginner|intermediate|advanced] [--output json|text]
 ```
 
-## Examples
+### quiz
+
+Generate quiz questions on a topic.
 
 ```bash
-# Example 1
-education lesson <topic>
-
-# Example 2
-education quiz <topic> [n]
+bash scripts/script.sh quiz <topic> [--count <num>] [--type mcq|truefalse|short] [--difficulty easy|medium|hard]
 ```
 
-- Run `education help` for all available commands
+### flashcard
 
----
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
+Generate flashcards for key concepts.
+
+```bash
+bash scripts/script.sh flashcard <topic> [--count <num>] [--format plain|csv|json]
+```
+
+### progress
+
+Track and display learning progress.
+
+```bash
+bash scripts/script.sh progress [--topic <topic>] [--mark <milestone>] [--reset]
+```
+
+### schedule
+
+Create a study schedule with time blocks.
+
+```bash
+bash scripts/script.sh schedule <topic> [--hours-per-day <num>] [--days <num>] [--start <date>]
+```
+
+### review
+
+Generate a review checklist from completed topics.
+
+```bash
+bash scripts/script.sh review <topic> [--scope all|weak|recent] [--format checklist|summary]
+```
 
 ## Output
 
-Results go to stdout. Save with `education run > output.txt`.
+All commands print to stdout. Use `--output json` (where supported) for machine-readable output. Progress data is stored in `~/.education/progress.json`.
 
-## Configuration
 
-Set `EDUCATION_DIR` to change data directory. Default: `~/.local/share/education/`
+## Requirements
+- bash 4+
+- python3 (standard library only)
+
+## Feedback
+
+Questions or suggestions? → [https://bytesagain.com/feedback/](https://bytesagain.com/feedback/)
+
+---
+
+Powered by BytesAgain | bytesagain.com

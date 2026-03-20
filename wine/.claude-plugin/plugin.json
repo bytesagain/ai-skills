@@ -1,0 +1,9 @@
+{
+  "name": "wine",
+  "description": "Record, search, and analyze your wine collection and tasting notes. Use when logging tastings, searching vintages, comparing ratings, or tracking inventory.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "web-profiler-bundle",
+  "description": "Profile HTTP requests with timing, memory, and query breakdowns. Use when debugging slow routes, analyzing queries, inspecting middleware, or optimizing.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "mailcheck",
+  "description": "Validate emails by checking MX, SPF/DKIM records, and SMTP connectivity. Use when verifying addresses, diagnosing delivery failures, checking DNS mail.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

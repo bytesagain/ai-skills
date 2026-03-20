@@ -1,0 +1,9 @@
+{
+  "name": "license",
+  "description": "Manage software license keys with generation, rotation, and audit tracking. Use when generating keys, auditing licenses, rotating expired credentials.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

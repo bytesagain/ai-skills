@@ -1,59 +1,106 @@
 ---
 version: "2.0.0"
 name: Gift Finder
-description: "Gift Finder. Use when you need gift finder capabilities. Triggers on: gift finder."
-  礼物推荐。按对象/预算/场合推荐、创意礼物、DIY礼物、礼物清单、贺卡文案。Gift finder by person, budget, occasion. 礼物、送礼、推荐。
+description: "Recommend gifts by person, budget, and occasion with creative card ideas. Use when picking birthday gifts, finding presents, or writing greetings."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
+
 # Gift Finder
 
-礼物推荐。按对象/预算/场合推荐、创意礼物、DIY礼物、礼物清单、贺卡文案。Gift finder by person, budget, occasion. 礼物、送礼、推荐。
+Multi-purpose utility tool for running tasks, managing configuration, tracking entries, searching data, and exporting results. All operations are logged with timestamps and stored locally for full traceability.
 
-## 如何使用
+## Commands
 
-1. 选择你需要的功能命令
-2. 输入你的具体需求描述
-3. 获取专业的输出结果
-4. 根据需要调整和完善
+| Command | Usage | Description |
+|---------|-------|-------------|
+| `run` | `gift-finder run <input>` | Execute main function with given input |
+| `config` | `gift-finder config` | Show configuration file location |
+| `status` | `gift-finder status` | Show current status (ready/not ready) |
+| `init` | `gift-finder init` | Initialize the data directory |
+| `list` | `gift-finder list` | List all entries from the data log |
+| `add` | `gift-finder add <entry>` | Add a new entry with today's date |
+| `remove` | `gift-finder remove <entry>` | Remove an entry |
+| `search` | `gift-finder search <term>` | Search entries for a keyword (case-insensitive) |
+| `export` | `gift-finder export` | Export all data from the log |
+| `info` | `gift-finder info` | Show version and data directory path |
+| `help` | `gift-finder help` | Show help with all available commands |
+| `version` | `gift-finder version` | Print version string |
 
-## 命令列表
+## Data Storage
 
-| 命令 | 功能 |
-|------|------|
-| `find` | find |
-| `budget` | budget |
-| `occasion` | occasion |
-| `creative` | creative |
-| `diy` | diy |
-| `card` | card |
+All data is stored locally at `~/.local/share/gift-finder/` (override with `GIFT_FINDER_DIR` env var):
 
----
-*Gift Finder by BytesAgain*
----
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
+- `data.log` — Main data log for entries added via `add`, listed via `list`, searched via `search`
+- `history.log` — Unified activity log across all commands with timestamps
+- `config.json` — Configuration file (referenced by `config` command)
+- Follows XDG Base Directory spec (`XDG_DATA_HOME` supported)
+
+No cloud services, no network calls, no external API calls needed. Fully offline.
+
+## Requirements
+
+- Bash 4+ (uses `set -euo pipefail`)
+- Standard Unix utilities (`date`, `grep`, `cat`)
+- No external dependencies
+
+## When to Use
+
+1. **Maintaining a gift idea list** — Use `gift-finder add "Wireless headphones for Dad's birthday"` to build a running list of gift ideas, then `gift-finder list` to review them all when shopping time comes.
+2. **Searching past entries** — Use `gift-finder search "birthday"` to find all birthday-related entries across your data log when you need inspiration from previous ideas.
+3. **Initializing a fresh workspace** — Use `gift-finder init` when setting up on a new machine to create the data directory structure, then `gift-finder status` to verify everything is ready.
+4. **Exporting data for sharing** — Use `gift-finder export` to dump all entries to stdout, which can be redirected to a file or piped to another tool for further processing.
+5. **Quick system info check** — Use `gift-finder info` to see the current version and data directory path, useful for debugging or verifying which instance is active.
 
 ## Examples
 
 ```bash
-# Show help
-gift-finder help
+# Initialize the data directory
+gift-finder init
 
-# Run
-gift-finder run
+# Add a gift idea
+gift-finder add "Kindle Paperwhite for Mom"
+
+# Add another entry
+gift-finder add "Board game collection for family game night"
+
+# List all entries
+gift-finder list
+
+# Search for entries containing "Mom"
+gift-finder search "Mom"
+
+# Check current status
+gift-finder status
+
+# View configuration location
+gift-finder config
+
+# Show version and data path
+gift-finder info
+
+# Export all data
+gift-finder export
+
+# Run main function
+gift-finder run "process holiday list"
+
+# Remove an entry
+gift-finder remove "Kindle Paperwhite for Mom"
 ```
 
-- Run `gift-finder help` for commands
-- No API keys needed
+## How It Works
 
-- Run `gift-finder help` for all commands
+Gift Finder stores all data locally in `~/.local/share/gift-finder/`. The `add` command appends entries to `data.log` with the current date prefix (`YYYY-MM-DD`). Every command logs its activity to `history.log` with timestamps in `MM-DD HH:MM` format. The `list` command displays the full data log, while `search` performs case-insensitive grep across entries.
 
-## Commands
+## Notes
 
-Run `gift-finder help` to see all available commands.
+- Entries are stored as plain text for easy inspection and portability
+- The `remove` command logs the removal but actual deletion depends on implementation
+- All operations are purely local — no network access, no external APIs
+- Redirect output to files with `gift-finder export > my_list.txt`
 
-- Run `gift-finder help` for all commands
+---
 
-## Output
-
-Results go to stdout. Save with `gift-finder run > output.txt`.
+Powered by BytesAgain | bytesagain.com | hello@bytesagain.com

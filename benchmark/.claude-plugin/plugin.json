@@ -1,0 +1,9 @@
+{
+  "name": "benchmark",
+  "description": "Run performance benchmarks and stress tests using Python profiling tools. Use when you need to measure, compare, or analyze system and application performance.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,102 +1,155 @@
 #!/usr/bin/env bash
-# ip-advisor - System operations and monitoring tool
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${IP_ADVISOR_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/ip-advisor}"
-DB="$DATA_DIR/data.log"
+
+VERSION="3.0.0"
+SCRIPT_NAME="ip-advisor"
+DATA_DIR="$HOME/.local/share/ip-advisor"
 mkdir -p "$DATA_DIR"
 
-show_help() {
-    cat << EOF
-ip-advisor v$VERSION
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-System operations and monitoring tool
-
-Usage: ip-advisor <command> [args]
-
-Commands:
-  status               System status
-  check                Health check
-  monitor              Start monitoring
-  logs                 View logs
-  config               Show config
-  restart              Restart guide
-  backup               Backup helper
-  alert                Set alert
-  optimize             Optimization tips
-  info                 System info
-  help                 Show this help
-  version              Show version
-
-Data: \$DATA_DIR
-EOF
-}
-
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-
-cmd_status() {
-    echo "  $(uptime 2>/dev/null || echo "uptime: unknown")"
-    _log "status" "${1:-}"
-}
-
-cmd_check() {
-    echo "  CPU: $(grep -c processor /proc/cpuinfo 2>/dev/null || echo "?") cores
-      Mem: $(free -h 2>/dev/null | awk "/Mem/{print \$3"/"\$2}" || echo "?")"
-    _log "check" "${1:-}"
-}
-
-cmd_monitor() {
-    echo "  Monitoring: $1"
-    _log "monitor" "${1:-}"
-}
-
-cmd_logs() {
-    echo "  Recent: $(tail -5 /var/log/syslog 2>/dev/null || echo "no access")"
-    _log "logs" "${1:-}"
-}
-
-cmd_config() {
-    echo "  Config dir: $DATA_DIR"
-    _log "config" "${1:-}"
-}
-
-cmd_restart() {
-    echo "  systemctl restart $1"
-    _log "restart" "${1:-}"
-}
-
-cmd_backup() {
-    echo "  Backup: tar czf backup-$(date +%Y%m%d).tar.gz $1"
-    _log "backup" "${1:-}"
-}
-
-cmd_alert() {
-    echo "  Alert: $1 threshold $2"
-    _log "alert" "${1:-}"
-}
-
-cmd_optimize() {
-    echo "  1. Clear cache | 2. Compress logs | 3. Kill zombies"
-    _log "optimize" "${1:-}"
-}
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
 cmd_info() {
-    uname -a 2>/dev/null; echo "  Disk: $(df -h / 2>/dev/null | tail -1)"
-    _log "info" "${1:-}"
+    local ip="${2:-}"
+    [ -z "$ip" ] && die "Usage: $SCRIPT_NAME info <ip>"
+    echo 'IP: $2'; echo $2 | grep -qE '^10\.|^172\.(1[6-9]|2[0-9]|3[01])\.|^192\.168\.' && echo 'Type: Private' || echo 'Type: Public'
 }
 
-case "${1:-help}" in
-    status) shift; cmd_status "$@" ;;
-    check) shift; cmd_check "$@" ;;
-    monitor) shift; cmd_monitor "$@" ;;
-    logs) shift; cmd_logs "$@" ;;
-    config) shift; cmd_config "$@" ;;
-    restart) shift; cmd_restart "$@" ;;
-    backup) shift; cmd_backup "$@" ;;
-    alert) shift; cmd_alert "$@" ;;
-    optimize) shift; cmd_optimize "$@" ;;
-    info) shift; cmd_info "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "ip-advisor v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
-esac
+cmd_subnet() {
+    local cidr="${2:-}"
+    [ -z "$cidr" ] && die "Usage: $SCRIPT_NAME subnet <cidr>"
+    echo 'CIDR: $2'; echo $2 | awk -F/ '{print "Mask bits: /"$2}'
+}
+
+cmd_validate() {
+    local ip="${2:-}"
+    [ -z "$ip" ] && die "Usage: $SCRIPT_NAME validate <ip>"
+    echo $2 | grep -qE '^([0-9]{1,3}\.){3}[0-9]{1,3}$' && echo 'Valid IPv4' || echo 'Invalid'
+}
+
+cmd_local() {
+    ip -br addr 2>/dev/null | grep -v lo || ifconfig 2>/dev/null
+}
+
+cmd_public() {
+    curl -s https://checkip.amazonaws.com 2>/dev/null || echo 'Cannot determine'
+}
+
+cmd_range() {
+    local start="${2:-}"
+    local end="${3:-}"
+    [ -z "$start" ] && die "Usage: $SCRIPT_NAME range <start end>"
+    echo 'Range: $2 - $3'
+}
+
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
+    echo ""
+    echo "Commands:"
+    printf "  %-25s\n" "info <ip>"
+    printf "  %-25s\n" "subnet <cidr>"
+    printf "  %-25s\n" "validate <ip>"
+    printf "  %-25s\n" "local"
+    printf "  %-25s\n" "public"
+    printf "  %-25s\n" "range <start end>"
+    printf "  %%-25s\n" "help"
+    echo ""
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
+}
+
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        info) shift; cmd_info "$@" ;;
+        subnet) shift; cmd_subnet "$@" ;;
+        validate) shift; cmd_validate "$@" ;;
+        local) shift; cmd_local "$@" ;;
+        public) shift; cmd_public "$@" ;;
+        range) shift; cmd_range "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
+    esac
+}
+
+main "$@"

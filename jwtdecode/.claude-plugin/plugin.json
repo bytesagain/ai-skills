@@ -1,0 +1,9 @@
+{
+  "name": "jwtdecode",
+  "description": "Decode and inspect JWT tokens showing header, payload, and expiry. Use when debugging auth tokens, inspecting claims, checking token expiration.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

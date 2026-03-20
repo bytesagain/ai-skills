@@ -1,0 +1,9 @@
+{
+  "name": "cluster",
+  "description": "Perform data clustering analysis using k-means and hierarchical algorithms. Use when you need to group, classify, or segment datasets.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

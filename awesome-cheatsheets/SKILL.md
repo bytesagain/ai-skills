@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: Awesome Cheatsheets
-description: "👩‍💻👨‍💻 Awesome cheatsheets for popular programming languages, frameworks and development tools. They awesome cheatsheets, javascript, backend, bash, cheatsheet, cheatsheets, database. Use when you need awesome cheatsheets capabilities. Triggers on: awesome cheatsheets."
+description: "👩‍💻👨‍💻 Awesome cheatsheets for popular programming languages, frameworks and development tools. They awesome cheatsheets, javascript, backend, bash."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Awesome Cheatsheets

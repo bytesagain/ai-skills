@@ -1,0 +1,9 @@
+{
+  "name": "timezone",
+  "description": "Convert times across world timezones and compare availability. Use when converting meetings, checking offsets, comparing zones, generating tables.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

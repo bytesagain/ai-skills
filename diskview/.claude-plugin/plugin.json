@@ -1,0 +1,9 @@
+{
+  "name": "diskview",
+  "description": "Display disk usage and free space across mounted filesystems clearly. Use when checking mounts, comparing utilization, monitoring capacity.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

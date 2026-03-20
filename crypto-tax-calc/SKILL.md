@@ -1,115 +1,99 @@
 ---
 version: "2.0.0"
 name: Crypto Tax Calculator
-description: "Calculate crypto capital gains taxes with FIFO/LIFO/average cost methods, multi-country tax law support, and HTML report generation. Use when you need crypto tax calc capabilities. Triggers on: crypto tax calc."
+description: "Calculate crypto taxes by importing trades and generating tax reports. Use when importing trades, calculating gains, generating tax reports."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
+# Crypto Tax Calculator
 
-# Crypto Tax Calculator 📊
-
-A complete cryptocurrency tax calculation engine. Import your trades, select your jurisdiction, and generate professional tax reports.
-
-## Workflow Overview
-
-```
-[Import CSV] → [Parse Trades] → [Match Cost Basis] → [Calculate Gains] → [Apply Tax Rules] → [Generate Report]
-     ↓              ↓                  ↓                    ↓                   ↓                    ↓
-  Validate      Normalize         FIFO/LIFO/AVG        Short vs Long       US/UK/AU/CN         HTML + CSV
-  Format        Currencies        Cost Matching         Term Gains          Rate Tables          Tax Report
-```
-
-## Step 1: Prepare Your Data
-
-Your CSV must have these columns (order doesn't matter):
-
-| Column | Required | Format | Example |
-|--------|----------|--------|---------|
-| date | ✅ | YYYY-MM-DD HH:MM:SS | 2024-03-15 14:30:00 |
-| type | ✅ | buy/sell/swap/transfer | buy |
-| asset | ✅ | Symbol | BTC |
-| amount | ✅ | Decimal number | 0.5 |
-| price_usd | ✅ | USD value per unit | 65000.00 |
-| fee_usd | ❌ | Fee in USD | 2.50 |
-| exchange | ❌ | Exchange name | Binance |
-| tx_hash | ❌ | Transaction hash | 0xabc... |
-
-## Step 2: Choose Your Method
-
-```bash
-# FIFO — First In, First Out (most common, required in some jurisdictions)
-bash scripts/crypto-tax-calc.sh calculate --input trades.csv --method fifo --country US
-
-# LIFO — Last In, First Out (can minimize taxes in rising markets)
-bash scripts/crypto-tax-calc.sh calculate --input trades.csv --method lifo --country US
-
-# Average Cost — Weighted average (required in UK, simpler calculation)
-bash scripts/crypto-tax-calc.sh calculate --input trades.csv --method average --country UK
-```
-
-## Step 3: Select Jurisdiction
-
-### 🇺🇸 United States
-- Short-term gains (<1 year): Taxed as ordinary income (10%-37%)
-- Long-term gains (>1 year): 0%, 15%, or 20%
-- Wash sale rules: Currently not enforced for crypto (may change)
-- Form 8949 generation supported
-
-### 🇬🇧 United Kingdom
-- Capital Gains Tax: 10% (basic) / 20% (higher rate)
-- Annual exempt amount: £6,000 (2024/25)
-- Must use share pooling (average cost)
-- HMRC-compatible report format
-
-### 🇦🇺 Australia
-- CGT discount: 50% for assets held >12 months
-- Marginal tax rates apply (19%-45%)
-- Personal use asset exemption <$10,000
-- ATO-compatible output
-
-### 🇨🇳 China
-- Individual income tax: 20% on gains
-- Currently ambiguous regulation
-- Report provides gain calculations for reference
-
-## Step 4: Generate Report
-
-The tool outputs:
-- **HTML Report** — Visual summary with charts, tables, per-asset breakdown
-- **CSV Export** — Machine-readable gain/loss per trade
-- **Summary JSON** — Totals for integration with other tools
-
-## Full Command Reference
-
-```bash
-# Calculate taxes
-bash scripts/crypto-tax-calc.sh calculate --input FILE --method METHOD --country CODE [--year YEAR]
-
-# Validate CSV format
-bash scripts/crypto-tax-calc.sh validate --input FILE
-
-# Show summary only (no report file)
-bash scripts/crypto-tax-calc.sh summary --input FILE --method METHOD
-
-# Merge multiple exchange CSVs
-bash scripts/crypto-tax-calc.sh merge --inputs "file1.csv,file2.csv" --output merged.csv
-
-# Compare methods side-by-side
-bash scripts/crypto-tax-calc.sh compare --input FILE --country CODE
-```
-
-## Important Disclaimers
-
-⚠️ This tool is for **informational purposes only**. It is NOT tax advice. Consult a qualified tax professional for your specific situation.
-
-⚠️ Tax laws change frequently. Always verify current rates and rules with your local tax authority.
----
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
+A financial tracking and analysis tool for recording transactions, managing budgets, reviewing spending categories, generating summaries, and forecasting trends. Crypto Tax Calculator provides 10 focused commands for personal financial management with local data storage.
 
 ## Commands
 
-- `import` — Import
-- `calculate` — Calculate
-- `add` — Add
-- `report` — Report
-- `compare-methods` — Compare Methods
+| Command | Description |
+|---------|-------------|
+| `crypto-tax-calc track <description> <amount>` | Record a transaction with a description and amount |
+| `crypto-tax-calc balance` | Show current balance information (references local ledger) |
+| `crypto-tax-calc summary` | Display a financial summary for the current month (income vs expenses) |
+| `crypto-tax-calc export` | Export transaction data to CSV format (outputs to stdout) |
+| `crypto-tax-calc budget` | Show budget overview with category breakdown (budget, spent, remaining) |
+| `crypto-tax-calc history` | Display the 20 most recent transactions from the data log |
+| `crypto-tax-calc alert <item> <threshold>` | Set a price or budget alert for a specific item at a given threshold |
+| `crypto-tax-calc compare` | Compare the current period against the previous period |
+| `crypto-tax-calc forecast` | Generate a simple financial forecast based on current trends |
+| `crypto-tax-calc categories` | Display available spending categories (Food, Transport, Housing, Entertainment, Savings) |
+| `crypto-tax-calc help` | Display available commands and usage information |
+| `crypto-tax-calc version` | Print current version (v2.0.0) |
+
+## Data Storage
+
+All data is stored locally in plain-text files:
+
+- **Location**: `~/.local/share/crypto-tax-calc/` (override with `CRYPTO_TAX_CALC_DIR` env var, or `XDG_DATA_HOME`)
+- **Data file**: `data.log` — main transaction ledger
+- **History log**: `history.log` — timestamped operation log for audit trail
+- **Format**: Pipe-delimited entries with timestamps
+- **No cloud sync** — everything stays on your machine, no API keys needed
+
+## Requirements
+
+- Bash 4.0+ (uses `set -euo pipefail`)
+- Standard Unix utilities: `date`, `wc`, `tail`, `cat`
+- No external dependencies, no API keys, no network access required
+- Works on Linux and macOS
+
+## When to Use
+
+1. **Transaction logging** — Record daily purchases, income, and transfers with `crypto-tax-calc track` to build a thorough financial history
+2. **Budget monitoring** — Use `budget` and `categories` to review spending by category and see where your money goes each month
+3. **Monthly summaries** — Run `summary` to get a quick income-vs-expenses overview for the current period without opening a spreadsheet
+4. **Period comparison** — Use `compare` to see how your current spending and income stack up against the previous period and spot trends
+5. **Data export** — Use `export` to generate CSV output that can be imported into spreadsheets, tax software, or other financial tools
+
+## Examples
+
+```bash
+# Record a transaction
+crypto-tax-calc track "coffee shop" 4.50
+
+# Check your current balance
+crypto-tax-calc balance
+
+# View monthly financial summary
+crypto-tax-calc summary
+
+# Export all transactions to CSV (pipe to file)
+crypto-tax-calc export > transactions.csv
+
+# Review budget breakdown by category
+crypto-tax-calc budget
+
+# View recent transaction history
+crypto-tax-calc history
+
+# Set a price alert
+crypto-tax-calc alert "BTC" 70000
+
+# Compare current vs previous period
+crypto-tax-calc compare
+
+# Get a simple forecast based on trends
+crypto-tax-calc forecast
+
+# View available spending categories
+crypto-tax-calc categories
+```
+
+## Configuration
+
+Set the `CRYPTO_TAX_CALC_DIR` environment variable to change the data directory. Alternatively, set `XDG_DATA_HOME` to relocate all XDG-compliant app data. Default location: `~/.local/share/crypto-tax-calc/`
+
+## Disclaimer
+
+⚠️ This tool is for **informational and personal tracking purposes only**. It is NOT financial or tax advice. Always consult a qualified professional for tax filing and financial decisions.
+
+---
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: code-reviewer-cn
-description: "代码审查、重构建议、安全漏洞检查、命名规范、复杂度分析、注释文档生成. Use when you need code reviewer cn capabilities. Triggers on: code reviewer cn, 圈复杂度估算, 嵌套深度检测, 命名风格一致性, 注释率计算与评级, 重复行检测."
+description: "Review code with refactoring tips, security checks, and docs in Chinese. Use when auditing PRs, analyzing complexity, or enforcing conventions."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # code-reviewer-cn
 

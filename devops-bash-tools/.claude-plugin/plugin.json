@@ -1,0 +1,9 @@
+{
+  "name": "devops-bash-tools",
+  "description": "Run 1000+ DevOps scripts for AWS, GCP, K8s, Docker, and CI/CD tasks. Use when automating cloud ops, managing clusters, scripting pipelines.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

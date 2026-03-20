@@ -1,0 +1,9 @@
+{
+  "name": "system-hardener",
+  "description": "Lynis - Security auditing tool for Linux, macOS, and UNIX-based systems. Assists with compliance tes system-hardener, shell, auditing, compliance, devops.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

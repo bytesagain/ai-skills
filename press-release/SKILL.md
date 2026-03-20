@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Press Release
-description: "📰 新闻稿 & 公关文案生成器. Use when you need press release capabilities. Triggers on: press release."
-  新闻稿生成器。企业新闻稿、产品发布、融资公告、活动报道。Press release generator for product launches, funding announcements, events. 新闻稿、公关稿、媒体发布。Use when writing press releases.
+description: "Draft press releases for launches and announcements. Use when writing product news, composing funding updates, outlining event coverage, crafting statements."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # Press Release
 

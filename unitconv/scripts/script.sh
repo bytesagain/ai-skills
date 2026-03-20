@@ -1,332 +1,244 @@
 #!/usr/bin/env bash
-# Unitconv — utility tool
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
+###############################################################################
+# UnitConv — Unit Converter
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+###############################################################################
 
-DATA_DIR="${HOME}/.local/share/unitconv"
-mkdir -p "$DATA_DIR"
+VERSION="3.0.0"
+SCRIPT_NAME="unitconv"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+# Colors
+RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'
+CYAN='\033[0;36m'; BOLD='\033[1m'; NC='\033[0m'
 
-_version() { echo "unitconv v2.0.0"; }
+err()  { echo -e "${RED}[ERROR]${NC} $*" >&2; }
+info() { echo -e "${CYAN}[INFO]${NC} $*"; }
 
-_help() {
-    echo "Unitconv v2.0.0 — utility toolkit"
-    echo ""
-    echo "Usage: unitconv <command> [args]"
-    echo ""
-    echo "Commands:"
-    echo "  run                Run"
-    echo "  check              Check"
-    echo "  convert            Convert"
-    echo "  analyze            Analyze"
-    echo "  generate           Generate"
-    echo "  preview            Preview"
-    echo "  batch              Batch"
-    echo "  compare            Compare"
-    echo "  export             Export"
-    echo "  config             Config"
-    echo "  status             Status"
-    echo "  report             Report"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
+usage() {
+  cat <<EOF
+${BOLD}UnitConv v${VERSION}${NC} — Unit Converter
+Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+
+${BOLD}Usage:${NC}
+  $SCRIPT_NAME length <value> <from> <to>   Convert length (m, ft, in, cm, km, mi, yd, mm)
+  $SCRIPT_NAME weight <value> <from> <to>   Convert weight (kg, lb, oz, g, mg, ton)
+  $SCRIPT_NAME temp <value> <from> <to>     Convert temperature (C, F, K)
+  $SCRIPT_NAME speed <value> <from> <to>    Convert speed (kmh, mph, ms, knots, fts)
+  $SCRIPT_NAME data <value> <from> <to>     Convert data (B, KB, MB, GB, TB, PB)
+  $SCRIPT_NAME time <value> <from> <to>     Convert time (s, m, h, d, w, mo, y)
+
+${BOLD}Examples:${NC}
+  $SCRIPT_NAME length 100 cm in          # 100 centimeters to inches
+  $SCRIPT_NAME weight 5 kg lb            # 5 kilograms to pounds
+  $SCRIPT_NAME temp 100 C F              # 100 Celsius to Fahrenheit
+  $SCRIPT_NAME speed 60 mph kmh          # 60 mph to km/h
+  $SCRIPT_NAME data 1024 MB GB           # 1024 MB to GB
+  $SCRIPT_NAME time 3600 s h             # 3600 seconds to hours
+EOF
 }
 
-_stats() {
-    echo "=== Unitconv Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Since: $(head -1 "$DATA_DIR/history.log" 2>/dev/null | cut -d'|' -f1 || echo 'N/A')"
+calc() {
+  awk "BEGIN { printf \"%.6g\", $1 }"
 }
 
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "" >> "$out"
-            echo "]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    echo "$name,$ts,$val" >> "$out"
-                done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Unitconv Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-                echo "" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
-    esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
+convert_length() {
+  local val="$1" from="$2" to="$3"
+  # Everything to meters first
+  local to_m from_m
+  case "$from" in
+    m)  from_m="1" ;;
+    cm) from_m="0.01" ;;
+    mm) from_m="0.001" ;;
+    km) from_m="1000" ;;
+    in) from_m="0.0254" ;;
+    ft) from_m="0.3048" ;;
+    yd) from_m="0.9144" ;;
+    mi) from_m="1609.344" ;;
+    *) err "Unknown length unit: $from (use m/cm/mm/km/in/ft/yd/mi)"; exit 1 ;;
+  esac
+  case "$to" in
+    m)  to_m="1" ;;
+    cm) to_m="0.01" ;;
+    mm) to_m="0.001" ;;
+    km) to_m="1000" ;;
+    in) to_m="0.0254" ;;
+    ft) to_m="0.3048" ;;
+    yd) to_m="0.9144" ;;
+    mi) to_m="1609.344" ;;
+    *) err "Unknown length unit: $to (use m/cm/mm/km/in/ft/yd/mi)"; exit 1 ;;
+  esac
+  calc "${val} * ${from_m} / ${to_m}"
 }
 
-_status() {
-    echo "=== Unitconv Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    local last=$(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo "never")
-    echo "  Last activity: $last"
-    echo "  Status: OK"
+convert_weight() {
+  local val="$1" from="$2" to="$3"
+  local from_g to_g
+  case "$from" in
+    g)   from_g="1" ;;
+    mg)  from_g="0.001" ;;
+    kg)  from_g="1000" ;;
+    lb)  from_g="453.592" ;;
+    oz)  from_g="28.3495" ;;
+    ton) from_g="907185" ;;
+    *) err "Unknown weight unit: $from (use g/mg/kg/lb/oz/ton)"; exit 1 ;;
+  esac
+  case "$to" in
+    g)   to_g="1" ;;
+    mg)  to_g="0.001" ;;
+    kg)  to_g="1000" ;;
+    lb)  to_g="453.592" ;;
+    oz)  to_g="28.3495" ;;
+    ton) to_g="907185" ;;
+    *) err "Unknown weight unit: $to (use g/mg/kg/lb/oz/ton)"; exit 1 ;;
+  esac
+  calc "${val} * ${from_g} / ${to_g}"
 }
 
-_search() {
-    local term="${1:?Usage: unitconv search <term>}"
-    echo "Searching for: $term"
-    local found=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local matches=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$matches" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$matches" | while read -r line; do
-                echo "    $line"
-                found=$((found + 1))
-            done
-        fi
-    done
-    [ $found -eq 0 ] && echo "  No matches found."
+convert_temp() {
+  local val="$1" from="$2" to="$3"
+
+  # Normalize to uppercase
+  from=$(echo "$from" | tr '[:lower:]' '[:upper:]')
+  to=$(echo "$to" | tr '[:lower:]' '[:upper:]')
+
+  if [[ "$from" == "$to" ]]; then
+    calc "$val"
+    return
+  fi
+
+  case "${from}-${to}" in
+    C-F)  calc "(${val} * 9/5) + 32" ;;
+    C-K)  calc "${val} + 273.15" ;;
+    F-C)  calc "(${val} - 32) * 5/9" ;;
+    F-K)  calc "((${val} - 32) * 5/9) + 273.15" ;;
+    K-C)  calc "${val} - 273.15" ;;
+    K-F)  calc "((${val} - 273.15) * 9/5) + 32" ;;
+    *) err "Unknown temperature units: $from -> $to (use C/F/K)"; exit 1 ;;
+  esac
 }
 
-_recent() {
-    echo "=== Recent Activity ==="
-    if [ -f "$DATA_DIR/history.log" ]; then
-        tail -20 "$DATA_DIR/history.log" | while IFS='' read -r line; do
-            echo "  $line"
-        done
-    else
-        echo "  No activity yet."
-    fi
+convert_speed() {
+  local val="$1" from="$2" to="$3"
+  # Everything to m/s
+  local from_ms to_ms
+  case "$from" in
+    ms|"m/s")    from_ms="1" ;;
+    kmh|"km/h")  from_ms="0.277778" ;;
+    mph)         from_ms="0.44704" ;;
+    knots|kn)    from_ms="0.514444" ;;
+    fts|"ft/s")  from_ms="0.3048" ;;
+    *) err "Unknown speed unit: $from (use ms/kmh/mph/knots/fts)"; exit 1 ;;
+  esac
+  case "$to" in
+    ms|"m/s")    to_ms="1" ;;
+    kmh|"km/h")  to_ms="0.277778" ;;
+    mph)         to_ms="0.44704" ;;
+    knots|kn)    to_ms="0.514444" ;;
+    fts|"ft/s")  to_ms="0.3048" ;;
+    *) err "Unknown speed unit: $to (use ms/kmh/mph/knots/fts)"; exit 1 ;;
+  esac
+  calc "${val} * ${from_ms} / ${to_ms}"
+}
+
+convert_data() {
+  local val="$1" from="$2" to="$3"
+  # Uppercase
+  from=$(echo "$from" | tr '[:lower:]' '[:upper:]')
+  to=$(echo "$to" | tr '[:lower:]' '[:upper:]')
+  # Everything to bytes
+  local from_b to_b
+  case "$from" in
+    B)  from_b="1" ;;
+    KB) from_b="1024" ;;
+    MB) from_b="1048576" ;;
+    GB) from_b="1073741824" ;;
+    TB) from_b="1099511627776" ;;
+    PB) from_b="1125899906842624" ;;
+    *) err "Unknown data unit: $from (use B/KB/MB/GB/TB/PB)"; exit 1 ;;
+  esac
+  case "$to" in
+    B)  to_b="1" ;;
+    KB) to_b="1024" ;;
+    MB) to_b="1048576" ;;
+    GB) to_b="1073741824" ;;
+    TB) to_b="1099511627776" ;;
+    PB) to_b="1125899906842624" ;;
+    *) err "Unknown data unit: $to (use B/KB/MB/GB/TB/PB)"; exit 1 ;;
+  esac
+  calc "${val} * ${from_b} / ${to_b}"
+}
+
+convert_time() {
+  local val="$1" from="$2" to="$3"
+  # Everything to seconds
+  local from_s to_s
+  case "$from" in
+    s)      from_s="1" ;;
+    m|min)  from_s="60" ;;
+    h|hr)   from_s="3600" ;;
+    d|day)  from_s="86400" ;;
+    w|wk)   from_s="604800" ;;
+    mo)     from_s="2592000" ;;
+    y|yr)   from_s="31536000" ;;
+    *) err "Unknown time unit: $from (use s/m/h/d/w/mo/y)"; exit 1 ;;
+  esac
+  case "$to" in
+    s)      to_s="1" ;;
+    m|min)  to_s="60" ;;
+    h|hr)   to_s="3600" ;;
+    d|day)  to_s="86400" ;;
+    w|wk)   to_s="604800" ;;
+    mo)     to_s="2592000" ;;
+    y|yr)   to_s="31536000" ;;
+    *) err "Unknown time unit: $to (use s/m/h/d/w/mo/y)"; exit 1 ;;
+  esac
+  calc "${val} * ${from_s} / ${to_s}"
 }
 
 # Main dispatch
-case "${1:-help}" in
-    run)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent run entries:"
-            tail -20 "$DATA_DIR/run.log" 2>/dev/null || echo "  No entries yet. Use: unitconv run <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/run.log"
-            local total=$(wc -l < "$DATA_DIR/run.log")
-            echo "  [Unitconv] run: $input"
-            echo "  Saved. Total run entries: $total"
-            _log "run" "$input"
-        fi
-        ;;
-    check)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent check entries:"
-            tail -20 "$DATA_DIR/check.log" 2>/dev/null || echo "  No entries yet. Use: unitconv check <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/check.log"
-            local total=$(wc -l < "$DATA_DIR/check.log")
-            echo "  [Unitconv] check: $input"
-            echo "  Saved. Total check entries: $total"
-            _log "check" "$input"
-        fi
-        ;;
-    convert)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent convert entries:"
-            tail -20 "$DATA_DIR/convert.log" 2>/dev/null || echo "  No entries yet. Use: unitconv convert <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/convert.log"
-            local total=$(wc -l < "$DATA_DIR/convert.log")
-            echo "  [Unitconv] convert: $input"
-            echo "  Saved. Total convert entries: $total"
-            _log "convert" "$input"
-        fi
-        ;;
-    analyze)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent analyze entries:"
-            tail -20 "$DATA_DIR/analyze.log" 2>/dev/null || echo "  No entries yet. Use: unitconv analyze <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/analyze.log"
-            local total=$(wc -l < "$DATA_DIR/analyze.log")
-            echo "  [Unitconv] analyze: $input"
-            echo "  Saved. Total analyze entries: $total"
-            _log "analyze" "$input"
-        fi
-        ;;
-    generate)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent generate entries:"
-            tail -20 "$DATA_DIR/generate.log" 2>/dev/null || echo "  No entries yet. Use: unitconv generate <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/generate.log"
-            local total=$(wc -l < "$DATA_DIR/generate.log")
-            echo "  [Unitconv] generate: $input"
-            echo "  Saved. Total generate entries: $total"
-            _log "generate" "$input"
-        fi
-        ;;
-    preview)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent preview entries:"
-            tail -20 "$DATA_DIR/preview.log" 2>/dev/null || echo "  No entries yet. Use: unitconv preview <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/preview.log"
-            local total=$(wc -l < "$DATA_DIR/preview.log")
-            echo "  [Unitconv] preview: $input"
-            echo "  Saved. Total preview entries: $total"
-            _log "preview" "$input"
-        fi
-        ;;
-    batch)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent batch entries:"
-            tail -20 "$DATA_DIR/batch.log" 2>/dev/null || echo "  No entries yet. Use: unitconv batch <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/batch.log"
-            local total=$(wc -l < "$DATA_DIR/batch.log")
-            echo "  [Unitconv] batch: $input"
-            echo "  Saved. Total batch entries: $total"
-            _log "batch" "$input"
-        fi
-        ;;
-    compare)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent compare entries:"
-            tail -20 "$DATA_DIR/compare.log" 2>/dev/null || echo "  No entries yet. Use: unitconv compare <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/compare.log"
-            local total=$(wc -l < "$DATA_DIR/compare.log")
-            echo "  [Unitconv] compare: $input"
-            echo "  Saved. Total compare entries: $total"
-            _log "compare" "$input"
-        fi
-        ;;
-    export)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent export entries:"
-            tail -20 "$DATA_DIR/export.log" 2>/dev/null || echo "  No entries yet. Use: unitconv export <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/export.log"
-            local total=$(wc -l < "$DATA_DIR/export.log")
-            echo "  [Unitconv] export: $input"
-            echo "  Saved. Total export entries: $total"
-            _log "export" "$input"
-        fi
-        ;;
-    config)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent config entries:"
-            tail -20 "$DATA_DIR/config.log" 2>/dev/null || echo "  No entries yet. Use: unitconv config <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/config.log"
-            local total=$(wc -l < "$DATA_DIR/config.log")
-            echo "  [Unitconv] config: $input"
-            echo "  Saved. Total config entries: $total"
-            _log "config" "$input"
-        fi
-        ;;
-    status)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent status entries:"
-            tail -20 "$DATA_DIR/status.log" 2>/dev/null || echo "  No entries yet. Use: unitconv status <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/status.log"
-            local total=$(wc -l < "$DATA_DIR/status.log")
-            echo "  [Unitconv] status: $input"
-            echo "  Saved. Total status entries: $total"
-            _log "status" "$input"
-        fi
-        ;;
-    report)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent report entries:"
-            tail -20 "$DATA_DIR/report.log" 2>/dev/null || echo "  No entries yet. Use: unitconv report <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/report.log"
-            local total=$(wc -l < "$DATA_DIR/report.log")
-            echo "  [Unitconv] report: $input"
-            echo "  Saved. Total report entries: $total"
-            _log "report" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown command: $1"
-        echo "Run 'unitconv help' for available commands."
-        exit 1
-        ;;
+if [[ $# -lt 1 ]]; then
+  usage
+  exit 0
+fi
+
+cmd="$1"; shift
+
+case "$cmd" in
+  length)
+    [[ $# -ge 3 ]] || { err "Usage: $SCRIPT_NAME length <value> <from> <to>"; exit 1; }
+    result=$(convert_length "$1" "$2" "$3")
+    echo -e "${GREEN}${1} ${2}${NC} = ${BOLD}${result} ${3}${NC}"
+    ;;
+  weight)
+    [[ $# -ge 3 ]] || { err "Usage: $SCRIPT_NAME weight <value> <from> <to>"; exit 1; }
+    result=$(convert_weight "$1" "$2" "$3")
+    echo -e "${GREEN}${1} ${2}${NC} = ${BOLD}${result} ${3}${NC}"
+    ;;
+  temp)
+    [[ $# -ge 3 ]] || { err "Usage: $SCRIPT_NAME temp <value> <from> <to>"; exit 1; }
+    result=$(convert_temp "$1" "$2" "$3")
+    echo -e "${GREEN}${1}°${2}${NC} = ${BOLD}${result}°${3}${NC}"
+    ;;
+  speed)
+    [[ $# -ge 3 ]] || { err "Usage: $SCRIPT_NAME speed <value> <from> <to>"; exit 1; }
+    result=$(convert_speed "$1" "$2" "$3")
+    echo -e "${GREEN}${1} ${2}${NC} = ${BOLD}${result} ${3}${NC}"
+    ;;
+  data)
+    [[ $# -ge 3 ]] || { err "Usage: $SCRIPT_NAME data <value> <from> <to>"; exit 1; }
+    result=$(convert_data "$1" "$2" "$3")
+    echo -e "${GREEN}${1} ${2}${NC} = ${BOLD}${result} ${3}${NC}"
+    ;;
+  time)
+    [[ $# -ge 3 ]] || { err "Usage: $SCRIPT_NAME time <value> <from> <to>"; exit 1; }
+    result=$(convert_time "$1" "$2" "$3")
+    echo -e "${GREEN}${1} ${2}${NC} = ${BOLD}${result} ${3}${NC}"
+    ;;
+  -h|--help) usage ;;
+  *)
+    err "Unknown command: $cmd"
+    usage
+    exit 1
+    ;;
 esac

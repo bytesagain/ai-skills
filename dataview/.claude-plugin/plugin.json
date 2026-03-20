@@ -1,0 +1,9 @@
+{
+  "name": "dataview",
+  "description": "Explore CSV and JSON files with quick queries, filters, and aggregation. Use when inspecting data, running queries, filtering rows, aggregating.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "clipbox",
+  "description": "Save and organize reusable text snippets for quick retrieval. Use when storing code fragments, saving command templates, or building snippet libraries.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

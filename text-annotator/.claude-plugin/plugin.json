@@ -1,0 +1,9 @@
+{
+  "name": "text-annotator",
+  "description": "Open source annotation tool for machine learning practitioners. text-annotator, python, annotation-tool, data-labeling, dataset, datasets.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

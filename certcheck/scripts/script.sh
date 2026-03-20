@@ -1,332 +1,155 @@
 #!/usr/bin/env bash
-# Certcheck — security tool
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-DATA_DIR="${HOME}/.local/share/certcheck"
+VERSION="3.0.0"
+SCRIPT_NAME="certcheck"
+DATA_DIR="$HOME/.local/share/certcheck"
 mkdir -p "$DATA_DIR"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-_version() { echo "certcheck v2.0.0"; }
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
-_help() {
-    echo "Certcheck v2.0.0 — security toolkit"
-    echo ""
-    echo "Usage: certcheck <command> [args]"
+cmd_check() {
+    local domain="${2:-}"
+    [ -z "$domain" ] && die "Usage: $SCRIPT_NAME check <domain>"
+    echo | openssl s_client -connect $2:443 -servername $2 2>/dev/null | openssl x509 -noout -subject -issuer -dates
+}
+
+cmd_expiry() {
+    local domain="${2:-}"
+    [ -z "$domain" ] && die "Usage: $SCRIPT_NAME expiry <domain>"
+    echo | openssl s_client -connect $2:443 -servername $2 2>/dev/null | openssl x509 -noout -enddate
+}
+
+cmd_chain() {
+    local domain="${2:-}"
+    [ -z "$domain" ] && die "Usage: $SCRIPT_NAME chain <domain>"
+    echo | openssl s_client -connect $2:443 -showcerts 2>/dev/null | grep -E 's:|i:'
+}
+
+cmd_compare() {
+    local d1="${2:-}"
+    local d2="${3:-}"
+    [ -z "$d1" ] && die "Usage: $SCRIPT_NAME compare <d1 d2>"
+    echo '=== $2 ==='; cmd_expiry $2; echo '=== $3 ==='; cmd_expiry $3
+}
+
+cmd_batch() {
+    local file="${2:-}"
+    [ -z "$file" ] && die "Usage: $SCRIPT_NAME batch <file>"
+    while IFS= read -r d; do echo "$d: $(cmd_expiry $d 2>/dev/null | cut -d= -f2)"; done < $2
+}
+
+cmd_report() {
+    local domain="${2:-}"
+    [ -z "$domain" ] && die "Usage: $SCRIPT_NAME report <domain>"
+    echo '=== SSL Report: $2 ==='; cmd_check $2
+}
+
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
     echo ""
     echo "Commands:"
-    echo "  generate           Generate"
-    echo "  check-strength     Check Strength"
-    echo "  rotate             Rotate"
-    echo "  audit              Audit"
-    echo "  store              Store"
-    echo "  retrieve           Retrieve"
-    echo "  expire             Expire"
-    echo "  policy             Policy"
-    echo "  report             Report"
-    echo "  hash               Hash"
-    echo "  verify             Verify"
-    echo "  revoke             Revoke"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
+    printf "  %-25s\n" "check <domain>"
+    printf "  %-25s\n" "expiry <domain>"
+    printf "  %-25s\n" "chain <domain>"
+    printf "  %-25s\n" "compare <d1 d2>"
+    printf "  %-25s\n" "batch <file>"
+    printf "  %-25s\n" "report <domain>"
+    printf "  %%-25s\n" "help"
     echo ""
-    echo "Data: $DATA_DIR"
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-_stats() {
-    echo "=== Certcheck Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Since: $(head -1 "$DATA_DIR/history.log" 2>/dev/null | cut -d'|' -f1 || echo 'N/A')"
-}
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
 
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "" >> "$out"
-            echo "]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    echo "$name,$ts,$val" >> "$out"
-                done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Certcheck Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-                echo "" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        check) shift; cmd_check "$@" ;;
+        expiry) shift; cmd_expiry "$@" ;;
+        chain) shift; cmd_chain "$@" ;;
+        compare) shift; cmd_compare "$@" ;;
+        batch) shift; cmd_batch "$@" ;;
+        report) shift; cmd_report "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
     esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
 }
 
-_status() {
-    echo "=== Certcheck Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    local last=$(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo "never")
-    echo "  Last activity: $last"
-    echo "  Status: OK"
-}
-
-_search() {
-    local term="${1:?Usage: certcheck search <term>}"
-    echo "Searching for: $term"
-    local found=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local matches=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$matches" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$matches" | while read -r line; do
-                echo "    $line"
-                found=$((found + 1))
-            done
-        fi
-    done
-    [ $found -eq 0 ] && echo "  No matches found."
-}
-
-_recent() {
-    echo "=== Recent Activity ==="
-    if [ -f "$DATA_DIR/history.log" ]; then
-        tail -20 "$DATA_DIR/history.log" | while IFS='' read -r line; do
-            echo "  $line"
-        done
-    else
-        echo "  No activity yet."
-    fi
-}
-
-# Main dispatch
-case "${1:-help}" in
-    generate)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent generate entries:"
-            tail -20 "$DATA_DIR/generate.log" 2>/dev/null || echo "  No entries yet. Use: certcheck generate <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/generate.log"
-            local total=$(wc -l < "$DATA_DIR/generate.log")
-            echo "  [Certcheck] generate: $input"
-            echo "  Saved. Total generate entries: $total"
-            _log "generate" "$input"
-        fi
-        ;;
-    check-strength)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent check-strength entries:"
-            tail -20 "$DATA_DIR/check-strength.log" 2>/dev/null || echo "  No entries yet. Use: certcheck check-strength <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/check-strength.log"
-            local total=$(wc -l < "$DATA_DIR/check-strength.log")
-            echo "  [Certcheck] check-strength: $input"
-            echo "  Saved. Total check-strength entries: $total"
-            _log "check-strength" "$input"
-        fi
-        ;;
-    rotate)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent rotate entries:"
-            tail -20 "$DATA_DIR/rotate.log" 2>/dev/null || echo "  No entries yet. Use: certcheck rotate <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/rotate.log"
-            local total=$(wc -l < "$DATA_DIR/rotate.log")
-            echo "  [Certcheck] rotate: $input"
-            echo "  Saved. Total rotate entries: $total"
-            _log "rotate" "$input"
-        fi
-        ;;
-    audit)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent audit entries:"
-            tail -20 "$DATA_DIR/audit.log" 2>/dev/null || echo "  No entries yet. Use: certcheck audit <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/audit.log"
-            local total=$(wc -l < "$DATA_DIR/audit.log")
-            echo "  [Certcheck] audit: $input"
-            echo "  Saved. Total audit entries: $total"
-            _log "audit" "$input"
-        fi
-        ;;
-    store)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent store entries:"
-            tail -20 "$DATA_DIR/store.log" 2>/dev/null || echo "  No entries yet. Use: certcheck store <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/store.log"
-            local total=$(wc -l < "$DATA_DIR/store.log")
-            echo "  [Certcheck] store: $input"
-            echo "  Saved. Total store entries: $total"
-            _log "store" "$input"
-        fi
-        ;;
-    retrieve)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent retrieve entries:"
-            tail -20 "$DATA_DIR/retrieve.log" 2>/dev/null || echo "  No entries yet. Use: certcheck retrieve <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/retrieve.log"
-            local total=$(wc -l < "$DATA_DIR/retrieve.log")
-            echo "  [Certcheck] retrieve: $input"
-            echo "  Saved. Total retrieve entries: $total"
-            _log "retrieve" "$input"
-        fi
-        ;;
-    expire)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent expire entries:"
-            tail -20 "$DATA_DIR/expire.log" 2>/dev/null || echo "  No entries yet. Use: certcheck expire <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/expire.log"
-            local total=$(wc -l < "$DATA_DIR/expire.log")
-            echo "  [Certcheck] expire: $input"
-            echo "  Saved. Total expire entries: $total"
-            _log "expire" "$input"
-        fi
-        ;;
-    policy)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent policy entries:"
-            tail -20 "$DATA_DIR/policy.log" 2>/dev/null || echo "  No entries yet. Use: certcheck policy <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/policy.log"
-            local total=$(wc -l < "$DATA_DIR/policy.log")
-            echo "  [Certcheck] policy: $input"
-            echo "  Saved. Total policy entries: $total"
-            _log "policy" "$input"
-        fi
-        ;;
-    report)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent report entries:"
-            tail -20 "$DATA_DIR/report.log" 2>/dev/null || echo "  No entries yet. Use: certcheck report <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/report.log"
-            local total=$(wc -l < "$DATA_DIR/report.log")
-            echo "  [Certcheck] report: $input"
-            echo "  Saved. Total report entries: $total"
-            _log "report" "$input"
-        fi
-        ;;
-    hash)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent hash entries:"
-            tail -20 "$DATA_DIR/hash.log" 2>/dev/null || echo "  No entries yet. Use: certcheck hash <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/hash.log"
-            local total=$(wc -l < "$DATA_DIR/hash.log")
-            echo "  [Certcheck] hash: $input"
-            echo "  Saved. Total hash entries: $total"
-            _log "hash" "$input"
-        fi
-        ;;
-    verify)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent verify entries:"
-            tail -20 "$DATA_DIR/verify.log" 2>/dev/null || echo "  No entries yet. Use: certcheck verify <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/verify.log"
-            local total=$(wc -l < "$DATA_DIR/verify.log")
-            echo "  [Certcheck] verify: $input"
-            echo "  Saved. Total verify entries: $total"
-            _log "verify" "$input"
-        fi
-        ;;
-    revoke)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent revoke entries:"
-            tail -20 "$DATA_DIR/revoke.log" 2>/dev/null || echo "  No entries yet. Use: certcheck revoke <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/revoke.log"
-            local total=$(wc -l < "$DATA_DIR/revoke.log")
-            echo "  [Certcheck] revoke: $input"
-            echo "  Saved. Total revoke entries: $total"
-            _log "revoke" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown command: $1"
-        echo "Run 'certcheck help' for available commands."
-        exit 1
-        ;;
-esac
+main "$@"

@@ -1,8 +1,10 @@
 ---
 name: HabitHero
-description: "Habit tracker with streak counting and visual calendars. Add daily habits, mark them complete, track consecutive day streaks with fire emojis, view habit calendars showing completion patterns, and build lasting routines. Gamified habit building."
+description: "Build positive habits with daily tracking, streaks, and progress dashboards. Use when committing to routines, tracking streaks, or reviewing consistency."
 version: "2.0.0"
 author: "BytesAgain"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 tags: ["habits","streak","daily","routine","tracking","goals","motivation","selfimprovement"]
 categories: ["Personal Management", "Productivity", "Health & Wellness"]
 ---

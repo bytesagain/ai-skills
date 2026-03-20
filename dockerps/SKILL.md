@@ -1,47 +1,57 @@
 ---
-name: DockerPS
-description: "Docker container status viewer. List running containers with resource usage, show container logs, inspect container details, and monitor Docker system resources."
-version: "2.0.0"
+name: "dockerps"
+version: "3.0.0"
+description: "View and manage Docker container processes and stats. Use when monitoring containers. Requires docker."
 author: "BytesAgain"
-tags: ["docker","container","status","devops","monitor"]
-categories: ["Developer Tools", "Utility"]
+homepage: "https://bytesagain.com"
 ---
-# DockerPS
 
-Docker container status viewer. List running containers with resource usage, show container logs, inspect container details, and monitor Docker system resources.
+# dockerps
 
-## Quick Start
+View and manage Docker container processes and stats. Use when monitoring containers. Requires docker.
 
-Run `dockerps help` for available commands and usage examples.
+## Commands
 
-## Features
-
-- Fast and lightweight — pure bash with embedded Python
-- No external dependencies required
- in `~/.dockerps/`
-- Works on Linux and macOS
-
-## Usage
+### `list`
 
 ```bash
-dockerps help
+scripts/script.sh list
 ```
 
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+### `top`
+
+```bash
+scripts/script.sh top <container>
+```
+
+### `logs`
+
+```bash
+scripts/script.sh logs <container lines>
+```
+
+### `inspect`
+
+```bash
+scripts/script.sh inspect <container>
+```
+
+### `cleanup`
+
+```bash
+scripts/script.sh cleanup
+```
+
+## Data Storage
+
+Data stored in `~/.local/share/dockerps/`.
+
 ---
-💬 Feedback: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
 
-- Run `dockerps help` for all commands
-
-## When to Use
-
-- as part of a larger automation pipeline
-- when you need quick dockerps from the command line
-
-## Output
-
-Returns formatted output to stdout. Redirect to a file with `dockerps run > output.txt`.
-
-## Configuration
-
-Set `DOCKERPS_DIR` environment variable to change the data directory. Default: `~/.local/share/dockerps/`
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

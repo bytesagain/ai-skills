@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: Crypto News Feed
-description: "Aggregate crypto news from RSS feeds, filter by keywords, score sentiment, and generate daily digest HTML reports. Use when you need crypto news feed capabilities. Triggers on: crypto news feed."
+description: "Aggregate crypto news with sentiment analysis and personalized feeds. Use when scanning headlines, analyzing sentiment, filtering by token."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Crypto News Feed 📰

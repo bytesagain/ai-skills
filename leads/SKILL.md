@@ -1,62 +1,85 @@
 ---
 name: leads
-version: "2.0.0"
+description: "Manage sales leads locally. Use when adding prospects, scoring leads, setting follow-ups, tracking conversions, or viewing funnels."
+version: "3.4.0"
 author: BytesAgain
-license: MIT-0
-tags: [leads, tool, utility]
-description: "Leads - command-line tool for everyday use"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
+tags:
+  - sales
+  - crm
+  - leads
+  - pipeline
+  - follow-up
 ---
 
-# Leads
+# Leads — Sales Lead CRM
 
-Lead management toolkit — capture leads, score prospects, track pipeline, automate follow-ups, export contacts, and conversion analytics.
+Manage sales leads through their lifecycle: add, score, follow up, convert, and report on your pipeline.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `leads add` | <name> <email> |
-| `leads list` | [status] |
-| `leads score` | <id> |
-| `leads pipeline` | Pipeline |
-| `leads followup` | Followup |
-| `leads export` | <format> |
-
-## Usage
+### add — Add a new lead
 
 ```bash
-# Show help
-leads help
-
-# Quick start
-leads add <name> <email>
+bash scripts/script.sh add "<name>" "<email>" "<company>" "[source]"
 ```
 
-## Examples
+Creates a new lead with status `new`. Source defaults to `direct`.
+
+### list — View leads
 
 ```bash
-# Example 1
-leads add <name> <email>
-
-# Example 2
-leads list [status]
+bash scripts/script.sh list [status] [--sort score|date]
 ```
 
-- Run `leads help` for all available commands
+Lists all leads, optionally filtered by status (`new`, `contacted`, `qualified`, `converted`, `lost`). Sort by score or date.
 
----
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
+### score — Score a lead
 
-## Configuration
+```bash
+bash scripts/script.sh score "<lead_id>" <points> "[reason]"
+```
 
-Set `LEADS_DIR` to change data directory. Default: `~/.local/share/leads/`
+Assigns or adds score points to a lead. Score range: 0–100. Higher = more likely to convert.
 
-## When to Use
+### follow-up — Set follow-up reminder
 
-- Quick leads tasks from terminal
-- Automation pipelines
+```bash
+bash scripts/script.sh follow-up "<lead_id>" "<YYYY-MM-DD>" "<note>"
+```
+
+Schedules a follow-up action for a lead on the specified date with a note.
+
+### convert — Mark lead as converted
+
+```bash
+bash scripts/script.sh convert "<lead_id>" "[deal_value]"
+```
+
+Changes lead status to `converted` and optionally records deal value.
+
+### pipeline — Sales funnel report
+
+```bash
+bash scripts/script.sh pipeline [YYYY-MM]
+```
+
+Shows a funnel breakdown of leads by status with counts and conversion rates. Defaults to current month.
 
 ## Output
 
-Results go to stdout. Save with `leads run > output.txt`.
+All commands print plain text to stdout. Data is stored in `~/.leads/leads.json`.
+
+
+## Requirements
+- bash 4+
+- python3 (standard library only)
+
+## Feedback
+
+Report issues or suggestions: [https://bytesagain.com/feedback/](https://bytesagain.com/feedback/)
+
+---
+
+Powered by BytesAgain | bytesagain.com

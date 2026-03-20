@@ -1,102 +1,155 @@
 #!/usr/bin/env bash
-# dropship-helper - System operations and monitoring tool
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${DROPSHIP_HELPER_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/dropship-helper}"
-DB="$DATA_DIR/data.log"
+
+VERSION="3.0.0"
+SCRIPT_NAME="dropship-helper"
+DATA_DIR="$HOME/.local/share/dropship-helper"
 mkdir -p "$DATA_DIR"
 
-show_help() {
-    cat << EOF
-dropship-helper v$VERSION
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-System operations and monitoring tool
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
-Usage: dropship-helper <command> [args]
-
-Commands:
-  status               System status
-  check                Health check
-  monitor              Start monitoring
-  logs                 View logs
-  config               Show config
-  restart              Restart guide
-  backup               Backup helper
-  alert                Set alert
-  optimize             Optimization tips
-  info                 System info
-  help                 Show this help
-  version              Show version
-
-Data: \$DATA_DIR
-EOF
+cmd_margin() {
+    local cost="${2:-}"
+    local price="${3:-}"
+    [ -z "$cost" ] && die "Usage: $SCRIPT_NAME margin <cost price>"
+    awk "BEGIN{m=($3-$2)/$3*100; printf \"Margin: %.1f%%\n\", m}"
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-
-cmd_status() {
-    echo "  $(uptime 2>/dev/null || echo "uptime: unknown")"
-    _log "status" "${1:-}"
+cmd_roi() {
+    local investment="${2:-}"
+    local revenue="${3:-}"
+    [ -z "$investment" ] && die "Usage: $SCRIPT_NAME roi <investment revenue>"
+    awk "BEGIN{r=($3-$2)/$2*100; printf \"ROI: %.1f%%\n\", r}"
 }
 
-cmd_check() {
-    echo "  CPU: $(grep -c processor /proc/cpuinfo 2>/dev/null || echo "?") cores
-      Mem: $(free -h 2>/dev/null | awk "/Mem/{print \$3"/"\$2}" || echo "?")"
-    _log "check" "${1:-}"
+cmd_pricing() {
+    local cost="${2:-}"
+    local margin_pct="${3:-}"
+    [ -z "$cost" ] && die "Usage: $SCRIPT_NAME pricing <cost margin_pct>"
+    awk "BEGIN{p=$2/(1-$3/100); printf \"Sell at: \$%.2f\n\", p}"
 }
 
-cmd_monitor() {
-    echo "  Monitoring: $1"
-    _log "monitor" "${1:-}"
+cmd_breakeven() {
+    local fixed="${2:-}"
+    local variable="${3:-}"
+    local price="${4:-}"
+    [ -z "$fixed" ] && die "Usage: $SCRIPT_NAME breakeven <fixed variable price>"
+    awk "BEGIN{b=$2/($4-$3); printf \"Breakeven: %.0f units\n\", b}"
 }
 
-cmd_logs() {
-    echo "  Recent: $(tail -5 /var/log/syslog 2>/dev/null || echo "no access")"
-    _log "logs" "${1:-}"
+cmd_compare() {
+    local c1="${2:-}"
+    local p1="${3:-}"
+    local c2="${4:-}"
+    local p2="${5:-}"
+    [ -z "$c1" ] && die "Usage: $SCRIPT_NAME compare <c1 p1 c2 p2>"
+    echo 'Product 1:'; cmd_margin $2 $3; echo 'Product 2:'; cmd_margin $4 $5
 }
 
-cmd_config() {
-    echo "  Config dir: $DATA_DIR"
-    _log "config" "${1:-}"
+cmd_report() {
+    echo '=== Dropship Calculator ==='; echo 'Use margin/roi/pricing/breakeven commands'
 }
 
-cmd_restart() {
-    echo "  systemctl restart $1"
-    _log "restart" "${1:-}"
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
+    echo ""
+    echo "Commands:"
+    printf "  %-25s\n" "margin <cost price>"
+    printf "  %-25s\n" "roi <investment revenue>"
+    printf "  %-25s\n" "pricing <cost margin_pct>"
+    printf "  %-25s\n" "breakeven <fixed variable price>"
+    printf "  %-25s\n" "compare <c1 p1 c2 p2>"
+    printf "  %-25s\n" "report"
+    printf "  %%-25s\n" "help"
+    echo ""
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-cmd_backup() {
-    echo "  Backup: tar czf backup-$(date +%Y%m%d).tar.gz $1"
-    _log "backup" "${1:-}"
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        margin) shift; cmd_margin "$@" ;;
+        roi) shift; cmd_roi "$@" ;;
+        pricing) shift; cmd_pricing "$@" ;;
+        breakeven) shift; cmd_breakeven "$@" ;;
+        compare) shift; cmd_compare "$@" ;;
+        report) shift; cmd_report "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
+    esac
 }
 
-cmd_alert() {
-    echo "  Alert: $1 threshold $2"
-    _log "alert" "${1:-}"
-}
-
-cmd_optimize() {
-    echo "  1. Clear cache | 2. Compress logs | 3. Kill zombies"
-    _log "optimize" "${1:-}"
-}
-
-cmd_info() {
-    uname -a 2>/dev/null; echo "  Disk: $(df -h / 2>/dev/null | tail -1)"
-    _log "info" "${1:-}"
-}
-
-case "${1:-help}" in
-    status) shift; cmd_status "$@" ;;
-    check) shift; cmd_check "$@" ;;
-    monitor) shift; cmd_monitor "$@" ;;
-    logs) shift; cmd_logs "$@" ;;
-    config) shift; cmd_config "$@" ;;
-    restart) shift; cmd_restart "$@" ;;
-    backup) shift; cmd_backup "$@" ;;
-    alert) shift; cmd_alert "$@" ;;
-    optimize) shift; cmd_optimize "$@" ;;
-    info) shift; cmd_info "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "dropship-helper v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
-esac
+main "$@"

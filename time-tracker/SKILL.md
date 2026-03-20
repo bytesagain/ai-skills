@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: time-tracker
-description: "时间追踪与分析工具。时间记录、分析报告、分类统计、报表生成、效率改进、番茄钟。Time tracker with log, analyze, category, report, improve, and pomodoro timer. Use when you need time tracker capabilities. Triggers on: time tracker."
+description: "Track work time with categories, reports, and Pomodoro. Use when adding entries, listing logs, tracking projects, reviewing weekly stats."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # time-tracker
 

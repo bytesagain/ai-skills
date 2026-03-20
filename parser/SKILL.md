@@ -1,56 +1,112 @@
 ---
-name: parser
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [parser, tool, utility]
-description: "Parser - command-line tool for everyday use"
+name: "parser"
+version: "1.0.0"
+description: "Parse JSON, CSV, XML, and logs into structured output. Use when converting formats, validating structure, extracting fields, analyzing nested data."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [parser, general, cli, tool]
+category: "general"
 ---
 
-# Parser
+# parser
 
-Text and data parser — parse JSON, CSV, XML, logs, and custom formats into structured output.
+Parse JSON, CSV, XML, and logs into structured output. Use when converting formats, validating structure, extracting fields, analyzing nested data.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `parser help` | Show usage info |
-| `parser run` | Run main task |
-| `parser status` | Check current state |
-| `parser list` | List items |
-| `parser add <item>` | Add new item |
-| `parser export <fmt>` | Export data |
-
-## Usage
+### `status`
 
 ```bash
-parser help
-parser run
-parser status
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-# Get started
-parser help
-
-# Run default task
-parser run
-
-# Export as JSON
-parser export json
+scripts/script.sh add
 ```
 
-## Output
+Add new entry
 
-Results go to stdout. Save with `parser run > output.txt`.
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `PARSER_DIR` to change data directory. Default: `~/.local/share/parser/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `PARSER_DIR` | No | Data directory (default: ~/.parser/) |
+
+## Data Storage
+
+All data stored in `~/.parser/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

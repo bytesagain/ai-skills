@@ -1,0 +1,9 @@
+{
+  "name": "animation",
+  "description": "Generate CSS and SVG animation code snippets using bash and Python. Use when building UI animations, keyframes, or transition effects.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

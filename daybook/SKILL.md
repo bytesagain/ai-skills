@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: daybook
-description: "Personal daily journal and diary tool with mood tracking, gratitude logging, and writing streaks. Use when you need to write daily entries, track mood over time, search past journals, maintain a writing streak, log gratitude, or get writing prompts. Triggers on: journal, diary, daily writing, mood log, gratitude, reflection, writing prompt, morning pages."
+description: "Write daily journal entries with tagging, search, and monthly reviews. Use when journaling daily, searching entries, tagging themes."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Daily Journal

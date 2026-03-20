@@ -1,40 +1,48 @@
 ---
 name: SeedGen
-description: "Random seed and test data generator. Create deterministic random sequences, generate seed phrases, produce reproducible test datasets, and manage random number generation for development and testing. Control randomness in your projects."
-version: "2.0.0"
+description: "Generate reproducible seeds and deterministic test data. Use when creating random seeds, rotating salt values, auditing randomness, storing seed records."
+version: "3.0.1"
 author: "BytesAgain"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 tags: ["seed","random","generator","testing","data","deterministic","developer"]
 categories: ["Developer Tools", "Utility"]
 ---
+
 # SeedGen
-Reproducible randomness. Generate seeds, test data, and deterministic sequences.
+
+Random seed and data generator. Generate random strings, hex, bytes, integers, floats, UUIDs, passwords, and batch outputs — using /dev/urandom and standard tools.
+
 ## Commands
-- `seed` — Generate a random seed
-- `sequence <seed> <n>` — Generate N numbers from seed
-- `words <n>` — Generate random word list
-- `hex <length>` — Random hex string
-- `bytes <length>` — Random bytes (base64)
-## Usage Examples
+
+| Command | Description |
+|---------|-------------|
+| `seedgen string <length>` | Random alphanumeric string of given length |
+| `seedgen hex <bytes>` | Random hex string (2 hex chars per byte) |
+| `seedgen bytes <count>` | Random bytes, base64 encoded |
+| `seedgen int <min> <max>` | Random integer in range [min, max] |
+| `seedgen float` | Random float between 0 and 1 |
+| `seedgen pick <item1> <item2> ...` | Randomly pick one item from a list |
+| `seedgen uuid` | Generate a UUID v4 |
+| `seedgen password <length>` | Generate a strong mixed-char password |
+| `seedgen batch <type> <count> [args]` | Generate multiple values at once |
+| `seedgen version` | Show version |
+
+## Examples
+
 ```bash
-seedgen seed
-seedgen sequence 42 10
-seedgen words 12
-seedgen hex 32
+seedgen string 32          # → "aB3kQ9..."
+seedgen hex 16             # → "4f2a1c..."
+seedgen bytes 64           # → base64-encoded random bytes
+seedgen int 1 100          # → 42
+seedgen float              # → 0.73812...
+seedgen pick red green blue # → "green"
+seedgen uuid               # → "550e8400-e29b-41d4-..."
+seedgen password 20        # → "kP#9xL!mQ..."
+seedgen batch string 5 16  # → 5 random 16-char strings
 ```
----
-Powered by BytesAgain | bytesagain.com
 
-- Run `seedgen help` for all commands
+## Requirements
 
-## When to Use
-
-- when you need quick seedgen from the command line
-- to automate seedgen tasks in your workflow
-
-## Output
-
-Returns reports to stdout. Redirect to a file with `seedgen run > output.txt`.
-
----
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
+- `/dev/urandom` (standard on Linux/macOS)
+- `shuf`, `awk`, `od`, `base64` (standard coreutils)

@@ -62,7 +62,14 @@ cmd_compare() {
 }
 
 cmd_cost() {
-    echo "  Tokens: ~$1 | Cost: ~\$$(python3 -c "print("{:.4f}".format(${1:-1000} * 0.00003))" 2>/dev/null || echo "?")"
+    local _cost
+    _cost=$(TOKENS="${1:-1000}" python3 << 'PYEOF2'
+import os
+tokens = int(os.environ["TOKENS"])
+print("{:.4f}".format(tokens * 0.00003))
+PYEOF2
+    ) 2>/dev/null || _cost="?"
+    echo "  Tokens: ~$1 | Cost: ~\$$_cost"
     _log "cost" "${1:-}"
 }
 

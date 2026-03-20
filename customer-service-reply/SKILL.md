@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Customer Service Reply
-description: "客服话术和回复模板生成器。售前咨询、售后问题、差评回复、退换货、升级处理、行业FAQ、满意度挽回。. Use when you need customer service reply capabilities. Triggers on: customer service reply."
-  客服回复模板。售前咨询、售后处理、退换货、投诉回复、好评引导、升级处理、行业FAQ、满意度挽回。Customer service reply templates for pre-sale, after-sale, returns, complaints, escalation, FAQ generation, satisfaction recovery. 客服话术、电商客服、售后模板、投诉处理、满意度管理。Use when responding to customer inquiries.
+description: "Generate customer service replies for inquiries, complaints, and refunds. Use when drafting support replies, handling refunds, writing FAQ answers."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # customer-service-reply

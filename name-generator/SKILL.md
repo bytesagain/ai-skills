@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Name Generator
-description: "起名取名助手。宝宝起名、英文名、笔名、品牌名。含寓意解析。. Use when you need name generator capabilities. Triggers on: name generator."
-  起名助手。宝宝取名、公司起名、笔名、网名、英文名。Name generator for babies, companies, pen names, usernames, English names. 取名字、起名大全、姓名测试。Use when naming anything.
+description: "Generate names for babies, brands, and pen names with meaning analysis. Use when brainstorming names, picking brand names, choosing names with meanings."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # name-generator

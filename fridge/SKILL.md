@@ -1,99 +1,112 @@
 ---
-name: "Fridge"
-description: "Manage Fridge data right from your terminal. Built for people who want organize your household without complex setup."
-version: "2.0.0"
+name: "fridge"
+version: "1.0.0"
+description: "Track fridge and pantry inventory with expiry reminders and grocery lists. Use when logging groceries, checking expiry dates, or building shopping lists."
 author: "BytesAgain"
-tags: ["maintenance", "inventory", "household", "fridge", "home"]
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [fridge, general, cli, tool]
+category: "general"
 ---
 
-# Fridge
+# fridge
 
-Manage Fridge data right from your terminal. Built for people who want organize your household without complex setup.
-
-## Why Fridge?
-
-- Works entirely offline — your data never leaves your machine
-- Simple command-line interface, no GUI needed
-- Export to JSON, CSV, or plain text anytime
-- Automatic history and activity logging
-
-## Getting Started
-
-```bash
-# See what you can do
-fridge help
-
-# Check current status
-fridge status
-
-# View your statistics
-fridge stats
-```
+Track fridge and pantry inventory with expiry reminders and grocery lists. Use when logging groceries, checking expiry dates, or building shopping lists.
 
 ## Commands
 
-| Command | What it does |
-|---------|-------------|
-| `fridge add` | Add |
-| `fridge inventory` | Inventory |
-| `fridge schedule` | Schedule |
-| `fridge remind` | Remind |
-| `fridge checklist` | Checklist |
-| `fridge usage` | Usage |
-| `fridge cost` | Cost |
-| `fridge maintain` | Maintain |
-| `fridge log` | Log |
-| `fridge report` | Report |
-| `fridge seasonal` | Seasonal |
-| `fridge tips` | Tips |
-| `fridge stats` | Summary statistics |
-| `fridge export` | <fmt>       Export (json|csv|txt) |
-| `fridge search` | <term>      Search entries |
-| `fridge recent` | Recent activity |
-| `fridge status` | Health check |
-| `fridge help` | Show this help |
-| `fridge version` | Show version |
-| `fridge $name:` | $c entries |
-| `fridge Total:` | $total entries |
-| `fridge Data` | size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1) |
-| `fridge Version:` | v2.0.0 |
-| `fridge Data` | dir: $DATA_DIR |
-| `fridge Entries:` | $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total |
-| `fridge Disk:` | $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1) |
-| `fridge Last:` | $(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo never) |
-| `fridge Status:` | OK |
-| `fridge [Fridge]` | add: $input |
-| `fridge Saved.` | Total add entries: $total |
-| `fridge [Fridge]` | inventory: $input |
-| `fridge Saved.` | Total inventory entries: $total |
-| `fridge [Fridge]` | schedule: $input |
-| `fridge Saved.` | Total schedule entries: $total |
-| `fridge [Fridge]` | remind: $input |
-| `fridge Saved.` | Total remind entries: $total |
-| `fridge [Fridge]` | checklist: $input |
-| `fridge Saved.` | Total checklist entries: $total |
-| `fridge [Fridge]` | usage: $input |
-| `fridge Saved.` | Total usage entries: $total |
-| `fridge [Fridge]` | cost: $input |
-| `fridge Saved.` | Total cost entries: $total |
-| `fridge [Fridge]` | maintain: $input |
-| `fridge Saved.` | Total maintain entries: $total |
-| `fridge [Fridge]` | log: $input |
-| `fridge Saved.` | Total log entries: $total |
-| `fridge [Fridge]` | report: $input |
-| `fridge Saved.` | Total report entries: $total |
-| `fridge [Fridge]` | seasonal: $input |
-| `fridge Saved.` | Total seasonal entries: $total |
-| `fridge [Fridge]` | tips: $input |
-| `fridge Saved.` | Total tips entries: $total |
+### `status`
+
+```bash
+scripts/script.sh status
+```
+
+Show current status
+
+### `add`
+
+```bash
+scripts/script.sh add
+```
+
+Add new entry
+
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
+
+## Configuration
+
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `FRIDGE_DIR` | No | Data directory (default: ~/.fridge/) |
 
 ## Data Storage
 
-All data is stored locally at `~/.local/share/fridge/`. Each action is logged with timestamps. Use `export` to back up your data anytime.
+All data stored in `~/.fridge/` using JSONL format (one JSON object per line).
 
-## Feedback
+## Output
 
-Found a bug or have a suggestion? Let us know: https://bytesagain.com/feedback/
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

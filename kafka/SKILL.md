@@ -1,88 +1,112 @@
 ---
-name: kafka
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [kafka, tool, utility]
-description: "Kafka - command-line tool for everyday use"
+name: "kafka"
+version: "1.0.0"
+description: "Produce, consume, and manage Kafka topics with lag monitoring and data export. Use when publishing messages, consuming topics, monitoring consumer lag."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [kafka, general, cli, tool]
+category: "general"
 ---
 
-# Kafka
+# kafka
 
-Kafka toolkit — produce, consume, manage topics, monitor lag, and export data.
+Produce, consume, and manage Kafka topics with lag monitoring and data export. Use when publishing messages, consuming topics, monitoring consumer lag.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `kafka help` | Show usage info |
-| `kafka run` | Run main task |
-| `kafka status` | Check current state |
-| `kafka list` | List items |
-| `kafka add <item>` | Add new item |
-| `kafka export <fmt>` | Export data |
-
-## Usage
+### `status`
 
 ```bash
-kafka help
-kafka run
-kafka status
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-# Get started
-kafka help
-
-# Run default task
-kafka run
-
-# Export as JSON
-kafka export json
+scripts/script.sh add
 ```
 
-## Output
+Add new entry
 
-Results go to stdout. Save with `kafka run > output.txt`.
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `KAFKA_DIR` to change data directory. Default: `~/.local/share/kafka/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `KAFKA_DIR` | No | Data directory (default: ~/.kafka/) |
+
+## Data Storage
+
+All data stored in `~/.kafka/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
 
-
-## Features
-
-- Simple command-line interface for quick access
-- Local data storage with JSON/CSV export
-- History tracking and activity logs
-- Search across all entries
-
-## Quick Start
-
-```bash
-# Check status
-kafka status
-
-# View help
-kafka help
-
-# Export data
-kafka export json
-```
-
-## How It Works
-
-Kafka stores all data locally in `~/.local/share/kafka/`. Each command logs activity with timestamps for full traceability.
-
-## Support
-
-- Feedback: https://bytesagain.com/feedback/
-- Website: https://bytesagain.com
-
-Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

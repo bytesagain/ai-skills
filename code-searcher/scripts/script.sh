@@ -1,101 +1,155 @@
 #!/usr/bin/env bash
-# code-searcher - Developer workflow automation tool
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${CODE_SEARCHER_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/code-searcher}"
-DB="$DATA_DIR/data.log"
+
+VERSION="3.0.0"
+SCRIPT_NAME="code-searcher"
+DATA_DIR="$HOME/.local/share/code-searcher"
 mkdir -p "$DATA_DIR"
 
-show_help() {
-    cat << EOF
-code-searcher v$VERSION
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-Developer workflow automation tool
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
-Usage: code-searcher <command> [args]
-
-Commands:
-  init                 Initialize project
-  check                Run checks
-  build                Build project
-  test                 Run tests
-  deploy               Deploy guide
-  config               Configuration
-  status               Project status
-  template             Code template
-  docs                 Documentation
-  clean                Clean artifacts
-  help                 Show this help
-  version              Show version
-
-Data: \$DATA_DIR
-EOF
+cmd_find() {
+    local pattern="${2:-}"
+    local dir="${3:-}"
+    [ -z "$pattern" ] && die "Usage: $SCRIPT_NAME find <pattern dir>"
+    grep -rn --include='*.py' --include='*.js' --include='*.sh' --include='*.go' $2 ${3:-.} 2>/dev/null | head -30
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-
-cmd_init() {
-    echo "  Project initialized in $(pwd)"
-    _log "init" "${1:-}"
+cmd_todo() {
+    local dir="${2:-}"
+    [ -z "$dir" ] && die "Usage: $SCRIPT_NAME todo <dir>"
+    grep -rn 'TODO\|FIXME\|HACK\|XXX' ${2:-.} --include='*.py' --include='*.js' --include='*.sh' 2>/dev/null | head -20
 }
 
-cmd_check() {
-    echo "  Running lint + type check + tests..."
-    _log "check" "${1:-}"
+cmd_refs() {
+    local symbol="${2:-}"
+    local dir="${3:-}"
+    [ -z "$symbol" ] && die "Usage: $SCRIPT_NAME refs <symbol dir>"
+    grep -rn $2 ${3:-.} 2>/dev/null | head -20
 }
 
-cmd_build() {
-    echo "  Building..."
-    _log "build" "${1:-}"
+cmd_stats() {
+    local dir="${2:-}"
+    [ -z "$dir" ] && die "Usage: $SCRIPT_NAME stats <dir>"
+    echo 'Files:'; find ${2:-.} -type f -name '*.py' -o -name '*.js' -o -name '*.sh' | wc -l; echo 'Lines:'; find ${2:-.} -type f \( -name '*.py' -o -name '*.js' -o -name '*.sh' \) -exec cat {} + 2>/dev/null | wc -l
 }
 
-cmd_test() {
-    echo "  Running test suite..."
-    _log "test" "${1:-}"
+cmd_recent() {
+    local dir="${2:-}"
+    local days="${3:-}"
+    [ -z "$dir" ] && die "Usage: $SCRIPT_NAME recent <dir days>"
+    find ${2:-.} -type f -mtime -${3:-7} \( -name '*.py' -o -name '*.js' -o -name '*.sh' \) | head -20
 }
 
-cmd_deploy() {
-    echo "  Deploy: build -> test -> stage -> prod"
-    _log "deploy" "${1:-}"
+cmd_grep() {
+    local text="${2:-}"
+    local dir="${3:-}"
+    [ -z "$text" ] && die "Usage: $SCRIPT_NAME grep <text dir>"
+    grep -rn $2 ${3:-.} 2>/dev/null | head -30
 }
 
-cmd_config() {
-    echo "  Config: $DATA_DIR/config.json"
-    _log "config" "${1:-}"
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
+    echo ""
+    echo "Commands:"
+    printf "  %-25s\n" "find <pattern dir>"
+    printf "  %-25s\n" "todo <dir>"
+    printf "  %-25s\n" "refs <symbol dir>"
+    printf "  %-25s\n" "stats <dir>"
+    printf "  %-25s\n" "recent <dir days>"
+    printf "  %-25s\n" "grep <text dir>"
+    printf "  %%-25s\n" "help"
+    echo ""
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-cmd_status() {
-    echo "  Status: checking project health..."
-    _log "status" "${1:-}"
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        find) shift; cmd_find "$@" ;;
+        todo) shift; cmd_todo "$@" ;;
+        refs) shift; cmd_refs "$@" ;;
+        stats) shift; cmd_stats "$@" ;;
+        recent) shift; cmd_recent "$@" ;;
+        grep) shift; cmd_grep "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
+    esac
 }
 
-cmd_template() {
-    echo "  Template for: $1"
-    _log "template" "${1:-}"
-}
-
-cmd_docs() {
-    echo "  Generating docs..."
-    _log "docs" "${1:-}"
-}
-
-cmd_clean() {
-    echo "  Cleaned build artifacts"
-    _log "clean" "${1:-}"
-}
-
-case "${1:-help}" in
-    init) shift; cmd_init "$@" ;;
-    check) shift; cmd_check "$@" ;;
-    build) shift; cmd_build "$@" ;;
-    test) shift; cmd_test "$@" ;;
-    deploy) shift; cmd_deploy "$@" ;;
-    config) shift; cmd_config "$@" ;;
-    status) shift; cmd_status "$@" ;;
-    template) shift; cmd_template "$@" ;;
-    docs) shift; cmd_docs "$@" ;;
-    clean) shift; cmd_clean "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "code-searcher v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
-esac
+main "$@"

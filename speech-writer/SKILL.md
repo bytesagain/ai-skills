@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: speech-writer
-description: "演讲稿(TED风格)、婚礼致辞、商务演讲、励志演讲、祝酒词、演讲大纲。Speech writing for TED-style talks, wedding speeches, business presentations, motivational speeches, toasts, and outlines. Use when you need speech writer capabilities. Triggers on: speech writer."
+description: "演讲稿(TED风格)、婚礼致辞、商务演讲、励志演讲、祝酒词、演讲大纲。Speech writing for TED-style talks, wedding speeches, business presentations, motivational speeches, toasts."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # speech-writer
 

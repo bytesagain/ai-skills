@@ -1,88 +1,112 @@
 ---
-name: helm
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [helm, tool, utility]
-description: "Helm - command-line tool for everyday use"
+name: "helm"
+version: "1.0.0"
+description: "Create, lint, template, and package Kubernetes Helm charts with checks. Use when scaffolding charts, linting templates, or packaging chart releases."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [helm, general, cli, tool]
+category: "general"
 ---
 
-# Helm
+# helm
 
-Helm chart toolkit — create, lint, template, package, and manage Kubernetes charts.
+Create, lint, template, and package Kubernetes Helm charts with checks. Use when scaffolding charts, linting templates, or packaging chart releases.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `helm help` | Show usage info |
-| `helm run` | Run main task |
-| `helm status` | Check current state |
-| `helm list` | List items |
-| `helm add <item>` | Add new item |
-| `helm export <fmt>` | Export data |
-
-## Usage
+### `status`
 
 ```bash
-helm help
-helm run
-helm status
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-# Get started
-helm help
-
-# Run default task
-helm run
-
-# Export as JSON
-helm export json
+scripts/script.sh add
 ```
 
-## Output
+Add new entry
 
-Results go to stdout. Save with `helm run > output.txt`.
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `HELM_DIR` to change data directory. Default: `~/.local/share/helm/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `HELM_DIR` | No | Data directory (default: ~/.helm/) |
+
+## Data Storage
+
+All data stored in `~/.helm/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
 
-
-## Features
-
-- Simple command-line interface for quick access
-- Local data storage with JSON/CSV export
-- History tracking and activity logs
-- Search across all entries
-
-## Quick Start
-
-```bash
-# Check status
-helm status
-
-# View help
-helm help
-
-# Export data
-helm export json
-```
-
-## How It Works
-
-Helm stores all data locally in `~/.local/share/helm/`. Each command logs activity with timestamps for full traceability.
-
-## Support
-
-- Feedback: https://bytesagain.com/feedback/
-- Website: https://bytesagain.com
-
-Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

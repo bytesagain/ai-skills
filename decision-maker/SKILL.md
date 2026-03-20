@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: decision-maker
-description: "决策分析工具。利弊对比、加权决策矩阵、盲选消除偏见、决策框架推荐、风险评估。Decision maker with pros-cons analysis, weighted matrix, blind choice, decision frameworks, risk assessment. Use when you need decision maker capabilities. Triggers on: decision maker."
+description: "决策分析工具。利弊对比、加权决策矩阵、盲选消除偏见、决策框架推荐、风险评估。Decision maker with pros-cons analysis, weighted matrix, blind choice, decision frameworks."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # decision-maker
 

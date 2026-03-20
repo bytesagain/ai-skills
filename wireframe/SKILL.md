@@ -1,62 +1,90 @@
 ---
 name: wireframe
-version: "2.0.0"
+description: "Generate wireframes, component sketches, and user flow diagrams. Use when prototyping layouts, sketching pages, diagramming flows, or drafting UI specs."
+version: "3.4.0"
 author: BytesAgain
-license: MIT-0
-tags: [wireframe, tool, utility]
-description: "Wireframe - command-line tool for everyday use"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
+tags:
+  - wireframe
+  - design
+  - ascii
+  - svg
+  - ux
+  - flowchart
 ---
 
 # Wireframe
 
-Wireframe generator — create ASCII and text-based wireframes, page layouts, component sketches, user flow diagrams, and export to multiple formats.
+Generate wireframes, component sketches, and user flow diagrams for UI design.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `wireframe page` | <type> |
-| `wireframe component` | <name> |
-| `wireframe flow` | <steps> |
-| `wireframe export` | <format> |
-| `wireframe templates` | Templates |
-| `wireframe annotate` | Annotate |
+### page
 
-## Usage
+Generate a full-page wireframe in ASCII or SVG format.
 
 ```bash
-# Show help
-wireframe help
-
-# Quick start
-wireframe page <type>
+bash scripts/script.sh page --sections "header,hero,features,cta,footer" --format svg --output wireframe.svg
 ```
 
-## Examples
+### component
+
+Generate a wireframe for a single UI component (form, card, nav, table, etc).
 
 ```bash
-# Example 1
-wireframe page <type>
-
-# Example 2
-wireframe component <name>
+bash scripts/script.sh component --type card --fields "image,title,text,button" --output card.svg
 ```
 
-- Run `wireframe help` for all available commands
+### flow
 
----
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
+Generate a user flow diagram showing page transitions and decision points.
 
-## When to Use
+```bash
+bash scripts/script.sh flow --steps "login,dashboard,settings,logout" --decisions "auth:yes/no" --output flow.svg
+```
 
-- Quick wireframe tasks from terminal
-- Automation pipelines
+### annotate
+
+Add numbered annotations and notes to an existing SVG wireframe.
+
+```bash
+bash scripts/script.sh annotate --input wireframe.svg --notes "1:Logo area,2:Search bar,3:Main content" --output annotated.svg
+```
+
+### export
+
+Export a wireframe to standalone HTML with inline styles.
+
+```bash
+bash scripts/script.sh export --input wireframe.svg --format html --output wireframe.html
+```
+
+### template
+
+Generate a wireframe from a built-in page template (landing, dashboard, blog, ecommerce, etc).
+
+```bash
+bash scripts/script.sh template --name landing --format ascii
+```
 
 ## Output
 
-Results go to stdout. Save with `wireframe run > output.txt`.
+- `page`: ASCII wireframe to stdout or SVG file to disk
+- `component`: SVG file with component wireframe
+- `flow`: SVG flowchart with boxes and arrows
+- `annotate`: SVG file with annotation markers and legend
+- `export`: Standalone HTML file with embedded wireframe
+- `template`: Wireframe output in chosen format
 
-## Configuration
 
-Set `WIREFRAME_DIR` to change data directory. Default: `~/.local/share/wireframe/`
+## Requirements
+- bash 4+
+
+## Feedback
+
+https://bytesagain.com/feedback/
+
+---
+
+Powered by BytesAgain | bytesagain.com

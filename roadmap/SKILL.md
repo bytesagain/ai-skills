@@ -1,62 +1,112 @@
 ---
-name: roadmap
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [roadmap, tool, utility]
-description: "Roadmap - command-line tool for everyday use"
+name: "roadmap"
+version: "1.0.0"
+description: "Plan product roadmaps with milestones and dependencies. Use when adding features, planning sprints, tracking milestone progress, reviewing priorities."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [roadmap, general, cli, tool]
+category: "general"
 ---
 
-# Roadmap
+# roadmap
 
-Product roadmap planner — create timelines, milestones, feature tracking, priority scoring, dependency mapping, and progress visualization.
+Plan product roadmaps with milestones and dependencies. Use when adding features, planning sprints, tracking milestone progress, reviewing priorities.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `roadmap run` | Execute main function |
-| `roadmap list` | List all items |
-| `roadmap add <item>` | Add new item |
-| `roadmap status` | Show current status |
-| `roadmap export <format>` | Export data |
-| `roadmap help` | Show help |
-
-## Usage
+### `status`
 
 ```bash
-# Show help
-roadmap help
-
-# Quick start
-roadmap run
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-# Run with defaults
-roadmap run
-
-# Check status
-roadmap status
-
-# Export results
-roadmap export json
+scripts/script.sh add
 ```
 
-- Run `roadmap help` for all commands
-- Data stored in `~/.local/share/roadmap/`
+Add new entry
 
----
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `ROADMAP_DIR` to change data directory. Default: `~/.local/share/roadmap/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
 
-## When to Use
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `ROADMAP_DIR` | No | Data directory (default: ~/.roadmap/) |
 
-- Quick roadmap tasks from terminal
-- Automation pipelines
+## Data Storage
+
+All data stored in `~/.roadmap/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
+
+---
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

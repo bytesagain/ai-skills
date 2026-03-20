@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Meeting Agenda
-description: "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━. Use when you need meeting agenda capabilities. Triggers on: meeting agenda."
-  会议议程管理。议程创建、站会模板、复盘会、一对一、决策会议、会议纪要。Meeting agenda with standups, retrospectives, one-on-ones, decision meetings, minutes. 会议、议程、站会、纪要。
+description: "Create agendas for standups, retros, 1-on-1s, and decision meetings with minutes. Use when planning standups, preparing retro agendas, capturing actions."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # Meeting Agenda
 

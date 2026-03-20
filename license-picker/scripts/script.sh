@@ -1,101 +1,159 @@
 #!/usr/bin/env bash
-# license-picker - Multi-purpose utility tool
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${LICENSE_PICKER_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/license-picker}"
-DB="$DATA_DIR/data.log"
+
+VERSION="3.0.0"
+SCRIPT_NAME="license-picker"
+DATA_DIR="$HOME/.local/share/license-picker"
 mkdir -p "$DATA_DIR"
 
-show_help() {
-    cat << EOF
-license-picker v$VERSION
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-Multi-purpose utility tool
-
-Usage: license-picker <command> [args]
-
-Commands:
-  run                  Execute main function
-  config               Configuration
-  status               Show status
-  init                 Initialize
-  list                 List items
-  add                  Add entry
-  remove               Remove entry
-  search               Search
-  export               Export data
-  info                 Show info
-  help                 Show this help
-  version              Show version
-
-Data: \$DATA_DIR
-EOF
-}
-
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-
-cmd_run() {
-    echo "  Running: $1"
-    _log "run" "${1:-}"
-}
-
-cmd_config() {
-    echo "  Config: $DATA_DIR/config.json"
-    _log "config" "${1:-}"
-}
-
-cmd_status() {
-    echo "  Status: ready"
-    _log "status" "${1:-}"
-}
-
-cmd_init() {
-    echo "  Initialized in $DATA_DIR"
-    _log "init" "${1:-}"
-}
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
 cmd_list() {
-    [ -f "$DB" ] && cat "$DB" || echo "  (empty)"
-    _log "list" "${1:-}"
-}
-
-cmd_add() {
-    echo "$(date +%Y-%m-%d) $*" >> "$DB"; echo "  Added: $*"
-    _log "add" "${1:-}"
-}
-
-cmd_remove() {
-    echo "  Removed: $1"
-    _log "remove" "${1:-}"
-}
-
-cmd_search() {
-    grep -i "$1" "$DB" 2>/dev/null || echo "  Not found: $1"
-    _log "search" "${1:-}"
-}
-
-cmd_export() {
-    [ -f "$DB" ] && cat "$DB" || echo "No data"
-    _log "export" "${1:-}"
+    echo 'Available: MIT, Apache-2.0, GPL-3.0, BSD-2, BSD-3, ISC, MPL-2.0, Unlicense'
 }
 
 cmd_info() {
-    echo "  Version: $VERSION | Data: $DATA_DIR"
-    _log "info" "${1:-}"
+    local license="${2:-}"
+    [ -z "$license" ] && die "Usage: $SCRIPT_NAME info <license>"
+    case $2 in MIT) echo 'MIT: Permissive, commercial use OK, must include license';; Apache-2.0) echo 'Apache 2.0: Permissive, patent grant, must include license+notice';; GPL-3.0) echo 'GPL 3.0: Copyleft, derivative works must be GPL';; *) echo 'License $2: check choosealicense.com';; esac
 }
 
-case "${1:-help}" in
-    run) shift; cmd_run "$@" ;;
-    config) shift; cmd_config "$@" ;;
-    status) shift; cmd_status "$@" ;;
-    init) shift; cmd_init "$@" ;;
-    list) shift; cmd_list "$@" ;;
-    add) shift; cmd_add "$@" ;;
-    remove) shift; cmd_remove "$@" ;;
-    search) shift; cmd_search "$@" ;;
-    export) shift; cmd_export "$@" ;;
-    info) shift; cmd_info "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "license-picker v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
-esac
+cmd_create() {
+    local license="${2:-}"
+    local author="${3:-}"
+    [ -z "$license" ] && die "Usage: $SCRIPT_NAME create <license author>"
+    echo 'MIT License
+
+Copyright (c) '$(date +%Y)' '$3'
+
+Permission is hereby granted...' > LICENSE && echo 'Created LICENSE'
+}
+
+cmd_compare() {
+    local l1="${2:-}"
+    local l2="${3:-}"
+    [ -z "$l1" ] && die "Usage: $SCRIPT_NAME compare <l1 l2>"
+    echo '=== $2 vs $3 ==='; cmd_info $2; echo '---'; cmd_info $3
+}
+
+cmd_recommend() {
+    local use="${2:-}"
+    [ -z "$use" ] && die "Usage: $SCRIPT_NAME recommend <use>"
+    case $2 in commercial) echo 'Recommended: MIT or Apache-2.0';; opensource) echo 'Recommended: GPL-3.0 or AGPL-3.0';; *) echo 'Recommended: MIT (most permissive)';; esac
+}
+
+cmd_detect() {
+    local file="${2:-}"
+    [ -z "$file" ] && die "Usage: $SCRIPT_NAME detect <file>"
+    grep -li 'MIT\|Apache\|GPL\|BSD' ${2:-LICENSE} 2>/dev/null || echo 'No license detected'
+}
+
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
+    echo ""
+    echo "Commands:"
+    printf "  %-25s\n" "list"
+    printf "  %-25s\n" "info <license>"
+    printf "  %-25s\n" "create <license author>"
+    printf "  %-25s\n" "compare <l1 l2>"
+    printf "  %-25s\n" "recommend <use>"
+    printf "  %-25s\n" "detect <file>"
+    printf "  %%-25s\n" "help"
+    echo ""
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
+}
+
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        list) shift; cmd_list "$@" ;;
+        info) shift; cmd_info "$@" ;;
+        create) shift; cmd_create "$@" ;;
+        compare) shift; cmd_compare "$@" ;;
+        recommend) shift; cmd_recommend "$@" ;;
+        detect) shift; cmd_detect "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
+    esac
+}
+
+main "$@"

@@ -1,49 +1,57 @@
 ---
-version: "2.0.0"
-name: Onchain Analyzer
-description: "Analyze wallet addresses and on-chain activity — transaction history, token holdings, DeFi positions, and trading patterns across EVM chains and Solana. Use when you need onchain analyzer capabilities. Triggers on: onchain analyzer."
-author: BytesAgain
+name: "onchain-analyzer"
+version: "3.0.0"
+description: "Analyze blockchain data with address lookups and transaction inspection. Use when investigating on-chain activity. Requires curl."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
 ---
 
-# Onchain Analyzer
+# onchain-analyzer
 
-Deep-dive into any wallet's on-chain activity.
-
-## Quick Reference
-
-| Command | Description |
-|---------|-------------|
-| `profile <addr>` | Wallet overview and stats |
-| `tokens <addr>` | Token holdings breakdown |
-| `txns <addr> [limit]` | Recent transactions |
-| `defi <addr>` | DeFi positions and yields |
-| `patterns <addr>` | Trading pattern analysis |
-| `compare <addr1> <addr2>` | Compare two wallets |
-
-## Supported Chains
-
-Ethereum, BSC, Polygon, Arbitrum, Base, Optimism, Avalanche, Solana
-
-## Use Cases
-
-- **Research**: Analyze whale wallets and smart money
-- **Security**: Verify counterparty wallet history
-- **Tracking**: Monitor wallets for copy-trading
-- **Compliance**: Transaction history for tax/audit
----
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
-
-## Examples
-
-```bash
-# Show help
-onchain-analyzer help
-
-# Run
-onchain-analyzer run
-```
+Analyze blockchain data with address lookups and transaction inspection. Use when investigating on-chain activity. Requires curl.
 
 ## Commands
 
-Run `onchain-analyzer help` to see all available commands.
+### `balance`
+
+```bash
+scripts/script.sh balance <addr>
+```
+
+### `tx`
+
+```bash
+scripts/script.sh tx <hash>
+```
+
+### `address`
+
+```bash
+scripts/script.sh address <addr>
+```
+
+### `gas`
+
+```bash
+scripts/script.sh gas
+```
+
+### `block`
+
+```bash
+scripts/script.sh block <number>
+```
+
+### `token`
+
+```bash
+scripts/script.sh token <addr>
+```
+
+## Data Storage
+
+Data stored in `~/.local/share/onchain-analyzer/`.
+
+---
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Fund Advisor
-description: "基金投资顾问。基金筛选、定投策略、资产配置、风险评估、收益计算、再平衡建议。Fund investment advisor with screening, DCA strategy, asset al. Use when you need fund advisor cn capabilities. Triggers on: fund advisor cn."
-  基金投资顾问。基金筛选、定投策略、资产配置、风险评估、收益计算、再平衡建议。Fund investment advisor with screening, DCA strategy, asset allocation, rebalancing. 基金理财、定投计划、投资组合、资产配置。Use when making fund investment decisions.
+description: "Screen Chinese funds, plan DCA strategies, and assess portfolio risk levels. Use when screening A-share funds, planning DCA, or comparing fund categories."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # Fund Advisor
 

@@ -1,89 +1,112 @@
 ---
-name: climate
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [climate, tool, utility]
-description: "Climate - command-line tool for everyday use"
+name: "climate"
+version: "1.0.0"
+description: "Analyze climate data with temperature trends and carbon tracking. Use when reviewing historical temps, tracking emissions, or generating climate reports."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [climate, general, cli, tool]
+category: "general"
 ---
 
-# Climate
+# climate
 
-Climate data toolkit — temperature trends, carbon tracking, weather patterns, and reports.
+Analyze climate data with temperature trends and carbon tracking. Use when reviewing historical temps, tracking emissions, or generating climate reports.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `climate help` | Show usage info |
-| `climate run` | Run main task |
-| `climate status` | Check state |
-| `climate list` | List items |
-| `climate add <item>` | Add item |
-| `climate export <fmt>` | Export data |
-
-## Usage
+### `status`
 
 ```bash
-climate help
-climate run
-climate status
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-climate help
-climate run
-climate export json
+scripts/script.sh add
 ```
 
-## Output
+Add new entry
 
-Results go to stdout. Save with `climate run > output.txt`.
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `CLIMATE_DIR` to change data directory. Default: `~/.local/share/climate/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `CLIMATE_DIR` | No | Data directory (default: ~/.climate/) |
+
+## Data Storage
+
+All data stored in `~/.climate/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
 
-
-## Features
-
-- Simple command-line interface for quick access
-- Local data storage with JSON/CSV export
-- History tracking and activity logs
-- Search across all entries
-- Status monitoring and health checks
-- No external dependencies required
-
-## Quick Start
-
-```bash
-# Check status
-climate status
-
-# View help and available commands
-climate help
-
-# View statistics
-climate stats
-
-# Export your data
-climate export json
-```
-
-## How It Works
-
-Climate stores all data locally in `~/.local/share/climate/`. Each command logs activity with timestamps for full traceability. Use `stats` to see a summary, or `export` to back up your data in JSON, CSV, or plain text format.
-
-## Support
-
-- Feedback: https://bytesagain.com/feedback/
-- Website: https://bytesagain.com
-- Email: hello@bytesagain.com
-
-Powered by BytesAgain | bytesagain.com
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

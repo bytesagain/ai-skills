@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # video-script-creator — Generate video scripts, shot lists, and storyboards
 set -euo pipefail
-VERSION="2.0.0"
+VERSION="3.0.0"
 DATA_DIR="${VIDEO_SCRIPT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/video-script-creator}"
 SCRIPTS_DIR="$DATA_DIR/scripts"
 mkdir -p "$SCRIPTS_DIR"

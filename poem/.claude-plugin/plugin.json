@@ -1,0 +1,9 @@
+{
+  "name": "poem",
+  "description": "Compose and refine poems across multiple styles. Use when drafting verse, checking meter and rhyme, converting prose to poetry, generating themed poems.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

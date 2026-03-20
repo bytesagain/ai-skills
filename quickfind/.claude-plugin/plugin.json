@@ -1,0 +1,9 @@
+{
+  "name": "quickfind",
+  "description": "Search files and directories faster than find. Use when locating nested files, planning directory cleanups, tracking recent changes, reviewing metadata.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

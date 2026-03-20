@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: My Arsenal Of Aws Security Tools
-description: "List of open source tools for AWS security: defensive, offensive, auditing, DFIR, etc. my arsenal of aws security tools, shell, auditing, aws-infrastructure, aws-inventory, aws-lambda, cloud. Use when you need my arsenal of aws security tools capabilities. Triggers on: my arsenal of aws security tools."
+description: "List of open source tools for AWS security: defensive, offensive, auditing, DFIR, etc. my arsenal of aws security tools, shell, auditing, aws-infrastructure."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # My Arsenal Of Aws Security Tools
@@ -41,3 +43,7 @@ aws-security run
 ## Configuration
 
 Set `AWS_SECURITY_DIR` to change data directory. Default: `~/.local/share/aws-security/`
+
+## Requirements
+- bash 4+
+- python3 (standard library only)

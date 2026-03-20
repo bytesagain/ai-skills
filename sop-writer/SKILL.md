@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: sop-writer
-description: "SOP标准操作流程编写工具。创建SOP、流程图、检查清单、审核评估、模板库、培训材料。SOP writer with create, flowchart, checklist, audit, template, and training materials. Use when you need sop writer capabilities. Triggers on: sop writer."
+description: "Draft SOPs with flowcharts, checklists, and training materials. Use when writing procedures, outlining flows, creating checklists, designing training docs."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # sop-writer
 

@@ -1,56 +1,120 @@
 ---
-name: validator
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [validator, tool, utility]
-description: "Validator - command-line tool for everyday use"
+name: "validator"
+version: "1.0.0"
+description: "Validate emails, URLs, phones, dates, and custom patterns. Use when sanitizing input, verifying form fields, checking formats, or enforcing rules."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [validator, general, cli, tool]
+category: "general"
 ---
 
-# Validator
+# validator
 
-Input validator — check emails, URLs, phone numbers, dates, and custom patterns.
+Validate emails, URLs, phones, dates, and custom patterns. Use when sanitizing input, verifying form fields, checking formats, or enforcing rules.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `validator help` | Show usage info |
-| `validator run` | Run main task |
-| `validator status` | Check current state |
-| `validator list` | List items |
-| `validator add <item>` | Add new item |
-| `validator export <fmt>` | Export data |
-
-## Usage
+### `status`
 
 ```bash
-validator help
-validator run
-validator status
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-# Get started
-validator help
-
-# Run default task
-validator run
-
-# Export as JSON
-validator export json
+scripts/script.sh add
 ```
 
-## Output
+Add new entry
 
-Results go to stdout. Save with `validator run > output.txt`.
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `check`
+
+```bash
+scripts/script.sh check
+```
+
+Validate input
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `VALIDATOR_DIR` to change data directory. Default: `~/.local/share/validator/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `VALIDATOR_DIR` | No | Data directory (default: ~/.validator/) |
+
+## Data Storage
+
+All data stored in `~/.validator/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

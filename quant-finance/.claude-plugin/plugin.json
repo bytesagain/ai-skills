@@ -1,0 +1,9 @@
+{
+  "name": "quant-finance",
+  "description": "MlFinLab helps portfolio managers and traders who want to use the power of machine learning by quant-finance, python, algorithmic-trading, finance.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

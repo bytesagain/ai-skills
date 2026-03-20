@@ -1,0 +1,9 @@
+{
+  "name": "rag-evaluator",
+  "description": "Python SDK for Agent AI Observability, Monitoring and Evaluation Framework. Includes features like a ragaai catalyst, python, agentic-ai.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

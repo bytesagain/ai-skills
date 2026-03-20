@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: ab-test-calculator
-description: "A/B测试计算器。样本量计算、统计显著性检验、实验时长预估、结果报告、贝叶斯分析。AB test calculator with sample size, significance testing, duration estimation, reports, and Bayesian analysis. Use when you need ab test calculator capabilities. Triggers on: ab test calculator."
+description: "A/B测试计算器。样本量计算、统计显著性检验、实验时长预估、结果报告、贝叶斯分析。AB test calculator with sample size, significance testing, duration estimation, reports."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # A/B Test Calculator Skill

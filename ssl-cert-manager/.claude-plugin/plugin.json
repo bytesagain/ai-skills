@@ -1,0 +1,9 @@
+{
+  "name": "ssl-cert-manager",
+  "description": "A pure Unix shell script ACME client for SSL / TLS certificate automation ssl cert manager, shell, acme, acme-challenge, acme-protocol, acme-v2.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: debt-payoff
-description: "还债策略工具。还款计划、雪球法、雪崩法、债务合并、协商技巧、还清时间线。Debt payoff planner with payment plan, snowball, avalanche, consolidation, negotiation tips, payoff timeline. Use when you need debt payoff capabilities. Triggers on: debt payoff."
+description: "还债策略工具。还款计划、雪球法、雪崩法、债务合并、协商技巧、还清时间线。Debt payoff planner with payment plan, snowball, avalanche, consolidation, negotiation tips."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # debt-payoff
 

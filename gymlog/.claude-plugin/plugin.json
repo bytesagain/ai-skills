@@ -1,0 +1,9 @@
+{
+  "name": "gymlog",
+  "description": "Log workouts, track sets and reps, and chart training progress over time. Use when recording sessions, tracking PRs, or reviewing weekly volume.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,332 +1,450 @@
 #!/usr/bin/env bash
-# Crypto Market Cli — crypto tool
+# crypto-market-cli — Cryptocurrency market toolkit with live CoinGecko data
 # Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
-
-DATA_DIR="${HOME}/.local/share/crypto-market-cli"
+VERSION="5.0.0"
+DATA_DIR="${CRYPTO_CLI_DIR:-$HOME/.crypto-market-cli}"
 mkdir -p "$DATA_DIR"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'
+BLUE='\033[0;34m'; BOLD='\033[1m'; DIM='\033[2m'; RESET='\033[0m'
 
-_version() { echo "crypto-market-cli v2.0.0"; }
+API="https://api.coingecko.com/api/v3"
 
-_help() {
-    echo "Crypto Market Cli v2.0.0 — crypto toolkit"
-    echo ""
-    echo "Usage: crypto-market-cli <command> [args]"
-    echo ""
-    echo "Commands:"
-    echo "  track              Track"
-    echo "  portfolio          Portfolio"
-    echo "  alert              Alert"
-    echo "  price              Price"
-    echo "  compare            Compare"
-    echo "  history            History"
-    echo "  gas                Gas"
-    echo "  whale-watch        Whale Watch"
-    echo "  report             Report"
-    echo "  watchlist          Watchlist"
-    echo "  analyze            Analyze"
-    echo "  export             Export"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
+die() { echo -e "${RED}Error: $1${RESET}" >&2; exit 1; }
+info() { echo -e "${GREEN}✓${RESET} $1"; }
+
+# Fetch JSON from CoinGecko with error handling
+_fetch() {
+    local url="$1"
+    local result
+    result=$(curl -sf --max-time 15 "$url" 2>/dev/null) || die "API request failed. Check your internet connection."
+    echo "$result"
 }
 
-_stats() {
-    echo "=== Crypto Market Cli Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Since: $(head -1 "$DATA_DIR/history.log" 2>/dev/null | cut -d'|' -f1 || echo 'N/A')"
+# === price: get live price ===
+cmd_price() {
+    local coin="${1:-bitcoin}"
+    local vs="${2:-usd}"
+    coin=$(echo "$coin" | tr '[:upper:]' '[:lower:]')
+
+    echo -e "${BOLD}Price: $coin${RESET}"
+    local data
+    data=$(_fetch "$API/simple/price?ids=$coin&vs_currencies=$vs&include_24hr_change=true&include_market_cap=true")
+
+    COIN="$coin" VS="$vs" python3 << 'PYEOF'
+import json, sys, os
+coin = os.environ["COIN"]
+vs = os.environ["VS"]
+data = json.loads(sys.stdin.read())
+if coin not in data:
+    print("  Coin '{}' not found. Try the full ID (e.g. 'bitcoin', 'ethereum').".format(coin))
+else:
+    d = data[coin]
+    price = d.get(vs, 0)
+    change = d.get("{}_24h_change".format(vs), 0)
+    mcap = d.get("{}_market_cap".format(vs), 0)
+    arrow = "↑" if change >= 0 else "↓"
+    print("  Price:      ${:,.2f} {}".format(price, vs.upper()))
+    print("  24h Change: {:+.2f}% {}".format(change, arrow))
+    if mcap > 0:
+        if mcap >= 1e9:
+            print("  Market Cap: ${:.2f}B".format(mcap / 1e9))
+        else:
+            print("  Market Cap: ${:,.0f}".format(mcap))
+PYEOF
+    <<< "$data"
+
+    echo "$coin" >> "$DATA_DIR/history.log"
 }
 
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "" >> "$out"
-            echo "]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    echo "$name,$ts,$val" >> "$out"
-                done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Crypto Market Cli Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-                echo "" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
-    esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
+# === search: find coins ===
+cmd_search() {
+    local query="${1:?Usage: crypto-market-cli search <query>}"
+    echo -e "${BOLD}Searching: $query${RESET}"
+    local data
+    data=$(_fetch "$API/search?query=$query")
+
+    python3 << 'PYEOF'
+import json, sys
+data = json.loads(sys.stdin.read())
+coins = data.get("coins", [])[:10]
+if not coins:
+    print("  No results found.")
+else:
+    print("  {:>5} {:<20} {:<8} {:>8}".format("#", "Name", "Symbol", "Rank"))
+    print("  " + "-" * 44)
+    for i, c in enumerate(coins, 1):
+        print("  {:>5} {:<20} {:<8} {:>8}".format(
+            i, c.get("name", "")[:20], c.get("symbol", "").upper(),
+            c.get("market_cap_rank", "—") or "—"))
+PYEOF
+    <<< "$data"
 }
 
-_status() {
-    echo "=== Crypto Market Cli Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    local last=$(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo "never")
-    echo "  Last activity: $last"
-    echo "  Status: OK"
-}
-
-_search() {
-    local term="${1:?Usage: crypto-market-cli search <term>}"
-    echo "Searching for: $term"
-    local found=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local matches=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$matches" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$matches" | while read -r line; do
-                echo "    $line"
-                found=$((found + 1))
-            done
-        fi
-    done
-    [ $found -eq 0 ] && echo "  No matches found."
-}
-
-_recent() {
-    echo "=== Recent Activity ==="
-    if [ -f "$DATA_DIR/history.log" ]; then
-        tail -20 "$DATA_DIR/history.log" | while IFS='' read -r line; do
-            echo "  $line"
-        done
+# === track: add to watchlist ===
+cmd_track() {
+    local coin="${1:?Usage: crypto-market-cli track <coin-id>}"
+    coin=$(echo "$coin" | tr '[:upper:]' '[:lower:]')
+    local wl="$DATA_DIR/watchlist.txt"
+    if grep -qx "$coin" "$wl" 2>/dev/null; then
+        echo "  $coin is already on your watchlist."
     else
-        echo "  No activity yet."
+        echo "$coin" >> "$wl"
+        info "$coin added to watchlist"
     fi
 }
 
-# Main dispatch
-case "${1:-help}" in
-    track)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent track entries:"
-            tail -20 "$DATA_DIR/track.log" 2>/dev/null || echo "  No entries yet. Use: crypto-market-cli track <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/track.log"
-            local total=$(wc -l < "$DATA_DIR/track.log")
-            echo "  [Crypto Market Cli] track: $input"
-            echo "  Saved. Total track entries: $total"
-            _log "track" "$input"
-        fi
-        ;;
-    portfolio)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent portfolio entries:"
-            tail -20 "$DATA_DIR/portfolio.log" 2>/dev/null || echo "  No entries yet. Use: crypto-market-cli portfolio <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/portfolio.log"
-            local total=$(wc -l < "$DATA_DIR/portfolio.log")
-            echo "  [Crypto Market Cli] portfolio: $input"
-            echo "  Saved. Total portfolio entries: $total"
-            _log "portfolio" "$input"
-        fi
-        ;;
-    alert)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent alert entries:"
-            tail -20 "$DATA_DIR/alert.log" 2>/dev/null || echo "  No entries yet. Use: crypto-market-cli alert <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/alert.log"
-            local total=$(wc -l < "$DATA_DIR/alert.log")
-            echo "  [Crypto Market Cli] alert: $input"
-            echo "  Saved. Total alert entries: $total"
-            _log "alert" "$input"
-        fi
-        ;;
-    price)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent price entries:"
-            tail -20 "$DATA_DIR/price.log" 2>/dev/null || echo "  No entries yet. Use: crypto-market-cli price <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/price.log"
-            local total=$(wc -l < "$DATA_DIR/price.log")
-            echo "  [Crypto Market Cli] price: $input"
-            echo "  Saved. Total price entries: $total"
-            _log "price" "$input"
-        fi
-        ;;
-    compare)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent compare entries:"
-            tail -20 "$DATA_DIR/compare.log" 2>/dev/null || echo "  No entries yet. Use: crypto-market-cli compare <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/compare.log"
-            local total=$(wc -l < "$DATA_DIR/compare.log")
-            echo "  [Crypto Market Cli] compare: $input"
-            echo "  Saved. Total compare entries: $total"
-            _log "compare" "$input"
-        fi
-        ;;
-    history)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent history entries:"
-            tail -20 "$DATA_DIR/history.log" 2>/dev/null || echo "  No entries yet. Use: crypto-market-cli history <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/history.log"
-            local total=$(wc -l < "$DATA_DIR/history.log")
-            echo "  [Crypto Market Cli] history: $input"
-            echo "  Saved. Total history entries: $total"
-            _log "history" "$input"
-        fi
-        ;;
-    gas)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent gas entries:"
-            tail -20 "$DATA_DIR/gas.log" 2>/dev/null || echo "  No entries yet. Use: crypto-market-cli gas <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/gas.log"
-            local total=$(wc -l < "$DATA_DIR/gas.log")
-            echo "  [Crypto Market Cli] gas: $input"
-            echo "  Saved. Total gas entries: $total"
-            _log "gas" "$input"
-        fi
-        ;;
-    whale-watch)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent whale-watch entries:"
-            tail -20 "$DATA_DIR/whale-watch.log" 2>/dev/null || echo "  No entries yet. Use: crypto-market-cli whale-watch <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/whale-watch.log"
-            local total=$(wc -l < "$DATA_DIR/whale-watch.log")
-            echo "  [Crypto Market Cli] whale-watch: $input"
-            echo "  Saved. Total whale-watch entries: $total"
-            _log "whale-watch" "$input"
-        fi
-        ;;
-    report)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent report entries:"
-            tail -20 "$DATA_DIR/report.log" 2>/dev/null || echo "  No entries yet. Use: crypto-market-cli report <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/report.log"
-            local total=$(wc -l < "$DATA_DIR/report.log")
-            echo "  [Crypto Market Cli] report: $input"
-            echo "  Saved. Total report entries: $total"
-            _log "report" "$input"
-        fi
-        ;;
-    watchlist)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent watchlist entries:"
-            tail -20 "$DATA_DIR/watchlist.log" 2>/dev/null || echo "  No entries yet. Use: crypto-market-cli watchlist <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/watchlist.log"
-            local total=$(wc -l < "$DATA_DIR/watchlist.log")
-            echo "  [Crypto Market Cli] watchlist: $input"
-            echo "  Saved. Total watchlist entries: $total"
-            _log "watchlist" "$input"
-        fi
-        ;;
-    analyze)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent analyze entries:"
-            tail -20 "$DATA_DIR/analyze.log" 2>/dev/null || echo "  No entries yet. Use: crypto-market-cli analyze <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/analyze.log"
-            local total=$(wc -l < "$DATA_DIR/analyze.log")
-            echo "  [Crypto Market Cli] analyze: $input"
-            echo "  Saved. Total analyze entries: $total"
-            _log "analyze" "$input"
-        fi
-        ;;
-    export)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent export entries:"
-            tail -20 "$DATA_DIR/export.log" 2>/dev/null || echo "  No entries yet. Use: crypto-market-cli export <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/export.log"
-            local total=$(wc -l < "$DATA_DIR/export.log")
-            echo "  [Crypto Market Cli] export: $input"
-            echo "  Saved. Total export entries: $total"
-            _log "export" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown command: $1"
-        echo "Run 'crypto-market-cli help' for available commands."
-        exit 1
-        ;;
+# === watchlist: show watchlist with prices ===
+cmd_watchlist() {
+    local wl="$DATA_DIR/watchlist.txt"
+    [ ! -f "$wl" ] && { echo "  Watchlist is empty. Use: track <coin>"; return 0; }
+
+    local coins
+    coins=$(cat "$wl" | tr '\n' ',' | sed 's/,$//')
+    [ -z "$coins" ] && { echo "  Watchlist is empty."; return 0; }
+
+    echo -e "${BOLD}Watchlist${RESET}"
+    local data
+    data=$(_fetch "$API/simple/price?ids=$coins&vs_currencies=usd&include_24hr_change=true")
+
+    python3 << 'PYEOF'
+import json, sys
+data = json.loads(sys.stdin.read())
+print("  {:<16} {:>12} {:>10}".format("Coin", "Price (USD)", "24h %"))
+print("  " + "-" * 40)
+for coin in sorted(data.keys()):
+    d = data[coin]
+    price = d.get("usd", 0)
+    change = d.get("usd_24h_change", 0)
+    arrow = "↑" if change >= 0 else "↓"
+    print("  {:<16} ${:>11,.2f} {:>+8.2f}% {}".format(coin, price, change, arrow))
+PYEOF
+    <<< "$data"
+}
+
+# === portfolio: manage portfolio ===
+cmd_portfolio() {
+    local action="${1:-show}"
+    local pf="$DATA_DIR/portfolio.jsonl"
+
+    case "$action" in
+        add)
+            local coin="${2:?Usage: portfolio add <coin> <amount> <buy_price>}"
+            local amount="${3:?Missing amount}"
+            local buy_price="${4:?Missing buy_price}"
+            coin=$(echo "$coin" | tr '[:upper:]' '[:lower:]')
+            local ts
+            ts=$(date '+%Y-%m-%d %H:%M:%S')
+
+            COIN="$coin" AMOUNT="$amount" BUY="$buy_price" TS="$ts" python3 << 'PYEOF'
+import json, os
+entry = {
+    "coin": os.environ["COIN"],
+    "amount": float(os.environ["AMOUNT"]),
+    "buy_price": float(os.environ["BUY"]),
+    "date": os.environ["TS"]
+}
+pf = os.path.expanduser("~/.crypto-market-cli/portfolio.jsonl")
+with open(pf, "a") as f:
+    f.write(json.dumps(entry) + "\n")
+print("  Added {} {} at ${} each".format(entry["amount"], entry["coin"], entry["buy_price"]))
+PYEOF
+            ;;
+        show|"")
+            [ ! -f "$pf" ] && { echo "  Portfolio is empty. Use: portfolio add <coin> <amount> <buy_price>"; return 0; }
+            echo -e "${BOLD}Portfolio${RESET}"
+
+            # Get unique coins
+            local coins
+            coins=$(python3 -c "
+import json
+pf = open('$pf')
+coins = set()
+for line in pf:
+    if line.strip():
+        coins.add(json.loads(line)['coin'])
+print(','.join(coins))
+" 2>/dev/null)
+
+            [ -z "$coins" ] && { echo "  No holdings."; return 0; }
+            local prices
+            prices=$(_fetch "$API/simple/price?ids=$coins&vs_currencies=usd")
+
+            PF_FILE="$pf" python3 << 'PYEOF'
+import json, sys, os
+prices = json.loads(sys.stdin.read())
+pf_file = os.environ["PF_FILE"]
+
+holdings = {}
+with open(pf_file) as f:
+    for line in f:
+        if not line.strip():
+            continue
+        entry = json.loads(line)
+        coin = entry["coin"]
+        if coin not in holdings:
+            holdings[coin] = {"amount": 0, "cost": 0}
+        holdings[coin]["amount"] += entry["amount"]
+        holdings[coin]["cost"] += entry["amount"] * entry["buy_price"]
+
+total_value = 0
+total_cost = 0
+print("  {:<14} {:>10} {:>12} {:>12} {:>10}".format("Coin", "Amount", "Value", "Cost", "P/L"))
+print("  " + "-" * 60)
+
+for coin in sorted(holdings.keys()):
+    h = holdings[coin]
+    current_price = prices.get(coin, {}).get("usd", 0)
+    value = h["amount"] * current_price
+    cost = h["cost"]
+    pl = value - cost
+    pct = pl / cost * 100 if cost > 0 else 0
+    total_value += value
+    total_cost += cost
+    print("  {:<14} {:>10.4f} ${:>11,.2f} ${:>11,.2f} {:>+9.1f}%".format(
+        coin, h["amount"], value, cost, pct))
+
+total_pl = total_value - total_cost
+total_pct = total_pl / total_cost * 100 if total_cost > 0 else 0
+print("  " + "-" * 60)
+print("  {:<14} {:>10} ${:>11,.2f} ${:>11,.2f} {:>+9.1f}%".format(
+    "TOTAL", "", total_value, total_cost, total_pct))
+PYEOF
+            <<< "$prices"
+            ;;
+        *)
+            echo "Usage: portfolio add <coin> <amount> <buy_price>"
+            echo "       portfolio show"
+            ;;
+    esac
+}
+
+# === history: price history ===
+cmd_history() {
+    local coin="${1:-bitcoin}"
+    local days="${2:-7}"
+    coin=$(echo "$coin" | tr '[:upper:]' '[:lower:]')
+
+    echo -e "${BOLD}$coin — ${days}-day price history${RESET}"
+    local data
+    data=$(_fetch "$API/coins/$coin/market_chart?vs_currency=usd&days=$days")
+
+    DAYS="$days" python3 << 'PYEOF'
+import json, sys
+from datetime import datetime
+data = json.loads(sys.stdin.read())
+prices = data.get("prices", [])
+if not prices:
+    print("  No data available.")
+else:
+    step = max(1, len(prices) // 14)
+    sampled = prices[::step]
+    vals = [p[1] for p in sampled]
+    mn, mx = min(vals), max(vals)
+    sparks = "▁▂▃▄▅▆▇█"
+
+    print("  {:>12} {:>12}".format("Date", "Price"))
+    print("  " + "-" * 26)
+    for ts, price in sampled:
+        dt = datetime.fromtimestamp(ts / 1000).strftime("%m-%d %H:%M")
+        idx = int((price - mn) / (mx - mn) * 7) if mx > mn else 4
+        print("  {:>12} ${:>11,.2f} {}".format(dt, price, sparks[idx]))
+
+    print("")
+    print("  Range: ${:,.2f} — ${:,.2f}".format(mn, mx))
+    print("  Change: {:+.2f}%".format((prices[-1][1] - prices[0][1]) / prices[0][1] * 100))
+PYEOF
+    <<< "$data"
+}
+
+# === gas: ethereum gas ===
+cmd_gas() {
+    echo -e "${BOLD}Ethereum Gas Prices${RESET}"
+    echo "  Note: CoinGecko free API does not provide gas data."
+    echo "  Check https://etherscan.io/gastracker for current gas prices."
+    echo ""
+    echo "  Tip: Set ETHERSCAN_API_KEY for automated gas tracking."
+}
+
+# === alert: price alerts ===
+cmd_alert() {
+    local action="${1:-list}"
+    local alerts_file="$DATA_DIR/alerts.jsonl"
+
+    case "$action" in
+        add)
+            local coin="${2:?Usage: alert add <coin> <price> <above|below>}"
+            local target="${3:?Missing target price}"
+            local direction="${4:-above}"
+            coin=$(echo "$coin" | tr '[:upper:]' '[:lower:]')
+
+            COIN="$coin" TARGET="$target" DIR="$direction" python3 << 'PYEOF'
+import json, os
+from datetime import datetime
+alert = {
+    "coin": os.environ["COIN"],
+    "target": float(os.environ["TARGET"]),
+    "direction": os.environ["DIR"],
+    "created": datetime.now().strftime("%Y-%m-%d %H:%M")
+}
+af = os.path.expanduser("~/.crypto-market-cli/alerts.jsonl")
+with open(af, "a") as f:
+    f.write(json.dumps(alert) + "\n")
+print("  Alert set: {} {} ${}".format(alert["coin"], alert["direction"], alert["target"]))
+PYEOF
+            ;;
+        list|"")
+            [ ! -f "$alerts_file" ] && { echo "  No alerts set."; return 0; }
+            echo -e "${BOLD}Price Alerts${RESET}"
+            python3 << 'PYEOF'
+import json, os
+af = open(os.path.expanduser("~/.crypto-market-cli/alerts.jsonl"))
+for line in af:
+    if line.strip():
+        a = json.loads(line)
+        print("  {:<14} ${:>9,.2f} {:>8} {:>12}".format(
+            a["coin"], a["target"], a["direction"], a["created"]))
+PYEOF
+            ;;
+        *) echo "Usage: alert add <coin> <price> <above|below>" ;;
+    esac
+}
+
+# === compare: compare two coins ===
+cmd_compare() {
+    local c1="${1:?Usage: compare <coin1> <coin2>}"
+    local c2="${2:?Missing second coin}"
+    c1=$(echo "$c1" | tr '[:upper:]' '[:lower:]')
+    c2=$(echo "$c2" | tr '[:upper:]' '[:lower:]')
+
+    echo -e "${BOLD}Compare: $c1 vs $c2${RESET}"
+    local data
+    data=$(_fetch "$API/simple/price?ids=$c1,$c2&vs_currencies=usd&include_24hr_change=true&include_market_cap=true")
+
+    C1="$c1" C2="$c2" python3 << 'PYEOF'
+import json, sys, os
+data = json.loads(sys.stdin.read())
+c1, c2 = os.environ["C1"], os.environ["C2"]
+
+print("  {:>14} {:>14} {:>14}".format("", c1, c2))
+print("  " + "-" * 44)
+
+for coin in [c1, c2]:
+    if coin not in data:
+        print("  {} not found".format(coin))
+
+d1 = data.get(c1, {})
+d2 = data.get(c2, {})
+print("  {:>14} ${:>13,.2f} ${:>13,.2f}".format("Price", d1.get("usd",0), d2.get("usd",0)))
+print("  {:>14} {:>+13.2f}% {:>+13.2f}%".format("24h", d1.get("usd_24h_change",0), d2.get("usd_24h_change",0)))
+
+m1 = d1.get("usd_market_cap", 0)
+m2 = d2.get("usd_market_cap", 0)
+fmt = lambda x: "${:.1f}B".format(x/1e9) if x >= 1e9 else "${:,.0f}".format(x)
+print("  {:>14} {:>14} {:>14}".format("MCap", fmt(m1), fmt(m2)))
+PYEOF
+    <<< "$data"
+}
+
+# === stats ===
+cmd_stats() {
+    echo -e "${BOLD}Usage Statistics${RESET}"
+    local wl="$DATA_DIR/watchlist.txt"
+    local pf="$DATA_DIR/portfolio.jsonl"
+    local al="$DATA_DIR/alerts.jsonl"
+    echo "  Watchlist:  $(wc -l < "$wl" 2>/dev/null || echo 0) coins"
+    echo "  Portfolio:  $(wc -l < "$pf" 2>/dev/null || echo 0) entries"
+    echo "  Alerts:     $(wc -l < "$al" 2>/dev/null || echo 0) set"
+    echo "  Disk:       $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
+}
+
+# === export ===
+cmd_export() {
+    local fmt="${1:-json}"
+    local pf="$DATA_DIR/portfolio.jsonl"
+    [ ! -f "$pf" ] && { echo "No portfolio data to export."; return 0; }
+
+    case "$fmt" in
+        json)
+            echo "["
+            local first=true
+            while IFS= read -r line; do
+                [ -z "$line" ] && continue
+                $first && first=false || echo ","
+                echo "  $line"
+            done < "$pf"
+            echo "]"
+            ;;
+        csv)
+            echo "coin,amount,buy_price,date"
+            python3 << 'PYEOF'
+import json, os
+with open(os.path.expanduser("~/.crypto-market-cli/portfolio.jsonl")) as f:
+    for line in f:
+        if line.strip():
+            d = json.loads(line)
+            print("{},{},{},{}".format(d["coin"], d["amount"], d["buy_price"], d["date"]))
+PYEOF
+            ;;
+        *) die "Unknown format: $fmt (use json or csv)" ;;
+    esac
+}
+
+show_help() {
+    cat << EOF
+crypto-market-cli v$VERSION — Cryptocurrency market toolkit
+
+Usage: crypto-market-cli <command> [args]
+
+Market Data (via CoinGecko API):
+  price <coin> [currency]       Get live price, 24h change, market cap
+  search <query>                Search for coins by name or symbol
+  history <coin> [days]         Price history with sparkline chart
+  compare <coin1> <coin2>       Side-by-side price comparison
+  gas                           Ethereum gas price info
+
+Portfolio:
+  track <coin>                  Add coin to watchlist
+  watchlist                     Show watchlist with live prices
+  portfolio add <c> <amt> <p>   Record a buy (coin, amount, price)
+  portfolio show                Show holdings with current P/L
+
+Alerts:
+  alert add <coin> <price> <dir>  Set price alert (above/below)
+  alert list                      List active alerts
+
+Data:
+  stats                         Usage statistics
+  export <json|csv>             Export portfolio data
+  help                          Show this help
+  version                       Show version
+
+API: CoinGecko free tier (no key required, rate-limited)
+Data: $DATA_DIR
+EOF
+}
+
+show_version() {
+    echo "crypto-market-cli v$VERSION"
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
+}
+
+[ $# -eq 0 ] && { show_help; exit 0; }
+
+case "$1" in
+    price)      shift; cmd_price "$@" ;;
+    search)     shift; cmd_search "$@" ;;
+    track)      shift; cmd_track "$@" ;;
+    watchlist)  cmd_watchlist ;;
+    portfolio)  shift; cmd_portfolio "$@" ;;
+    history)    shift; cmd_history "$@" ;;
+    gas)        cmd_gas ;;
+    alert)      shift; cmd_alert "$@" ;;
+    compare)    shift; cmd_compare "$@" ;;
+    stats)      cmd_stats ;;
+    export)     shift; cmd_export "$@" ;;
+    help|-h)    show_help ;;
+    version|-v) show_version ;;
+    *)          echo "Unknown: $1"; show_help; exit 1 ;;
 esac

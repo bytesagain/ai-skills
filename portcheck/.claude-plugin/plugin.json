@@ -1,0 +1,9 @@
+{
+  "name": "portcheck",
+  "description": "Scan open ports and validate network services. Use when checking port availability, validating firewall rules, generating reports, linting configs.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

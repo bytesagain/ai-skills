@@ -1,0 +1,9 @@
+{
+  "name": "palette",
+  "description": "Create and manage color palettes using color theory algorithms. Use when designing UIs or building brand color systems.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

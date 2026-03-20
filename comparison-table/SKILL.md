@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: comparison-table
-description: "产品对比表生成工具。Markdown/HTML对比表、技术选型、定价对比、功能矩阵、导出。Comparison table generator with Markdown/HTML output, tech comparison, pricing, feature matrix, export. Use when you need comparison table capabilities. Triggers on: comparison table."
+description: "产品对比表生成工具。Markdown/HTML对比表、技术选型、定价对比、功能矩阵、导出。Comparison table generator with Markdown/HTML output, tech comparison, pricing, feature matrix."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # comparison-table
 

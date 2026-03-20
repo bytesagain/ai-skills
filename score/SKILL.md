@@ -1,83 +1,112 @@
 ---
-name: score
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [score, tool, utility]
-description: "Score - command-line tool for everyday use"
+name: "score"
+version: "1.0.0"
+description: "Track game scores, brackets, and player statistics. Use when recording results, scoring rounds, ranking leaderboards, reviewing game history, computing stats."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [score, general, cli, tool]
+category: "general"
 ---
 
-# Score
+# score
 
-Score tracker — game scores, tournament brackets, standings, and statistics.
+Track game scores, brackets, and player statistics. Use when recording results, scoring rounds, ranking leaderboards, reviewing game history, computing stats.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `score help` | Show usage info |
-| `score run` | Run main task |
-| `score status` | Check state |
-| `score list` | List items |
-| `score add <item>` | Add item |
-| `score export <fmt>` | Export data |
-
-## Usage
+### `status`
 
 ```bash
-score help
-score run
-score status
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-score help
-score run
-score export json
+scripts/script.sh add
 ```
 
-## Output
+Add new entry
 
-Results go to stdout. Save with `score run > output.txt`.
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `SCORE_DIR` to change data directory. Default: `~/.local/share/score/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `SCORE_DIR` | No | Data directory (default: ~/.score/) |
+
+## Data Storage
+
+All data stored in `~/.score/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
 
-
-## Features
-
-- Simple command-line interface for quick access
-- Local data storage with JSON/CSV export
-- History tracking and activity logs
-- Search across all entries
-
-## Quick Start
-
-```bash
-# Check status
-score status
-
-# View help
-score help
-
-# Export data
-score export json
-```
-
-## How It Works
-
-Score stores all data locally in `~/.local/share/score/`. Each command logs activity with timestamps for full traceability.
-
-## Support
-
-- Feedback: https://bytesagain.com/feedback/
-- Website: https://bytesagain.com
-
-Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

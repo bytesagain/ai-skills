@@ -1,0 +1,9 @@
+{
+  "name": "sysinfo-fetch",
+  "description": "A maintained, feature-rich and performance oriented, neofetch like system information tool. sysinfo-fetch, c, bsdfetch, command-line, sysinfo-fetch, fetch.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

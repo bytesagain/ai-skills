@@ -1,99 +1,112 @@
 ---
-name: "Heartrate"
-description: "A focused health & wellness tool built for Heartrate. Log entries, review trends, and export reports — all locally."
-version: "2.0.0"
+name: "heartrate"
+version: "1.0.0"
+description: "Log heart rate readings, track BPM trends, and set cardiovascular goals. Use when recording heart rate, tracking trends, or charting weekly averages."
 author: "BytesAgain"
-tags: ["health", "tracking", "daily", "heartrate", "personal"]
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [heartrate, general, cli, tool]
+category: "general"
 ---
 
-# Heartrate
+# heartrate
 
-A focused health & wellness tool built for Heartrate. Log entries, review trends, and export reports — all locally.
-
-## Why Heartrate?
-
-- Works entirely offline — your data never leaves your machine
-- Simple command-line interface, no GUI needed
-- Export to JSON, CSV, or plain text anytime
-- Automatic history and activity logging
-
-## Getting Started
-
-```bash
-# See what you can do
-heartrate help
-
-# Check current status
-heartrate status
-
-# View your statistics
-heartrate stats
-```
+Log heart rate readings, track BPM trends, and set cardiovascular goals. Use when recording heart rate, tracking trends, or charting weekly averages.
 
 ## Commands
 
-| Command | What it does |
-|---------|-------------|
-| `heartrate log` | Log |
-| `heartrate track` | Track |
-| `heartrate chart` | Chart |
-| `heartrate goal` | Goal |
-| `heartrate remind` | Remind |
-| `heartrate weekly` | Weekly |
-| `heartrate monthly` | Monthly |
-| `heartrate compare` | Compare |
-| `heartrate export` | Export |
-| `heartrate streak` | Streak |
-| `heartrate milestone` | Milestone |
-| `heartrate trend` | Trend |
-| `heartrate stats` | Summary statistics |
-| `heartrate export` | <fmt>       Export (json|csv|txt) |
-| `heartrate search` | <term>      Search entries |
-| `heartrate recent` | Recent activity |
-| `heartrate status` | Health check |
-| `heartrate help` | Show this help |
-| `heartrate version` | Show version |
-| `heartrate $name:` | $c entries |
-| `heartrate Total:` | $total entries |
-| `heartrate Data` | size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1) |
-| `heartrate Version:` | v2.0.0 |
-| `heartrate Data` | dir: $DATA_DIR |
-| `heartrate Entries:` | $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total |
-| `heartrate Disk:` | $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1) |
-| `heartrate Last:` | $(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo never) |
-| `heartrate Status:` | OK |
-| `heartrate [Heartrate]` | log: $input |
-| `heartrate Saved.` | Total log entries: $total |
-| `heartrate [Heartrate]` | track: $input |
-| `heartrate Saved.` | Total track entries: $total |
-| `heartrate [Heartrate]` | chart: $input |
-| `heartrate Saved.` | Total chart entries: $total |
-| `heartrate [Heartrate]` | goal: $input |
-| `heartrate Saved.` | Total goal entries: $total |
-| `heartrate [Heartrate]` | remind: $input |
-| `heartrate Saved.` | Total remind entries: $total |
-| `heartrate [Heartrate]` | weekly: $input |
-| `heartrate Saved.` | Total weekly entries: $total |
-| `heartrate [Heartrate]` | monthly: $input |
-| `heartrate Saved.` | Total monthly entries: $total |
-| `heartrate [Heartrate]` | compare: $input |
-| `heartrate Saved.` | Total compare entries: $total |
-| `heartrate [Heartrate]` | export: $input |
-| `heartrate Saved.` | Total export entries: $total |
-| `heartrate [Heartrate]` | streak: $input |
-| `heartrate Saved.` | Total streak entries: $total |
-| `heartrate [Heartrate]` | milestone: $input |
-| `heartrate Saved.` | Total milestone entries: $total |
-| `heartrate [Heartrate]` | trend: $input |
-| `heartrate Saved.` | Total trend entries: $total |
+### `status`
+
+```bash
+scripts/script.sh status
+```
+
+Show current status
+
+### `add`
+
+```bash
+scripts/script.sh add
+```
+
+Add new entry
+
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
+
+## Configuration
+
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `HEARTRATE_DIR` | No | Data directory (default: ~/.heartrate/) |
 
 ## Data Storage
 
-All data is stored locally at `~/.local/share/heartrate/`. Each action is logged with timestamps. Use `export` to back up your data anytime.
+All data stored in `~/.heartrate/` using JSONL format (one JSON object per line).
 
-## Feedback
+## Output
 
-Found a bug or have a suggestion? Let us know: https://bytesagain.com/feedback/
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: apicheck
-description: "API请求构造、curl命令生成、Mock数据、API文档、HTTP状态码速查、Headers说明。API request builder, curl generator, mock data, API documentation, HTTP status codes, headers reference. Use when you need apicheck capabilities. Triggers on: apicheck."
+description: "API请求构造、curl命令生成、Mock数据、API文档、HTTP状态码速查、Headers说明。API request builder, curl generator, mock data, API documentation, HTTP status codes."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # API Tester — API 测试助手

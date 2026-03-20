@@ -1,332 +1,289 @@
 #!/usr/bin/env bash
-# Mockdata — data tool
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
+###############################################################################
+# MockData — Mock Data Generator
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+###############################################################################
 
-DATA_DIR="${HOME}/.local/share/mockdata"
-mkdir -p "$DATA_DIR"
+VERSION="3.0.0"
+SCRIPT_NAME="mockdata"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+# Colors
+RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'
+CYAN='\033[0;36m'; BOLD='\033[1m'; NC='\033[0m'
 
-_version() { echo "mockdata v2.0.0"; }
+err()  { echo -e "${RED}[ERROR]${NC} $*" >&2; }
+info() { echo -e "${CYAN}[INFO]${NC} $*"; }
 
-_help() {
-    echo "Mockdata v2.0.0 — data toolkit"
-    echo ""
-    echo "Usage: mockdata <command> [args]"
-    echo ""
-    echo "Commands:"
-    echo "  ingest             Ingest"
-    echo "  transform          Transform"
-    echo "  query              Query"
-    echo "  filter             Filter"
-    echo "  aggregate          Aggregate"
-    echo "  visualize          Visualize"
-    echo "  export             Export"
-    echo "  sample             Sample"
-    echo "  schema             Schema"
-    echo "  validate           Validate"
-    echo "  pipeline           Pipeline"
-    echo "  profile            Profile"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
+usage() {
+  cat <<EOF
+${BOLD}MockData v${VERSION}${NC} — Mock Data Generator
+Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+
+${BOLD}Usage:${NC}
+  $SCRIPT_NAME name [count]              Random full names
+  $SCRIPT_NAME email [count]             Random email addresses
+  $SCRIPT_NAME phone [count]             Random phone numbers
+  $SCRIPT_NAME address [count]           Random addresses
+  $SCRIPT_NAME uuid [count]              Random UUIDs (v4)
+  $SCRIPT_NAME csv <rows> <cols>         Generate CSV with random data
+  $SCRIPT_NAME json [count]              Generate JSON records
+
+${BOLD}Examples:${NC}
+  $SCRIPT_NAME name 5
+  $SCRIPT_NAME email 10
+  $SCRIPT_NAME uuid 3
+  $SCRIPT_NAME csv 100 5
+  $SCRIPT_NAME json 5
+EOF
 }
 
-_stats() {
-    echo "=== Mockdata Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Since: $(head -1 "$DATA_DIR/history.log" 2>/dev/null | cut -d'|' -f1 || echo 'N/A')"
+# --- Data Arrays ---
+
+FIRST_NAMES=(
+  James Mary Robert Patricia John Jennifer Michael Linda David Elizabeth
+  William Barbara Richard Susan Joseph Jessica Thomas Sarah Charles Karen
+  Christopher Nancy Daniel Lisa Matthew Betty Mark Sandra Donald Ashley
+  Steven Emily Andrew Kimberly Paul Donna Joshua Michelle Kenneth Carol
+  Kevin Amanda Brian Dorothy George Melissa Edward Deborah Ronald Stephanie
+  Timothy Rebecca Jason Sharon Jeffrey Laura Ryan Cynthia Jacob Kathleen
+  Gary Amy Nicholas Shirley Eric Angela Jonathan Anna Stephen Brenda
+  Larry Pamela Justin Emma Scott Virginia Frank Catherine Brandon Kelly
+  Raymond Debra Gregory Rachel Samuel Janet Benjamin Marie Jack Virginia
+  Dennis Theresa Jerry Denise Alexander Beverly Tyler Jean Gerald Cheryl
+  Aaron Megan Jose Natalie Henry Meghan Douglas Hannah Peter Brittany
+  Adam Samantha Nathan Jane Zachary Victoria Louis Gloria Russell Martha
+  Randy Janice Eugene Frances Harry Evelyn Carl Jean Wayne Teresa
+)
+
+LAST_NAMES=(
+  Smith Johnson Williams Brown Jones Garcia Miller Davis Rodriguez Martinez
+  Hernandez Lopez Gonzalez Wilson Anderson Thomas Taylor Moore Jackson Martin
+  Lee Perez Thompson White Harris Sanchez Clark Ramirez Lewis Robinson
+  Walker Young Allen King Wright Scott Torres Nguyen Hill Flores Green
+  Adams Nelson Baker Hall Rivera Campbell Mitchell Carter Roberts Gomez
+  Phillips Evans Turner Diaz Parker Cruz Edwards Collins Reyes Stewart
+  Morris Morales Murphy Cook Rogers Gutierrez Ortiz Morgan Cooper Peterson
+  Bailey Reed Kelly Howard Ramos Kim Cox Ward Richardson Watson Brooks
+  Chavez Wood James Bennett Gray Mendoza Ruiz Hughes Price Alvarez
+  Castillo Sanders Patel Myers Long Ross Foster Jimenez Powell Jenkins
+)
+
+DOMAINS=( "gmail.com" "yahoo.com" "outlook.com" "hotmail.com" "proton.me"
+  "example.com" "testmail.org" "mockmail.io" "devbox.net" "fastmail.com" )
+
+STREETS=( "Main St" "Oak Ave" "Maple Dr" "Cedar Ln" "Pine Rd"
+  "Elm St" "Washington Blvd" "Park Ave" "Lake Dr" "River Rd"
+  "Broadway" "Market St" "Church St" "Highland Ave" "Sunset Blvd"
+  "Franklin St" "Spring St" "Lincoln Ave" "Valley Rd" "Hill St" )
+
+CITIES=( "New York" "Los Angeles" "Chicago" "Houston" "Phoenix"
+  "Philadelphia" "San Antonio" "San Diego" "Dallas" "Austin"
+  "Jacksonville" "San Jose" "Columbus" "Charlotte" "Indianapolis"
+  "Seattle" "Denver" "Boston" "Portland" "Nashville" )
+
+STATES=( "NY" "CA" "IL" "TX" "AZ" "PA" "FL" "OH" "NC" "IN"
+  "WA" "CO" "MA" "OR" "TN" "GA" "MI" "VA" "NJ" "MN" )
+
+# --- Helper Functions ---
+
+rand_int() {
+  local max="$1"
+  echo $(( RANDOM % max ))
 }
 
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "" >> "$out"
-            echo "]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    echo "$name,$ts,$val" >> "$out"
-                done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Mockdata Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-                echo "" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
+pick_random() {
+  local -n arr=$1
+  echo "${arr[$(rand_int ${#arr[@]})]}"
+}
+
+random_first() { pick_random FIRST_NAMES; }
+random_last()  { pick_random LAST_NAMES; }
+
+random_name() {
+  echo "$(random_first) $(random_last)"
+}
+
+random_email() {
+  local first last domain
+  first=$(random_first | tr '[:upper:]' '[:lower:]')
+  last=$(random_last | tr '[:upper:]' '[:lower:]')
+  domain=$(pick_random DOMAINS)
+  local sep
+  case $(( RANDOM % 3 )) in
+    0) echo "${first}.${last}@${domain}" ;;
+    1) echo "${first}${last}$(( RANDOM % 100 ))@${domain}" ;;
+    2) echo "${first:0:1}${last}@${domain}" ;;
+  esac
+}
+
+random_phone() {
+  printf "+1-%03d-%03d-%04d\n" $(( RANDOM % 900 + 100 )) $(( RANDOM % 900 + 100 )) $(( RANDOM % 10000 ))
+}
+
+random_address() {
+  local num street city state zip
+  num=$(( RANDOM % 9900 + 100 ))
+  street=$(pick_random STREETS)
+  city=$(pick_random CITIES)
+  state=$(pick_random STATES)
+  zip=$(printf "%05d" $(( RANDOM % 99999 )))
+  echo "${num} ${street}, ${city}, ${state} ${zip}"
+}
+
+random_uuid() {
+  # Generate UUID v4 format
+  local hex
+  hex=$(od -An -tx1 -N16 /dev/urandom 2>/dev/null | tr -d ' \n' || \
+    printf '%04x%04x%04x%04x%04x%04x%04x%04x' \
+      $RANDOM $RANDOM $RANDOM $RANDOM $RANDOM $RANDOM $RANDOM $RANDOM)
+
+  # Set version (4) and variant (8,9,a,b)
+  printf '%s-%s-4%s-%x%s-%s\n' \
+    "${hex:0:8}" \
+    "${hex:8:4}" \
+    "${hex:13:3}" \
+    $(( (0x${hex:16:1} & 0x3) | 0x8 )) \
+    "${hex:17:3}" \
+    "${hex:20:12}"
+}
+
+random_word() {
+  local words=( "alpha" "beta" "gamma" "delta" "epsilon" "zeta" "theta"
+    "lambda" "sigma" "omega" "phoenix" "atlas" "nexus" "vertex" "prism"
+    "matrix" "nova" "pulse" "quantum" "vortex" "zenith" "apex" )
+  pick_random words
+}
+
+# --- Command Functions ---
+
+cmd_name() {
+  local count="${1:-1}"
+  local i
+  for (( i = 0; i < count; i++ )); do
+    random_name
+  done
+}
+
+cmd_email() {
+  local count="${1:-1}"
+  local i
+  for (( i = 0; i < count; i++ )); do
+    random_email
+  done
+}
+
+cmd_phone() {
+  local count="${1:-1}"
+  local i
+  for (( i = 0; i < count; i++ )); do
+    random_phone
+  done
+}
+
+cmd_address() {
+  local count="${1:-1}"
+  local i
+  for (( i = 0; i < count; i++ )); do
+    random_address
+  done
+}
+
+cmd_uuid() {
+  local count="${1:-1}"
+  local i
+  for (( i = 0; i < count; i++ )); do
+    random_uuid
+  done
+}
+
+cmd_csv() {
+  local rows="${1:?Usage: $SCRIPT_NAME csv <rows> <cols>}"
+  local cols="${2:?Usage: $SCRIPT_NAME csv <rows> <cols>}"
+
+  # Header
+  local headers=()
+  local col_types=()
+  for (( c = 0; c < cols; c++ )); do
+    case $(( c % 6 )) in
+      0) headers+=("id"); col_types+=("id") ;;
+      1) headers+=("name"); col_types+=("name") ;;
+      2) headers+=("email"); col_types+=("email") ;;
+      3) headers+=("phone"); col_types+=("phone") ;;
+      4) headers+=("city"); col_types+=("city") ;;
+      5) headers+=("score"); col_types+=("score") ;;
     esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
-}
+  done
 
-_status() {
-    echo "=== Mockdata Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    local last=$(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo "never")
-    echo "  Last activity: $last"
-    echo "  Status: OK"
-}
+  # Print header
+  local IFS=','
+  echo "${headers[*]}"
 
-_search() {
-    local term="${1:?Usage: mockdata search <term>}"
-    echo "Searching for: $term"
-    local found=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local matches=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$matches" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$matches" | while read -r line; do
-                echo "    $line"
-                found=$((found + 1))
-            done
-        fi
+  # Print rows
+  local r
+  for (( r = 1; r <= rows; r++ )); do
+    local row=()
+    for (( c = 0; c < cols; c++ )); do
+      case "${col_types[$c]}" in
+        id)    row+=("$r") ;;
+        name)  row+=("$(random_name)") ;;
+        email) row+=("$(random_email)") ;;
+        phone) row+=("$(random_phone)") ;;
+        city)  row+=("$(pick_random CITIES)") ;;
+        score) row+=("$(( RANDOM % 100 ))") ;;
+      esac
     done
-    [ $found -eq 0 ] && echo "  No matches found."
+    echo "${row[*]}"
+  done
 }
 
-_recent() {
-    echo "=== Recent Activity ==="
-    if [ -f "$DATA_DIR/history.log" ]; then
-        tail -20 "$DATA_DIR/history.log" | while IFS='' read -r line; do
-            echo "  $line"
-        done
-    else
-        echo "  No activity yet."
+cmd_json() {
+  local count="${1:-1}"
+
+  echo "["
+  local i
+  for (( i = 0; i < count; i++ )); do
+    local name email phone city age uuid_val
+    name=$(random_name)
+    email=$(random_email)
+    phone=$(random_phone)
+    city=$(pick_random CITIES)
+    age=$(( RANDOM % 50 + 18 ))
+    uuid_val=$(random_uuid)
+
+    local comma=""
+    if [[ $i -lt $((count - 1)) ]]; then
+      comma=","
     fi
+
+    cat <<JSONEOF
+  {
+    "id": "${uuid_val}",
+    "name": "${name}",
+    "email": "${email}",
+    "phone": "${phone}",
+    "age": ${age},
+    "city": "${city}"
+  }${comma}
+JSONEOF
+  done
+  echo "]"
 }
 
-# Main dispatch
-case "${1:-help}" in
-    ingest)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent ingest entries:"
-            tail -20 "$DATA_DIR/ingest.log" 2>/dev/null || echo "  No entries yet. Use: mockdata ingest <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/ingest.log"
-            local total=$(wc -l < "$DATA_DIR/ingest.log")
-            echo "  [Mockdata] ingest: $input"
-            echo "  Saved. Total ingest entries: $total"
-            _log "ingest" "$input"
-        fi
-        ;;
-    transform)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent transform entries:"
-            tail -20 "$DATA_DIR/transform.log" 2>/dev/null || echo "  No entries yet. Use: mockdata transform <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/transform.log"
-            local total=$(wc -l < "$DATA_DIR/transform.log")
-            echo "  [Mockdata] transform: $input"
-            echo "  Saved. Total transform entries: $total"
-            _log "transform" "$input"
-        fi
-        ;;
-    query)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent query entries:"
-            tail -20 "$DATA_DIR/query.log" 2>/dev/null || echo "  No entries yet. Use: mockdata query <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/query.log"
-            local total=$(wc -l < "$DATA_DIR/query.log")
-            echo "  [Mockdata] query: $input"
-            echo "  Saved. Total query entries: $total"
-            _log "query" "$input"
-        fi
-        ;;
-    filter)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent filter entries:"
-            tail -20 "$DATA_DIR/filter.log" 2>/dev/null || echo "  No entries yet. Use: mockdata filter <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/filter.log"
-            local total=$(wc -l < "$DATA_DIR/filter.log")
-            echo "  [Mockdata] filter: $input"
-            echo "  Saved. Total filter entries: $total"
-            _log "filter" "$input"
-        fi
-        ;;
-    aggregate)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent aggregate entries:"
-            tail -20 "$DATA_DIR/aggregate.log" 2>/dev/null || echo "  No entries yet. Use: mockdata aggregate <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/aggregate.log"
-            local total=$(wc -l < "$DATA_DIR/aggregate.log")
-            echo "  [Mockdata] aggregate: $input"
-            echo "  Saved. Total aggregate entries: $total"
-            _log "aggregate" "$input"
-        fi
-        ;;
-    visualize)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent visualize entries:"
-            tail -20 "$DATA_DIR/visualize.log" 2>/dev/null || echo "  No entries yet. Use: mockdata visualize <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/visualize.log"
-            local total=$(wc -l < "$DATA_DIR/visualize.log")
-            echo "  [Mockdata] visualize: $input"
-            echo "  Saved. Total visualize entries: $total"
-            _log "visualize" "$input"
-        fi
-        ;;
-    export)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent export entries:"
-            tail -20 "$DATA_DIR/export.log" 2>/dev/null || echo "  No entries yet. Use: mockdata export <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/export.log"
-            local total=$(wc -l < "$DATA_DIR/export.log")
-            echo "  [Mockdata] export: $input"
-            echo "  Saved. Total export entries: $total"
-            _log "export" "$input"
-        fi
-        ;;
-    sample)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent sample entries:"
-            tail -20 "$DATA_DIR/sample.log" 2>/dev/null || echo "  No entries yet. Use: mockdata sample <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/sample.log"
-            local total=$(wc -l < "$DATA_DIR/sample.log")
-            echo "  [Mockdata] sample: $input"
-            echo "  Saved. Total sample entries: $total"
-            _log "sample" "$input"
-        fi
-        ;;
-    schema)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent schema entries:"
-            tail -20 "$DATA_DIR/schema.log" 2>/dev/null || echo "  No entries yet. Use: mockdata schema <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/schema.log"
-            local total=$(wc -l < "$DATA_DIR/schema.log")
-            echo "  [Mockdata] schema: $input"
-            echo "  Saved. Total schema entries: $total"
-            _log "schema" "$input"
-        fi
-        ;;
-    validate)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent validate entries:"
-            tail -20 "$DATA_DIR/validate.log" 2>/dev/null || echo "  No entries yet. Use: mockdata validate <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/validate.log"
-            local total=$(wc -l < "$DATA_DIR/validate.log")
-            echo "  [Mockdata] validate: $input"
-            echo "  Saved. Total validate entries: $total"
-            _log "validate" "$input"
-        fi
-        ;;
-    pipeline)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent pipeline entries:"
-            tail -20 "$DATA_DIR/pipeline.log" 2>/dev/null || echo "  No entries yet. Use: mockdata pipeline <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/pipeline.log"
-            local total=$(wc -l < "$DATA_DIR/pipeline.log")
-            echo "  [Mockdata] pipeline: $input"
-            echo "  Saved. Total pipeline entries: $total"
-            _log "pipeline" "$input"
-        fi
-        ;;
-    profile)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent profile entries:"
-            tail -20 "$DATA_DIR/profile.log" 2>/dev/null || echo "  No entries yet. Use: mockdata profile <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/profile.log"
-            local total=$(wc -l < "$DATA_DIR/profile.log")
-            echo "  [Mockdata] profile: $input"
-            echo "  Saved. Total profile entries: $total"
-            _log "profile" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown command: $1"
-        echo "Run 'mockdata help' for available commands."
-        exit 1
-        ;;
+# --- Main Dispatch ---
+
+case "${1:-}" in
+  name)    shift; cmd_name "$@" ;;
+  email)   shift; cmd_email "$@" ;;
+  phone)   shift; cmd_phone "$@" ;;
+  address) shift; cmd_address "$@" ;;
+  uuid)    shift; cmd_uuid "$@" ;;
+  csv)     shift; cmd_csv "$@" ;;
+  json)    shift; cmd_json "$@" ;;
+  -h|--help|"") usage ;;
+  *)
+    err "Unknown command: $1"
+    usage
+    exit 1
+    ;;
 esac

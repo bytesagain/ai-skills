@@ -1,131 +1,106 @@
 ---
-version: "2.0.0"
-name: wp-manager
-description: "WordPress site manager via REST API. WordPress博客管理、WordPress网站管理、WP建站、文章发布、页面管理、博客发布、媒体上传、图片管理、插件管理、主题设置、SEO优化、搜索引擎优化、SEO检查、网站安全、安全加固、速度优化、备份策略、内容管理系统CMS、网站运维、站点管理、博客运营。Manage posts, pages, media, plugins, themes, templates, and site settings. SEO health check, security audit, speed optimization, backup strategy. Blog management, content publishing, website operations. Use when: (1) managing WordPress sites/blogs, (2) publishing or editing posts and pages, (3) uploading media files, (4) managing plugins and themes, (5) updating site settings and SEO, (6) WordPress REST API operations, (7) checking SEO score, (8) WordPress security hardening, (9) site speed optimization, (10) backup planning. 适用场景：发布文章、管理页面、上传图片、管理插件主题、修改网站设置、WordPress自动化运维、SEO检查、安全加固、速度优化、备份策略。 Triggers on: wp manager."
-author: BytesAgain
+name: "wp-manager"
+version: "4.0.0"
+description: "Manage WordPress sites with cookie auth, page CRUD, duplicate detection, and batch cleanup. Requires curl."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
 ---
 
-# WP Manager
+# wp-manager
 
-Manage WordPress sites via REST API. Cookie-based auth, no plugins required.
+Manage WordPress sites with cookie-based authentication, content CRUD, duplicate page detection, and batch cleanup. Use when managing WordPress pages, cleaning duplicates, or syncing content.
 
-## 为什么用这个 Skill？ / Why This Skill?
+## Requirements
 
-- **结构化命令** vs 直接问AI：预置了完整的WordPress REST API调用链，登录→鉴权→操作一步到位，不用手写curl
-- **Cookie认证**：自动处理登录、cookie存储、nonce提取，不需要安装额外插件
-- **Block格式**：自动生成WordPress Gutenberg block标记，不用手写HTML
-- Compared to asking AI directly: this skill provides ready-to-run shell commands that handle auth, nonce, and WordPress block formatting automatically
+- curl (HTTP requests)
+- python3 (JSON parsing)
+- WordPress site with REST API enabled
 
-## Setup
+## Configuration
 
-Store credentials in `.env`:
-```
-WP_URL=https://example.com
-WP_USER=admin
-WP_PASS=yourpassword
-```
-
-## Quick Start
-
-```bash
-# Load env
-source .env
-
-# Login + get auth cookie & nonce
-scripts/wp.sh login
-
-# Then use any command:
-scripts/wp.sh posts          # List recent posts
-scripts/wp.sh publish "Title" "Content here"   # Create post
-scripts/wp.sh pages          # List pages
-scripts/wp.sh plugins        # List plugins
-scripts/wp.sh media upload ./image.png          # Upload media
-scripts/wp.sh settings       # View site settings
-```
+Set `WP_URL` environment variable or defaults to `https://bytesagain.com`.
+WordPress credentials read from `.env` file automatically.
 
 ## Commands
 
-### Content
+### `login`
+
 ```bash
-wp.sh posts                          # List recent posts
-wp.sh post <id>                      # Get single post
-wp.sh publish "Title" "Content"      # Publish new post
-wp.sh draft "Title" "Content"        # Save as draft
-wp.sh edit <id> "New content"        # Update post content
-wp.sh delete <id>                    # Trash a post
-wp.sh pages                          # List pages
-wp.sh page-publish "Title" "Content" # Publish new page
+scripts/script.sh login [password]
+# Auto-reads WP_PASS from .env if no password given
 ```
 
-### Media
+### `status`
+
 ```bash
-wp.sh media                          # List media
-wp.sh media upload ./file.png        # Upload file
+scripts/script.sh status
+# Shows site health + session age
 ```
 
-### Plugins
+### `list-pages`
+
 ```bash
-wp.sh plugins                        # List all plugins
-wp.sh plugin-activate <slug>         # Activate plugin
-wp.sh plugin-deactivate <slug>       # Deactivate plugin
-wp.sh plugin-delete <slug>           # Delete plugin
+scripts/script.sh list-pages [count] [page]
+# Paginated page listing with ID, slug, date, status
 ```
 
-### Site Settings
+### `list-all-pages`
+
 ```bash
-wp.sh settings                       # View settings
-wp.sh set-title "New Title"          # Update site title
-wp.sh set-tagline "New tagline"      # Update tagline
-wp.sh set-homepage posts             # Set homepage to latest posts
-wp.sh set-homepage page <id>         # Set static homepage
+scripts/script.sh list-all-pages
+# Fetches ALL pages to local cache (all-pages.jsonl)
 ```
 
-### Templates (Block Themes)
+### `create-page`
+
 ```bash
-wp.sh templates                      # List templates
-wp.sh template <id>                  # Get template content
-wp.sh template-update <id> "content" # Update template
-wp.sh template-parts                 # List template parts
-wp.sh template-part <id>             # Get template part
-wp.sh template-part-update <id> "content"  # Update template part
+scripts/script.sh create-page "Title" "Content" "slug" "publish"
 ```
 
-### SEO & Operations
+### `delete-page`
+
 ```bash
-wp.sh seo-check "URL"                # SEO health check (16 items)
-wp.sh security                       # WordPress security checklist
-wp.sh speed                          # Site speed optimization guide
-wp.sh backup                         # Backup strategy + script template
+scripts/script.sh delete-page <page-id>
 ```
 
-See also: `tips.md` for WordPress best practices.
+### `delete-batch`
 
-## Auth Notes
-
-- Uses `curl --data-urlencode` for login (handles special chars in passwords)
-- Cookie stored in `/tmp/wp-session.txt`
-- Nonce extracted from `/wp-admin/post-new.php`
-- Sessions expire ~24-48h; re-run `wp.sh login` if you get 401/403
-- REST API base: `{WP_URL}/wp-json/wp/v2/`
-
-## Content Format
-
-Post/page content uses WordPress block markup:
-```html
-<!-- wp:paragraph -->
-<p>Your text here</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading -->
-<h2>Section Title</h2>
-<!-- /wp:heading -->
-
-<!-- wp:list -->
-<ul><li>Item 1</li><li>Item 2</li></ul>
-<!-- /wp:list -->
+```bash
+scripts/script.sh delete-batch <ids-file>
+# Delete multiple pages from a file of IDs (one per line)
 ```
 
-Plain HTML also works — WordPress auto-wraps in classic blocks.
+### `find-duplicates`
+
+```bash
+scripts/script.sh find-duplicates
+# Scans all pages, finds slug-2/slug-3 copies, saves IDs for deletion
+```
+
+### `clean-duplicates`
+
+```bash
+scripts/script.sh clean-duplicates
+# Interactive: deletes duplicate pages found by find-duplicates
+```
+
+### `clean-blacklisted`
+
+```bash
+scripts/script.sh clean-blacklisted [blacklist-file]
+# Finds WP pages matching blacklisted skill slugs
+```
+
+### `search`
+
+```bash
+scripts/script.sh search <query>
+```
+
+## Data Storage
+
+Session cookies and page cache stored in `~/.local/share/wp-manager/`.
+
 ---
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

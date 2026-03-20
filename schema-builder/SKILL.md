@@ -1,57 +1,57 @@
 ---
-version: "2.0.0"
-name: schema-builder
-description: "Database schema designer. Design table structures, generate SQL DDL, migration scripts, seed data, ER diagrams, optimization reports, NoSQL schemas, and schema diffs. Commands: design, sql, migrate, seed, erd, optimize, nosql, compare. Use for database design, table structure, SQL generation. Use when you need schema builder capabilities. Triggers on: schema builder."
-author: BytesAgain
+name: "schema-builder"
+version: "3.0.0"
+description: "Build database schemas with SQL generation and relationship modeling. Use when designing databases."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
 ---
 
-# 🗃️ Schema Builder
+# schema-builder
 
-From requirement to complete database structure in one step.
+Build database schemas with SQL generation and relationship modeling. Use when designing databases.
 
-## Usage
+## Commands
+
+### `create`
 
 ```bash
-bash scripts/schema.sh <command> <table_name> [options]
+scripts/script.sh create <table cols>
 ```
 
-## Command Matrix
+### `alter`
 
-```
-┌──────────┬──────────────────────────────┬───────────────┐
-│ Command  │ Description                  │ Output        │
-├──────────┼──────────────────────────────┼───────────────┤
-│ design   │ Design schema from name      │ Field layout  │
-│ sql      │ Generate CREATE TABLE DDL    │ SQL statement │
-│ migrate  │ Generate migration script    │ Migration     │
-│ seed     │ Generate test/seed data      │ INSERT stmts  │
-│ erd      │ ASCII ER diagram             │ Relationship  │
-│ optimize │ Index & perf recommendations │ Report        │
-│ nosql    │ MongoDB schema               │ JSON schema   │
-│ compare  │ Diff two schemas             │ Diff report   │
-└──────────┴──────────────────────────────┴───────────────┘
+```bash
+scripts/script.sh alter <table action col>
 ```
 
-## Typical Flow
+### `show`
 
-```
-design → sql → migrate → seed
-         ↓
-       optimize
-         ↓
-        erd
+```bash
+scripts/script.sh show <table>
 ```
 
-1. `design users` — plan fields and relations
-2. `sql users` — generate executable SQL
-3. `migrate users` — versioned migration
-4. `seed users` — populate test data
-5. `optimize users` — check index suggestions
+### `export`
 
-## Supported Databases
+```bash
+scripts/script.sh export <format>
+```
 
-- Relational: MySQL, PostgreSQL, SQLite
-- NoSQL: MongoDB, Redis (via `nosql` command)
+### `validate`
+
+```bash
+scripts/script.sh validate <file>
+```
+
+### `er`
+
+```bash
+scripts/script.sh er <t1 t2 relation>
+```
+
+## Data Storage
+
+Data stored in `~/.local/share/schema-builder/`.
+
 ---
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

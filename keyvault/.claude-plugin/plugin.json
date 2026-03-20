@@ -1,0 +1,9 @@
+{
+  "name": "keyvault",
+  "description": "Generate and manage passwords with strength auditing and secure vault storage. Use when creating strong passwords, rotating credentials, auditing vaults.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

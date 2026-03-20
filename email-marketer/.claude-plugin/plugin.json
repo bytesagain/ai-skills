@@ -1,0 +1,9 @@
+{
+  "name": "email-marketer",
+  "description": "Plan email campaigns with segmentation, A/B testing, and benchmarking. Use when designing campaigns, segmenting lists, benchmarking rates.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

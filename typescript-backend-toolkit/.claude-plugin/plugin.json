@@ -1,0 +1,9 @@
+{
+  "name": "typescript-backend-toolkit",
+  "description": "Production-ready Express.js/TypeScript framework with auto-generated OpenAPI, Artisan-style CLI, plu typescript backend toolkit, typescript, boilerplate.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

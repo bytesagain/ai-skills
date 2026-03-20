@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: copywriter-pro
-description: "营销文案助手。标题公式(100个)、正文写作、AIDA框架、痛点挖掘、客户证言、落地页文案。Copywriting with 100 headline formulas, body copy, AIDA framework, pain points, testimonials, landing pages. Use when you need copywriter pro capabilities. Triggers on: copywriter pro."
+description: "营销文案助手。标题公式(100个)、正文写作、AIDA框架、痛点挖掘、客户证言、落地页文案。Copywriting with 100 headline formulas, body copy, AIDA framework, pain points, testimonials."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Copywriter ✍️

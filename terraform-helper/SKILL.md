@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: terraform-helper
-description: "Unknown: help. Use when you need terraform helper capabilities. Triggers on: terraform helper, provider, resource, name, region, no-vars."
+description: "Generate production-ready Terraform HCL for cloud providers. Use when validating configs, generating modules, formatting HCL, linting plans."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # terraform-helper

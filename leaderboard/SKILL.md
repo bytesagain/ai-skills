@@ -1,99 +1,112 @@
 ---
-name: "Leaderboard"
-description: "Leaderboard makes gaming & entertainment simple. Record, search, and analyze your data with clear terminal output."
-version: "2.0.0"
+name: "leaderboard"
+version: "1.0.0"
+description: "Record scores, rank players, and analyze game stats with terminal leaderboards. Use when tracking scores, ranking competitors, reviewing performance."
 author: "BytesAgain"
-tags: ["scores", "tabletop", "gaming", "fun", "leaderboard"]
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [leaderboard, general, cli, tool]
+category: "general"
 ---
 
-# Leaderboard
+# leaderboard
 
-Leaderboard makes gaming & entertainment simple. Record, search, and analyze your data with clear terminal output.
-
-## Why Leaderboard?
-
-- Works entirely offline — your data never leaves your machine
-- Simple command-line interface, no GUI needed
-- Export to JSON, CSV, or plain text anytime
-- Automatic history and activity logging
-
-## Getting Started
-
-```bash
-# See what you can do
-leaderboard help
-
-# Check current status
-leaderboard status
-
-# View your statistics
-leaderboard stats
-```
+Record scores, rank players, and analyze game stats with terminal leaderboards. Use when tracking scores, ranking competitors, reviewing performance.
 
 ## Commands
 
-| Command | What it does |
-|---------|-------------|
-| `leaderboard roll` | Roll |
-| `leaderboard score` | Score |
-| `leaderboard rank` | Rank |
-| `leaderboard history` | History |
-| `leaderboard stats` | Stats |
-| `leaderboard challenge` | Challenge |
-| `leaderboard create` | Create |
-| `leaderboard join` | Join |
-| `leaderboard track` | Track |
-| `leaderboard leaderboard` | Leaderboard |
-| `leaderboard reward` | Reward |
-| `leaderboard reset` | Reset |
-| `leaderboard stats` | Summary statistics |
-| `leaderboard export` | <fmt>       Export (json|csv|txt) |
-| `leaderboard search` | <term>      Search entries |
-| `leaderboard recent` | Recent activity |
-| `leaderboard status` | Health check |
-| `leaderboard help` | Show this help |
-| `leaderboard version` | Show version |
-| `leaderboard $name:` | $c entries |
-| `leaderboard Total:` | $total entries |
-| `leaderboard Data` | size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1) |
-| `leaderboard Version:` | v2.0.0 |
-| `leaderboard Data` | dir: $DATA_DIR |
-| `leaderboard Entries:` | $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total |
-| `leaderboard Disk:` | $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1) |
-| `leaderboard Last:` | $(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo never) |
-| `leaderboard Status:` | OK |
-| `leaderboard [Leaderboard]` | roll: $input |
-| `leaderboard Saved.` | Total roll entries: $total |
-| `leaderboard [Leaderboard]` | score: $input |
-| `leaderboard Saved.` | Total score entries: $total |
-| `leaderboard [Leaderboard]` | rank: $input |
-| `leaderboard Saved.` | Total rank entries: $total |
-| `leaderboard [Leaderboard]` | history: $input |
-| `leaderboard Saved.` | Total history entries: $total |
-| `leaderboard [Leaderboard]` | stats: $input |
-| `leaderboard Saved.` | Total stats entries: $total |
-| `leaderboard [Leaderboard]` | challenge: $input |
-| `leaderboard Saved.` | Total challenge entries: $total |
-| `leaderboard [Leaderboard]` | create: $input |
-| `leaderboard Saved.` | Total create entries: $total |
-| `leaderboard [Leaderboard]` | join: $input |
-| `leaderboard Saved.` | Total join entries: $total |
-| `leaderboard [Leaderboard]` | track: $input |
-| `leaderboard Saved.` | Total track entries: $total |
-| `leaderboard [Leaderboard]` | leaderboard: $input |
-| `leaderboard Saved.` | Total leaderboard entries: $total |
-| `leaderboard [Leaderboard]` | reward: $input |
-| `leaderboard Saved.` | Total reward entries: $total |
-| `leaderboard [Leaderboard]` | reset: $input |
-| `leaderboard Saved.` | Total reset entries: $total |
+### `status`
+
+```bash
+scripts/script.sh status
+```
+
+Show current status
+
+### `add`
+
+```bash
+scripts/script.sh add
+```
+
+Add new entry
+
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
+
+## Configuration
+
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `LEADERBOARD_DIR` | No | Data directory (default: ~/.leaderboard/) |
 
 ## Data Storage
 
-All data is stored locally at `~/.local/share/leaderboard/`. Each action is logged with timestamps. Use `export` to back up your data anytime.
+All data stored in `~/.leaderboard/` using JSONL format (one JSON object per line).
 
-## Feedback
+## Output
 
-Found a bug or have a suggestion? Let us know: https://bytesagain.com/feedback/
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

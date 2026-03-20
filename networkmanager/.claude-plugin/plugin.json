@@ -1,0 +1,9 @@
+{
+  "name": "networkmanager",
+  "description": "Manage Wi-Fi, VPN, and network connections on Linux with troubleshooting tools. Use when configuring Wi-Fi, managing VPNs, troubleshooting connectivity.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

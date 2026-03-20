@@ -1,8 +1,10 @@
 ---
 name: ColorPick
-description: "Color picker and converter. Convert between hex, RGB, HSL color formats, generate color palettes, find complementary colors, and preview colors in terminal."
+description: "Pick and convert colors between hex, RGB, HSL with palette tools. Use when sampling colors, generating palettes, converting formats."
 version: "2.0.0"
 author: "BytesAgain"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 tags: ["color","hex","rgb","hsl","palette","design","css"]
 categories: ["Developer Tools", "Utility"]
 ---
@@ -33,7 +35,6 @@ Powered by BytesAgain | bytesagain.com
 
 - Run `colorpick help` for all commands
 
-- Run `colorpick help` for all commands
 
 ## Configuration
 

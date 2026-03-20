@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Classical Chinese
-description: "Classical Chinese Tool. Use when you need classical chinese capabilities. Triggers on: classical chinese."
-  文言文助手。文言文翻译、注释、古诗赏析、古文写作、古今对比、学习计划。Classical Chinese translator and analyzer. 文言文、古诗、国学。
+description: "Translate and annotate classical Chinese texts with poetry analysis. Use when reading ancient prose, analyzing poems, or comparing classical usage."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # Classical Chinese
 

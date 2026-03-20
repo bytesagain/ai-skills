@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: prompt-generator
-description: "AI prompt generator for image and text. AI绘画提示词、AI画图、Midjourney提示词、MJ提示词、Stable Diffusion提示词、SD提示词、DALL-E提示词、AI绘图、AI生图、AI画画、文生图提示词、text-to-image prompt、写作提示词、ChatGPT提示词、Claude提示词、prompt engineering、提示词工程、提示词优化、负面提示词、negative prompt、画风提示词、风格提示词、风格词库、工作流、提示词升级。Generate image prompts for Midjourney/SD/DALL-E and writing prompts for ChatGPT/Claude. Use when: (1) generating AI image/art prompts, (2) creating Midjourney/Stable Diffusion/DALL-E prompts, (3) translating Chinese descriptions to English prompts, (4) enhancing or optimizing existing prompts, (5) batch generating prompt variations, (6) creating writing prompts, (7) browsing style-specific keyword libraries, (8) getting complete negative prompt reference, (9) following complete image generation workflows, (10) upgrading simple descriptions to professional prompts, (11) any AI art or prompt engineering task. 适用场景：生成AI绘画提示词、Midjourney出图、SD出图、中文转英文提示词、优化提示词、批量生成提示词变体、风格词库查询、负面提示词参考、完整出图工作流、提示词升级优化。纯本地模板生成，不依赖外部API。 Triggers on: prompt generator, Image, Chinese, All."
+description: "AI prompt generator for image and text. AI绘画提示词、AI画图、Midjourney提示词、MJ提示词、Stable Diffusion提示词、SD提示词、DALL-E提示词、AI绘图、AI生图、AI画画、文生图提示词、text-to-image prompt、写作提示词."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Prompt Generator

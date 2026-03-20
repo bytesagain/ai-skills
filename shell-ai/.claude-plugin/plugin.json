@@ -1,0 +1,9 @@
+{
+  "name": "shell-ai",
+  "description": "A command-line productivity tool powered by AI large language models like GPT-5, will help you accom shell gpt, python, chatgpt, cheat-sheet, cli, commands.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

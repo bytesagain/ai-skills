@@ -1,0 +1,9 @@
+{
+  "name": "spec-workflow",
+  "description": "Drive spec-driven dev workflows with planning, tracking, and review. Use when adding specs, planning sprints, tracking progress, reviewing deliverables.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

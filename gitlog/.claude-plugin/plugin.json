@@ -1,0 +1,9 @@
+{
+  "name": "gitlog",
+  "description": "View formatted commit history, author stats, and commit frequency patterns. Use when reviewing logs, comparing contributions, or generating repo reports.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

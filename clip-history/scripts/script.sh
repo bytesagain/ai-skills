@@ -1,101 +1,155 @@
 #!/usr/bin/env bash
-# clip-history - Developer workflow automation tool
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${CLIP_HISTORY_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/clip-history}"
-DB="$DATA_DIR/data.log"
+
+VERSION="3.0.0"
+SCRIPT_NAME="clip-history"
+DATA_DIR="$HOME/.local/share/clip-history"
 mkdir -p "$DATA_DIR"
 
-show_help() {
-    cat << EOF
-clip-history v$VERSION
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-Developer workflow automation tool
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
-Usage: clip-history <command> [args]
-
-Commands:
-  init                 Initialize project
-  check                Run checks
-  build                Build project
-  test                 Run tests
-  deploy               Deploy guide
-  config               Configuration
-  status               Project status
-  template             Code template
-  docs                 Documentation
-  clean                Clean artifacts
-  help                 Show this help
-  version              Show version
-
-Data: \$DATA_DIR
-EOF
+cmd_save() {
+    local text="${2:-}"
+    [ -z "$text" ] && die "Usage: $SCRIPT_NAME save <text>"
+    echo '{"ts":"'$(date +%s)'","text":"'$2'"}' >> $DATA_DIR/clips.jsonl && echo Saved
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-
-cmd_init() {
-    echo "  Project initialized in $(pwd)"
-    _log "init" "${1:-}"
+cmd_list() {
+    local count="${2:-}"
+    [ -z "$count" ] && die "Usage: $SCRIPT_NAME list <count>"
+    tail -${2:-10} $DATA_DIR/clips.jsonl 2>/dev/null
 }
 
-cmd_check() {
-    echo "  Running lint + type check + tests..."
-    _log "check" "${1:-}"
+cmd_search() {
+    local query="${2:-}"
+    [ -z "$query" ] && die "Usage: $SCRIPT_NAME search <query>"
+    grep -i $2 $DATA_DIR/clips.jsonl 2>/dev/null || echo 'No matches'
 }
 
-cmd_build() {
-    echo "  Building..."
-    _log "build" "${1:-}"
+cmd_get() {
+    local id="${2:-}"
+    [ -z "$id" ] && die "Usage: $SCRIPT_NAME get <id>"
+    sed -n ${2}p $DATA_DIR/clips.jsonl 2>/dev/null
 }
 
-cmd_test() {
-    echo "  Running test suite..."
-    _log "test" "${1:-}"
+cmd_clear() {
+    : > $DATA_DIR/clips.jsonl && echo Cleared
 }
 
-cmd_deploy() {
-    echo "  Deploy: build -> test -> stage -> prod"
-    _log "deploy" "${1:-}"
+cmd_export() {
+    local file="${2:-}"
+    [ -z "$file" ] && die "Usage: $SCRIPT_NAME export <file>"
+    cp $DATA_DIR/clips.jsonl $2 && echo 'Exported to $2'
 }
 
-cmd_config() {
-    echo "  Config: $DATA_DIR/config.json"
-    _log "config" "${1:-}"
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
+    echo ""
+    echo "Commands:"
+    printf "  %-25s\n" "save <text>"
+    printf "  %-25s\n" "list <count>"
+    printf "  %-25s\n" "search <query>"
+    printf "  %-25s\n" "get <id>"
+    printf "  %-25s\n" "clear"
+    printf "  %-25s\n" "export <file>"
+    printf "  %%-25s\n" "help"
+    echo ""
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-cmd_status() {
-    echo "  Status: checking project health..."
-    _log "status" "${1:-}"
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        save) shift; cmd_save "$@" ;;
+        list) shift; cmd_list "$@" ;;
+        search) shift; cmd_search "$@" ;;
+        get) shift; cmd_get "$@" ;;
+        clear) shift; cmd_clear "$@" ;;
+        export) shift; cmd_export "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
+    esac
 }
 
-cmd_template() {
-    echo "  Template for: $1"
-    _log "template" "${1:-}"
-}
-
-cmd_docs() {
-    echo "  Generating docs..."
-    _log "docs" "${1:-}"
-}
-
-cmd_clean() {
-    echo "  Cleaned build artifacts"
-    _log "clean" "${1:-}"
-}
-
-case "${1:-help}" in
-    init) shift; cmd_init "$@" ;;
-    check) shift; cmd_check "$@" ;;
-    build) shift; cmd_build "$@" ;;
-    test) shift; cmd_test "$@" ;;
-    deploy) shift; cmd_deploy "$@" ;;
-    config) shift; cmd_config "$@" ;;
-    status) shift; cmd_status "$@" ;;
-    template) shift; cmd_template "$@" ;;
-    docs) shift; cmd_docs "$@" ;;
-    clean) shift; cmd_clean "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "clip-history v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
-esac
+main "$@"

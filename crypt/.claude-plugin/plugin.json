@@ -1,0 +1,9 @@
+{
+  "name": "crypt",
+  "description": "Encrypt, decrypt, hash, and sign data using standard cryptographic algorithms. Use when you need data protection or integrity verification.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

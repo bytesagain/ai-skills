@@ -1,0 +1,9 @@
+{
+  "name": "options",
+  "description": "Log and review options trades with trend analysis and exportable position reports. Use when tracking trades, reviewing positions, exporting trade summaries.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "vector",
+  "description": "Perform vector math and similarity operations using CLI tools. Use when you need dot products, cosine similarity, distance metrics, normalization,",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "wordcraft",
+  "description": "Analyze text, build outlines, and craft polished writing. Use when outlining articles, scoring readability, counting words, ranking keywords, or editing.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

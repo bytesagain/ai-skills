@@ -1,332 +1,315 @@
 #!/usr/bin/env bash
-# Favicon — design tool
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
+###############################################################################
+# Favicon — Favicon Tool
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+###############################################################################
 
-DATA_DIR="${HOME}/.local/share/favicon"
-mkdir -p "$DATA_DIR"
+VERSION="3.0.0"
+SCRIPT_NAME="favicon"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+# Colors
+RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'
+CYAN='\033[0;36m'; BOLD='\033[1m'; NC='\033[0m'
 
-_version() { echo "favicon v2.0.0"; }
+err()  { echo -e "${RED}[ERROR]${NC} $*" >&2; }
+info() { echo -e "${CYAN}[INFO]${NC} $*"; }
+ok()   { echo -e "${GREEN}[OK]${NC} $*"; }
+warn() { echo -e "${YELLOW}[WARN]${NC} $*"; }
 
-_help() {
-    echo "Favicon v2.0.0 — design toolkit"
-    echo ""
-    echo "Usage: favicon <command> [args]"
-    echo ""
-    echo "Commands:"
-    echo "  palette            Palette"
-    echo "  preview            Preview"
-    echo "  generate           Generate"
-    echo "  convert            Convert"
-    echo "  harmonize          Harmonize"
-    echo "  contrast           Contrast"
-    echo "  export             Export"
-    echo "  random             Random"
-    echo "  browse             Browse"
-    echo "  mix                Mix"
-    echo "  gradient           Gradient"
-    echo "  swatch             Swatch"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
+USER_AGENT="Mozilla/5.0 (compatible; Favicon/${VERSION}; +https://bytesagain.com)"
+
+usage() {
+  cat <<EOF
+${BOLD}Favicon v${VERSION}${NC} — Favicon Tool
+Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+
+${BOLD}Usage:${NC}
+  $SCRIPT_NAME check <url>                 Check if site has favicon
+  $SCRIPT_NAME download <url> [output]     Download favicon from site
+  $SCRIPT_NAME generate <text> [size]      Generate SVG favicon placeholder
+  $SCRIPT_NAME info <file>                 Show image file info
+
+${BOLD}Examples:${NC}
+  $SCRIPT_NAME check https://github.com
+  $SCRIPT_NAME download https://google.com favicon.ico
+  $SCRIPT_NAME generate "AB" 64
+  $SCRIPT_NAME info favicon.ico
+EOF
 }
 
-_stats() {
-    echo "=== Favicon Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Since: $(head -1 "$DATA_DIR/history.log" 2>/dev/null | cut -d'|' -f1 || echo 'N/A')"
+require_curl() {
+  if ! command -v curl &>/dev/null; then
+    err "curl is required but not found."
+    exit 1
+  fi
 }
 
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "" >> "$out"
-            echo "]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    echo "$name,$ts,$val" >> "$out"
-                done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Favicon Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-                echo "" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
-    esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
+# Strip protocol and path to get domain
+get_domain() {
+  echo "$1" | sed -E 's|https?://||' | sed 's|/.*||'
 }
 
-_status() {
-    echo "=== Favicon Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    local last=$(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo "never")
-    echo "  Last activity: $last"
-    echo "  Status: OK"
+# Normalize URL to have protocol
+normalize_url() {
+  local url="$1"
+  if [[ ! "$url" =~ ^https?:// ]]; then
+    url="https://${url}"
+  fi
+  echo "$url"
 }
 
-_search() {
-    local term="${1:?Usage: favicon search <term>}"
-    echo "Searching for: $term"
-    local found=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local matches=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$matches" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$matches" | while read -r line; do
-                echo "    $line"
-                found=$((found + 1))
-            done
+cmd_check() {
+  local raw_url="${1:?Usage: $SCRIPT_NAME check <url>}"
+  local url
+  url=$(normalize_url "$raw_url")
+  local domain
+  domain=$(get_domain "$url")
+
+  info "Checking favicon for ${BOLD}${domain}${NC}..."
+  echo ""
+
+  local found=0
+
+  # Method 1: /favicon.ico
+  local ico_url="${url%%/}/favicon.ico"
+  local code
+  code=$(curl -sL -o /dev/null -w '%{http_code}' --max-time 10 -A "$USER_AGENT" "$ico_url" 2>/dev/null || echo "000")
+  if [[ "$code" =~ ^2 ]]; then
+    local content_type
+    content_type=$(curl -sI -L --max-time 10 -A "$USER_AGENT" "$ico_url" 2>/dev/null | grep -i 'content-type' | tail -1 | tr -d '\r')
+    echo -e "  ${GREEN}✓${NC} /favicon.ico — ${code} ${content_type:-}"
+    found=1
+  else
+    echo -e "  ${RED}✗${NC} /favicon.ico — ${code}"
+  fi
+
+  # Method 2: Parse HTML for <link rel="icon">
+  local page
+  page=$(curl -sL --max-time 10 -A "$USER_AGENT" "$url" 2>/dev/null || echo "")
+
+  if [[ -n "$page" ]]; then
+    local icons
+    icons=$(echo "$page" | grep -oEi '<link[^>]*(rel="[^"]*icon[^"]*"|rel='"'"'[^'"'"']*icon[^'"'"']*'"'"')[^>]*>' | head -5)
+
+    if [[ -n "$icons" ]]; then
+      while IFS= read -r tag; do
+        local href
+        href=$(echo "$tag" | grep -oEi 'href="[^"]*"' | sed 's/href="//;s/"$//' | head -1)
+        [[ -z "$href" ]] && href=$(echo "$tag" | grep -oEi "href='[^']*'" | sed "s/href='//;s/'$//" | head -1)
+        if [[ -n "$href" ]]; then
+          # Resolve relative URL
+          if [[ "$href" =~ ^// ]]; then
+            href="https:${href}"
+          elif [[ "$href" =~ ^/ ]]; then
+            href="${url%%/}${href}"
+          elif [[ ! "$href" =~ ^https?:// ]]; then
+            href="${url%%/}/${href}"
+          fi
+          local icode
+          icode=$(curl -sL -o /dev/null -w '%{http_code}' --max-time 10 -A "$USER_AGENT" "$href" 2>/dev/null || echo "000")
+          if [[ "$icode" =~ ^2 ]]; then
+            echo -e "  ${GREEN}✓${NC} ${href} — ${icode}"
+            found=1
+          else
+            echo -e "  ${YELLOW}?${NC} ${href} — ${icode}"
+          fi
         fi
-    done
-    [ $found -eq 0 ] && echo "  No matches found."
+      done <<< "$icons"
+    fi
+
+    # Method 3: Check apple-touch-icon
+    local apple
+    apple=$(echo "$page" | grep -oEi '<link[^>]*rel="apple-touch-icon[^"]*"[^>]*>' | head -1)
+    if [[ -n "$apple" ]]; then
+      local ahref
+      ahref=$(echo "$apple" | grep -oEi 'href="[^"]*"' | sed 's/href="//;s/"$//')
+      if [[ -n "$ahref" ]]; then
+        if [[ "$ahref" =~ ^/ ]]; then
+          ahref="${url%%/}${ahref}"
+        elif [[ ! "$ahref" =~ ^https?:// ]]; then
+          ahref="${url%%/}/${ahref}"
+        fi
+        echo -e "  ${CYAN}ℹ${NC} apple-touch-icon: ${ahref}"
+        found=1
+      fi
+    fi
+  fi
+
+  echo ""
+  if [[ "$found" -eq 1 ]]; then
+    ok "Favicon found for ${domain}"
+  else
+    warn "No favicon found for ${domain}"
+  fi
 }
 
-_recent() {
-    echo "=== Recent Activity ==="
-    if [ -f "$DATA_DIR/history.log" ]; then
-        tail -20 "$DATA_DIR/history.log" | while IFS='' read -r line; do
-            echo "  $line"
-        done
-    else
-        echo "  No activity yet."
+cmd_download() {
+  local raw_url="${1:?Usage: $SCRIPT_NAME download <url> [output]}"
+  local url
+  url=$(normalize_url "$raw_url")
+  local domain
+  domain=$(get_domain "$url")
+  local output="${2:-${domain}-favicon.ico}"
+
+  info "Downloading favicon from ${BOLD}${domain}${NC}..."
+
+  # Try direct /favicon.ico first
+  local ico_url="${url%%/}/favicon.ico"
+  local code
+  code=$(curl -sL -o "$output" -w '%{http_code}' --max-time 15 -A "$USER_AGENT" "$ico_url" 2>/dev/null || echo "000")
+
+  if [[ "$code" =~ ^2 ]] && [[ -s "$output" ]]; then
+    local size
+    size=$(wc -c < "$output")
+    ok "Downloaded favicon to ${output} (${size} bytes)"
+    return 0
+  fi
+
+  # Try parsing page for icon link
+  local page
+  page=$(curl -sL --max-time 10 -A "$USER_AGENT" "$url" 2>/dev/null || echo "")
+  local href
+  href=$(echo "$page" | grep -oEi '<link[^>]*rel="[^"]*icon[^"]*"[^>]*href="[^"]*"' | \
+    grep -oEi 'href="[^"]*"' | sed 's/href="//;s/"$//' | head -1)
+
+  if [[ -n "$href" ]]; then
+    if [[ "$href" =~ ^// ]]; then
+      href="https:${href}"
+    elif [[ "$href" =~ ^/ ]]; then
+      href="${url%%/}${href}"
+    elif [[ ! "$href" =~ ^https?:// ]]; then
+      href="${url%%/}/${href}"
     fi
+
+    code=$(curl -sL -o "$output" -w '%{http_code}' --max-time 15 -A "$USER_AGENT" "$href" 2>/dev/null || echo "000")
+    if [[ "$code" =~ ^2 ]] && [[ -s "$output" ]]; then
+      local size
+      size=$(wc -c < "$output")
+      ok "Downloaded favicon to ${output} (${size} bytes)"
+      return 0
+    fi
+  fi
+
+  # Try Google's favicon service as fallback
+  local google_url="https://www.google.com/s2/favicons?domain=${domain}&sz=64"
+  code=$(curl -sL -o "$output" -w '%{http_code}' --max-time 10 "$google_url" 2>/dev/null || echo "000")
+  if [[ "$code" =~ ^2 ]] && [[ -s "$output" ]]; then
+    local size
+    size=$(wc -c < "$output")
+    ok "Downloaded via Google API to ${output} (${size} bytes)"
+    return 0
+  fi
+
+  rm -f "$output"
+  err "Could not download favicon from ${domain}"
+  return 1
+}
+
+cmd_generate() {
+  local text="${1:?Usage: $SCRIPT_NAME generate <text> [size]}"
+  local size="${2:-64}"
+  local output="${text// /_}-favicon.svg"
+
+  # Truncate text to 2 chars for favicon
+  local display_text="${text:0:2}"
+
+  info "Generating SVG favicon: \"${display_text}\" (${size}x${size})..."
+
+  # Generate random background color
+  local bg_r bg_g bg_b
+  bg_r=$(( (RANDOM % 200) + 30 ))
+  bg_g=$(( (RANDOM % 200) + 30 ))
+  bg_b=$(( (RANDOM % 200) + 30 ))
+  local bg_hex
+  bg_hex=$(printf "#%02X%02X%02X" "$bg_r" "$bg_g" "$bg_b")
+
+  # Calculate text color (white or black based on luminance)
+  local lum
+  lum=$(awk "BEGIN { printf \"%.3f\", (0.299 * ${bg_r} + 0.587 * ${bg_g} + 0.114 * ${bg_b}) / 255 }")
+  local text_color
+  text_color=$(awk "BEGIN { print ($lum > 0.5) ? \"#000000\" : \"#FFFFFF\" }")
+
+  local font_size
+  font_size=$(awk "BEGIN { printf \"%d\", ${size} * 0.5 }")
+
+  cat > "$output" <<SVGEOF
+<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+  <rect width="100%" height="100%" rx="8" ry="8" fill="${bg_hex}"/>
+  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle"
+        font-family="Arial, Helvetica, sans-serif" font-size="${font_size}" font-weight="bold"
+        fill="${text_color}">${display_text}</text>
+</svg>
+SVGEOF
+
+  ok "Generated: ${output}"
+  echo -e "  ${BOLD}Size:${NC}       ${size}x${size}"
+  echo -e "  ${BOLD}Text:${NC}       ${display_text}"
+  echo -e "  ${BOLD}Background:${NC} ${bg_hex}"
+  echo -e "  ${BOLD}Text color:${NC} ${text_color}"
+}
+
+cmd_info() {
+  local file="${1:?Usage: $SCRIPT_NAME info <file>}"
+
+  if [[ ! -f "$file" ]]; then
+    err "File not found: $file"
+    exit 1
+  fi
+
+  info "File info for ${BOLD}${file}${NC}:"
+  echo ""
+
+  local size
+  size=$(wc -c < "$file")
+  echo -e "  ${BOLD}File:${NC}     ${file}"
+  echo -e "  ${BOLD}Size:${NC}     ${size} bytes ($(awk "BEGIN { printf \"%.1f\", ${size}/1024 }") KB)"
+
+  # MIME type
+  if command -v file &>/dev/null; then
+    local mime
+    mime=$(file --mime-type -b "$file" 2>/dev/null || echo "unknown")
+    echo -e "  ${BOLD}MIME:${NC}     ${mime}"
+
+    local desc
+    desc=$(file -b "$file" 2>/dev/null || echo "unknown")
+    echo -e "  ${BOLD}Type:${NC}     ${desc}"
+  else
+    warn "'file' command not available for MIME detection"
+  fi
+
+  # Check file magic bytes
+  local magic
+  magic=$(xxd -l 4 -p "$file" 2>/dev/null || echo "")
+  case "$magic" in
+    00000100) echo -e "  ${BOLD}Format:${NC}   ICO (Windows Icon)" ;;
+    89504e47) echo -e "  ${BOLD}Format:${NC}   PNG" ;;
+    ffd8ff*)  echo -e "  ${BOLD}Format:${NC}   JPEG" ;;
+    47494638) echo -e "  ${BOLD}Format:${NC}   GIF" ;;
+    52494646) echo -e "  ${BOLD}Format:${NC}   WebP (RIFF)" ;;
+    3c737667|3c3f786d|3c212d2d)
+              echo -e "  ${BOLD}Format:${NC}   SVG (XML)" ;;
+    *)        echo -e "  ${BOLD}Magic:${NC}    ${magic:-unknown}" ;;
+  esac
+
+  # Modification time
+  local mtime
+  mtime=$(stat -c '%y' "$file" 2>/dev/null || stat -f '%Sm' "$file" 2>/dev/null || echo "unknown")
+  echo -e "  ${BOLD}Modified:${NC} ${mtime}"
 }
 
 # Main dispatch
-case "${1:-help}" in
-    palette)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent palette entries:"
-            tail -20 "$DATA_DIR/palette.log" 2>/dev/null || echo "  No entries yet. Use: favicon palette <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/palette.log"
-            local total=$(wc -l < "$DATA_DIR/palette.log")
-            echo "  [Favicon] palette: $input"
-            echo "  Saved. Total palette entries: $total"
-            _log "palette" "$input"
-        fi
-        ;;
-    preview)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent preview entries:"
-            tail -20 "$DATA_DIR/preview.log" 2>/dev/null || echo "  No entries yet. Use: favicon preview <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/preview.log"
-            local total=$(wc -l < "$DATA_DIR/preview.log")
-            echo "  [Favicon] preview: $input"
-            echo "  Saved. Total preview entries: $total"
-            _log "preview" "$input"
-        fi
-        ;;
-    generate)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent generate entries:"
-            tail -20 "$DATA_DIR/generate.log" 2>/dev/null || echo "  No entries yet. Use: favicon generate <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/generate.log"
-            local total=$(wc -l < "$DATA_DIR/generate.log")
-            echo "  [Favicon] generate: $input"
-            echo "  Saved. Total generate entries: $total"
-            _log "generate" "$input"
-        fi
-        ;;
-    convert)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent convert entries:"
-            tail -20 "$DATA_DIR/convert.log" 2>/dev/null || echo "  No entries yet. Use: favicon convert <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/convert.log"
-            local total=$(wc -l < "$DATA_DIR/convert.log")
-            echo "  [Favicon] convert: $input"
-            echo "  Saved. Total convert entries: $total"
-            _log "convert" "$input"
-        fi
-        ;;
-    harmonize)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent harmonize entries:"
-            tail -20 "$DATA_DIR/harmonize.log" 2>/dev/null || echo "  No entries yet. Use: favicon harmonize <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/harmonize.log"
-            local total=$(wc -l < "$DATA_DIR/harmonize.log")
-            echo "  [Favicon] harmonize: $input"
-            echo "  Saved. Total harmonize entries: $total"
-            _log "harmonize" "$input"
-        fi
-        ;;
-    contrast)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent contrast entries:"
-            tail -20 "$DATA_DIR/contrast.log" 2>/dev/null || echo "  No entries yet. Use: favicon contrast <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/contrast.log"
-            local total=$(wc -l < "$DATA_DIR/contrast.log")
-            echo "  [Favicon] contrast: $input"
-            echo "  Saved. Total contrast entries: $total"
-            _log "contrast" "$input"
-        fi
-        ;;
-    export)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent export entries:"
-            tail -20 "$DATA_DIR/export.log" 2>/dev/null || echo "  No entries yet. Use: favicon export <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/export.log"
-            local total=$(wc -l < "$DATA_DIR/export.log")
-            echo "  [Favicon] export: $input"
-            echo "  Saved. Total export entries: $total"
-            _log "export" "$input"
-        fi
-        ;;
-    random)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent random entries:"
-            tail -20 "$DATA_DIR/random.log" 2>/dev/null || echo "  No entries yet. Use: favicon random <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/random.log"
-            local total=$(wc -l < "$DATA_DIR/random.log")
-            echo "  [Favicon] random: $input"
-            echo "  Saved. Total random entries: $total"
-            _log "random" "$input"
-        fi
-        ;;
-    browse)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent browse entries:"
-            tail -20 "$DATA_DIR/browse.log" 2>/dev/null || echo "  No entries yet. Use: favicon browse <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/browse.log"
-            local total=$(wc -l < "$DATA_DIR/browse.log")
-            echo "  [Favicon] browse: $input"
-            echo "  Saved. Total browse entries: $total"
-            _log "browse" "$input"
-        fi
-        ;;
-    mix)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent mix entries:"
-            tail -20 "$DATA_DIR/mix.log" 2>/dev/null || echo "  No entries yet. Use: favicon mix <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/mix.log"
-            local total=$(wc -l < "$DATA_DIR/mix.log")
-            echo "  [Favicon] mix: $input"
-            echo "  Saved. Total mix entries: $total"
-            _log "mix" "$input"
-        fi
-        ;;
-    gradient)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent gradient entries:"
-            tail -20 "$DATA_DIR/gradient.log" 2>/dev/null || echo "  No entries yet. Use: favicon gradient <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/gradient.log"
-            local total=$(wc -l < "$DATA_DIR/gradient.log")
-            echo "  [Favicon] gradient: $input"
-            echo "  Saved. Total gradient entries: $total"
-            _log "gradient" "$input"
-        fi
-        ;;
-    swatch)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent swatch entries:"
-            tail -20 "$DATA_DIR/swatch.log" 2>/dev/null || echo "  No entries yet. Use: favicon swatch <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/swatch.log"
-            local total=$(wc -l < "$DATA_DIR/swatch.log")
-            echo "  [Favicon] swatch: $input"
-            echo "  Saved. Total swatch entries: $total"
-            _log "swatch" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown command: $1"
-        echo "Run 'favicon help' for available commands."
-        exit 1
-        ;;
+require_curl
+
+case "${1:-}" in
+  check)    shift; cmd_check "$@" ;;
+  download) shift; cmd_download "$@" ;;
+  generate) shift; cmd_generate "$@" ;;
+  info)     shift; cmd_info "$@" ;;
+  -h|--help|"") usage ;;
+  *)
+    err "Unknown command: $1"
+    usage
+    exit 1
+    ;;
 esac

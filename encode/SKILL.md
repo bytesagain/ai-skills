@@ -1,89 +1,120 @@
 ---
-name: encode
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [encode, tool, utility]
-description: "Encode - command-line tool for everyday use"
+name: "encode"
+version: "1.0.0"
+description: "Encode text to base64, URL-safe strings, and HTML entity formats. Use when encoding payloads, escaping URLs, converting HTML entities."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [encode, general, cli, tool]
+category: "general"
 ---
 
-# Encode
+# encode
 
-Encoder toolkit — base64, URL encoding, HTML entities, and format conversion.
+Encode text to base64, URL-safe strings, and HTML entity formats. Use when encoding payloads, escaping URLs, converting HTML entities.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `encode help` | Show usage info |
-| `encode run` | Run main task |
-| `encode status` | Check state |
-| `encode list` | List items |
-| `encode add <item>` | Add item |
-| `encode export <fmt>` | Export data |
-
-## Usage
+### `status`
 
 ```bash
-encode help
-encode run
-encode status
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-encode help
-encode run
-encode export json
+scripts/script.sh add
 ```
 
-## Output
+Add new entry
 
-Results go to stdout. Save with `encode run > output.txt`.
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `convert`
+
+```bash
+scripts/script.sh convert
+```
+
+Convert input data
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `ENCODE_DIR` to change data directory. Default: `~/.local/share/encode/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `ENCODE_DIR` | No | Data directory (default: ~/.encode/) |
+
+## Data Storage
+
+All data stored in `~/.encode/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
 
-
-## Features
-
-- Simple command-line interface for quick access
-- Local data storage with JSON/CSV export
-- History tracking and activity logs
-- Search across all entries
-- Status monitoring and health checks
-- No external dependencies required
-
-## Quick Start
-
-```bash
-# Check status
-encode status
-
-# View help and available commands
-encode help
-
-# View statistics
-encode stats
-
-# Export your data
-encode export json
-```
-
-## How It Works
-
-Encode stores all data locally in `~/.local/share/encode/`. Each command logs activity with timestamps for full traceability. Use `stats` to see a summary, or `export` to back up your data in JSON, CSV, or plain text format.
-
-## Support
-
-- Feedback: https://bytesagain.com/feedback/
-- Website: https://bytesagain.com
-- Email: hello@bytesagain.com
-
-Powered by BytesAgain | bytesagain.com
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

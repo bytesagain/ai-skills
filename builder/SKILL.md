@@ -1,56 +1,120 @@
 ---
-name: builder
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [builder, tool, utility]
-description: "Builder - command-line tool for everyday use"
+name: "builder"
+version: "1.0.0"
+description: "builder tool for creating outputs"
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [builder, general, cli, tool]
+category: "general"
 ---
 
-# Builder
+# builder
 
-Project builder — scaffold new projects, generate boilerplate, configure build systems.
+builder tool for creating outputs
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `builder help` | Show usage info |
-| `builder run` | Run main task |
-| `builder status` | Check current state |
-| `builder list` | List items |
-| `builder add <item>` | Add new item |
-| `builder export <fmt>` | Export data |
-
-## Usage
+### `status`
 
 ```bash
-builder help
-builder run
-builder status
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-# Get started
-builder help
-
-# Run default task
-builder run
-
-# Export as JSON
-builder export json
+scripts/script.sh add
 ```
 
-## Output
+Add new entry
 
-Results go to stdout. Save with `builder run > output.txt`.
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `generate`
+
+```bash
+scripts/script.sh generate
+```
+
+Generate output
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `BUILDER_DIR` to change data directory. Default: `~/.local/share/builder/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `BUILDER_DIR` | No | Data directory (default: ~/.builder/) |
+
+## Data Storage
+
+All data stored in `~/.builder/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

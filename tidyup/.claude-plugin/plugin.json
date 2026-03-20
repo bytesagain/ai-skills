@@ -1,0 +1,9 @@
+{
+  "name": "tidyup",
+  "description": "Find duplicates, reclaim disk space, and clean storage. Use when scanning dupes, checking usage, running cleanup, analyzing age, generating reports.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

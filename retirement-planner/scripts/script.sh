@@ -1,101 +1,155 @@
 #!/usr/bin/env bash
-# retirement-planner - Productivity and task management tool
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${RETIREMENT_PLANNER_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/retirement-planner}"
-DB="$DATA_DIR/data.log"
+
+VERSION="3.0.0"
+SCRIPT_NAME="retirement-planner"
+DATA_DIR="$HOME/.local/share/retirement-planner"
 mkdir -p "$DATA_DIR"
 
-show_help() {
-    cat << EOF
-retirement-planner v$VERSION
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-Productivity and task management tool
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
-Usage: retirement-planner <command> [args]
-
-Commands:
-  add                  Add item
-  list                 List items
-  done                 Mark done
-  priority             Set priority
-  today                Today view
-  week                 Week view
-  remind               Set reminder
-  stats                Statistics
-  clear                Clear completed
-  export               Export
-  help                 Show this help
-  version              Show version
-
-Data: \$DATA_DIR
-EOF
+cmd_calculate() {
+    local age="${2:-}"
+    local target="${3:-}"
+    local savings="${4:-}"
+    local monthly="${5:-}"
+    [ -z "$age" ] && die "Usage: $SCRIPT_NAME calculate <age target savings monthly>"
+    awk "BEGIN{years=${3:-65}-$2; total=$4; for(i=0;i<years*12;i++){total=(total+$5)*1.005}; printf \"At %d with %.0f/mo: \$%.0f\n\",$3,$5,total}"
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-
-cmd_add() {
-    echo "$(date +%Y-%m-%d) $*" >> "$DB"; echo "  Added: $*"
-    _log "add" "${1:-}"
+cmd_roi() {
+    local principal="${2:-}"
+    local rate="${3:-}"
+    local years="${4:-}"
+    [ -z "$principal" ] && die "Usage: $SCRIPT_NAME roi <principal rate years>"
+    awk "BEGIN{printf \"%.0f -> %.0f (%.1f%% over %d years)\n\",$2,$2*(1+$3/100)^$4,$3,$4}"
 }
 
-cmd_list() {
-    [ -f "$DB" ] && cat "$DB" || echo "  (empty)"
-    _log "list" "${1:-}"
+cmd_inflation() {
+    local amount="${2:-}"
+    local years="${3:-}"
+    local rate="${4:-}"
+    [ -z "$amount" ] && die "Usage: $SCRIPT_NAME inflation <amount years rate>"
+    awk "BEGIN{printf \"\$%.0f in %d years = \$%.0f today (%.1f%% inflation)\n\",$2,$3,$2/(1+$4/100)^$3,$4}"
 }
 
-cmd_done() {
-    echo "  Completed: $1"
-    _log "done" "${1:-}"
+cmd_gap() {
+    local current="${2:-}"
+    local target="${3:-}"
+    local years="${4:-}"
+    [ -z "$current" ] && die "Usage: $SCRIPT_NAME gap <current target years>"
+    awk "BEGIN{gap=$3-$2; monthly=gap/($4*12); printf \"Gap: \$%.0f, Need: \$%.0f/month\n\",gap,monthly}"
 }
 
-cmd_priority() {
-    echo "  $1 -> priority: ${2:-medium}"
-    _log "priority" "${1:-}"
+cmd_social() {
+    local income="${2:-}"
+    [ -z "$income" ] && die "Usage: $SCRIPT_NAME social <income>"
+    awk "BEGIN{printf \"Est. SS benefit: \$%.0f/month\n\",$2*0.4/12}"
 }
 
-cmd_today() {
-    echo "  Today $(date +%Y-%m-%d):"; grep "$(date +%Y-%m-%d)" "$DB" 2>/dev/null || echo "  Nothing scheduled"
-    _log "today" "${1:-}"
+cmd_401k() {
+    local salary="${2:-}"
+    local match="${3:-}"
+    [ -z "$salary" ] && die "Usage: $SCRIPT_NAME 401k <salary match>"
+    awk "BEGIN{printf \"Annual 401k: \$%.0f (you) + \$%.0f (match) = \$%.0f\n\",$2*0.06,$2*$3/100,$2*0.06+$2*$3/100}"
 }
 
-cmd_week() {
-    echo "  This week overview"
-    _log "week" "${1:-}"
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
+    echo ""
+    echo "Commands:"
+    printf "  %-25s\n" "calculate <age target savings monthly>"
+    printf "  %-25s\n" "roi <principal rate years>"
+    printf "  %-25s\n" "inflation <amount years rate>"
+    printf "  %-25s\n" "gap <current target years>"
+    printf "  %-25s\n" "social <income>"
+    printf "  %-25s\n" "401k <salary match>"
+    printf "  %%-25s\n" "help"
+    echo ""
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
 }
 
-cmd_remind() {
-    echo "  Reminder: $1 at ${2:-tomorrow}"
-    _log "remind" "${1:-}"
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        calculate) shift; cmd_calculate "$@" ;;
+        roi) shift; cmd_roi "$@" ;;
+        inflation) shift; cmd_inflation "$@" ;;
+        gap) shift; cmd_gap "$@" ;;
+        social) shift; cmd_social "$@" ;;
+        401k) shift; cmd_401k "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
+    esac
 }
 
-cmd_stats() {
-    echo "  Total: $(wc -l < "$DB" 2>/dev/null || echo 0)"
-    _log "stats" "${1:-}"
-}
-
-cmd_clear() {
-    echo "  Cleared completed items"
-    _log "clear" "${1:-}"
-}
-
-cmd_export() {
-    [ -f "$DB" ] && cat "$DB" || echo "No data"
-    _log "export" "${1:-}"
-}
-
-case "${1:-help}" in
-    add) shift; cmd_add "$@" ;;
-    list) shift; cmd_list "$@" ;;
-    done) shift; cmd_done "$@" ;;
-    priority) shift; cmd_priority "$@" ;;
-    today) shift; cmd_today "$@" ;;
-    week) shift; cmd_week "$@" ;;
-    remind) shift; cmd_remind "$@" ;;
-    stats) shift; cmd_stats "$@" ;;
-    clear) shift; cmd_clear "$@" ;;
-    export) shift; cmd_export "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "retirement-planner v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
-esac
+main "$@"

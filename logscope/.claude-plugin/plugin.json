@@ -1,0 +1,9 @@
+{
+  "name": "logscope",
+  "description": "Analyze web server logs with real-time dashboards and traffic breakdowns. Use when reviewing access logs, identifying top pages, monitoring visitor stats.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

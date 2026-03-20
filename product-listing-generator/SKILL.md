@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: product-listing-generator
-description: "电商产品文案生成器。支持全平台上架文案、跨境电商多平台listing、短视频脚本、FAQ生成、组合套装文案、标题优化诊断、用户痛点挖掘。Generate e-commerce product listing copy including titles, selling points, descriptions, SEO keywords, competitive comparisons, cross-border listings (Amazon/Shopee/AliExpress), video scripts, FAQ generation, bundle copy, title optimization diagnosis, and customer pain point mining. 产品文案、跨境电商、短视频脚本、商品FAQ、套装组合、标题优化、痛点挖掘、listing优化、曝光不够、产品卖不动、淘宝拼多多亚马逊Shopee速卖通。. Use when you need product listing generator capabilities. Triggers on: product listing generator."
+description: "电商产品文案生成器。支持全平台上架文案、跨境电商多平台listing、短视频脚本、FAQ生成、组合套装文案、标题优化诊断、用户痛点挖掘。Generate e-commerce product listing copy including titles, selling points, descriptions."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Product Listing Generator

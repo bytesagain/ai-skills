@@ -1,332 +1,360 @@
 #!/usr/bin/env bash
-# Yamlcheck — devtools tool
+# ============================================================================
+# YAMLCheck — YAML Validator & Toolkit
 # Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+# ============================================================================
 set -euo pipefail
 
-DATA_DIR="${HOME}/.local/share/yamlcheck"
-mkdir -p "$DATA_DIR"
+VERSION="3.0.2"
+SCRIPT_NAME="yamlcheck"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+# --- Colors ----------------------------------------------------------------
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+BOLD='\033[1m'
+NC='\033[0m'
 
-_version() { echo "yamlcheck v2.0.0"; }
+# --- Helpers ---------------------------------------------------------------
+info()    { echo -e "${BLUE}ℹ${NC} $*"; }
+success() { echo -e "${GREEN}✔${NC} $*"; }
+warn()    { echo -e "${YELLOW}⚠${NC} $*"; }
+error()   { echo -e "${RED}✖${NC} $*" >&2; }
+die()     { error "$@"; exit 1; }
 
-_help() {
-    echo "Yamlcheck v2.0.0 — devtools toolkit"
-    echo ""
-    echo "Usage: yamlcheck <command> [args]"
-    echo ""
-    echo "Commands:"
-    echo "  check              Check"
-    echo "  validate           Validate"
-    echo "  generate           Generate"
-    echo "  format             Format"
-    echo "  lint               Lint"
-    echo "  explain            Explain"
-    echo "  convert            Convert"
-    echo "  template           Template"
-    echo "  diff               Diff"
-    echo "  preview            Preview"
-    echo "  fix                Fix"
-    echo "  report             Report"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
+need_file() {
+    [[ -z "${1:-}" ]] && die "Missing required argument: <file>"
+    [[ -f "$1" ]]     || die "File not found: $1"
 }
 
-_stats() {
-    echo "=== Yamlcheck Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Since: $(head -1 "$DATA_DIR/history.log" 2>/dev/null | cut -d'|' -f1 || echo 'N/A')"
+need_python3() {
+    command -v python3 &>/dev/null || die "python3 is required but not found"
 }
 
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "" >> "$out"
-            echo "]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    echo "$name,$ts,$val" >> "$out"
-                done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Yamlcheck Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-                echo "" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
-    esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
+# Check if PyYAML is available
+has_pyyaml() {
+    python3 -c "import yaml" 2>/dev/null
 }
 
-_status() {
-    echo "=== Yamlcheck Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    local last=$(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo "never")
-    echo "  Last activity: $last"
-    echo "  Status: OK"
+# --- Usage -----------------------------------------------------------------
+usage() {
+    cat <<EOF
+${BOLD}YAMLCheck v${VERSION}${NC} — YAML Validator & Toolkit
+Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+
+${BOLD}Usage:${NC}
+  ${SCRIPT_NAME} <command> [arguments]
+
+${BOLD}Commands:${NC}
+  validate <file>     Validate YAML syntax
+  to-json  <file>     Convert YAML to JSON
+  lint     <file>     Check for common style issues
+  keys     <file>     List top-level keys
+
+${BOLD}Options:${NC}
+  -h, --help          Show this help
+  -v, --version       Show version
+
+${BOLD}Examples:${NC}
+  ${SCRIPT_NAME} validate config.yml
+  ${SCRIPT_NAME} to-json  docker-compose.yml
+  ${SCRIPT_NAME} lint     values.yaml
+  ${SCRIPT_NAME} keys     playbook.yml
+EOF
 }
 
-_search() {
-    local term="${1:?Usage: yamlcheck search <term>}"
-    echo "Searching for: $term"
-    local found=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local matches=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$matches" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$matches" | while read -r line; do
-                echo "    $line"
-                found=$((found + 1))
-            done
+# --- Commands: with PyYAML -------------------------------------------------
+
+cmd_validate_pyyaml() {
+    need_file "$1"
+    info "Validating YAML (PyYAML): ${CYAN}$1${NC}"
+    python3 -c "
+import yaml, sys, os
+
+path = sys.argv[1]
+try:
+    with open(path, 'r') as f:
+        docs = list(yaml.safe_load_all(f))
+    # filter None docs (empty documents)
+    docs = [d for d in docs if d is not None]
+    count = len(docs)
+    if count == 0:
+        print('⚠ File is empty or contains only comments')
+        sys.exit(0)
+    kinds = []
+    for d in docs:
+        if isinstance(d, dict):
+            kinds.append(f'mapping ({len(d)} keys)')
+        elif isinstance(d, list):
+            kinds.append(f'sequence ({len(d)} items)')
+        else:
+            kinds.append(f'scalar ({type(d).__name__})')
+    size = os.path.getsize(path)
+    with open(path, 'r') as f:
+        lines = sum(1 for _ in f)
+    print(f'✔ Valid YAML — {count} document(s)')
+    for i, k in enumerate(kinds):
+        print(f'  Document {i+1}: {k}')
+    print(f'  Size: {size} bytes, {lines} lines')
+except yaml.YAMLError as e:
+    print(f'✖ Invalid YAML: {e}', file=sys.stderr)
+    sys.exit(1)
+" "$1"
+}
+
+cmd_validate_fallback() {
+    need_file "$1"
+    info "Validating YAML (basic checks): ${CYAN}$1${NC}"
+    local errors=0
+    local line_num=0
+    local in_multiline=0
+
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        line_num=$((line_num + 1))
+
+        # Skip empty lines and comments
+        [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && continue
+
+        # Check for tabs (YAML forbids tabs for indentation)
+        if [[ "$line" =~ ^$'\t' ]]; then
+            warn "Line ${line_num}: tab used for indentation (use spaces)"
+            errors=$((errors + 1))
         fi
-    done
-    [ $found -eq 0 ] && echo "  No matches found."
-}
 
-_recent() {
-    echo "=== Recent Activity ==="
-    if [ -f "$DATA_DIR/history.log" ]; then
-        tail -20 "$DATA_DIR/history.log" | while IFS='' read -r line; do
-            echo "  $line"
-        done
+        # Check for obviously broken key-value (colon without space)
+        if [[ "$line" =~ ^[[:space:]]*[a-zA-Z_][a-zA-Z0-9_]*:[^[:space:]] ]] && \
+           [[ ! "$line" =~ ^[[:space:]]*[a-zA-Z_][a-zA-Z0-9_]*:\"  ]] && \
+           [[ ! "$line" =~ ^[[:space:]]*[a-zA-Z_][a-zA-Z0-9_]*:\'  ]] && \
+           [[ ! "$line" =~ ^[[:space:]]*https?: ]]; then
+            warn "Line ${line_num}: missing space after colon"
+            errors=$((errors + 1))
+        fi
+
+    done < "$1"
+
+    if [[ $errors -eq 0 ]]; then
+        local lines
+        lines=$(wc -l < "$1" | tr -d ' ')
+        success "Basic YAML checks passed (${lines} lines)"
+        warn "Install PyYAML for full validation: pip3 install pyyaml"
     else
-        echo "  No activity yet."
+        error "Found ${errors} issue(s)"
+        return 1
     fi
 }
 
-# Main dispatch
-case "${1:-help}" in
-    check)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent check entries:"
-            tail -20 "$DATA_DIR/check.log" 2>/dev/null || echo "  No entries yet. Use: yamlcheck check <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/check.log"
-            local total=$(wc -l < "$DATA_DIR/check.log")
-            echo "  [Yamlcheck] check: $input"
-            echo "  Saved. Total check entries: $total"
-            _log "check" "$input"
+cmd_validate() {
+    if has_pyyaml; then
+        cmd_validate_pyyaml "$1"
+    else
+        cmd_validate_fallback "$1"
+    fi
+}
+
+cmd_tojson_pyyaml() {
+    need_file "$1"
+    info "Converting YAML to JSON: ${CYAN}$1${NC}"
+    python3 -c "
+import yaml, json, sys
+
+try:
+    with open(sys.argv[1], 'r') as f:
+        docs = list(yaml.safe_load_all(f))
+    docs = [d for d in docs if d is not None]
+    if len(docs) == 0:
+        print('{}')
+    elif len(docs) == 1:
+        print(json.dumps(docs[0], indent=2, ensure_ascii=False, default=str))
+    else:
+        print(json.dumps(docs, indent=2, ensure_ascii=False, default=str))
+except yaml.YAMLError as e:
+    print(f'Error: invalid YAML — {e}', file=sys.stderr)
+    sys.exit(1)
+" "$1"
+}
+
+cmd_tojson_fallback() {
+    need_file "$1"
+    info "Converting YAML to JSON: ${CYAN}$1${NC}"
+    need_python3
+    # Basic YAML-to-JSON for simple flat key:value files
+    python3 -c "
+import sys, json, re
+
+result = {}
+with open(sys.argv[1], 'r') as f:
+    for line in f:
+        line = line.rstrip()
+        if not line or line.lstrip().startswith('#'):
+            continue
+        # Skip lines that are just list items or complex structures
+        m = re.match(r'^([a-zA-Z_][\w.-]*)\s*:\s*(.*)', line)
+        if m:
+            key = m.group(1)
+            val = m.group(2).strip()
+            # Remove quotes
+            if (val.startswith('\"') and val.endswith('\"')) or (val.startswith(\"'\") and val.endswith(\"'\")):
+                val = val[1:-1]
+            elif val.lower() in ('true', 'yes', 'on'):
+                val = True
+            elif val.lower() in ('false', 'no', 'off'):
+                val = False
+            elif val.lower() in ('null', '~', ''):
+                val = None
+            else:
+                try:
+                    val = int(val)
+                except ValueError:
+                    try:
+                        val = float(val)
+                    except ValueError:
+                        pass
+            result[key] = val
+
+print(json.dumps(result, indent=2, ensure_ascii=False))
+print('⚠ Basic conversion only (flat keys). Install PyYAML for full support: pip3 install pyyaml', file=sys.stderr)
+" "$1"
+}
+
+cmd_tojson() {
+    if has_pyyaml; then
+        cmd_tojson_pyyaml "$1"
+    else
+        cmd_tojson_fallback "$1"
+    fi
+}
+
+cmd_lint() {
+    need_file "$1"
+    info "Linting YAML: ${CYAN}$1${NC}"
+    local issues=0
+    local line_num=0
+    local prev_indent=0
+
+    echo ""
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        line_num=$((line_num + 1))
+
+        # Check for tabs
+        if [[ "$line" == *$'\t'* ]]; then
+            warn "Line ${line_num}: contains tab character(s) — use spaces in YAML"
+            issues=$((issues + 1))
         fi
-        ;;
-    validate)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent validate entries:"
-            tail -20 "$DATA_DIR/validate.log" 2>/dev/null || echo "  No entries yet. Use: yamlcheck validate <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/validate.log"
-            local total=$(wc -l < "$DATA_DIR/validate.log")
-            echo "  [Yamlcheck] validate: $input"
-            echo "  Saved. Total validate entries: $total"
-            _log "validate" "$input"
+
+        # Check for trailing whitespace
+        if [[ "$line" =~ [[:space:]]$ ]] && [[ -n "$line" ]]; then
+            warn "Line ${line_num}: trailing whitespace"
+            issues=$((issues + 1))
         fi
-        ;;
-    generate)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent generate entries:"
-            tail -20 "$DATA_DIR/generate.log" 2>/dev/null || echo "  No entries yet. Use: yamlcheck generate <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/generate.log"
-            local total=$(wc -l < "$DATA_DIR/generate.log")
-            echo "  [Yamlcheck] generate: $input"
-            echo "  Saved. Total generate entries: $total"
-            _log "generate" "$input"
+
+        # Check for very long lines
+        if [[ ${#line} -gt 200 ]]; then
+            warn "Line ${line_num}: very long line (${#line} chars)"
+            issues=$((issues + 1))
         fi
-        ;;
-    format)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent format entries:"
-            tail -20 "$DATA_DIR/format.log" 2>/dev/null || echo "  No entries yet. Use: yamlcheck format <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/format.log"
-            local total=$(wc -l < "$DATA_DIR/format.log")
-            echo "  [Yamlcheck] format: $input"
-            echo "  Saved. Total format entries: $total"
-            _log "format" "$input"
+
+        # Check for Windows line endings
+        if [[ "$line" == *$'\r' ]]; then
+            warn "Line ${line_num}: Windows line ending (\\r\\n)"
+            issues=$((issues + 1))
         fi
-        ;;
-    lint)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent lint entries:"
-            tail -20 "$DATA_DIR/lint.log" 2>/dev/null || echo "  No entries yet. Use: yamlcheck lint <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/lint.log"
-            local total=$(wc -l < "$DATA_DIR/lint.log")
-            echo "  [Yamlcheck] lint: $input"
-            echo "  Saved. Total lint entries: $total"
-            _log "lint" "$input"
+
+        # Check inconsistent indentation (odd number of spaces)
+        local stripped="${line%%[! ]*}"
+        local indent=${#stripped}
+        if [[ $indent -gt 0 ]] && [[ $((indent % 2)) -ne 0 ]]; then
+            warn "Line ${line_num}: odd indentation (${indent} spaces) — consider using multiples of 2"
+            issues=$((issues + 1))
         fi
-        ;;
-    explain)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent explain entries:"
-            tail -20 "$DATA_DIR/explain.log" 2>/dev/null || echo "  No entries yet. Use: yamlcheck explain <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/explain.log"
-            local total=$(wc -l < "$DATA_DIR/explain.log")
-            echo "  [Yamlcheck] explain: $input"
-            echo "  Saved. Total explain entries: $total"
-            _log "explain" "$input"
+
+        # Check for missing space after colon in key: value
+        if [[ "$line" =~ ^[[:space:]]*[a-zA-Z_][a-zA-Z0-9_]*:[^[:space:]:] ]] && \
+           [[ ! "$line" =~ ^[[:space:]]*https?: ]]; then
+            warn "Line ${line_num}: missing space after colon in key: value pair"
+            issues=$((issues + 1))
         fi
-        ;;
-    convert)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent convert entries:"
-            tail -20 "$DATA_DIR/convert.log" 2>/dev/null || echo "  No entries yet. Use: yamlcheck convert <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/convert.log"
-            local total=$(wc -l < "$DATA_DIR/convert.log")
-            echo "  [Yamlcheck] convert: $input"
-            echo "  Saved. Total convert entries: $total"
-            _log "convert" "$input"
-        fi
-        ;;
-    template)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent template entries:"
-            tail -20 "$DATA_DIR/template.log" 2>/dev/null || echo "  No entries yet. Use: yamlcheck template <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/template.log"
-            local total=$(wc -l < "$DATA_DIR/template.log")
-            echo "  [Yamlcheck] template: $input"
-            echo "  Saved. Total template entries: $total"
-            _log "template" "$input"
-        fi
-        ;;
-    diff)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent diff entries:"
-            tail -20 "$DATA_DIR/diff.log" 2>/dev/null || echo "  No entries yet. Use: yamlcheck diff <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/diff.log"
-            local total=$(wc -l < "$DATA_DIR/diff.log")
-            echo "  [Yamlcheck] diff: $input"
-            echo "  Saved. Total diff entries: $total"
-            _log "diff" "$input"
-        fi
-        ;;
-    preview)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent preview entries:"
-            tail -20 "$DATA_DIR/preview.log" 2>/dev/null || echo "  No entries yet. Use: yamlcheck preview <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/preview.log"
-            local total=$(wc -l < "$DATA_DIR/preview.log")
-            echo "  [Yamlcheck] preview: $input"
-            echo "  Saved. Total preview entries: $total"
-            _log "preview" "$input"
-        fi
-        ;;
-    fix)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent fix entries:"
-            tail -20 "$DATA_DIR/fix.log" 2>/dev/null || echo "  No entries yet. Use: yamlcheck fix <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/fix.log"
-            local total=$(wc -l < "$DATA_DIR/fix.log")
-            echo "  [Yamlcheck] fix: $input"
-            echo "  Saved. Total fix entries: $total"
-            _log "fix" "$input"
-        fi
-        ;;
-    report)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent report entries:"
-            tail -20 "$DATA_DIR/report.log" 2>/dev/null || echo "  No entries yet. Use: yamlcheck report <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/report.log"
-            local total=$(wc -l < "$DATA_DIR/report.log")
-            echo "  [Yamlcheck] report: $input"
-            echo "  Saved. Total report entries: $total"
-            _log "report" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown command: $1"
-        echo "Run 'yamlcheck help' for available commands."
-        exit 1
-        ;;
-esac
+
+        # Duplicate key detection for top-level keys
+        # (basic: just check if same key appears twice at indent 0)
+
+    done < "$1"
+
+    echo ""
+    if [[ $issues -eq 0 ]]; then
+        success "No style issues found! Clean YAML."
+    else
+        error "Found ${issues} style issue(s)"
+        return 1
+    fi
+}
+
+cmd_keys() {
+    need_file "$1"
+    need_python3
+    info "Top-level keys in: ${CYAN}$1${NC}"
+
+    if has_pyyaml; then
+        python3 -c "
+import yaml, sys
+
+try:
+    with open(sys.argv[1], 'r') as f:
+        data = yaml.safe_load(f)
+    if isinstance(data, dict):
+        for i, (k, v) in enumerate(data.items(), 1):
+            vtype = type(v).__name__
+            if isinstance(v, str):
+                preview = v[:60] + ('…' if len(v) > 60 else '')
+                print(f'  {i:3}. {k} ({vtype}): \"{preview}\"')
+            elif isinstance(v, (list, dict)):
+                print(f'  {i:3}. {k} ({vtype}, {len(v)} items)')
+            elif v is None:
+                print(f'  {i:3}. {k} (null)')
+            else:
+                print(f'  {i:3}. {k} ({vtype}): {v}')
+        print(f'\nTotal: {len(data)} keys')
+    elif isinstance(data, list):
+        print(f'Root is a sequence with {len(data)} items')
+    else:
+        print(f'Root is a scalar: {data}')
+except yaml.YAMLError as e:
+    print(f'Error: {e}', file=sys.stderr)
+    sys.exit(1)
+" "$1"
+    else
+        # Fallback: grep top-level keys (no leading whitespace)
+        info "(Using basic parser — install PyYAML for better results)"
+        local count=0
+        while IFS= read -r line; do
+            # Skip comments and empty lines
+            [[ -z "$line" || "$line" =~ ^[[:space:]]*# || "$line" == "---" || "$line" == "..." ]] && continue
+            # Top-level key: no leading whitespace, has a colon
+            if [[ "$line" =~ ^([a-zA-Z_][a-zA-Z0-9_./-]*):[[:space:]]* ]]; then
+                count=$((count + 1))
+                local key="${BASH_REMATCH[1]}"
+                printf "  %3d. %s\n" "$count" "$key"
+            fi
+        done < "$1"
+        echo ""
+        echo "Total: ${count} top-level keys (approximate)"
+    fi
+}
+
+# --- Main ------------------------------------------------------------------
+main() {
+    [[ $# -eq 0 ]] && { usage; exit 0; }
+
+    case "${1}" in
+        -h|--help)      usage ;;
+        -v|--version)   echo "${SCRIPT_NAME} v${VERSION}" ;;
+        validate)       shift; cmd_validate "${1:-}" ;;
+        to-json|tojson) shift; cmd_tojson "${1:-}" ;;
+        lint)           shift; cmd_lint "${1:-}" ;;
+        keys)           shift; cmd_keys "${1:-}" ;;
+        *)              die "Unknown command: $1 (try --help)" ;;
+    esac
+}
+
+main "$@"

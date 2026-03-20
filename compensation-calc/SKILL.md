@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: compensation-calc
-description: "薪酬计算器。薪资计算、奖金方案、股权激励、市场对标、薪资谈判、总包计算。Compensation calculator with salary, bonus, equity, benchmarking, negotiation, total comp. 薪酬、工资、奖金、股权、谈薪。Use when calculating or designing compensation. Triggers on: compensation calc."
+description: "Calculate total compensation with salary, bonus, equity, and benchmarks. Use when designing pay bands, estimating equity, benchmarking offers."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Compensation Calc — 薪酬计算器

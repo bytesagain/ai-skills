@@ -1,0 +1,9 @@
+{
+  "name": "traceroute-visual",
+  "description": "Visualize network paths with hop latency and geo mapping. Use when ingesting traces, transforming hops, querying routes, aggregating stats.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

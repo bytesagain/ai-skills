@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Study Plan
-description: "学习计划生成器。考研计划、考证规划、每日学习、番茄钟。Study plan generator for exams, certifications, daily schedules. 学习计划、考研计. Use when you need study plan capabilities. Triggers on: study plan."
-  学习计划生成器。考研计划、考证规划、每日学习、番茄钟。Study plan generator for exams, certifications, daily schedules. 学习计划、考研计划、备考规划。Use when creating study schedules.
+description: "Create study plans for exams with schedules and reminders. Use when adding tasks, planning reviews, tracking progress, prioritizing subjects."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # Study Plan
 

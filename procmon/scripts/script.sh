@@ -1,364 +1,317 @@
 #!/usr/bin/env bash
-# Procmon — sysops tool
+# ProcMon — Process monitor
 # Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-DATA_DIR="${HOME}/.local/share/procmon"
-mkdir -p "$DATA_DIR"
+VERSION="3.0.0"
+SCRIPT_NAME="procmon"
+LOG_DIR="${HOME}/.procmon"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+# ─────────────────────────────────────────────────────────────
+# Usage / Help
+# ─────────────────────────────────────────────────────────────
+usage() {
+  cat <<'EOF'
+ProcMon — Process monitor
+Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-_version() { echo "procmon v2.0.0"; }
+USAGE:
+  procmon <command> [arguments]
 
-_help() {
-    echo "Procmon v2.0.0 — sysops toolkit"
+COMMANDS:
+  list [filter]           List processes (optionally filter by name)
+  watch <name>            Monitor a named process (5 snapshots, 2s interval)
+  zombie                  Find zombie processes
+  heavy                   Show CPU/memory heavy processes
+  count                   Count processes by state
+  log <name>              Log process stats to file
+  tree [pid]              Show process tree
+  ports                   Show processes listening on ports
+  help                    Show this help message
+  version                 Show version
+
+EXAMPLES:
+  procmon list
+  procmon list nginx
+  procmon watch sshd
+  procmon zombie
+  procmon heavy
+  procmon count
+  procmon log node
+  procmon tree
+  procmon tree 1
+  procmon ports
+EOF
+}
+
+# ─────────────────────────────────────────────────────────────
+# Helpers
+# ─────────────────────────────────────────────────────────────
+die() { echo "ERROR: $*" >&2; exit 1; }
+
+require_arg() {
+  if [[ -z "${1:-}" ]]; then
+    die "Missing required argument: $2"
+  fi
+}
+
+timestamp() {
+  date '+%Y-%m-%d %H:%M:%S'
+}
+
+ensure_log_dir() {
+  mkdir -p "$LOG_DIR"
+}
+
+# ─────────────────────────────────────────────────────────────
+# Commands
+# ─────────────────────────────────────────────────────────────
+
+cmd_list() {
+  local filter="${1:-}"
+  echo "Process List — $(timestamp)"
+  echo "─────────────────────────────────────"
+
+  if [[ -n "$filter" ]]; then
+    echo "Filter: $filter"
     echo ""
-    echo "Usage: procmon <command> [args]"
+    printf "%-8s %-6s %-6s %-8s %-6s %s\n" "PID" "%CPU" "%MEM" "STATE" "TTY" "COMMAND"
+    echo "─────────────────────────────────────"
+    ps aux 2>/dev/null | awk -v pat="$filter" '
+      NR>1 && tolower($0) ~ tolower(pat) {
+        printf "%-8s %-6s %-6s %-8s %-6s %s\n", $2, $3, $4, $8, $7, $11
+      }
+    '
+  else
+    local total
+    total=$(ps aux 2>/dev/null | tail -n +2 | wc -l)
+    echo "Total processes: $total"
     echo ""
-    echo "Commands:"
-    echo "  scan               Scan"
-    echo "  monitor            Monitor"
-    echo "  report             Report"
-    echo "  alert              Alert"
-    echo "  top                Top"
-    echo "  usage              Usage"
-    echo "  check              Check"
-    echo "  fix                Fix"
-    echo "  cleanup            Cleanup"
-    echo "  backup             Backup"
-    echo "  restore            Restore"
-    echo "  log                Log"
-    echo "  benchmark          Benchmark"
-    echo "  compare            Compare"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
+    printf "%-8s %-6s %-6s %-8s %s\n" "PID" "%CPU" "%MEM" "STATE" "COMMAND"
+    echo "─────────────────────────────────────"
+    ps aux --sort=-%cpu 2>/dev/null | awk 'NR>1 && NR<=26 {
+      printf "%-8s %-6s %-6s %-8s %s\n", $2, $3, $4, $8, $11
+    }'
+    [[ "$total" -gt 25 ]] && echo "... (showing top 25 of $total, use 'procmon list <filter>' to search)"
+  fi
+}
+
+cmd_watch() {
+  local name="${1:-}"
+  require_arg "$name" "process name"
+
+  local snapshots=5
+  local interval=2
+
+  echo "Watching process: $name ($snapshots snapshots, ${interval}s interval)"
+  echo "─────────────────────────────────────"
+
+  local i
+  for (( i = 1; i <= snapshots; i++ )); do
     echo ""
-    echo "Data: $DATA_DIR"
-}
-
-_stats() {
-    echo "=== Procmon Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Since: $(head -1 "$DATA_DIR/history.log" 2>/dev/null | cut -d'|' -f1 || echo 'N/A')"
-}
-
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "" >> "$out"
-            echo "]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    echo "$name,$ts,$val" >> "$out"
-                done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Procmon Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-                echo "" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
-    esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
-}
-
-_status() {
-    echo "=== Procmon Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    local last=$(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo "never")
-    echo "  Last activity: $last"
-    echo "  Status: OK"
-}
-
-_search() {
-    local term="${1:?Usage: procmon search <term>}"
-    echo "Searching for: $term"
+    echo "── Snapshot $i/$snapshots — $(date '+%H:%M:%S') ──"
     local found=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local matches=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$matches" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$matches" | while read -r line; do
-                echo "    $line"
-                found=$((found + 1))
-            done
-        fi
-    done
-    [ $found -eq 0 ] && echo "  No matches found."
-}
+    while IFS= read -r line; do
+      if [[ $found -eq 0 ]]; then
+        printf "  %-8s %-6s %-6s %-10s %-10s %s\n" "PID" "%CPU" "%MEM" "RSS(MB)" "TIME" "CMD"
+        found=1
+      fi
+      local pid cpu mem rss etime cmd
+      read -r pid cpu mem rss etime cmd <<< "$line"
+      local rss_mb
+      rss_mb=$(awk "BEGIN{printf \"%.1f\", $rss/1024}")
+      printf "  %-8s %-6s %-6s %-10s %-10s %s\n" "$pid" "$cpu" "$mem" "$rss_mb" "$etime" "$cmd"
+    done < <(ps -eo pid,%cpu,%mem,rss,etime,comm 2>/dev/null | awk -v pat="$name" 'NR>1 && $6 ~ pat {print}')
 
-_recent() {
-    echo "=== Recent Activity ==="
-    if [ -f "$DATA_DIR/history.log" ]; then
-        tail -20 "$DATA_DIR/history.log" | while IFS='' read -r line; do
-            echo "  $line"
-        done
-    else
-        echo "  No activity yet."
+    if [[ $found -eq 0 ]]; then
+      echo "  (no matching processes found)"
     fi
+
+    [[ $i -lt $snapshots ]] && sleep "$interval"
+  done
 }
 
-# Main dispatch
-case "${1:-help}" in
-    scan)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent scan entries:"
-            tail -20 "$DATA_DIR/scan.log" 2>/dev/null || echo "  No entries yet. Use: procmon scan <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/scan.log"
-            local total=$(wc -l < "$DATA_DIR/scan.log")
-            echo "  [Procmon] scan: $input"
-            echo "  Saved. Total scan entries: $total"
-            _log "scan" "$input"
-        fi
-        ;;
-    monitor)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent monitor entries:"
-            tail -20 "$DATA_DIR/monitor.log" 2>/dev/null || echo "  No entries yet. Use: procmon monitor <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/monitor.log"
-            local total=$(wc -l < "$DATA_DIR/monitor.log")
-            echo "  [Procmon] monitor: $input"
-            echo "  Saved. Total monitor entries: $total"
-            _log "monitor" "$input"
-        fi
-        ;;
-    report)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent report entries:"
-            tail -20 "$DATA_DIR/report.log" 2>/dev/null || echo "  No entries yet. Use: procmon report <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/report.log"
-            local total=$(wc -l < "$DATA_DIR/report.log")
-            echo "  [Procmon] report: $input"
-            echo "  Saved. Total report entries: $total"
-            _log "report" "$input"
-        fi
-        ;;
-    alert)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent alert entries:"
-            tail -20 "$DATA_DIR/alert.log" 2>/dev/null || echo "  No entries yet. Use: procmon alert <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/alert.log"
-            local total=$(wc -l < "$DATA_DIR/alert.log")
-            echo "  [Procmon] alert: $input"
-            echo "  Saved. Total alert entries: $total"
-            _log "alert" "$input"
-        fi
-        ;;
-    top)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent top entries:"
-            tail -20 "$DATA_DIR/top.log" 2>/dev/null || echo "  No entries yet. Use: procmon top <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/top.log"
-            local total=$(wc -l < "$DATA_DIR/top.log")
-            echo "  [Procmon] top: $input"
-            echo "  Saved. Total top entries: $total"
-            _log "top" "$input"
-        fi
-        ;;
-    usage)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent usage entries:"
-            tail -20 "$DATA_DIR/usage.log" 2>/dev/null || echo "  No entries yet. Use: procmon usage <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/usage.log"
-            local total=$(wc -l < "$DATA_DIR/usage.log")
-            echo "  [Procmon] usage: $input"
-            echo "  Saved. Total usage entries: $total"
-            _log "usage" "$input"
-        fi
-        ;;
-    check)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent check entries:"
-            tail -20 "$DATA_DIR/check.log" 2>/dev/null || echo "  No entries yet. Use: procmon check <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/check.log"
-            local total=$(wc -l < "$DATA_DIR/check.log")
-            echo "  [Procmon] check: $input"
-            echo "  Saved. Total check entries: $total"
-            _log "check" "$input"
-        fi
-        ;;
-    fix)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent fix entries:"
-            tail -20 "$DATA_DIR/fix.log" 2>/dev/null || echo "  No entries yet. Use: procmon fix <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/fix.log"
-            local total=$(wc -l < "$DATA_DIR/fix.log")
-            echo "  [Procmon] fix: $input"
-            echo "  Saved. Total fix entries: $total"
-            _log "fix" "$input"
-        fi
-        ;;
-    cleanup)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent cleanup entries:"
-            tail -20 "$DATA_DIR/cleanup.log" 2>/dev/null || echo "  No entries yet. Use: procmon cleanup <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/cleanup.log"
-            local total=$(wc -l < "$DATA_DIR/cleanup.log")
-            echo "  [Procmon] cleanup: $input"
-            echo "  Saved. Total cleanup entries: $total"
-            _log "cleanup" "$input"
-        fi
-        ;;
-    backup)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent backup entries:"
-            tail -20 "$DATA_DIR/backup.log" 2>/dev/null || echo "  No entries yet. Use: procmon backup <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/backup.log"
-            local total=$(wc -l < "$DATA_DIR/backup.log")
-            echo "  [Procmon] backup: $input"
-            echo "  Saved. Total backup entries: $total"
-            _log "backup" "$input"
-        fi
-        ;;
-    restore)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent restore entries:"
-            tail -20 "$DATA_DIR/restore.log" 2>/dev/null || echo "  No entries yet. Use: procmon restore <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/restore.log"
-            local total=$(wc -l < "$DATA_DIR/restore.log")
-            echo "  [Procmon] restore: $input"
-            echo "  Saved. Total restore entries: $total"
-            _log "restore" "$input"
-        fi
-        ;;
-    log)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent log entries:"
-            tail -20 "$DATA_DIR/log.log" 2>/dev/null || echo "  No entries yet. Use: procmon log <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/log.log"
-            local total=$(wc -l < "$DATA_DIR/log.log")
-            echo "  [Procmon] log: $input"
-            echo "  Saved. Total log entries: $total"
-            _log "log" "$input"
-        fi
-        ;;
-    benchmark)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent benchmark entries:"
-            tail -20 "$DATA_DIR/benchmark.log" 2>/dev/null || echo "  No entries yet. Use: procmon benchmark <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/benchmark.log"
-            local total=$(wc -l < "$DATA_DIR/benchmark.log")
-            echo "  [Procmon] benchmark: $input"
-            echo "  Saved. Total benchmark entries: $total"
-            _log "benchmark" "$input"
-        fi
-        ;;
-    compare)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent compare entries:"
-            tail -20 "$DATA_DIR/compare.log" 2>/dev/null || echo "  No entries yet. Use: procmon compare <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/compare.log"
-            local total=$(wc -l < "$DATA_DIR/compare.log")
-            echo "  [Procmon] compare: $input"
-            echo "  Saved. Total compare entries: $total"
-            _log "compare" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown command: $1"
-        echo "Run 'procmon help' for available commands."
-        exit 1
-        ;;
-esac
+cmd_zombie() {
+  echo "Zombie Process Scanner — $(timestamp)"
+  echo "─────────────────────────────────────"
+
+  local zombies
+  zombies=$(ps aux 2>/dev/null | awk '$8 ~ /^Z/ {print}')
+
+  if [[ -z "$zombies" ]]; then
+    echo "✅ No zombie processes found"
+    return
+  fi
+
+  local count
+  count=$(echo "$zombies" | wc -l)
+  echo "🧟 Found $count zombie process(es):"
+  echo ""
+  printf "  %-8s %-8s %-8s %-20s %s\n" "PID" "PPID" "STATE" "TIME" "COMMAND"
+  echo "  ─────────────────────────────────────"
+
+  while IFS= read -r line; do
+    local pid ppid state time cmd
+    pid=$(echo "$line" | awk '{print $2}')
+    ppid=$(ps -o ppid= -p "$pid" 2>/dev/null | tr -d ' ' || echo "?")
+    state=$(echo "$line" | awk '{print $8}')
+    time=$(echo "$line" | awk '{print $10}')
+    cmd=$(echo "$line" | awk '{print $11}')
+    printf "  %-8s %-8s %-8s %-20s %s\n" "$pid" "$ppid" "$state" "$time" "$cmd"
+  done <<< "$zombies"
+
+  echo ""
+  echo "Tip: Kill parent processes (PPID) to clean up zombies"
+}
+
+cmd_heavy() {
+  echo "Heavy Processes — $(timestamp)"
+  echo "─────────────────────────────────────"
+
+  echo ""
+  echo "🔥 Top 10 by CPU:"
+  printf "  %-8s %-7s %-7s %-10s %s\n" "PID" "%CPU" "%MEM" "RSS(MB)" "COMMAND"
+  echo "  ─────────────────────────────────────"
+  ps aux --sort=-%cpu 2>/dev/null | awk 'NR>1 && NR<=11 {
+    printf "  %-8s %-7s %-7s %-10.1f %s\n", $2, $3, $4, $6/1024, $11
+  }'
+
+  echo ""
+  echo "🧠 Top 10 by Memory:"
+  printf "  %-8s %-7s %-7s %-10s %s\n" "PID" "%CPU" "%MEM" "RSS(MB)" "COMMAND"
+  echo "  ─────────────────────────────────────"
+  ps aux --sort=-%mem 2>/dev/null | awk 'NR>1 && NR<=11 {
+    printf "  %-8s %-7s %-7s %-10.1f %s\n", $2, $3, $4, $6/1024, $11
+  }'
+}
+
+cmd_count() {
+  echo "Process State Count — $(timestamp)"
+  echo "─────────────────────────────────────"
+
+  local total running sleeping stopped zombie other
+  total=0 running=0 sleeping=0 stopped=0 zombie=0 other=0
+
+  while IFS= read -r state; do
+    (( total++ )) || true
+    case "$state" in
+      R*) (( running++ )) || true ;;
+      S*|D*|I*) (( sleeping++ )) || true ;;
+      T*|t*) (( stopped++ )) || true ;;
+      Z*) (( zombie++ )) || true ;;
+      *) (( other++ )) || true ;;
+    esac
+  done < <(ps -eo stat= 2>/dev/null)
+
+  echo "  Total:    $total"
+  echo "  Running:  $running (R)"
+  echo "  Sleeping: $sleeping (S/D/I)"
+  echo "  Stopped:  $stopped (T)"
+  echo "  Zombie:   $zombie (Z)"
+  echo "  Other:    $other"
+
+  echo ""
+  echo "State breakdown:"
+  ps -eo stat= 2>/dev/null | sort | uniq -c | sort -rn | head -20 | awk '{printf "  %-6s %s\n", $2, $1}'
+}
+
+cmd_log() {
+  local name="${1:-}"
+  require_arg "$name" "process name"
+  ensure_log_dir
+
+  local logfile="$LOG_DIR/${name}.log"
+  local ts
+  ts=$(timestamp)
+  local entries=""
+  local count=0
+
+  while IFS= read -r line; do
+    entries+="  $line"$'\n'
+    (( count++ )) || true
+  done < <(ps -eo pid,%cpu,%mem,rss,etime,comm 2>/dev/null | awk -v pat="$name" 'NR>1 && $6 ~ pat')
+
+  echo "[$ts] process=$name matches=$count" >> "$logfile"
+  if [[ $count -gt 0 ]]; then
+    echo "$entries" >> "$logfile"
+  fi
+
+  echo "Logged $count process(es) matching '$name'"
+  echo "File: $logfile"
+
+  if [[ $count -gt 0 ]]; then
+    echo ""
+    echo "Matched processes:"
+    printf "  %-8s %-6s %-6s %-10s %-10s %s\n" "PID" "%CPU" "%MEM" "RSS(kB)" "ELAPSED" "CMD"
+    echo -n "$entries"
+  else
+    echo "(no matching processes found)"
+  fi
+}
+
+cmd_tree() {
+  local pid="${1:-}"
+  echo "Process Tree — $(timestamp)"
+  echo "─────────────────────────────────────"
+
+  if command -v pstree &>/dev/null; then
+    if [[ -n "$pid" ]]; then
+      pstree -p "$pid" 2>/dev/null || echo "PID $pid not found"
+    else
+      pstree -p 2>/dev/null | head -60
+    fi
+  else
+    if [[ -n "$pid" ]]; then
+      ps --forest -o pid,ppid,%cpu,%mem,comm -g "$(ps -o sid= -p "$pid" 2>/dev/null)" 2>/dev/null || \
+        ps -ef --forest 2>/dev/null | awk -v pid="$pid" '$2==pid || $3==pid' || echo "PID $pid not found"
+    else
+      ps -ef --forest 2>/dev/null | head -40
+    fi
+  fi
+}
+
+cmd_ports() {
+  echo "Processes Listening on Ports — $(timestamp)"
+  echo "─────────────────────────────────────"
+
+  if command -v ss &>/dev/null; then
+    ss -tlnp 2>/dev/null | head -30
+  elif command -v netstat &>/dev/null; then
+    netstat -tlnp 2>/dev/null | head -30
+  else
+    # Fallback: check /proc/net/tcp
+    echo "(ss and netstat not found, showing /proc/net/tcp)"
+    if [[ -f /proc/net/tcp ]]; then
+      echo "  Local Address        State"
+      awk 'NR>1 {
+        split($2, a, ":");
+        port = strtonum("0x" a[2]);
+        if ($4 == "0A") printf "  :%d LISTEN\n", port
+      }' /proc/net/tcp | sort -t: -k2 -n | head -20
+    fi
+  fi
+}
+
+# ─────────────────────────────────────────────────────────────
+# Main dispatcher
+# ─────────────────────────────────────────────────────────────
+main() {
+  local cmd="${1:-help}"
+  shift || true
+
+  case "$cmd" in
+    list)    cmd_list "$@" ;;
+    watch)   cmd_watch "$@" ;;
+    zombie)  cmd_zombie ;;
+    heavy)   cmd_heavy ;;
+    count)   cmd_count ;;
+    log)     cmd_log "$@" ;;
+    tree)    cmd_tree "$@" ;;
+    ports)   cmd_ports ;;
+    version) echo "$SCRIPT_NAME $VERSION" ;;
+    help|--help|-h) usage ;;
+    *)       die "Unknown command: $cmd (try 'procmon help')" ;;
+  esac
+}
+
+main "$@"

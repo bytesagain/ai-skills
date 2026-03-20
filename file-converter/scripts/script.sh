@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # file-converter — File format conversion swiss army knife
 set -euo pipefail
-VERSION="2.0.0"
+VERSION="2.1.0"
 
 show_help() {
     cat << EOF
@@ -37,32 +37,32 @@ EOF
 cmd_csv2json() {
     local file="${1:?Usage: file-converter csv2json <file>}"
     [ -f "$file" ] || { echo "Not found: $file"; return 1; }
-    python3 -c "
-import csv, json
-with open('$file') as f:
+    FILE="$file" python3 << 'PYEOF'
+import csv, json, os
+with open(os.environ["FILE"]) as f:
     print(json.dumps(list(csv.DictReader(f)), indent=2))
-"
+PYEOF
 }
 
 cmd_json2csv() {
     local file="${1:?Usage: file-converter json2csv <file>}"
     [ -f "$file" ] || { echo "Not found: $file"; return 1; }
-    python3 -c "
-import csv, json, sys
-data = json.load(open('$file'))
+    FILE="$file" python3 << 'PYEOF'
+import csv, json, sys, os
+data = json.load(open(os.environ["FILE"]))
 if isinstance(data, list) and data:
     w = csv.DictWriter(sys.stdout, fieldnames=data[0].keys())
     w.writeheader()
     w.writerows(data)
-"
+PYEOF
 }
 
 cmd_md2html() {
     local file="${1:?}"
     [ -f "$file" ] || return 1
-    python3 -c "
-import re
-with open('$file') as f:
+    FILE="$file" python3 << 'PYEOF'
+import re, os
+with open(os.environ["FILE"]) as f:
     t = f.read()
 t = re.sub(r'^### (.+)$', r'<h3>\1</h3>', t, flags=re.MULTILINE)
 t = re.sub(r'^## (.+)$', r'<h2>\1</h2>', t, flags=re.MULTILINE)
@@ -70,7 +70,7 @@ t = re.sub(r'^# (.+)$', r'<h1>\1</h1>', t, flags=re.MULTILINE)
 t = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', t)
 t = re.sub(r'\*(.+?)\*', r'<em>\1</em>', t)
 print(t)
-"
+PYEOF
 }
 
 cmd_tsv2csv() {
@@ -82,24 +82,30 @@ cmd_tsv2csv() {
 cmd_csv2sql() {
     local file="${1:?Usage: file-converter csv2sql <file> <table>}"
     local table="${2:?}"
-    python3 -c "
-import csv
-with open('$file') as f:
+    FILE="$file" TABLE="$table" python3 << 'PYEOF'
+import csv, os
+with open(os.environ["FILE"]) as f:
     for row in csv.DictReader(f):
         cols = ', '.join(row.keys())
-        vals = ', '.join(\"'{}'\".format(v.replace(\"'\",\"''\")) for v in row.values())
-        print('INSERT INTO $table ({}) VALUES ({});'.format(cols, vals))
-"
+        vals = ', '.join("'{}'".format(v.replace("'","''")) for v in row.values())
+        print('INSERT INTO {} ({}) VALUES ({});'.format(os.environ["TABLE"], cols, vals))
+PYEOF
 }
 
 cmd_pretty_json() {
     local file="${1:?}"
-    python3 -c "import json; print(json.dumps(json.load(open('$file')), indent=2))"
+    FILE="$file" python3 << 'PYEOF'
+import json, os
+print(json.dumps(json.load(open(os.environ["FILE"])), indent=2))
+PYEOF
 }
 
 cmd_minify_json() {
     local file="${1:?}"
-    python3 -c "import json; print(json.dumps(json.load(open('$file')), separators=(',',':')))"
+    FILE="$file" python3 << 'PYEOF'
+import json, os
+print(json.dumps(json.load(open(os.environ["FILE"])), separators=(',', ':')))
+PYEOF
 }
 
 cmd_base64_enc() {
@@ -113,11 +119,17 @@ cmd_base64_dec() {
 }
 
 cmd_url_encode() {
-    python3 -c "import urllib.parse; print(urllib.parse.quote('$*'))"
+    INPUT="$*" python3 << 'PYEOF'
+import urllib.parse, os
+print(urllib.parse.quote(os.environ["INPUT"]))
+PYEOF
 }
 
 cmd_url_decode() {
-    python3 -c "import urllib.parse; print(urllib.parse.unquote('$*'))"
+    INPUT="$*" python3 << 'PYEOF'
+import urllib.parse, os
+print(urllib.parse.unquote(os.environ["INPUT"]))
+PYEOF
 }
 
 cmd_detect() {

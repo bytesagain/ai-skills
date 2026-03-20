@@ -1,99 +1,112 @@
 ---
-name: "Tire"
-description: "Your personal Tire assistant. Track, analyze, and manage all your home management needs from the command line."
-version: "2.0.0"
+name: "tire"
+version: "1.0.0"
+description: "Track tire maintenance, rotation, and tread wear for vehicles. Use when logging changes, checking wear, running reminders, generating reports."
 author: "BytesAgain"
-tags: ["maintenance", "smart-home", "inventory", "household", "tire"]
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [tire, general, cli, tool]
+category: "general"
 ---
 
-# Tire
+# tire
 
-Your personal Tire assistant. Track, analyze, and manage all your home management needs from the command line.
-
-## Why Tire?
-
-- Works entirely offline — your data never leaves your machine
-- Simple command-line interface, no GUI needed
-- Export to JSON, CSV, or plain text anytime
-- Automatic history and activity logging
-
-## Getting Started
-
-```bash
-# See what you can do
-tire help
-
-# Check current status
-tire status
-
-# View your statistics
-tire stats
-```
+Track tire maintenance, rotation, and tread wear for vehicles. Use when logging changes, checking wear, running reminders, generating reports.
 
 ## Commands
 
-| Command | What it does |
-|---------|-------------|
-| `tire run` | Run |
-| `tire check` | Check |
-| `tire convert` | Convert |
-| `tire analyze` | Analyze |
-| `tire generate` | Generate |
-| `tire preview` | Preview |
-| `tire batch` | Batch |
-| `tire compare` | Compare |
-| `tire export` | Export |
-| `tire config` | Config |
-| `tire status` | Status |
-| `tire report` | Report |
-| `tire stats` | Summary statistics |
-| `tire export` | <fmt>       Export (json|csv|txt) |
-| `tire search` | <term>      Search entries |
-| `tire recent` | Recent activity |
-| `tire status` | Health check |
-| `tire help` | Show this help |
-| `tire version` | Show version |
-| `tire $name:` | $c entries |
-| `tire Total:` | $total entries |
-| `tire Data` | size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1) |
-| `tire Version:` | v2.0.0 |
-| `tire Data` | dir: $DATA_DIR |
-| `tire Entries:` | $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total |
-| `tire Disk:` | $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1) |
-| `tire Last:` | $(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo never) |
-| `tire Status:` | OK |
-| `tire [Tire]` | run: $input |
-| `tire Saved.` | Total run entries: $total |
-| `tire [Tire]` | check: $input |
-| `tire Saved.` | Total check entries: $total |
-| `tire [Tire]` | convert: $input |
-| `tire Saved.` | Total convert entries: $total |
-| `tire [Tire]` | analyze: $input |
-| `tire Saved.` | Total analyze entries: $total |
-| `tire [Tire]` | generate: $input |
-| `tire Saved.` | Total generate entries: $total |
-| `tire [Tire]` | preview: $input |
-| `tire Saved.` | Total preview entries: $total |
-| `tire [Tire]` | batch: $input |
-| `tire Saved.` | Total batch entries: $total |
-| `tire [Tire]` | compare: $input |
-| `tire Saved.` | Total compare entries: $total |
-| `tire [Tire]` | export: $input |
-| `tire Saved.` | Total export entries: $total |
-| `tire [Tire]` | config: $input |
-| `tire Saved.` | Total config entries: $total |
-| `tire [Tire]` | status: $input |
-| `tire Saved.` | Total status entries: $total |
-| `tire [Tire]` | report: $input |
-| `tire Saved.` | Total report entries: $total |
+### `status`
+
+```bash
+scripts/script.sh status
+```
+
+Show current status
+
+### `add`
+
+```bash
+scripts/script.sh add
+```
+
+Add new entry
+
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
+
+## Configuration
+
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `TIRE_DIR` | No | Data directory (default: ~/.tire/) |
 
 ## Data Storage
 
-All data is stored locally at `~/.local/share/tire/`. Each action is logged with timestamps. Use `export` to back up your data anytime.
+All data stored in `~/.tire/` using JSONL format (one JSON object per line).
 
-## Feedback
+## Output
 
-Found a bug or have a suggestion? Let us know: https://bytesagain.com/feedback/
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

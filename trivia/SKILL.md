@@ -1,83 +1,112 @@
 ---
-name: trivia
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [trivia, tool, utility]
-description: "Trivia - command-line tool for everyday use"
+name: "trivia"
+version: "1.0.0"
+description: "Host trivia rounds with question banks, scoring, and boards. Use when running quizzes, checking answers, analyzing scores, generating rounds."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [trivia, general, cli, tool]
+category: "general"
 ---
 
-# Trivia
+# trivia
 
-Trivia toolkit — question banks, quiz rounds, scoring, and category management.
+Host trivia rounds with question banks, scoring, and boards. Use when running quizzes, checking answers, analyzing scores, generating rounds.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `trivia help` | Show usage info |
-| `trivia run` | Run main task |
-| `trivia status` | Check state |
-| `trivia list` | List items |
-| `trivia add <item>` | Add item |
-| `trivia export <fmt>` | Export data |
-
-## Usage
+### `status`
 
 ```bash
-trivia help
-trivia run
-trivia status
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-trivia help
-trivia run
-trivia export json
+scripts/script.sh add
 ```
 
-## Output
+Add new entry
 
-Results go to stdout. Save with `trivia run > output.txt`.
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `TRIVIA_DIR` to change data directory. Default: `~/.local/share/trivia/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `TRIVIA_DIR` | No | Data directory (default: ~/.trivia/) |
+
+## Data Storage
+
+All data stored in `~/.trivia/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
 
-
-## Features
-
-- Simple command-line interface for quick access
-- Local data storage with JSON/CSV export
-- History tracking and activity logs
-- Search across all entries
-
-## Quick Start
-
-```bash
-# Check status
-trivia status
-
-# View help
-trivia help
-
-# Export data
-trivia export json
-```
-
-## How It Works
-
-Trivia stores all data locally in `~/.local/share/trivia/`. Each command logs activity with timestamps for full traceability.
-
-## Support
-
-- Feedback: https://bytesagain.com/feedback/
-- Website: https://bytesagain.com
-
-Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

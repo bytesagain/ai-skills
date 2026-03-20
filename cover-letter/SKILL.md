@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Cover Letter Generator
-description: "✉️ 求职信生成器 — cover.sh. Use when you need cover letter capabilities. Triggers on: cover letter."
-  求职信生成器。中英文求职信、JD关键词匹配、求职信评分诊断、多模板(应届/社招/内推/转行/外企)、批量生成。Cover letter generator with Chinese/English support, JD matching, scoring, templates, batch generation. 求职信、自荐信、应聘信。
+description: "Generate cover letters matching job descriptions with keyword scoring. Use when writing applications, matching JD keywords, scoring letter quality."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # Cover Letter Generator
 

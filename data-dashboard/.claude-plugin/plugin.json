@@ -1,0 +1,9 @@
+{
+  "name": "data-dashboard",
+  "description": "\ud83d\udd25 \u4eba\u4eba\u53ef\u7528\u7684\u5f00\u6e90 BI \u5de5\u5177\uff0c\u6570\u636e\u53ef\u89c6\u5316\u795e\u5668\u3002An open-source BI tool alternative to Tableau. data-dashboard, java, apache-doris, business-intelligence, data-analysis.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

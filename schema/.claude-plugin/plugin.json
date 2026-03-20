@@ -1,0 +1,9 @@
+{
+  "name": "schema",
+  "description": "Design and manage database schemas using CLI tools. Use when you need to create tables, columns, indexes, relations, validate, migrate, diff,",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "macos-toolkit",
+  "description": "macOS command line tool for developers \u2013 The ultimate tool to manage your Mac. It provides a huge mac cli, shell, bash, cli, command-line-tool, linux.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

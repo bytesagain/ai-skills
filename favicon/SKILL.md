@@ -1,38 +1,56 @@
 ---
 name: Favicon
-description: "Favicon fetcher and generator tool. Extract favicons from any website, generate favicon URLs, check favicon availability, download favicons, and create simple text-based favicons. Quick favicon management for web development."
-version: "2.0.0"
+description: "Fetch and download favicons from any website for your design projects. Use when grabbing icons, checking availability, or previewing favicon renders."
+version: "3.0.0"
 author: "BytesAgain"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 tags: ["favicon","icon","website","image","web","html","branding","developer"]
 categories: ["Developer Tools", "Utility"]
 ---
-# Favicon
-Fetch favicons from any site. Check availability. Download for your projects.
+
+# Favicon — Favicon Tool
+
+Check, download, and generate favicons. Detects favicons via /favicon.ico, HTML `<link>` tags, and apple-touch-icon. Can generate SVG placeholder favicons from text.
+
 ## Commands
-- `get <domain>` — Get favicon URL for a domain
-- `check <domain>` — Check if favicon exists
-- `download <domain> [output]` — Download favicon
-- `html <path>` — Generate HTML favicon tags
-## Usage Examples
+
+| Command | Description |
+|---------|-------------|
+| `check <url>` | Check if a website has a favicon (tries /favicon.ico, HTML link tags, apple-touch-icon) |
+| `download <url> [output]` | Download a site's favicon (tries direct, HTML parsing, Google API fallback) |
+| `generate <text> [size]` | Generate an SVG favicon placeholder with text (1-2 chars, random background) |
+| `info <file>` | Show image file info — size, MIME type, format (ICO/PNG/JPEG/GIF/SVG/WebP) |
+
+## Examples
+
 ```bash
-favicon get google.com
-favicon check github.com
-favicon download example.com favicon.ico
-favicon html /favicon.ico
+# Check if a site has a favicon
+favicon check https://github.com
+# → ✓ /favicon.ico — 200
+# → ✓ apple-touch-icon found
+
+# Download a favicon
+favicon download https://google.com google-icon.ico
+
+# Generate an SVG placeholder
+favicon generate "AB" 64
+# → Creates AB-favicon.svg with random background color
+
+# Get info about a favicon file
+favicon info favicon.ico
+# → Size, MIME type, format (detected from magic bytes)
 ```
----
-Powered by BytesAgain | bytesagain.com
 
-- Run `favicon help` for commands
-- No API keys needed
+## Detection Methods
 
-- Run `favicon help` for all commands
+1. **Direct:** Checks `<url>/favicon.ico`
+2. **HTML Parsing:** Looks for `<link rel="icon">` and `<link rel="shortcut icon">` in page HTML
+3. **Apple Touch Icon:** Checks for `<link rel="apple-touch-icon">`
+4. **Google API (download only):** Falls back to `google.com/s2/favicons` API
 
-## When to Use
+## Requirements
 
-- Quick favicon tasks from terminal
-- Automation pipelines
-
----
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
+- `curl` — for HTTP requests
+- `file` (optional) — for MIME type detection in `info` command
+- `xxd` (optional) — for magic byte detection in `info` command

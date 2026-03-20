@@ -1,0 +1,9 @@
+{
+  "name": "currency",
+  "description": "Plan travel budgets with currency conversion and expense tracking. Use when converting travel money, budgeting trips, comparing destination costs.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

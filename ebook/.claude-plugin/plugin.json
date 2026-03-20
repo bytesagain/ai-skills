@@ -1,0 +1,9 @@
+{
+  "name": "ebook",
+  "description": "Manage ebook collections, track reading progress, and export highlights using bash and Python. Use when cataloging books, logging reading sessions,",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

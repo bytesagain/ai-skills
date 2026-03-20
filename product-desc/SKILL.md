@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: product-desc
-description: "产品描述生成器。产品文案撰写、SEO优化、卖点提炼、竞品对比、多语言本地化。Product description writer with SEO, bullet points, comparison, localization. 产品描述、产品文案、卖点、电商文案。Use when writing product descriptions. Triggers on: product desc."
+description: "Write SEO product descriptions and selling points. Use when drafting listings, highlighting features, localizing copy, comparing competitor descriptions."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # product-desc
 

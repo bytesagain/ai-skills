@@ -1,62 +1,57 @@
 ---
-name: sms
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [sms, tool, utility]
-description: "Sms - command-line tool for everyday use"
+name: "sms"
+version: "3.0.0"
+description: "Manage SMS templates with variable substitution and formatting. Use when preparing bulk messages."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
 ---
 
-# SMS
+# sms
 
-SMS toolkit — send messages, manage contacts, template management, delivery tracking, bulk sending, and conversation history.
+Manage SMS templates with variable substitution and formatting. Use when preparing bulk messages.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `sms run` | Execute main function |
-| `sms list` | List all items |
-| `sms add <item>` | Add new item |
-| `sms status` | Show current status |
-| `sms export <format>` | Export data |
-| `sms help` | Show help |
-
-## Usage
+### `create`
 
 ```bash
-# Show help
-sms help
-
-# Quick start
-sms run
+scripts/script.sh create <name text>
 ```
 
-## Examples
+### `list`
 
 ```bash
-# Run with defaults
-sms run
-
-# Check status
-sms status
-
-# Export results
-sms export json
+scripts/script.sh list
 ```
 
-- Run `sms help` for all commands
-- Data stored in `~/.local/share/sms/`
+### `preview`
 
-## When to Use
+```bash
+scripts/script.sh preview <name>
+```
 
-- for batch processing sms operations
-- as part of a larger automation pipeline
+### `send`
 
-## Output
+```bash
+scripts/script.sh send <name phone>
+```
 
-Returns formatted output to stdout. Redirect to a file with `sms run > output.txt`.
+### `var`
+
+```bash
+scripts/script.sh var <name key_val>
+```
+
+### `export`
+
+```bash
+scripts/script.sh export <file>
+```
+
+## Data Storage
+
+Data stored in `~/.local/share/sms/`.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

@@ -1,68 +1,57 @@
 ---
-name: landing
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [landing, tool, utility]
-description: "Landing - command-line tool for everyday use"
+name: "landing"
+version: "3.0.0"
+description: "Generate HTML landing pages from templates with SEO optimization. Use when creating web pages."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
 ---
 
-# Landing
+# landing
 
-Landing page builder — HTML generation, conversion optimization, A/B variants, form creation, CTA placement, and analytics.
+Generate HTML landing pages from templates with SEO optimization. Use when creating web pages.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `landing run` | Execute main function |
-| `landing list` | List all items |
-| `landing add <item>` | Add new item |
-| `landing status` | Show current status |
-| `landing export <format>` | Export data |
-| `landing help` | Show help |
-
-## Usage
+### `create`
 
 ```bash
-# Show help
-landing help
-
-# Quick start
-landing run
+scripts/script.sh create <title description>
 ```
 
-## Examples
+### `template`
 
 ```bash
-# Run with defaults
-landing run
-
-# Check status
-landing status
-
-# Export results
-landing export json
+scripts/script.sh template <type>
 ```
 
-## How It Works
+### `checklist`
 
+```bash
+scripts/script.sh checklist
+```
 
-## Tips
+### `meta`
 
-- Run `landing help` for all commands
-- Data stored in `~/.local/share/landing/`
+```bash
+scripts/script.sh meta <file>
+```
 
+### `optimize`
 
-## When to Use
+```bash
+scripts/script.sh optimize <file>
+```
 
-- when you need quick landing from the command line
-- to automate landing tasks in your workflow
+### `preview`
 
-## Output
+```bash
+scripts/script.sh preview <file>
+```
 
-Returns logs to stdout. Redirect to a file with `landing run > output.txt`.
+## Data Storage
+
+Data stored in `~/.local/share/landing/`.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

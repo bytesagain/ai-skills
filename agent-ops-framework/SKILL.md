@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: Agent Ops Framework
-description: "Production-grade multi-agent team orchestration framework. Define agent roles, task pipelines, quality gates, and monitoring dashboards. Inspired by Google Vertex AI, Microsoft AutoGen, CrewAI, and Anthropic agent patterns. Features: role-based agent registry, task lifecycle (backlog→assigned→in-progress→review→done→deployed), structured handoffs with context passing, quality gates before promotion, centralized state store (single JSON source of truth), quota/budget management, cron-based monitoring with alerts, rollback capability, and human-in-the-loop approval points. Use when: (1) managing 3+ specialized agents on a project, (2) building CI/CD-style pipelines for content or code, (3) tracking task progress across multiple agents, (4) enforcing quality standards before deployment, (5) monitoring agent performance and output quality, (6) managing rate limits and quotas across accounts. multi-agent orchestration, team management, task pipeline, quality assurance, agent coordination, project management, CI/CD, workflow automation, monitoring, alerting. Triggers on: agent ops framework."
+description: "Orchestrate multi-agent teams with task pipelines and quality gates. Use when coordinating agents, enforcing reviews, or tracking tasks."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Agent Ops Framework

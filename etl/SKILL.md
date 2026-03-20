@@ -1,66 +1,112 @@
 ---
-name: etl
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [etl, tool, utility]
-description: "Etl - command-line tool for everyday use"
+name: "etl"
+version: "1.0.0"
+description: "Build ETL pipelines with data ingestion, cleaning, and validation steps. Use when ingesting sources, transforming formats, validating data, or scheduling loads."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [etl, general, cli, tool]
+category: "general"
 ---
 
-# ETL
+# etl
 
-Extract-Transform-Load pipeline toolkit — data extraction, format conversion, cleaning, validation, loading, and pipeline scheduling.
+Build ETL pipelines with data ingestion, cleaning, and validation steps. Use when ingesting sources, transforming formats, validating data, or scheduling loads.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `etl run` | Execute main function |
-| `etl list` | List all items |
-| `etl add <item>` | Add new item |
-| `etl status` | Show current status |
-| `etl export <format>` | Export data |
-| `etl help` | Show help |
-
-## Usage
+### `status`
 
 ```bash
-# Show help
-etl help
-
-# Quick start
-etl run
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-# Run with defaults
-etl run
-
-# Check status
-etl status
-
-# Export results
-etl export json
+scripts/script.sh add
 ```
 
-- Run `etl help` for all commands
-- Data stored in `~/.local/share/etl/`
+Add new entry
 
-## When to Use
+### `list`
 
-- as part of a larger automation pipeline
-- when you need quick etl from the command line
+```bash
+scripts/script.sh list
+```
 
-## Output
+List all entries
 
-Returns structured data to stdout. Redirect to a file with `etl run > output.txt`.
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `ETL_DIR` environment variable to change the data directory. Default: `~/.local/share/etl/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `ETL_DIR` | No | Data directory (default: ~/.etl/) |
+
+## Data Storage
+
+All data stored in `~/.etl/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

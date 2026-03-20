@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: thesis-helper
-description: "论文写作助手。论文大纲生成、文献综述框架、摘要生成、引用格式转换、格式规范检查、答辩准备。Thesis helper with outline generation, literature review, abstract writing, citation formatting, style guide, defense preparation. Use when you need thesis helper capabilities. Triggers on: thesis helper, 根据学位层次自动调整大纲深度和字数, 结构化摘要模板, 答辩准备含20, 完成度清单."
+description: "论文写作助手。论文大纲生成、文献综述框架、摘要生成、引用格式转换、格式规范检查、答辩准备。Thesis helper with outline generation, literature review, abstract writing, citation formatting, style guide."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # thesis-helper
 

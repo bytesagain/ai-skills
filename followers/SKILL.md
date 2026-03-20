@@ -2,9 +2,11 @@
 name: followers
 version: "2.0.0"
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 license: MIT-0
 tags: [followers, tool, utility]
-description: "Followers - command-line tool for everyday use"
+description: "Track follower growth, detect unfollows, and analyze engagement trends. Use when monitoring counts, spotting changes, or reviewing audience demographics."
 ---
 
 # Followers

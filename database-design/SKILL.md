@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Database Designer
-description: "Database Design Helper - 数据库设计助手. Use when you need database design capabilities. Triggers on: database design."
-  数据库设计助手。表设计、范式化、索引策略、迁移脚本、测试数据、ER图描述。Database designer with normalization, indexing, migration, seeding, ER diagrams. 数据库、MySQL。
+description: "Design database schemas with normalization, indexing, and migrations. Use when modeling tables, planning indexes, writing migration scripts."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # Database Designer
 

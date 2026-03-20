@@ -1,0 +1,9 @@
+{
+  "name": "pension",
+  "description": "Track pension contributions, balances, and growth forecasts. Use when recording deposits, categorizing funds, reviewing balances, forecasting payouts.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

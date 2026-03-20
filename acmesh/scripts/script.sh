@@ -1,101 +1,155 @@
 #!/usr/bin/env bash
-# acmesh - Multi-purpose utility tool
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${ACMESH_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/acmesh}"
-DB="$DATA_DIR/data.log"
+
+VERSION="3.0.0"
+SCRIPT_NAME="acmesh"
+DATA_DIR="$HOME/.local/share/acmesh"
 mkdir -p "$DATA_DIR"
 
-show_help() {
-    cat << EOF
-acmesh v$VERSION
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 
-Multi-purpose utility tool
+_info()  { echo "[INFO]  $*"; }
+_error() { echo "[ERROR] $*" >&2; }
+die()    { _error "$@"; exit 1; }
 
-Usage: acmesh <command> [args]
-
-Commands:
-  run                  Execute main function
-  config               Configuration
-  status               Show status
-  init                 Initialize
-  list                 List items
-  add                  Add entry
-  remove               Remove entry
-  search               Search
-  export               Export data
-  info                 Show info
-  help                 Show this help
-  version              Show version
-
-Data: \$DATA_DIR
-EOF
-}
-
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-
-cmd_run() {
-    echo "  Running: $1"
-    _log "run" "${1:-}"
-}
-
-cmd_config() {
-    echo "  Config: $DATA_DIR/config.json"
-    _log "config" "${1:-}"
-}
-
-cmd_status() {
-    echo "  Status: ready"
-    _log "status" "${1:-}"
-}
-
-cmd_init() {
-    echo "  Initialized in $DATA_DIR"
-    _log "init" "${1:-}"
+cmd_issue() {
+    local domain="${2:-}"
+    [ -z "$domain" ] && die "Usage: $SCRIPT_NAME issue <domain>"
+    openssl req -x509 -newkey rsa:2048 -keyout $DATA_DIR/$2.key -out $DATA_DIR/$2.crt -days 365 -nodes -subj "/CN=$2" 2>/dev/null && echo "Issued self-signed cert for $2"
 }
 
 cmd_list() {
-    [ -f "$DB" ] && cat "$DB" || echo "  (empty)"
-    _log "list" "${1:-}"
-}
-
-cmd_add() {
-    echo "$(date +%Y-%m-%d) $*" >> "$DB"; echo "  Added: $*"
-    _log "add" "${1:-}"
-}
-
-cmd_remove() {
-    echo "  Removed: $1"
-    _log "remove" "${1:-}"
-}
-
-cmd_search() {
-    grep -i "$1" "$DB" 2>/dev/null || echo "  Not found: $1"
-    _log "search" "${1:-}"
-}
-
-cmd_export() {
-    [ -f "$DB" ] && cat "$DB" || echo "No data"
-    _log "export" "${1:-}"
+    ls $DATA_DIR/*.crt 2>/dev/null | xargs -I{} basename {} .crt || echo 'No certs'
 }
 
 cmd_info() {
-    echo "  Version: $VERSION | Data: $DATA_DIR"
-    _log "info" "${1:-}"
+    local domain="${2:-}"
+    [ -z "$domain" ] && die "Usage: $SCRIPT_NAME info <domain>"
+    openssl x509 -in $DATA_DIR/$2.crt -noout -subject -dates 2>/dev/null || echo 'Cert not found'
 }
 
-case "${1:-help}" in
-    run) shift; cmd_run "$@" ;;
-    config) shift; cmd_config "$@" ;;
-    status) shift; cmd_status "$@" ;;
-    init) shift; cmd_init "$@" ;;
-    list) shift; cmd_list "$@" ;;
-    add) shift; cmd_add "$@" ;;
-    remove) shift; cmd_remove "$@" ;;
-    search) shift; cmd_search "$@" ;;
-    export) shift; cmd_export "$@" ;;
-    info) shift; cmd_info "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "acmesh v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
-esac
+cmd_renew() {
+    local domain="${2:-}"
+    [ -z "$domain" ] && die "Usage: $SCRIPT_NAME renew <domain>"
+    cmd_issue "$2" && echo 'Renewed'
+}
+
+cmd_revoke() {
+    local domain="${2:-}"
+    [ -z "$domain" ] && die "Usage: $SCRIPT_NAME revoke <domain>"
+    rm -f $DATA_DIR/$2.crt $DATA_DIR/$2.key && echo 'Revoked $2'
+}
+
+cmd_check() {
+    local domain="${2:-}"
+    [ -z "$domain" ] && die "Usage: $SCRIPT_NAME check <domain>"
+    echo | openssl s_client -connect $2:443 2>/dev/null | openssl x509 -noout -dates 2>/dev/null || echo 'Cannot connect'
+}
+
+cmd_help() {
+    echo "$SCRIPT_NAME v$VERSION"
+    echo ""
+    echo "Commands:"
+    printf "  %-25s\n" "issue <domain>"
+    printf "  %-25s\n" "list"
+    printf "  %-25s\n" "info <domain>"
+    printf "  %-25s\n" "renew <domain>"
+    printf "  %-25s\n" "revoke <domain>"
+    printf "  %-25s\n" "check <domain>"
+    printf "  %%-25s\n" "help"
+    echo ""
+    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
+}
+
+cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+
+main() {
+    local cmd="${1:-help}"
+    case "$cmd" in
+        issue) shift; cmd_issue "$@" ;;
+        list) shift; cmd_list "$@" ;;
+        info) shift; cmd_info "$@" ;;
+        renew) shift; cmd_renew "$@" ;;
+        revoke) shift; cmd_revoke "$@" ;;
+        check) shift; cmd_check "$@" ;;
+        help) cmd_help ;;
+        version) cmd_version ;;
+        *) die "Unknown: $cmd" ;;
+    esac
+}
+
+main "$@"

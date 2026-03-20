@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Bilibili Helper
-description: "Bilibili Creator Helper. Use when you need bilibili helper capabilities. Triggers on: bilibili helper."
-  B站创作助手。视频标题优化、标签推荐、简介模板、投稿策略、UP主运营、弹幕互动。Bilibili video creator assistant. B站运营、视频SEO、粉丝增长、投币收藏、充电计划。Use when creating content for Bilibili.
+description: "Optimize Bilibili video titles, tags, and descriptions for engagement. Use when planning uploads, writing intros, or managing video comments."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # bilibili-helper

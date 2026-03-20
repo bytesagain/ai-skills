@@ -1,0 +1,9 @@
+{
+  "name": "compass",
+  "description": "Audit security posture and manage credential rotation schedules. Use when auditing passwords, rotating credentials, generating secure tokens.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

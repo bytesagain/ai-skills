@@ -1,9 +1,10 @@
 ---
 version: "2.0.0"
 name: Ad Copywriter
-description: "广告文案生成器。信息流广告、朋友圈广告、搜索广告、品牌文案、A/B测试、ROI计算、平台适配。. Use when you need ad copywriter capabilities. Triggers on: ad copywriter."
-  广告文案生成器。信息流广告、朋友圈广告、搜索广告、直通车标题、巨量引擎创意、Google Ads文案、A/B测试文案、ROI计算器、平台适配文案。Ad copywriter for feeds, search ads, social ads, A/B testing, ROI calculator, platform-specific copy. 广告投放、ROI优化、A/B测试、转化率、点击率优化、抖音广告、微信广告、百度SEM。Use when writing ad copy for any platform.
+description: "Generate ad copy for feeds, search, and social with A/B variants. Use when writing headlines, crafting CTAs, or optimizing ad keywords."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # ad-copywriter

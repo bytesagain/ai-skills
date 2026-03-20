@@ -1,63 +1,63 @@
 ---
-name: sketch
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [sketch, tool, utility]
-description: "Sketch - command-line tool for everyday use"
+name: "sketch"
+version: "3.0.0"
+description: "Generate ASCII art including boxes, tables, trees, and banners. Use when creating text diagrams."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
 ---
 
-# Sketch
+# sketch
 
-ASCII sketch tool — text-based diagrams, flowcharts, wireframes, box drawing, arrow connections, and export to image.
+Generate ASCII art including boxes, tables, trees, and banners. Use when creating text diagrams.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `sketch run` | Execute main function |
-| `sketch list` | List all items |
-| `sketch add <item>` | Add new item |
-| `sketch status` | Show current status |
-| `sketch export <format>` | Export data |
-| `sketch help` | Show help |
-
-## Usage
+### `box`
 
 ```bash
-# Show help
-sketch help
-
-# Quick start
-sketch run
+scripts/script.sh box <text>
 ```
 
-## Examples
+### `table`
 
 ```bash
-# Run with defaults
-sketch run
-
-# Check status
-sketch status
-
-# Export results
-sketch export json
+scripts/script.sh table <data>
 ```
 
-- Run `sketch help` for all commands
-- Data stored in `~/.local/share/sketch/`
+### `tree`
+
+```bash
+scripts/script.sh tree <dir>
+```
+
+### `banner`
+
+```bash
+scripts/script.sh banner <text>
+```
+
+### `line`
+
+```bash
+scripts/script.sh line <length char>
+```
+
+### `flowchart`
+
+```bash
+scripts/script.sh flowchart <steps>
+```
+
+### `border`
+
+```bash
+scripts/script.sh border <text style>
+```
+
+## Data Storage
+
+Data stored in `~/.local/share/sketch/`.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
 
-- Run `sketch help` for all commands
-
-## Output
-
-Results go to stdout. Save with `sketch run > output.txt`.
-
-## Configuration
-
-Set `SKETCH_DIR` to change data directory. Default: `~/.local/share/sketch/`
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

@@ -1,8 +1,10 @@
 ---
 name: FontPick
-description: "Font pairing and typography helper for designers and developers. Get selectd font pairings by style (modern, classic, minimal, bold, code), generate CSS font stacks for web/email/print, calculate type scales with customizable base sizes, and learn typography contrast principles. No more guessing which fonts go together."
+description: "Pick font pairings and generate type scales for design projects quickly. Use when choosing fonts, generating scales, or previewing type combinations."
 version: "2.0.0"
 author: "BytesAgain"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 tags: ["font","typography","design","css","pairing","web","style","ui"]
 categories: ["Design", "Developer Tools", "Utility"]
 ---

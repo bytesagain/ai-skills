@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: System Prompts And Models Of Ai Tools
-description: "FULL Augment Code, Claude Code, Cluely, CodeBuddy, Comet, Cursor, Devin AI, Junie, Kiro, Leap.new, L system prompts and models of ai tools, python, ai, bolt, cluely, copilot, cursor. Use when you need system prompts and models of ai tools capabilities. Triggers on: system prompts and models of ai tools."
+description: "FULL Augment Code, Claude Code, Cluely, CodeBuddy, Comet, Cursor, Devin AI, Junie, Kiro, Leap.new, L system prompts and models of ai tools, python, ai, bolt."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # System Prompts And Models Of Ai Tools
@@ -34,3 +36,7 @@ ai-prompt-library help
 # Run
 ai-prompt-library run
 ```
+
+## Requirements
+- bash 4+
+- python3 (standard library only)

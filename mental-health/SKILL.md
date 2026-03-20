@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: mental-health
-description: "心理健康助手。情绪自查、呼吸练习、情绪日记、心理资源、压力管理、感恩练习。Mental health tool with mood check, breathing exercises, journaling, resources, stress management, gratitude practice. ⚠️ 非心理治疗工具。. Use when you need mental health capabilities. Triggers on: mental health."
+description: "心理健康助手。情绪自查、呼吸练习、情绪日记、心理资源、压力管理、感恩练习。Mental health tool with mood check, breathing exercises, journaling, resources, stress management."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # mental-health
 

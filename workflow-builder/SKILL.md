@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: workflow-builder
-description: "工作流设计与优化工具。流程设计、自动化方案、流程优化、文档化、审批流、系统集成。Workflow builder with design, automate, optimize, document, approval, and integration capabilities. Use when you need workflow builder capabilities. Triggers on: workflow builder."
+description: "Design workflows with process mapping and approval chains. Use when diagramming processes, defining approvals, documenting integrations, or optimizing ops."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 # workflow-builder
 

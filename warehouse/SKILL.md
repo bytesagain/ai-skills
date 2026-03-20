@@ -1,61 +1,112 @@
 ---
-name: warehouse
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [warehouse, tool, utility]
-description: "Warehouse - command-line tool for everyday use"
+name: "warehouse"
+version: "1.0.0"
+description: "Design data warehouse schemas and optimize query pipelines. Use when ingesting datasets, transforming tables, tuning queries, or building aggregations."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [warehouse, general, cli, tool]
+category: "general"
 ---
 
-# Warehouse
+# warehouse
 
-Data warehouse toolkit — schema design, query optimization, data partitioning, aggregation pipelines, and storage management.
+Design data warehouse schemas and optimize query pipelines. Use when ingesting datasets, transforming tables, tuning queries, or building aggregations.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `warehouse run` | Execute main function |
-| `warehouse list` | List all items |
-| `warehouse add <item>` | Add new item |
-| `warehouse status` | Show current status |
-| `warehouse export <format>` | Export data |
-| `warehouse help` | Show help |
-
-## Usage
+### `status`
 
 ```bash
-# Show help
-warehouse help
-
-# Quick start
-warehouse run
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-# Run with defaults
-warehouse run
-
-# Check status
-warehouse status
-
-# Export results
-warehouse export json
+scripts/script.sh add
 ```
 
-- Run `warehouse help` for all commands
-- Data stored in `~/.local/share/warehouse/`
+Add new entry
 
----
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
+### `list`
 
-## Output
+```bash
+scripts/script.sh list
+```
 
-Results go to stdout. Save with `warehouse run > output.txt`.
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `WAREHOUSE_DIR` to change data directory. Default: `~/.local/share/warehouse/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `WAREHOUSE_DIR` | No | Data directory (default: ~/.warehouse/) |
+
+## Data Storage
+
+All data stored in `~/.warehouse/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
+
+---
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

@@ -122,7 +122,11 @@ cmd_opener() {
 cmd_timing() {
     local total="${1:?Usage: ppt-outline timing <total-minutes> <slides>}"
     local slides="${2:?}"
-    local per=$(python3 -c "print('{:.1f}'.format($total / $slides))")
+    local per=$(TOTAL="$total" SLIDES="$slides" python3 << 'PYEOF'
+import os
+print('{:.1f}'.format(float(os.environ['TOTAL']) / float(os.environ['SLIDES'])))
+PYEOF
+    )
     echo "  ═══ Timing Plan ═══"
     echo "  Total: ${total} min | Slides: $slides | Per slide: ${per} min"
     echo ""

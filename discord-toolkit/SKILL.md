@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: discord-toolkit
-description: "Error: --action required. Use when you need discord toolkit capabilities. Triggers on: discord toolkit, token, guild-id, channel-id, message, user-id."
+description: "Manage Discord bots with messaging, channels, embeds, and role tools. Use when sending messages, managing channels, creating embeds."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Discord Toolkit

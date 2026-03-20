@@ -1,0 +1,9 @@
+{
+  "name": "quote",
+  "description": "Record, search, and display quotes and sayings. Use when saving favorites, checking attribution, converting collections, analyzing themes, generating picks.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,65 +1,101 @@
 ---
 version: "2.0.0"
 name: Fund Advisor
-description: "基金定投顾问。定投计算（复利+真实年化）、收益模拟、资产配置、再平衡建议、止盈策略、基金类型科普。. Use when you need fund advisor pro capabilities. Triggers on: fund advisor pro."
-  基金投资顾问。基金筛选、定投策略、资产配置、风险评估、收益计算、再平衡建议。Fund investment advisor with screening, DCA strategy, asset allocation, rebalancing. 基金理财、定投计划、投资组合、资产配置。Use when making fund investment decisions.
+description: "Calculate DCA with annualized rates and plan rebalancing strategies easily. Use when modeling growth, comparing allocations, or simulating drawdown scenarios."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
-# fund-advisor
+# Fund Advisor Pro
 
-基金定投顾问。定投计算（复利+真实年化）、收益模拟、资产配置、再平衡建议、止盈策略、基金类型科普。
+Financial tracking and analysis tool. Record transactions, check balances, view summaries, manage budgets, set alerts, compare periods, forecast trends, and categorize spending — all from the command line with local storage.
 
 ## Commands
 
-All commands via `scripts/fund.sh`:
-
 | Command | Usage | Description |
 |---------|-------|-------------|
-| `invest` | `fund.sh invest "月定投额" "年化收益%" "定投年数"` | 定投收益计算 |
-| `dca` | `fund.sh dca "月定投额" "年化收益%" "定投年数"` | 定投计算器（同invest，含复利+真实年化） |
-| `compare` | `fund.sh compare "金额" "年数" "收益率1%,收益率2%,收益率3%"` | 多收益率对比 |
-| `allocate` | `fund.sh allocate "保守\|稳健\|激进" "总金额"` | 资产配置建议（三种方案详细配置+金额） |
-| `rebalance` | `fund.sh rebalance "股票50000,债券30000,货币20000"` | 再平衡建议（偏离目标配置时提醒调整） |
-| `types` | `fund.sh types` | 基金类型科普 |
-| `strategy` | `fund.sh strategy "风险偏好"` | 定投策略建议（保守/稳健/积极） |
-| `help` | `fund.sh help` | 显示帮助信息 |
+| `track` | `fund-advisor-pro track <description> <amount>` | Record a transaction with description and amount |
+| `balance` | `fund-advisor-pro balance` | Show current balance (references local ledger) |
+| `summary` | `fund-advisor-pro summary` | Financial summary for current period (income vs expenses) |
+| `export` | `fund-advisor-pro export` | Export transaction data to CSV format |
+| `budget` | `fund-advisor-pro budget` | Budget overview — category, budget, spent, remaining |
+| `history` | `fund-advisor-pro history` | Show the 20 most recent transactions from data log |
+| `alert` | `fund-advisor-pro alert <item> <threshold>` | Set a price or budget alert for an item at a threshold |
+| `compare` | `fund-advisor-pro compare` | Compare current period vs previous period |
+| `forecast` | `fund-advisor-pro forecast` | Simple trend-based financial projection |
+| `categories` | `fund-advisor-pro categories` | List spending categories (Food, Transport, Housing, etc.) |
+| `help` | `fund-advisor-pro help` | Show help with all available commands |
+| `version` | `fund-advisor-pro version` | Print version string |
+
+## Data Storage
+
+All data is stored locally at `~/.local/share/fund-advisor-pro/` (override with `FUND_ADVISOR_PRO_DIR` env var):
+
+- `data.log` — Main transaction and data log
+- `history.log` — Unified activity log across all commands
+- Follows XDG Base Directory spec (`XDG_DATA_HOME` supported)
+
+No cloud services, no network calls, no external API calls needed. Fully offline.
+
+## Requirements
+
+- Bash 4+ (uses `set -euo pipefail`)
+- Standard Unix utilities (`date`, `wc`, `tail`, `cat`)
+- No external dependencies or API keys
+
+## When to Use
+
+1. **Tracking daily expenses** — Use `fund-advisor-pro track "lunch" 35` to record each transaction with a description and amount, building a local spending diary.
+2. **Monthly budget reviews** — Use `fund-advisor-pro budget` to see category-level budget vs actual spending, then `fund-advisor-pro summary` for the overall period picture.
+3. **Setting spending alerts** — Use `fund-advisor-pro alert "dining" 2000` to set thresholds and get notified when spending approaches limits.
+4. **Period-over-period comparison** — Use `fund-advisor-pro compare` to see how current spending stacks up against the previous period and spot trends.
+5. **Exporting data for external analysis** — Use `fund-advisor-pro export` to dump all transactions as CSV for import into spreadsheets or BI tools.
 
 ## Examples
 
 ```bash
-# 每月定投2000元，年化8%，定投10年
-bash scripts/fund.sh invest 2000 8 10
+# Record a transaction
+fund-advisor-pro track "grocery shopping" 150
 
-# 定投计算器（同invest）
-bash scripts/fund.sh dca 3000 10 20
+# Check current balance
+fund-advisor-pro balance
 
-# 月投1000，10年，对比5%/8%/12%
-bash scripts/fund.sh compare 1000 10 5,8,12
+# View financial summary for current month
+fund-advisor-pro summary
 
-# 10万元稳健型资产配置
-bash scripts/fund.sh allocate 稳健 100000
+# See budget breakdown by category
+fund-advisor-pro budget
 
-# 持仓再平衡分析
-bash scripts/fund.sh rebalance "股票50000,债券30000,货币20000"
+# View last 20 transactions
+fund-advisor-pro history
 
-# 查看基金类型介绍
-bash scripts/fund.sh types
+# Set an alert
+fund-advisor-pro alert "entertainment" 500
 
-# 获取稳健型策略建议
-bash scripts/fund.sh strategy 稳健
+# Compare current vs previous period
+fund-advisor-pro compare
+
+# Get a simple forecast
+fund-advisor-pro forecast
+
+# List all spending categories
+fund-advisor-pro categories
+
+# Export all data as CSV
+fund-advisor-pro export
 ```
 
-## Reference
+## How It Works
 
-- 参考文档: `tips.md` — 基金投资实用指南（定投策略、资产配置、避坑指南）
+Fund Advisor Pro stores all data locally in `~/.local/share/fund-advisor-pro/`. Every command logs its activity to `history.log` with timestamps in `MM-DD HH:MM` format. The main `data.log` file holds transaction records. All operations are purely local — no network access, no external APIs.
 
 ## Notes
 
-- 收益为理论模拟，不代表实际投资收益
-- 纯本地计算，无需联网
-- Python 3.6+ 兼容
-- ⚠️ 基金有风险，投资需谨慎
+- All financial projections are simplified estimates, not professional financial advice
+- Data is stored as plain text logs for easy inspection and portability
+- ⚠️ This is a tracking tool, not investment advice — consult a professional for financial decisions
+
 ---
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
+
+Powered by BytesAgain | bytesagain.com | hello@bytesagain.com

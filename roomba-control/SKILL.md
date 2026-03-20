@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: roomba-control
-description: "Manage iRobot Roomba vacuums via the cloud API. Start/stop/schedule cleaning jobs, monitor consumable status, and view cleaning maps and history. Use when you need roomba control capabilities. Triggers on: roomba control."
+description: "Command iRobot Roomba vacuums from the terminal. Use when starting cleans, configuring maps, checking status, listing schedules, adding no-go zones."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # Roomba Control

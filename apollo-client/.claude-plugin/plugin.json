@@ -1,0 +1,9 @@
+{
+  "name": "apollo-client",
+  "description": "Manage GraphQL queries, caching, and state with Apollo Client. Use when building React apps, debugging cache, or optimizing GraphQL fetches.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

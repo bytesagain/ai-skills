@@ -1,0 +1,9 @@
+{
+  "name": "beer",
+  "description": "Catalog beers, log tasting notes, and track brewing recipes locally. Use when rating craft beers, recording homebrew batches, or browsing styles.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "slideshow-generator",
+  "description": "Create HTML slideshows from Markdown with live preview. Use when drafting slides, editing decks, optimizing layouts, scheduling talks, repurposing content.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

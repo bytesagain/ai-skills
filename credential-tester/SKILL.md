@@ -1,52 +1,57 @@
 ---
-version: "2.0.0"
-name: Mimikatz
-description: "A little tool to play with Windows security credential-tester, c. Use when you need credential-tester capabilities. Triggers on: credential-tester."
-author: BytesAgain
+name: "credential-tester"
+version: "3.0.0"
+description: "Test authentication credentials against HTTP, SSH, and FTP services. Use when validating access credentials."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
 ---
 
-# Mimikatz
+# credential-tester
 
-A little tool to play with Windows security ## Commands
+Test authentication credentials against HTTP, SSH, and FTP services. Use when validating access credentials.
 
-- `help` - Help
-- `run` - Run
-- `info` - Info
-- `status` - Status
+## Commands
 
-## Features
-
-- Core functionality from gentilkiwi/credential-tester
-
-## Usage
-
-Run any command: `credential-tester <command> [args]`
----
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
-
-## Examples
+### `http`
 
 ```bash
-# Show help
-credential-tester help
-
-# Run
-credential-tester run
+scripts/script.sh http <url user pass>
 ```
 
-- Run `credential-tester help` for commands
-- No API keys needed
+### `ssh`
 
-- Run `credential-tester help` for all commands
+```bash
+scripts/script.sh ssh <host user>
+```
 
-- Run `credential-tester help` for all commands
+### `check-env`
 
-## Configuration
+```bash
+scripts/script.sh check-env
+```
 
-Set `CREDENTIAL_TESTER_DIR` to change data directory. Default: `~/.local/share/credential-tester/`
+### `report`
 
-## When to Use
+```bash
+scripts/script.sh report
+```
 
-- Quick credential tasks from terminal
-- Automation pipelines
+### `ports`
+
+```bash
+scripts/script.sh ports <host>
+```
+
+### `validate`
+
+```bash
+scripts/script.sh validate <token>
+```
+
+## Data Storage
+
+Data stored in `~/.local/share/credential-tester/`.
+
+---
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

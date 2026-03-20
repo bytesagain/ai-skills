@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: ppt-outline
-description: "PPT outline and HTML presentation generator. PPT大纲、PPT模板、演示文稿、presentation、PowerPoint、幻灯片、slides、HTML演示文稿、HTML slides、浏览器演示、商业路演、pitch deck、BP商业计划书、business plan、工作汇报PPT、培训课件、课件大纲、产品介绍PPT、产品发布、keynote、演讲稿、述职PPT、答辩PPT、竞品分析PPT、毕业答辩、论文答辩、项目复盘、迭代复盘。Generate PPT outlines and standalone HTML presentations (open directly in browser, no dependencies). Use when: (1) creating PPT/presentation outlines, (2) building pitch deck/BP structures, (3) preparing work report slides, (4) designing training course outlines, (5) creating thesis defense PPT outlines, (6) building project review/retrospective PPTs, (7) generating HTML slide decks for browser-based presentations, (8) any PowerPoint/Keynote/Google Slides planning. 适用场景：做PPT大纲、写路演BP、汇报PPT结构、培训课件大纲、毕业答辩PPT、项目复盘PPT、述职答辩PPT、生成HTML演示文稿（浏览器直接打开，支持dark/light/tech/minimal四种风格）。 Triggers on: ppt outline."
+description: "PPT outline and HTML presentation generator. PPT大纲、PPT模板、演示文稿、presentation、PowerPoint、幻灯片、slides、HTML演示文稿、HTML slides、浏览器演示、商业路演、pitch deck、BP商业计划书、business."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # ppt-outline
@@ -59,3 +61,7 @@ bash scripts/ppt.sh html "AI在医疗的应用" --style tech
 ---
 💬 Feedback & Feature Requests: https://bytesagain.com/feedback
 Powered by BytesAgain | bytesagain.com
+
+## Requirements
+- bash 4+
+- python3 (standard library only)

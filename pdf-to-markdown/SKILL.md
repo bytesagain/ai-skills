@@ -1,47 +1,123 @@
 ---
-version: "2.0.0"
+version: "3.0.1"
 name: PDF to Markdown
-description: "PDF to Markdown - PDF文本转Markdown工具. Use when you need pdf to markdown capabilities. Triggers on: pdf to markdown."
-  PDF转Markdown工具。PDF文本转Markdown、表格识别转换、关键信息提取、格式美化修复、内容摘要、文档对比。PDF to Markdown converter with table recognition, info extraction, formatting, summarization, document comparison. PDF转换、文档处理、Markdown。
+description: "Convert PDF files to Markdown with table recognition. Use when extracting text, converting tables, summarizing documents, fixing formatting issues."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
-# PDF to Markdown
 
-PDF转Markdown工具。PDF文本转Markdown、表格识别转换、关键信息提取、格式美化修复、内容摘要、文档对比。PDF to Markdown converter with table recognition, info extraction, formatting, summarization, document comparison. PDF转换、文档处理、Markdown。
+# pdf-to-markdown
 
-## 常见问题
-
-**Q: 这个工具适合谁用？**
-A: 任何需要pdf to markdown的人，无论是个人还是企业用户。
-
-**Q: 输出格式是什么？**
-A: 主要输出Markdown格式，方便复制和编辑。
-
-## 命令速查
-
-```
-  convert         convert
-  table           table
-  extract         extract
-  format          format
-  summary         summary
-  compare         compare
-```
-
-## 专业建议
-
-- > PDF to Markdown 技能参考文档
-- > 完整的 Markdown 语法速查手册
-- ```markdown
-- ```
-- 最佳实践：**
-
----
-*PDF to Markdown by BytesAgain*
----
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
+CLI tool for pdf to markdown
 
 ## Commands
 
-Run `pdf-to-markdown help` to see all available commands.
+### `md`
+
+```bash
+scripts/script.sh md
+```
+
+### `txt`
+
+```bash
+scripts/script.sh txt
+```
+
+### `json`
+
+```bash
+scripts/script.sh json
+```
+
+### `convert`
+
+```bash
+scripts/script.sh convert
+```
+
+### `batch`
+
+```bash
+scripts/script.sh batch
+```
+
+### `extract`
+
+```bash
+scripts/script.sh extract
+```
+
+### `headers`
+
+```bash
+scripts/script.sh headers
+```
+
+### `table`
+
+```bash
+scripts/script.sh table
+```
+
+### `info`
+
+```bash
+scripts/script.sh info
+```
+
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
+
+## Examples
+
+```bash
+scripts/script.sh help
+scripts/script.sh md
+```
+
+## Configuration
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `PDF_TO_MARKDOWN_DIR` | No | Data directory (default: `~/.pdf-to-markdown/`) |
+
+## Data Storage
+
+All data saved in `~/.pdf-to-markdown/`. Runs on your machine without external calls.
+
+## Requirements
+
+- bash 4.0+
+
+---
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

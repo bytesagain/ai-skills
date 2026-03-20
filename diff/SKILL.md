@@ -1,89 +1,120 @@
 ---
-name: diff
-version: "2.0.0"
-author: BytesAgain
-license: MIT-0
-tags: [diff, tool, utility]
-description: "Diff - command-line tool for everyday use"
+name: "diff"
+version: "1.0.0"
+description: "Compare files and directories, merge changes, and generate patches. Use when comparing versions, merging changes, generating patch files."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [diff, general, cli, tool]
+category: "general"
 ---
 
-# Diff
+# diff
 
-Diff toolkit — compare files, directories, merge changes, and generate patches.
+Compare files and directories, merge changes, and generate patches. Use when comparing versions, merging changes, generating patch files.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `diff help` | Show usage info |
-| `diff run` | Run main task |
-| `diff status` | Check state |
-| `diff list` | List items |
-| `diff add <item>` | Add item |
-| `diff export <fmt>` | Export data |
-
-## Usage
+### `status`
 
 ```bash
-diff help
-diff run
-diff status
+scripts/script.sh status
 ```
 
-## Examples
+Show current status
+
+### `add`
 
 ```bash
-diff help
-diff run
-diff export json
+scripts/script.sh add
 ```
 
-## Output
+Add new entry
 
-Results go to stdout. Save with `diff run > output.txt`.
+### `list`
+
+```bash
+scripts/script.sh list
+```
+
+List all entries
+
+### `search`
+
+```bash
+scripts/script.sh search
+```
+
+Search entries
+
+### `compare`
+
+```bash
+scripts/script.sh compare
+```
+
+Compare two inputs
+
+### `remove`
+
+```bash
+scripts/script.sh remove
+```
+
+Remove entry by number
+
+### `export`
+
+```bash
+scripts/script.sh export
+```
+
+Export data to file
+
+### `stats`
+
+```bash
+scripts/script.sh stats
+```
+
+Show statistics
+
+### `config`
+
+```bash
+scripts/script.sh config
+```
+
+View or set config
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
 
 ## Configuration
 
-Set `DIFF_DIR` to change data directory. Default: `~/.local/share/diff/`
+Use `scripts/script.sh config <key> <value>` to set preferences.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `DIFF_DIR` | No | Data directory (default: ~/.diff/) |
+
+## Data Storage
+
+All data stored in `~/.diff/` using JSONL format (one JSON object per line).
+
+## Output
+
+Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
-*Powered by BytesAgain | bytesagain.com*
-*Feedback & Feature Requests: https://bytesagain.com/feedback*
 
-
-## Features
-
-- Simple command-line interface for quick access
-- Local data storage with JSON/CSV export
-- History tracking and activity logs
-- Search across all entries
-- Status monitoring and health checks
-- No external dependencies required
-
-## Quick Start
-
-```bash
-# Check status
-diff status
-
-# View help and available commands
-diff help
-
-# View statistics
-diff stats
-
-# Export your data
-diff export json
-```
-
-## How It Works
-
-Diff stores all data locally in `~/.local/share/diff/`. Each command logs activity with timestamps for full traceability. Use `stats` to see a summary, or `export` to back up your data in JSON, CSV, or plain text format.
-
-## Support
-
-- Feedback: https://bytesagain.com/feedback/
-- Website: https://bytesagain.com
-- Email: hello@bytesagain.com
-
-Powered by BytesAgain | bytesagain.com
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

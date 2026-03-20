@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # chinese-lunar-calendar - Chinese content creation tool
 set -euo pipefail
-VERSION="2.0.0"
+VERSION="3.0.1"
 DATA_DIR="${CHINESE_LUNAR_CALENDAR_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/chinese-lunar-calendar}"
 DB="$DATA_DIR/data.log"
 mkdir -p "$DATA_DIR"

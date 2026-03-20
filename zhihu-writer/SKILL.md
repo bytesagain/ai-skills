@@ -1,8 +1,10 @@
 ---
 version: "2.0.0"
 name: zhihu-writer
-description: "Zhihu answer and article generator. 知乎回答、知乎文章、知乎专栏、知乎盐选、盐选故事、高赞回答、知乎SEO、知乎涨粉、知乎运营、知乎写作、专栏写作、知乎问答、知乎干货、知乎长文、Zhihu answer、Zhihu article、数据型回答、故事型回答、专业回答、辩论型回答、知乎标题。Generate Zhihu answers, articles, titles, and Yanxuan-style content. Use when: (1) writing Zhihu answers in various styles (professional/story/data/debate), (2) creating Zhihu column articles, (3) generating engaging Zhihu titles, (4) writing Zhihu Yanxuan/盐选 style stories, (5) any Zhihu content creation. 适用场景：写知乎回答、写专栏文章、生成知乎标题、写盐选故事、知乎内容运营。 Triggers on: zhihu writer."
+description: "Zhihu answer and article generator. 知乎回答、知乎文章、知乎专栏、知乎盐选、盐选故事、高赞回答、知乎SEO、知乎涨粉、知乎运营、知乎写作、专栏写作、知乎问答、知乎干货、知乎长文、Zhihu answer、Zhihu article、数据型回答、故事型回答、专业回答、辩论型回答、."
 author: BytesAgain
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 ---
 
 # zhihu-writer

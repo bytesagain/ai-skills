@@ -1,52 +1,56 @@
 ---
 name: ColorLab
-description: "Color palette generator and converter. Convert between hex and RGB, generate harmonious color palettes from any base color, check WCAG contrast ratios for accessibility compliance, and browse named CSS colors. Essential for designers and frontend developers."
-version: "2.0.0"
+description: "Convert colors and generate palettes with WCAG contrast checks. Use when building palettes, converting hex/RGB, checking accessibility."
+version: "3.0.0"
 author: "BytesAgain"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
 tags: ["color","palette","design","hex","rgb","contrast","accessibility","css","wcag"]
 categories: ["Design", "Developer Tools", "Utility"]
 ---
 
-# ColorLab
+# ColorLab — Color Tool
 
-Your color toolkit in the terminal. Convert, generate palettes, and check accessibility.
-
-## Why ColorLab?
-
-- **Format conversion**: Hex ↔ RGB instant conversion
-- **Palette generation**: Create harmonious palettes from any color
-- **Accessibility**: WCAG contrast ratio checking
-- **Named colors**: Quick reference for CSS color names
-- **No GUI needed**: Fast color work from command line
+Convert colors, generate palettes, check WCAG contrast ratios, and find closest CSS color names. Uses `printf` and `awk` for calculations, with ANSI 24-bit color swatches in terminal output.
 
 ## Commands
 
-- `hex2rgb <#hexcode>` — Convert hex to RGB
-- `rgb2hex <r> <g> <b>` — Convert RGB to hex
-- `palette [hex|random]` — Generate a 6-color palette
-- `contrast <fg_hex> <bg_hex>` — Check WCAG contrast ratio
-- `named` — Show named CSS colors
-- `info` — Version info
-- `help` — Show commands
+| Command | Description |
+|---------|-------------|
+| `hex-to-rgb <hex>` | Convert hex color to RGB values |
+| `rgb-to-hex <r> <g> <b>` | Convert RGB values (0-255) to hex |
+| `contrast <hex1> <hex2>` | Calculate WCAG 2.0 contrast ratio with AA/AAA pass/fail ratings |
+| `palette <hex> [count]` | Generate lighter and darker variants of a color (default: 5 each direction) |
+| `random [count]` | Generate random colors with hex and RGB values (default: 1) |
+| `name <hex>` | Find the closest named CSS color (from ~50 common colors) |
 
-## Usage Examples
+## Examples
 
 ```bash
-colorlab hex2rgb #ff5733
-colorlab rgb2hex 255 87 51
-colorlab palette #3498db
-colorlab palette random
-colorlab contrast #ffffff #000000
-colorlab named
+# Convert hex to RGB
+colorlab hex-to-rgb "#FF5733"    # → rgb(255, 87, 51)
+
+# Convert RGB to hex
+colorlab rgb-to-hex 255 87 51    # → #FF5733
+
+# Check contrast for accessibility
+colorlab contrast "#FFFFFF" "#000000"
+# → 21.00:1, WCAG AA/AAA all pass
+
+# Generate a palette
+colorlab palette "#3498db" 3
+# → Shows 3 darker + base + 3 lighter variants with color swatches
+
+# Random colors
+colorlab random 5
+
+# Find closest CSS color name
+colorlab name "#e74c3c"          # → Crimson
 ```
 
-## Contrast Rating
+## Notes
 
-- ✅ AAA (7:1+) — Excellent readability
-- ✅ AA (4.5:1+) — Good for normal text
-- ⚠️ AA Large (3:1+) — Only for large text
-- ❌ Fail — Does not meet WCAG guidelines
-
----
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
+- Hex colors accept `#` prefix (optional) and 3-digit shorthand (`#F00` → `#FF0000`)
+- WCAG contrast checks report AA/AAA compliance for normal and large text
+- Palette output includes ANSI 24-bit color swatches (requires a modern terminal)
+- Color naming uses Euclidean distance in RGB space against ~50 common CSS color names

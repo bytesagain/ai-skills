@@ -1,0 +1,9 @@
+{
+  "name": "omni",
+  "description": "Boost productivity with an all-in-one terminal toolkit for tasks and automation. Use when running utilities, automating tasks, streamlining workflows.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

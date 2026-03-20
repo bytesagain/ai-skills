@@ -1,0 +1,9 @@
+{
+  "name": "notelane",
+  "description": "Organize notes as a personal knowledge base with tagging and full-text search. Use when capturing notes, searching entries, building a knowledge base.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}
