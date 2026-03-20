@@ -55,7 +55,7 @@ const puppeteer = require('puppeteer-core');
 
     if echo "$text" | grep -q "Loading skill" || [ "$textlen" -lt 200 ]; then
         echo "free"
-    elif echo "$text" | grep -qi "bytesagain\|ckchzh\|xueyetianya"; then
+    elif echo "$text" | grep -qi "${MY_ACCOUNTS:-bytesagain}"; then
         echo "ours"
     else
         local owner
