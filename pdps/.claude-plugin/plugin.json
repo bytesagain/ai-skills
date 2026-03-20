@@ -1,0 +1,9 @@
+{
+  "name": "pdps",
+  "description": "Process design and plant simulation tool",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

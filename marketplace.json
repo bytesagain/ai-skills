@@ -1,6 +1,6 @@
 {
   "name": "bytesagain-skills",
-  "description": "700+ AI Agent Skills by BytesAgain. The largest open-source skill collection for Claude Code and SKILL.md-compatible platforms.",
+  "description": "700+ AI Agent Skills by BytesAgain.",
   "owner": {
     "name": "BytesAgain",
     "url": "https://bytesagain.com",
@@ -18,6 +18,12 @@
       "source": "./acmesh",
       "description": "Manage ACME/SSL certificates with issuance, renewal, and revocation. Use when provisioning certs or checking SSL status.",
       "version": "3.0.0"
+    },
+    {
+      "name": "actuator",
+      "source": "./actuator",
+      "description": "Actuator selection and sizing calculator",
+      "version": "1.0.0"
     },
     {
       "name": "ad-copywriter",
@@ -278,6 +284,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "bearing",
+      "source": "./bearing",
+      "description": "Bearing selection and life calculator",
+      "version": "1.0.0"
+    },
+    {
       "name": "beat",
       "source": "./beat",
       "description": "Track, analyze, and manage music and audio files from the command line. Use when organizing playlists, converting formats, or analyzing metadata.",
@@ -372,6 +384,12 @@
       "source": "./bmi-calculator",
       "description": "Calculate BMI, ideal weight, and health plans for adults and children. Use when checking body metrics, interpreting results, or tracking weight.",
       "version": "2.0.0"
+    },
+    {
+      "name": "boiler",
+      "source": "./boiler",
+      "description": "Boiler efficiency and sizing tool",
+      "version": "1.0.0"
     },
     {
       "name": "boilerplates",
@@ -470,6 +488,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "cad",
+      "source": "./cad",
+      "description": "Computer-aided design assistant",
+      "version": "1.0.0"
+    },
+    {
       "name": "calctool",
       "source": "./calctool",
       "description": "Perform basic, scientific, and financial calculations from the terminal. Use when computing interest, converting units, or solving quick math.",
@@ -492,6 +516,12 @@
       "source": "./calendar-planner-pro",
       "description": "\u65e5\u7a0b\u89c4\u5212\u5de5\u5177\u3002\u5468\u8ba1\u5212\u3001\u6708\u8ba1\u5212\u3001\u65f6\u95f4\u5757\u3001\u4f1a\u8bae\u5b89\u6392\u3001\u622a\u6b62\u65e5\u671f\u7ba1\u7406\u3001\u5de5\u4f5c\u751f\u6d3b\u5e73\u8861\u3002Calendar planner with weekly, monthly, time-blocking, meeting scheduling, deadline management.",
       "version": "2.0.0"
+    },
+    {
+      "name": "cam",
+      "source": "./cam",
+      "description": "Computer-aided manufacturing tool",
+      "version": "1.0.0"
     },
     {
       "name": "campaign",
@@ -680,10 +710,22 @@
       "version": "1.0.0"
     },
     {
+      "name": "cmms",
+      "source": "./cmms",
+      "description": "Computerized maintenance management system",
+      "version": "1.0.0"
+    },
+    {
       "name": "cms",
       "source": "./cms",
       "description": "Manage web content with page creation, media library, and templates. Use when building site pages, organizing media assets, or versioning content.",
       "version": "2.0.0"
+    },
+    {
+      "name": "cnc",
+      "source": "./cnc",
+      "description": "CNC machining program manager",
+      "version": "1.0.0"
     },
     {
       "name": "code-generator",
@@ -1160,6 +1202,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "dcs",
+      "source": "./dcs",
+      "description": "Distributed control system manager",
+      "version": "1.0.0"
+    },
+    {
       "name": "deadline",
       "source": "./deadline",
       "description": "Draft and schedule content with editing and hashtag suggestions. Use when drafting posts, scheduling publishing, optimizing headlines.",
@@ -1446,6 +1494,12 @@
       "source": "./dupfinder",
       "description": "Scan directories for duplicate files by hash to reclaim disk space. Use when finding duplicates, reclaiming space, comparing checksums.",
       "version": "2.0.0"
+    },
+    {
+      "name": "eam",
+      "source": "./eam",
+      "description": "Enterprise asset management tracker",
+      "version": "1.0.0"
     },
     {
       "name": "ebook",
@@ -1814,6 +1868,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "furnace",
+      "source": "./furnace",
+      "description": "Furnace temperature and control manager",
+      "version": "1.0.0"
+    },
+    {
       "name": "furniture",
       "source": "./furniture",
       "description": "Track home furniture, schedule maintenance, and manage warranty details. Use when cataloging furniture, scheduling cleaning, or tracking warranty expiry dates.",
@@ -1848,6 +1908,12 @@
       "source": "./gdpr-checker",
       "description": "Check GDPR compliance with audits, consent reviews, and breach prep plans. Use when running audits, verifying consent, or preparing breach responses.",
       "version": "2.0.0"
+    },
+    {
+      "name": "gear",
+      "source": "./gear",
+      "description": "Gear ratio and transmission calculator",
+      "version": "1.0.0"
     },
     {
       "name": "genai-toolbox",
@@ -2000,6 +2066,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "hazmat",
+      "source": "./hazmat",
+      "description": "Hazardous material classification tool",
+      "version": "1.0.0"
+    },
+    {
       "name": "headless-browser",
       "source": "./headless-browser",
       "description": "Automate browser tasks with scriptable headless browsing for tests and scraping. Use when scraping pages, running tests, or capturing screenshots.",
@@ -2021,6 +2093,12 @@
       "name": "helm",
       "source": "./helm",
       "description": "Create, lint, template, and package Kubernetes Helm charts with checks. Use when scaffolding charts, linting templates, or packaging chart releases.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "hmi",
+      "source": "./hmi",
+      "description": "Human-machine interface design tool",
       "version": "1.0.0"
     },
     {
@@ -2159,6 +2237,12 @@
       "name": "iperf",
       "source": "./iperf",
       "description": "Measure TCP/UDP/SCTP bandwidth between hosts with detailed throughput data. Use when benchmarking speed, testing links, or diagnosing network bottlenecks.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "iso",
+      "source": "./iso",
+      "description": "ISO standard compliance checker",
       "version": "1.0.0"
     },
     {
@@ -2396,6 +2480,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "loto",
+      "source": "./loto",
+      "description": "Lockout-tagout procedure generator",
+      "version": "1.0.0"
+    },
+    {
       "name": "lottery",
       "source": "./lottery",
       "description": "Generate lottery numbers and check results. Use when picking numbers for draws.",
@@ -2546,6 +2636,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "mes",
+      "source": "./mes",
+      "description": "Manufacturing execution system tracker",
+      "version": "1.0.0"
+    },
+    {
       "name": "mesh-network",
       "source": "./mesh-network",
       "description": "Configure encrypted overlay mesh networks focused on performance and simplicity. Use when setting up VPN meshes, connecting nodes, managing tunnels.",
@@ -2622,6 +2718,12 @@
       "source": "./mortgage-calculator",
       "description": "Calculate mortgage payments with equal-principal and equal-interest comparisons. Use when comparing loans, calculating payments, evaluating prepayment.",
       "version": "2.0.0"
+    },
+    {
+      "name": "motor",
+      "source": "./motor",
+      "description": "Motor specification and selection tool",
+      "version": "1.0.0"
     },
     {
       "name": "movie-review",
@@ -2906,6 +3008,12 @@
       "version": "3.0.1"
     },
     {
+      "name": "pdps",
+      "source": "./pdps",
+      "description": "Process design and plant simulation tool",
+      "version": "1.0.0"
+    },
+    {
       "name": "pension",
       "source": "./pension",
       "description": "Track pension contributions, balances, and growth forecasts. Use when recording deposits, categorizing funds, reviewing balances, forecasting payouts.",
@@ -2978,6 +3086,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "piston",
+      "source": "./piston",
+      "description": "Piston and cylinder design calculator",
+      "version": "1.0.0"
+    },
+    {
       "name": "pitch-deck",
       "source": "./pitch-deck",
       "description": "Build investor pitch decks with slide structure. Use when outlining narratives, preparing demo day talks, drafting investor Q&A, refining proposals.",
@@ -2987,6 +3101,12 @@
       "name": "plant",
       "source": "./plant",
       "description": "Manage houseplant care with watering and fertilizer schedules. Use when adding plants, tracking watering, scheduling fertilizing, setting care reminders.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "plc",
+      "source": "./plc",
+      "description": "Programmable logic controller programming helper",
       "version": "1.0.0"
     },
     {
@@ -3338,6 +3458,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "scada",
+      "source": "./scada",
+      "description": "Supervisory control and data acquisition manager",
+      "version": "1.0.0"
+    },
+    {
       "name": "scheduler",
       "source": "./scheduler",
       "description": "Schedule recurring tasks, deadlines, and time blocks. Use when adding cron jobs, planning routines, tracking due dates, reviewing upcoming tasks.",
@@ -3407,6 +3533,12 @@
       "name": "serverless-runner",
       "source": "./serverless-runner",
       "description": "Laf is a vibrant cloud development platform that provides essential tools like cloud functions, data serverless-runner, typescript, cloudbase, faas.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "servo",
+      "source": "./servo",
+      "description": "Servo motor configuration and tuning tool",
       "version": "1.0.0"
     },
     {
@@ -3956,6 +4088,12 @@
       "version": "3.0.0"
     },
     {
+      "name": "tpm",
+      "source": "./tpm",
+      "description": "Total productive maintenance tracker",
+      "version": "1.0.0"
+    },
+    {
       "name": "trace",
       "source": "./trace",
       "description": "Track and debug application logs using CLI tracing tools. Use when you need to start trace sessions, search logs, filter by level, tail output,",
@@ -4020,6 +4158,12 @@
       "source": "./trivia-quiz",
       "description": "Play knowledge quizzes with facts, categories, and daily challenges. Use when learning topics, drilling flashcards, reviewing answers, tracking progress.",
       "version": "2.0.0"
+    },
+    {
+      "name": "turbine",
+      "source": "./turbine",
+      "description": "Turbine performance calculator",
+      "version": "1.0.0"
     },
     {
       "name": "tweet-generator",
@@ -4097,6 +4241,12 @@
       "name": "valuation",
       "source": "./valuation",
       "description": "Build DCF models and run comparable analysis for company valuation. Use when modeling cash flows, benchmarking peers, projecting growth, or pitching.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "valve",
+      "source": "./valve",
+      "description": "Valve sizing and selection tool",
       "version": "1.0.0"
     },
     {
