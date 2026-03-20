@@ -1,40 +1,70 @@
-# BytesAgain Skills Collection
+# BytesAgain AI Skills
 
-872+ AI Agent Skills for Claude Code, Manus, OpenClaw, and any SKILL.md-compatible platform.
+**The largest open-source AI Agent Skill collection** — 461+ plugins for Claude Code, OpenClaw, and all SKILL.md-compatible platforms.
 
-## What are Skills?
+## 🚀 Quick Install (Claude Code)
 
-Skills are knowledge packages that teach AI agents how to perform tasks. Each skill contains:
-- `SKILL.md` — Instructions and documentation
-- `scripts/script.sh` — Executable bash script with real functionality
+Add our marketplace to Claude Code with one command:
 
-## Categories
-
-- 🛠️ Developer Tools (API, CLI, DevOps)
-- 📝 Content Creation (Writing, SEO, Social Media)
-- 📊 Data & Analytics
-- 💰 Finance & Crypto
-- 🏥 Health & Wellness
-- 🎓 Education & Learning
-- 🏠 Home & Lifestyle
-- 🇨🇳 Chinese Tools (中文工具)
-
-## Quick Start
-
-```bash
-# Use any skill directly
-cd chart-generator
-bash scripts/script.sh help
+```
+/plugin marketplace add bytesagain/ai-skills
 ```
 
-## License
+Then browse and install any skill:
 
-MIT
+```
+/plugin install chart-generator@bytesagain-skills
+/plugin install sql-generator@bytesagain-skills
+/plugin install debug@bytesagain-skills
+```
 
-## Links
+## 📦 What's Inside
 
-- Website: https://bytesagain.com
-- Feedback: https://bytesagain.com/feedback/
-- Email: hello@bytesagain.com
+| Category | Examples | Count |
+|----------|---------|-------|
+| **Dev Tools** | debug, lint, git, docker, sql-generator | 80+ |
+| **Content** | blog-writer, tweet-generator, copywriter | 50+ |
+| **Finance** | crypto-tracker, portfolio, bookkeeper | 40+ |
+| **Productivity** | task-planner, calendar, note-taker | 40+ |
+| **Chinese Tools** | 中文日历, 成语词典, 公务员考试 | 30+ |
+| **Data** | chart-generator, csv-analyzer, dashboard | 30+ |
+| **Health** | fitness-plan, sleep-tracker, meditation | 20+ |
+| **Industrial** | PLC, SCADA, HMI, CNC, CAD, CAM | 60+ |
+| **More...** | 150+ additional skills | 150+ |
 
-Powered by BytesAgain
+## 🔧 Also Works With
+
+- **OpenClaw** — `clawhub install <skill-name>`
+- **Any SKILL.md platform** — Copy the `SKILL.md` file directly
+
+## 📁 Structure
+
+Each skill follows the Claude Code Plugin format:
+
+```
+skill-name/
+  .claude-plugin/
+    plugin.json          # Plugin manifest
+  skills/
+    skill-name/
+      SKILL.md           # Skill instructions
+      scripts/
+        script.sh        # Executable script
+  SKILL.md               # Also at root (ClawHub/OpenClaw compat)
+  scripts/
+    script.sh            # Also at root (backward compat)
+```
+
+## 🌐 Links
+
+- **Website**: [bytesagain.com](https://bytesagain.com)
+- **ClawHub**: [clawhub.ai](https://clawhub.ai) — Search "BytesAgain"
+- **Email**: hello@bytesagain.com
+
+## 📄 License
+
+MIT — Use freely, attribution appreciated.
+
+---
+
+*Built by [BytesAgain](https://bytesagain.com) — The AI Agent Skill Hub*
