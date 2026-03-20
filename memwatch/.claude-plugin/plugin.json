@@ -1,0 +1,9 @@
+{
+  "name": "memwatch",
+  "description": "Monitor RAM usage in real time and alert on high memory consumption thresholds. Use when tracking memory, identifying RAM hogs, setting alert thresholds.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

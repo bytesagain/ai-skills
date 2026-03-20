@@ -1,0 +1,9 @@
+{
+  "name": "slack-automator",
+  "description": "Automate Slack messaging, channels, and search with Block Kit. Use when sending scheduled messages, syncing channels, monitoring chats, notifying teams.",
+  "version": "4.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

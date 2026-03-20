@@ -1,0 +1,9 @@
+{
+  "name": "pickup-lines",
+  "description": "Generate witty romantic lines for any occasion. Use when drafting confessions, writing humorous openers, composing anniversary notes, crafting farewells.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

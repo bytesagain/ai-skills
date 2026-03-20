@@ -1,0 +1,9 @@
+{
+  "name": "sslgen",
+  "description": "Generate self-signed SSL certs and CAs for dev environments. Use when creating certs, validating CSRs, generating chains, formatting PEM.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

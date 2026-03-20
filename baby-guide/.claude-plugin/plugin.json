@@ -1,0 +1,9 @@
+{
+  "name": "baby-guide",
+  "description": "Track infant milestones, plan feeding schedules, and manage vaccines. Use when checking development, planning meals, or scheduling immunizations.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

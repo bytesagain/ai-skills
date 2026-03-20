@@ -1,0 +1,9 @@
+{
+  "name": "format",
+  "description": "Auto-format source code with language detection, presets, and diff preview. Use when formatting code, enforcing styles, or batch-formatting projects.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "nginx-config",
+  "description": "Generate Nginx configs for reverse proxy, SSL, caching, and security hardening. Use when setting up proxies, configuring SSL, optimizing Nginx performance.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

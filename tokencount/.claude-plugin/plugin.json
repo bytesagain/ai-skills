@@ -1,0 +1,9 @@
+{
+  "name": "tokencount",
+  "description": "Count words, characters, and estimate GPT tokens with readability. Use when tracking length, checking budgets, comparing complexity.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

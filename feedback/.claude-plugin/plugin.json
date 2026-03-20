@@ -1,0 +1,9 @@
+{
+  "name": "feedback",
+  "description": "Collect user feedback, categorize by theme, and track issue resolution. Use when gathering opinions, prioritizing bugs, or tracking fix progress.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

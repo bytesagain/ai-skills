@@ -1,0 +1,9 @@
+{
+  "name": "alipay-helper",
+  "description": "Integrate WeChat Pay and Alipay with refund handling and callbacks. Use when adding payment flows, debugging webhooks, or testing sandbox.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "browser-fingerprinting",
+  "description": "Analysis of Bot Protection systems with available countermeasures \ud83d\udebf. How to defeat anti-bot system \ud83d\udc7b browser fingerprinting, javascript, abck, arkose.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

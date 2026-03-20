@@ -1,0 +1,9 @@
+{
+  "name": "personal-bookkeeper",
+  "description": "Record double-entry bookkeeping for personal finances. Use when logging transactions, categorizing accounts, balancing ledgers, trending expenses.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

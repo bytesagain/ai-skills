@@ -1,0 +1,9 @@
+{
+  "name": "logbook",
+  "description": "Write journal entries, search history, and export your personal log digitally. Use when journaling thoughts, searching past entries, exporting notes.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

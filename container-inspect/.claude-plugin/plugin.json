@@ -1,0 +1,9 @@
+{
+  "name": "container-inspect",
+  "description": "Explore Docker image layers and diagnose container build issues. Use when inspecting layers, debugging failures, checking configurations.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

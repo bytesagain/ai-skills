@@ -1,0 +1,9 @@
+{
+  "name": "vision",
+  "description": "Resize, crop, convert, and optimize images using ImageMagick. Use when processing photos, reading EXIF, or adding watermarks.",
+  "version": "3.4.1",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "prototype",
+  "description": "Build interactive HTML prototypes. Use when creating clickable mockups, adding animations, linking pages, or exporting HTML.",
+  "version": "3.4.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

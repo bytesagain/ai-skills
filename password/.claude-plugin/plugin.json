@@ -1,0 +1,9 @@
+{
+  "name": "password",
+  "description": "Manage passwords with generation, strength checks, and storage. Use when creating credentials, auditing strength, rotating secrets, checking breaches.",
+  "version": "3.0.1",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

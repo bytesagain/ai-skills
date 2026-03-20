@@ -1,0 +1,9 @@
+{
+  "name": "adversarial-robustness-toolbox",
+  "description": "Adversarial Robustness Toolbox (ART) - Python Library for Machine Learning Security - Evasion, Poiso adversarial robustness toolbox, python.",
+  "version": "2.0.1",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

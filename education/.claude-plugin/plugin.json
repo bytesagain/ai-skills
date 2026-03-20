@@ -1,0 +1,9 @@
+{
+  "name": "education",
+  "description": "Generate study materials. Use when creating study plans, quizzes, flashcards, tracking progress, or scheduling review sessions.",
+  "version": "3.4.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "ssl-checker",
+  "description": "Check SSL certificate health, protocols, and cipher suites on domains. Use when auditing web security.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

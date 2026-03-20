@@ -1,0 +1,9 @@
+{
+  "name": "crypto-whale-tracker",
+  "description": "Track large crypto transactions and whale movements using CoinGecko API. Use when monitoring whale activity. Requires curl.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

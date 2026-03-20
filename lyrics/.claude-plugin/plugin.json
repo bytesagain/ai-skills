@@ -1,0 +1,9 @@
+{
+  "name": "lyrics",
+  "description": "Save and search song lyrics in a personal collection. Use when managing lyrics.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "cleaning",
+  "description": "Schedule and track household cleaning tasks with inventory management. Use when planning cleaning rotations, restocking supplies, or making checklists.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

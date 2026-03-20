@@ -1,0 +1,9 @@
+{
+  "name": "antlr4",
+  "description": "ANTLR (ANother Tool for Language Recognition) is a powerful parser generator for reading, processing antlr4, java, antlr, antlr4, cpp, csharp.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

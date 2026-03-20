@@ -1,0 +1,9 @@
+{
+  "name": "math-solver",
+  "description": "\u6570\u5b66\u9898\u89e3\u6790\u4e0e\u5b66\u4e60\u5de5\u5177\u3002\u5206\u6b65\u9aa4\u89e3\u7b54\u3001\u51fd\u6570\u56fe\u5f62ASCII\u63cf\u8ff0\u3001\u516c\u5f0f\u901f\u67e5\u3001\u5355\u4f4d\u6362\u7b97\u3001\u7ec3\u4e60\u9898\u751f\u6210\u3002Math solver with step-by-step solutions, function graphing, formula reference, unit conversion.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

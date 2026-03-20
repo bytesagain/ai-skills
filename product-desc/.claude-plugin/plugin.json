@@ -1,0 +1,9 @@
+{
+  "name": "product-desc",
+  "description": "Write SEO product descriptions and selling points. Use when drafting listings, highlighting features, localizing copy, comparing competitor descriptions.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

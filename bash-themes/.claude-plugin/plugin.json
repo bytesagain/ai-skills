@@ -1,0 +1,9 @@
+{
+  "name": "bash-themes",
+  "description": "A delightful community-driven framework for managing your bash configuration, and an auto-update too oh my bash, shell, bash-configuration, bash-themes.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "schema-builder",
+  "description": "Build database schemas with SQL generation and relationship modeling. Use when designing databases.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

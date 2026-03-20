@@ -1,0 +1,9 @@
+{
+  "name": "container-runner",
+  "description": "Run and manage OCI containers and pods with Podman rootless mode. Use when launching containers, managing pods, building images.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

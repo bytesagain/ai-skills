@@ -1,0 +1,9 @@
+{
+  "name": "wallet-tracker",
+  "description": "Track crypto wallet balances and transactions using Blockstream API. Use when monitoring wallets. Requires curl.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

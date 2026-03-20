@@ -1,0 +1,9 @@
+{
+  "name": "deadline",
+  "description": "Draft and schedule content with editing and hashtag suggestions. Use when drafting posts, scheduling publishing, optimizing headlines.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

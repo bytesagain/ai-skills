@@ -1,0 +1,9 @@
+{
+  "name": "diary",
+  "description": "Write diary entries with mood tracking, photos, and monthly summaries. Use when recording thoughts, tracking moods, reviewing monthly patterns.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

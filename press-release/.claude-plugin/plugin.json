@@ -1,0 +1,9 @@
+{
+  "name": "press-release",
+  "description": "Draft press releases for launches and announcements. Use when writing product news, composing funding updates, outlining event coverage, crafting statements.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "swagger-generator",
+  "description": "Generate OpenAPI 3.0 specs from endpoint descriptions. Use when validating APIs, generating docs, formatting YAML, checking schemas, linting contracts.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

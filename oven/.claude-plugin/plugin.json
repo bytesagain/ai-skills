@@ -1,0 +1,9 @@
+{
+  "name": "oven",
+  "description": "Track oven usage and cooking schedules. Use when logging bake sessions, setting cook reminders, checking inventory, reviewing stats.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "wp-manager",
+  "description": "Manage WordPress sites with cookie auth, page CRUD, duplicate detection, and batch cleanup. Requires curl.",
+  "version": "4.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

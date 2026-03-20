@@ -1,0 +1,9 @@
+{
+  "name": "labor-law",
+  "description": "Query Chinese labor law on overtime, leave, contracts, and severance rules. Use when checking overtime rules, calculating severance, reviewing contracts.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

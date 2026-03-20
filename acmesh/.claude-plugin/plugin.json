@@ -1,0 +1,9 @@
+{
+  "name": "acmesh",
+  "description": "Manage ACME/SSL certificates with issuance, renewal, and revocation. Use when provisioning certs or checking SSL status.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

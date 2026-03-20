@@ -1,0 +1,9 @@
+{
+  "name": "cloud-sdk",
+  "description": "The Go Cloud Development Kit (Go CDK): A library and tools for open cloud development in Go. go cloud, go, aws, azure, cloud, gcp.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

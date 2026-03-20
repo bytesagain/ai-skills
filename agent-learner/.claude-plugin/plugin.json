@@ -1,0 +1,9 @@
+{
+  "name": "agent-learner",
+  "description": "Benchmark and compare agent prompts and evaluation results. Use when tuning strategies, evaluating outputs, or comparing configurations.",
+  "version": "2.0.1",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "mortgage-calculator",
+  "description": "Calculate mortgage payments with equal-principal and equal-interest comparisons. Use when comparing loans, calculating payments, evaluating prepayment.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

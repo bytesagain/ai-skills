@@ -1,0 +1,9 @@
+{
+  "name": "instagram-caption",
+  "description": "Instagram\u6587\u6848\u3001\u7cbe\u51c6Hashtag(30\u4e2a)\u3001Story\u811a\u672c\u3001Reels\u811a\u672c\u3001\u7b80\u4ecb\u4f18\u5316\u3001\u5185\u5bb9\u65e5\u5386\u3002Instagram caption writer with hashtags, Story scripts, Reels scripts, bio optimization.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "tire",
+  "description": "Track tire maintenance, rotation, and tread wear for vehicles. Use when logging changes, checking wear, running reminders, generating reports.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

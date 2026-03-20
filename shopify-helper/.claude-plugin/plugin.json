@@ -1,0 +1,9 @@
+{
+  "name": "shopify-helper",
+  "description": "Set up Shopify stores with theme, product, and SEO management. Use when building storefronts, customizing themes, managing products, optimizing SEO.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

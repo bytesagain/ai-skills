@@ -1,0 +1,9 @@
+{
+  "name": "agent-toolkit",
+  "description": "Configure and benchmark agent tools and integration patterns. Use when setting up agent workflows, comparing tools, or evaluating agents.",
+  "version": "2.0.1",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

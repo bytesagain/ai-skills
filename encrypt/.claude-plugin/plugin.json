@@ -1,0 +1,9 @@
+{
+  "name": "encrypt",
+  "description": "Encrypt files, generate hashes, and manage keys for secure storage. Use when encrypting files, generating hashes, managing keys.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "landing",
+  "description": "Generate HTML landing pages from templates with SEO optimization. Use when creating web pages.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

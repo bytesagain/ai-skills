@@ -1,0 +1,9 @@
+{
+  "name": "idiom-dictionary",
+  "description": "Look up Chinese idioms with origin stories and play idiom chain games. Use when searching meanings, reading stories, or playing word chain games.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

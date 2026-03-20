@@ -1,0 +1,9 @@
+{
+  "name": "first-aid",
+  "description": "First aid reference guide with emergency procedures and kit checklists. Use when looking up first aid instructions.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

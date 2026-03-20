@@ -1,0 +1,9 @@
+{
+  "name": "portfolio",
+  "description": "Manage investment portfolios. Use when adding positions, analyzing allocation, calculating returns, or generating rebalance advice.",
+  "version": "3.4.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

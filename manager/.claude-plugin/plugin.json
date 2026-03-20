@@ -1,0 +1,9 @@
+{
+  "name": "manager",
+  "description": "Manage tasks and projects with priorities and status tracking. Use when organizing work.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

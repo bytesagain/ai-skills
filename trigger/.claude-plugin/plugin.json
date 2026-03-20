@@ -1,0 +1,9 @@
+{
+  "name": "trigger",
+  "description": "Set up event triggers with webhooks, file watchers, and automation. Use when adding rules, planning flows, tracking events, reviewing triggers, building chains.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

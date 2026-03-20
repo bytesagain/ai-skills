@@ -1,0 +1,9 @@
+{
+  "name": "bookkeeping-pro",
+  "description": "Record income and expenses, generate monthly reports, and manage budgets. Use when logging transactions, comparing periods, or tracking savings.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

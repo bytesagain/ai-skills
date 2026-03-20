@@ -1,0 +1,9 @@
+{
+  "name": "layout",
+  "description": "Generate CSS layouts. Use when building grid or flexbox layouts, creating responsive breakpoints, or scaffolding HTML pages.",
+  "version": "3.4.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

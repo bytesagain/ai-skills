@@ -1,0 +1,9 @@
+{
+  "name": "privacy-policy",
+  "description": "Generate GDPR/CCPA-compliant privacy policies. Use when scanning data practices, auditing consent flows, checking compliance, drafting policy documents.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

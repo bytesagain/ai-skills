@@ -1,0 +1,9 @@
+{
+  "name": "changelog-writer",
+  "description": "Generate changelogs with release notes, semver, and diff comparisons. Use when documenting releases, comparing versions, or exporting update logs.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

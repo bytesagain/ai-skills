@@ -1,0 +1,9 @@
+{
+  "name": "alert",
+  "description": "Send and schedule alerts via multiple channels with flexible triggers. Use when monitoring servers, tracking thresholds, or setting reminders.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

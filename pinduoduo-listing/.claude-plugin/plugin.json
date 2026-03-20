@@ -1,0 +1,9 @@
+{
+  "name": "pinduoduo-listing",
+  "description": "Write Pinduoduo product listings with SEO titles. Use when drafting headlines, optimizing detail pages, writing SKU copy, planning flash sale text.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "deadlink",
+  "description": "Scan websites and files for broken links with HTTP status details. Use when auditing links, finding broken URLs, validating references.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

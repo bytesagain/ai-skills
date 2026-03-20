@@ -1,0 +1,9 @@
+{
+  "name": "code-viewer",
+  "description": "Display source files with syntax highlighting and Git decorations. Use when reading code, inspecting file diffs, or reviewing configs in terminal.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

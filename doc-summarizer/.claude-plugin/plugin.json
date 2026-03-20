@@ -1,0 +1,9 @@
+{
+  "name": "doc-summarizer",
+  "description": "Summarize documents, extract meeting notes, and create mind map outlines. Use when condensing docs, extracting action items, generating digests.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

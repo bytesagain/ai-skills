@@ -1,0 +1,9 @@
+{
+  "name": "resignation-letter",
+  "description": "Generate professional resignation letters from templates. Use when preparing to resign.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

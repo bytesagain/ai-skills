@@ -1,0 +1,9 @@
+{
+  "name": "cover-letter",
+  "description": "Generate cover letters matching job descriptions with keyword scoring. Use when writing applications, matching JD keywords, scoring letter quality.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

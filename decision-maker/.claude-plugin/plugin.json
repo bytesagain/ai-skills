@@ -1,0 +1,9 @@
+{
+  "name": "decision-maker",
+  "description": "\u51b3\u7b56\u5206\u6790\u5de5\u5177\u3002\u5229\u5f0a\u5bf9\u6bd4\u3001\u52a0\u6743\u51b3\u7b56\u77e9\u9635\u3001\u76f2\u9009\u6d88\u9664\u504f\u89c1\u3001\u51b3\u7b56\u6846\u67b6\u63a8\u8350\u3001\u98ce\u9669\u8bc4\u4f30\u3002Decision maker with pros-cons analysis, weighted matrix, blind choice, decision frameworks.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "tar",
+  "description": "Create, extract, list, and compress tar archives with format support. Use when scanning contents, monitoring sizes, reporting results, alerting corruption.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

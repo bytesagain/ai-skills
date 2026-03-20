@@ -1,0 +1,9 @@
+{
+  "name": "ring-security",
+  "description": "Control Ring doorbells and cameras from the terminal. Use when scanning motion events, auditing device access, checking firmware, reporting activity.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "diet",
+  "description": "Track food and nutrition. Use when logging meals, checking calories, tracking protein/carbs/fat, or generating diet reports.",
+  "version": "3.4.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

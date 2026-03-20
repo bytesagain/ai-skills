@@ -1,0 +1,9 @@
+{
+  "name": "pdf-to-markdown",
+  "description": "Convert PDF files to Markdown with table recognition. Use when extracting text, converting tables, summarizing documents, fixing formatting issues.",
+  "version": "3.0.1",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

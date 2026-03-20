@@ -1,0 +1,9 @@
+{
+  "name": "graphql-builder",
+  "description": "Build and validate GraphQL queries, mutations, and schemas. Use when working with GraphQL APIs.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

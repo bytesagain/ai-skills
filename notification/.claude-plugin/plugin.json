@@ -1,0 +1,9 @@
+{
+  "name": "notification",
+  "description": "Manage terminal notifications with scheduling, filtering, and delivery tracking. Use when sending alerts, filtering notifications, confirming delivery.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

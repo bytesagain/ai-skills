@@ -1,0 +1,9 @@
+{
+  "name": "html-builder",
+  "description": "Generate HTML pages, landing pages, email templates, and forms with ease. Use when building landing pages, creating emails, or prototyping portfolios.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

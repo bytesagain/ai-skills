@@ -1,0 +1,9 @@
+{
+  "name": "retirement-planner",
+  "description": "Calculate retirement savings with compound interest and inflation. Use when planning finances.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

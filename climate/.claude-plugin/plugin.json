@@ -1,0 +1,9 @@
+{
+  "name": "climate",
+  "description": "Analyze climate data with temperature trends and carbon tracking. Use when reviewing historical temps, tracking emissions, or generating climate reports.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

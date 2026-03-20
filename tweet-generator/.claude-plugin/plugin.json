@@ -1,0 +1,9 @@
+{
+  "name": "tweet-generator",
+  "description": "Craft tweets, threads, and viral hooks with schedule tips. Use when drafting copy, editing threads, optimizing engagement, scheduling posts.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

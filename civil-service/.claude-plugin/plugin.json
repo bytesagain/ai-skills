@@ -1,0 +1,9 @@
+{
+  "name": "civil-service",
+  "description": "Civil service exam study helper with quizzes and topic review (\u516c\u52a1\u5458\u8003\u8bd5). Use when preparing for exams.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

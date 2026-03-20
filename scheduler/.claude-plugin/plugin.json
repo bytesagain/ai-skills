@@ -1,0 +1,9 @@
+{
+  "name": "scheduler",
+  "description": "Schedule recurring tasks, deadlines, and time blocks. Use when adding cron jobs, planning routines, tracking due dates, reviewing upcoming tasks.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

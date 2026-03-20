@@ -1,0 +1,9 @@
+{
+  "name": "followers",
+  "description": "Track follower growth, detect unfollows, and analyze engagement trends. Use when monitoring counts, spotting changes, or reviewing audience demographics.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

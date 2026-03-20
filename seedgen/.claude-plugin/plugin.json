@@ -1,0 +1,9 @@
+{
+  "name": "seedgen",
+  "description": "Generate reproducible seeds and deterministic test data. Use when creating random seeds, rotating salt values, auditing randomness, storing seed records.",
+  "version": "3.0.1",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

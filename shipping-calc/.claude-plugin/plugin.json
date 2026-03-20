@@ -1,0 +1,9 @@
+{
+  "name": "shipping-calc",
+  "description": "Calculate shipping costs with zone-based rates and duty estimates. Use when estimating shipping costs.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

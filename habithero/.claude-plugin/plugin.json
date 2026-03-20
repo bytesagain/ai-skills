@@ -1,0 +1,9 @@
+{
+  "name": "habithero",
+  "description": "Build positive habits with daily tracking, streaks, and progress dashboards. Use when committing to routines, tracking streaks, or reviewing consistency.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

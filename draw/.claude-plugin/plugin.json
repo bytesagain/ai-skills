@@ -1,0 +1,9 @@
+{
+  "name": "draw",
+  "description": "Create SVG diagrams with shapes, layers, and multi-format export. Use when generating graphics, building diagrams, arranging layouts.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

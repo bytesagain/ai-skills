@@ -1,0 +1,9 @@
+{
+  "name": "erp",
+  "description": "Plan resources, track inventory, and coordinate departments with reporting. Use when allocating resources, managing stock, or tracking department KPIs.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

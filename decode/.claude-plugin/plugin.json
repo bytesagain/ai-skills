@@ -1,0 +1,9 @@
+{
+  "name": "decode",
+  "description": "Decode base64, URLs, JWTs, and encoded formats into readable text. Use when decoding base64, parsing JWT tokens, inspecting encoded payloads.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

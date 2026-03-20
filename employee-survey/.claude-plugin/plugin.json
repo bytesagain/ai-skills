@@ -1,0 +1,9 @@
+{
+  "name": "employee-survey",
+  "description": "Design employee surveys with eNPS scoring and trend analysis templates. Use when creating surveys, calculating eNPS, analyzing feedback.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

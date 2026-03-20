@@ -1,0 +1,9 @@
+{
+  "name": "blog",
+  "description": "Manage blog posts with drafts, scheduling, and SEO optimization. Use when creating articles, optimizing metadata, or scheduling publication dates.",
+  "version": "2.0.1",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "coze-studio",
+  "description": "An AI agent development platform with all-in-one visual tools, simplifying agent creation, debugging coze studio, typescript, agent, agent-platform.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

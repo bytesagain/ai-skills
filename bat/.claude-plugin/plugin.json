@@ -1,0 +1,9 @@
+{
+  "name": "bat",
+  "description": "Log and search local text entries from the command line. Use when adding quick notes, searching past entries, or exporting a simple activity log.",
+  "version": "2.0.2",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

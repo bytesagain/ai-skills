@@ -1,0 +1,9 @@
+{
+  "name": "mental-health",
+  "description": "\u5fc3\u7406\u5065\u5eb7\u52a9\u624b\u3002\u60c5\u7eea\u81ea\u67e5\u3001\u547c\u5438\u7ec3\u4e60\u3001\u60c5\u7eea\u65e5\u8bb0\u3001\u5fc3\u7406\u8d44\u6e90\u3001\u538b\u529b\u7ba1\u7406\u3001\u611f\u6069\u7ec3\u4e60\u3002Mental health tool with mood check, breathing exercises, journaling, resources, stress management.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

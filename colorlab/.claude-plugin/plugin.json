@@ -1,0 +1,9 @@
+{
+  "name": "colorlab",
+  "description": "Convert colors and generate palettes with WCAG contrast checks. Use when building palettes, converting hex/RGB, checking accessibility.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

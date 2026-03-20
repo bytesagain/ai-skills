@@ -1,0 +1,9 @@
+{
+  "name": "process",
+  "description": "List, filter, and manage system processes. Use when scanning running tasks, monitoring CPU usage, reporting memory hogs, alerting on runaway processes.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "homeassistant-toolkit",
+  "description": "Control Home Assistant devices and automations from the terminal directly. Use when toggling lights, listing entities, or triggering automation scripts.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

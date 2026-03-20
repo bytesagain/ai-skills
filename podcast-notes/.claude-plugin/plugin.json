@@ -1,0 +1,9 @@
+{
+  "name": "podcast-notes",
+  "description": "\u64ad\u5ba2\u5927\u7eb2\u3001Show Notes\u751f\u6210\u3001\u5f00\u573a\u767d\u3001\u5609\u5bbe\u95ee\u9898\u3001\u53d8\u73b0\u7b56\u7565\u3001\u5206\u53d1\u6e20\u9053\u3002Podcast assistant with outlines, show notes, intro scripts, guest questions, monetization strategies.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

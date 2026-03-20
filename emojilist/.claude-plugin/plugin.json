@@ -1,0 +1,9 @@
+{
+  "name": "emojilist",
+  "description": "Search emojis by name or category and copy them for instant use. Use when finding emojis, browsing categories, copying codes.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "notion-powertools",
+  "description": "Manage Notion pages, databases, and blocks via API from the command line. Use when creating pages, querying databases, syncing Notion content via CLI.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

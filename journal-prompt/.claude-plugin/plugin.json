@@ -1,0 +1,9 @@
+{
+  "name": "journal-prompt",
+  "description": "Generate journal prompts for gratitude, reflection, and weekly review writing. Use when starting journals, writing gratitude entries, or finding new prompts.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

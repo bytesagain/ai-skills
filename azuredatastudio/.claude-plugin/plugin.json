@@ -1,0 +1,9 @@
+{
+  "name": "azuredatastudio",
+  "description": "Azure Data Studio is a data management and development tool with connectivity to popular cloud and o azuredatastudio, typescript, azure, azure-data-studio.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "bmi-calculator",
+  "description": "Calculate BMI, ideal weight, and health plans for adults and children. Use when checking body metrics, interpreting results, or tracking weight.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "jsonlint",
+  "description": "Validate and pretty-print JSON files from the terminal. Use when linting config files, formatting API payloads, checking syntax before deployment.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

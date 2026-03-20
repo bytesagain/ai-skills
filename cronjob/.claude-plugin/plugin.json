@@ -1,0 +1,9 @@
+{
+  "name": "cronjob",
+  "description": "Manage cron jobs with execution logging and failure alert tracking. Use when adding tasks, monitoring execution, debugging failed crons.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "consent",
+  "description": "Build cookie consent banners and track opt-in compliance status. Use when implementing GDPR consent, auditing cookies, generating privacy banners.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

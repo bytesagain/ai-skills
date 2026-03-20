@@ -1,0 +1,9 @@
+{
+  "name": "wireframe",
+  "description": "Generate wireframes, component sketches, and user flow diagrams. Use when prototyping layouts, sketching pages, diagramming flows, or drafting UI specs.",
+  "version": "3.4.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

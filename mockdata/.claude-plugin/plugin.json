@@ -1,0 +1,9 @@
+{
+  "name": "mockdata",
+  "description": "Generate realistic fake data \u2014 names, emails, addresses \u2014 for testing and dev. Use when seeding databases, mocking API responses, creating sample records.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

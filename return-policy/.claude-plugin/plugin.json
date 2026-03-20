@@ -1,0 +1,9 @@
+{
+  "name": "return-policy",
+  "description": "Generate return and refund policies for online stores. Use when drafting refund terms, listing exceptions, adding international rules, creating FAQs.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "dailylog",
+  "description": "Record daily wins, challenges, and learnings with streak tracking. Use when logging reflections, tracking streaks, reviewing weekly progress.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

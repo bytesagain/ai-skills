@@ -1,0 +1,9 @@
+{
+  "name": "agent-ops-framework",
+  "description": "Orchestrate multi-agent teams with task pipelines and quality gates. Use when coordinating agents, enforcing reviews, or tracking tasks.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

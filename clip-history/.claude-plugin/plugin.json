@@ -1,0 +1,9 @@
+{
+  "name": "clip-history",
+  "description": "Clipboard history manager for saving and searching text snippets. Use when managing copied text.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

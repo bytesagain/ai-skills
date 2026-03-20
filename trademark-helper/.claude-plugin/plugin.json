@@ -1,0 +1,9 @@
+{
+  "name": "trademark-helper",
+  "description": "Check trademark availability and Nice classification codes. Use when registering brands.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

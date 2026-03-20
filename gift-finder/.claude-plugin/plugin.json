@@ -1,0 +1,9 @@
+{
+  "name": "gift-finder",
+  "description": "Recommend gifts by person, budget, and occasion with creative card ideas. Use when picking birthday gifts, finding presents, or writing greetings.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

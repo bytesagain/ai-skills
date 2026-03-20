@@ -1,0 +1,9 @@
+{
+  "name": "blood",
+  "description": "Log blood pressure, glucose, and health metrics with trend charts. Use when recording vitals, reviewing health trends, or exporting medical logs.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

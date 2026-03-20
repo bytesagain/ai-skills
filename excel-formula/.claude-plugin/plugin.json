@@ -1,0 +1,9 @@
+{
+  "name": "excel-formula",
+  "description": "Generate Excel formulas from descriptions and diagnose spreadsheet errors. Use when writing VLOOKUP formulas, debugging errors, or converting formulas.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

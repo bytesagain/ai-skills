@@ -1,0 +1,9 @@
+{
+  "name": "autohotkey",
+  "description": "AutoHotkey - macro-creation and automation-oriented scripting utility for Windows. autohotkey, c++, autohotkey, automation, c-plus-plus, hotkeys.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

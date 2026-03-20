@@ -1,0 +1,9 @@
+{
+  "name": "diff",
+  "description": "Compare files and directories, merge changes, and generate patches. Use when comparing versions, merging changes, generating patch files.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

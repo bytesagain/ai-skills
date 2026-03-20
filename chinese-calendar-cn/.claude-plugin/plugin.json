@@ -1,0 +1,9 @@
+{
+  "name": "chinese-calendar-cn",
+  "description": "Chinese calendar with zodiac, festivals, and solar terms (\u4e2d\u6587). Use when checking lunar dates.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

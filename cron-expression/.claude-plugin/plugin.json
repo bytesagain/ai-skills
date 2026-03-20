@@ -1,0 +1,9 @@
+{
+  "name": "cron-expression",
+  "description": "Parse, validate, and explain cron expressions with next-run predictions. Use when building cron schedules.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

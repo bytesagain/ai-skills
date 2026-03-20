@@ -1,0 +1,9 @@
+{
+  "name": "regexpal",
+  "description": "Test and debug regex patterns against sample text. Use when checking match groups, validating patterns, generating replacements, linting syntax.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

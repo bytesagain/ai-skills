@@ -1,0 +1,9 @@
+{
+  "name": "fridge",
+  "description": "Track fridge and pantry inventory with expiry reminders and grocery lists. Use when logging groceries, checking expiry dates, or building shopping lists.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "crypto-market-cli",
+  "description": "Track crypto prices, portfolios, and market data via CoinGecko. Use when checking coin prices, managing a portfolio, setting alerts, or comparing cryptocurrencies.",
+  "version": "5.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

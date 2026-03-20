@@ -1,0 +1,9 @@
+{
+  "name": "prompt-generator",
+  "description": "AI prompt generator for image and text. AI\u7ed8\u753b\u63d0\u793a\u8bcd\u3001AI\u753b\u56fe\u3001Midjourney\u63d0\u793a\u8bcd\u3001MJ\u63d0\u793a\u8bcd\u3001Stable Diffusion\u63d0\u793a\u8bcd\u3001SD\u63d0\u793a\u8bcd\u3001DALL-E\u63d0\u793a\u8bcd\u3001AI\u7ed8\u56fe\u3001AI\u751f\u56fe\u3001AI\u753b\u753b\u3001\u6587\u751f\u56fe\u63d0\u793a\u8bcd\u3001text-to-image prompt\u3001\u5199\u4f5c\u63d0\u793a\u8bcd.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

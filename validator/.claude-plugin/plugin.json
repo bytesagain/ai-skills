@@ -1,0 +1,9 @@
+{
+  "name": "validator",
+  "description": "Validate emails, URLs, phones, dates, and custom patterns. Use when sanitizing input, verifying form fields, checking formats, or enforcing rules.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

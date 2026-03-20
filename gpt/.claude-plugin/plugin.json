@@ -1,0 +1,9 @@
+{
+  "name": "gpt",
+  "description": "Generate GPT API request payloads. Use when building chat completions, embeddings, fine-tuning data, or estimating API costs.",
+  "version": "3.4.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

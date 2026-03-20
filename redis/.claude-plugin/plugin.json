@@ -1,0 +1,9 @@
+{
+  "name": "redis",
+  "description": "Connect, query, and monitor Redis instances. Use when checking key health, validating data types, generating backups, formatting results, linting configs.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "moodring",
+  "description": "Log daily moods, spot emotional patterns, and review wellbeing trends over time. Use when logging mood, spotting patterns, reviewing weekly wellbeing.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

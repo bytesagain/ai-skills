@@ -1,0 +1,9 @@
+{
+  "name": "code-generator",
+  "description": "Multi-language code generator. Generate functions, classes, API endpoints, CRUD operations, test code, refactoring suggestions, language conversion guides.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

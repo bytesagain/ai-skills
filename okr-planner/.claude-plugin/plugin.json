@@ -1,0 +1,9 @@
+{
+  "name": "okr-planner",
+  "description": "Plan OKRs with goal setting, quarterly reviews, alignment, and scoring templates. Use when defining OKRs, running alignment, scoring key result progress.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "polymarket-screener",
+  "description": "Filter Polymarket prediction markets and track probabilities. Use when screening bets, drafting analyses, outlining trends, tracking price movements.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

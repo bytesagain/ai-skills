@@ -1,0 +1,9 @@
+{
+  "name": "fitlog",
+  "description": "Track workouts, log sets and reps, and build exercise streaks over time. Use when logging sessions, tracking progress, or reviewing weekly volume.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

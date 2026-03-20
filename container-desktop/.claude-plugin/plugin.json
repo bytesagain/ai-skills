@@ -1,0 +1,9 @@
+{
+  "name": "container-desktop",
+  "description": "Podman Desktop is the best free and open source tool to work with Containers and Kubernetes for deve podman desktop, typescript, container, containers.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

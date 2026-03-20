@@ -1,0 +1,9 @@
+{
+  "name": "favicon",
+  "description": "Fetch and download favicons from any website for your design projects. Use when grabbing icons, checking availability, or previewing favicon renders.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

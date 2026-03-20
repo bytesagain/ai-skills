@@ -1,0 +1,9 @@
+{
+  "name": "netstat",
+  "description": "Display network connections, listening ports, and routing tables. Use when diagnosing network issues.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

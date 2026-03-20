@@ -1,0 +1,9 @@
+{
+  "name": "movie-review",
+  "description": "Write film reviews, get recommendations, and manage watchlists with spoiler control. Use when drafting reviews, getting recs, comparing films side by side.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

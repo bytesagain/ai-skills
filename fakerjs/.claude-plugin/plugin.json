@@ -1,0 +1,9 @@
+{
+  "name": "fakerjs",
+  "description": "Generate realistic test data: names, addresses, companies, dates, and more. Use when seeding databases, mocking APIs, or building demo datasets.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

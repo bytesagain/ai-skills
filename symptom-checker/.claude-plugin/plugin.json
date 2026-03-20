@@ -1,0 +1,9 @@
+{
+  "name": "symptom-checker",
+  "description": "\u75c7\u72b6\u81ea\u67e5\u5de5\u5177\u3002\u75c7\u72b6\u5206\u6790\u3001\u5c31\u533b\u5efa\u8bae\u3001\u9884\u9632\u63aa\u65bd\u3001\u751f\u6d3b\u65b9\u5f0f\u6539\u5584\u3001\u75c7\u72b6\u8ffd\u8e2a\u3001\u6025\u75c7\u8bc6\u522b\u3002Symptom checker with analysis, when to see doctor, prevention, lifestyle tips, tracking.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

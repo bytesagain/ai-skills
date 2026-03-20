@@ -1,0 +1,9 @@
+{
+  "name": "capistrano",
+  "description": "Automate deployments over SSH with Ruby-based release workflows. Use when deploying Rails apps, managing releases, or configuring multi-stage deploys.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

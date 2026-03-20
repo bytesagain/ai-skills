@@ -1,0 +1,9 @@
+{
+  "name": "leave-doc",
+  "description": "Generate leave request forms with workday calculation and annual leave planning. Use when filing leave requests, calculating days off, planning leave.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

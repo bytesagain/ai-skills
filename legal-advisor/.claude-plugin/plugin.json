@@ -1,0 +1,9 @@
+{
+  "name": "legal-advisor",
+  "description": "Generate legal templates for labor, consumer, rental, and traffic disputes. Use when drafting dispute letters, reviewing tenant rights, preparing claims.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

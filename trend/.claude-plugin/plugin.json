@@ -1,0 +1,9 @@
+{
+  "name": "trend",
+  "description": "Track trending topics with popularity, sentiment, and alerts. Use when drafting reports, optimizing keywords, scheduling checks, tagging hashtags.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

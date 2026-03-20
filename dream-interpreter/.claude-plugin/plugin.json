@@ -1,0 +1,9 @@
+{
+  "name": "dream-interpreter",
+  "description": "Interpret dream symbols and maintain a dream journal. Use when analyzing dreams.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

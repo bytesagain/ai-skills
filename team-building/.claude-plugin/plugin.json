@@ -1,0 +1,9 @@
+{
+  "name": "team-building",
+  "description": "Generate team activities, icebreakers, and random team assignments. Use when planning team events.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

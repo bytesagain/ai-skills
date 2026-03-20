@@ -1,0 +1,9 @@
+{
+  "name": "notion-template",
+  "description": "Notion\u6a21\u677f\u751f\u6210\u5668\u3002\u5de5\u4f5c\u7a7a\u95f4\u89c4\u5212\u3001\u6570\u636e\u5e93\u8bbe\u8ba1\u3001\u4eea\u8868\u76d8\u5e03\u5c40\u3001\u77e5\u8bc6\u5e93Wiki\u3001\u9879\u76ee\u7ba1\u7406\u3001\u4e2a\u4eba\u6a21\u677f\u3002Notion template generator with workspace, database, dashboard, wiki, project.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

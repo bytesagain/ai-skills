@@ -1,0 +1,9 @@
+{
+  "name": "daybook",
+  "description": "Write daily journal entries with tagging, search, and monthly reviews. Use when journaling daily, searching entries, tagging themes.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

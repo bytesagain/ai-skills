@@ -1,0 +1,9 @@
+{
+  "name": "step",
+  "description": "Log daily steps, set fitness goals, and chart walking trends. Use when logging counts, tracking progress, charting trends, setting goals.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "comparison-table",
+  "description": "\u4ea7\u54c1\u5bf9\u6bd4\u8868\u751f\u6210\u5de5\u5177\u3002Markdown/HTML\u5bf9\u6bd4\u8868\u3001\u6280\u672f\u9009\u578b\u3001\u5b9a\u4ef7\u5bf9\u6bd4\u3001\u529f\u80fd\u77e9\u9635\u3001\u5bfc\u51fa\u3002Comparison table generator with Markdown/HTML output, tech comparison, pricing, feature matrix.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

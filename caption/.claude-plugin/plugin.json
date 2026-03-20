@@ -1,0 +1,9 @@
+{
+  "name": "caption",
+  "description": "Generate captions for images, videos, and social media posts. Use when writing post captions, creating accessibility text, or batch-processing media.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

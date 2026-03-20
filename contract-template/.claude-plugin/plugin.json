@@ -1,0 +1,9 @@
+{
+  "name": "contract-template",
+  "description": "Contract and agreement template generator. \u5408\u540c\u6a21\u677f\u3001\u5408\u540c\u8303\u672c\u3001\u534f\u8bae\u4e66\u3001contract template\u3001\u52b3\u52a8\u5408\u540c\u3001employment contract\u3001\u52b3\u52a8\u534f\u8bae\u3001\u4fdd\u5bc6\u534f\u8baeNDA\u3001non-disclosure agreement\u3001\u79df\u8d41\u5408\u540c\u3001\u79df\u623f\u5408\u540c\u3001lease agr.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

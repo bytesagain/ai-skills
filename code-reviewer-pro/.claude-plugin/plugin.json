@@ -1,0 +1,9 @@
+{
+  "name": "code-reviewer-pro",
+  "description": "Review code with security scanning, complexity analysis, and auto docs. Use when auditing codebases, suggesting refactors, or enforcing standards.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

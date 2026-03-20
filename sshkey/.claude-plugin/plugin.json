@@ -1,0 +1,9 @@
+{
+  "name": "sshkey",
+  "description": "Generate, list, copy, and test SSH keys without complex flags. Use when scanning keys, monitoring expiry, reporting fingerprints, alerting weak algorithms.",
+  "version": "3.0.1",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

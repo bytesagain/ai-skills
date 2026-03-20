@@ -1,0 +1,9 @@
+{
+  "name": "flashcard",
+  "description": "Study with spaced-repetition cards that surface hard items more often. Use when memorizing vocabulary, reviewing material, or drilling key concepts.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

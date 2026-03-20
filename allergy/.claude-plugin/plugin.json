@@ -1,0 +1,9 @@
+{
+  "name": "allergy",
+  "description": "Log allergens, track reactions, and chart symptom patterns over time. Use when identifying triggers, preparing reports, or setting reminders.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

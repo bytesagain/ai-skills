@@ -1,0 +1,9 @@
+{
+  "name": "ansible-ui",
+  "description": "Modern UI and powerful API for Ansible, Terraform/OpenTofu/Terragrunt, PowerShell and other DevOps t ansible-ui, go, ansible, awx, ci, cicd.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

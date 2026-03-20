@@ -1,0 +1,9 @@
+{
+  "name": "macro-helper",
+  "description": "Excel\u5b8f\u4e0eVBA\u52a9\u624b\u3002\u751f\u6210VBA\u4ee3\u7801\u3001\u89e3\u91ca\u5b8f\u3001\u8c03\u8bd5\u9519\u8bef\u3001\u6a21\u677f\u5e93\u3001\u683c\u5f0f\u8f6c\u6362\u3001\u6027\u80fd\u4f18\u5316\u3002Excel macro and VBA helper with generate, explain, debug, template, convert.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

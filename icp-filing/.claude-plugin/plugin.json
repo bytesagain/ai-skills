@@ -1,0 +1,9 @@
+{
+  "name": "icp-filing",
+  "description": "Guide through China ICP filing with checklists, timelines, and provider tips. Use when preparing materials, choosing providers, or tracking filing status.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "court-prep",
+  "description": "Prepare court filings with document checklists and evidence timelines. Use when drafting legal docs, organizing evidence, building timelines.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

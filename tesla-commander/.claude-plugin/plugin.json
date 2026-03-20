@@ -1,0 +1,9 @@
+{
+  "name": "tesla-commander",
+  "description": "Control Tesla vehicles from terminal: climate, charging, locks, location. Use when checking status, configuring climate, listing charges, adding schedules.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

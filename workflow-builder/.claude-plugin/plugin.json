@@ -1,0 +1,9 @@
+{
+  "name": "workflow-builder",
+  "description": "Design workflows with process mapping and approval chains. Use when diagramming processes, defining approvals, documenting integrations, or optimizing ops.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "contact-book",
+  "description": "Store personal contacts with tags, search, and relationship tracking. Use when adding contacts, searching details, planning follow-ups.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

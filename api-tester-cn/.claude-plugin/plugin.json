@@ -1,0 +1,9 @@
+{
+  "name": "api-tester-cn",
+  "description": "Test and debug API endpoints from terminal. Use when checking endpoint status, validating JSON responses, comparing API versions, or running best-practice lints.",
+  "version": "3.0.2",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

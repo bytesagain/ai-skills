@@ -1,0 +1,9 @@
+{
+  "name": "roomba-control",
+  "description": "Command iRobot Roomba vacuums from the terminal. Use when starting cleans, configuring maps, checking status, listing schedules, adding no-go zones.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "leaderboard",
+  "description": "Record scores, rank players, and analyze game stats with terminal leaderboards. Use when tracking scores, ranking competitors, reviewing performance.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

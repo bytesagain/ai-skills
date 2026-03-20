@@ -1,0 +1,9 @@
+{
+  "name": "home-organizer",
+  "description": "Plan decluttering sessions, design storage, and create cleaning schedules. Use when decluttering rooms, planning storage, or creating moving checklists.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

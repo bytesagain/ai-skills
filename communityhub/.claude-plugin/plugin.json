@@ -1,0 +1,9 @@
+{
+  "name": "communityhub",
+  "description": "Manage community operations including growth, content, and moderation. Use when onboarding members, scheduling events, moderating discussions.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

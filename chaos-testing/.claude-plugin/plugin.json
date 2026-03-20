@@ -1,0 +1,9 @@
+{
+  "name": "chaos-testing",
+  "description": "Run controlled chaos and stress tests on your system. Use when testing resilience or load capacity.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "cli-builder",
+  "description": "CLI tool generator. Project scaffolding, command adding, argument parsing, help docs, config handling, publish checklist, interactive prompts.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

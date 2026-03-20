@@ -1,0 +1,9 @@
+{
+  "name": "dispute-letter",
+  "description": "Generate dispute letters for consumer, landlord, labor, and insurance cases. Use when filing complaints, disputing charges, drafting grievances.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

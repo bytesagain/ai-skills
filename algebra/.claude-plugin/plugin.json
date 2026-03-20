@@ -1,0 +1,9 @@
+{
+  "name": "algebra",
+  "description": "Solve equations, simplify expressions, and factor polynomials. Use when doing algebra homework, checking proofs, or plotting functions.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

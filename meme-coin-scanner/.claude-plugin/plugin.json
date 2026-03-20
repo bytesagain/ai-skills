@@ -1,0 +1,9 @@
+{
+  "name": "meme-coin-scanner",
+  "description": "Scan meme coins for scam signals, rug-pull risk, and on-chain audit flags. Use when evaluating tokens, auditing contracts, checking liquidity lock status.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

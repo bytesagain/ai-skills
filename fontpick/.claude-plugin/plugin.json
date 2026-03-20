@@ -1,0 +1,9 @@
+{
+  "name": "fontpick",
+  "description": "Pick font pairings and generate type scales for design projects quickly. Use when choosing fonts, generating scales, or previewing type combinations.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

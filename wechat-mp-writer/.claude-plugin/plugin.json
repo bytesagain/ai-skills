@@ -1,0 +1,9 @@
+{
+  "name": "wechat-mp-writer",
+  "description": "Draft WeChat Official Account articles with headlines and CTAs. Use when writing posts, optimizing titles, scheduling publications, or repurposing content.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "code-searcher",
+  "description": "Search codebases for patterns, symbols, and TODOs. Use when navigating large codebases.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

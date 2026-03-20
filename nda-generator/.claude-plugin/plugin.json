@@ -1,0 +1,9 @@
+{
+  "name": "nda-generator",
+  "description": "Generate NDA templates \u2014 mutual, unilateral, employee \u2014 with clause review. Use when drafting NDAs, reviewing confidentiality terms, creating templates.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

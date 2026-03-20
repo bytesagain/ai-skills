@@ -1,0 +1,9 @@
+{
+  "name": "receipt",
+  "description": "Scan, categorize, and total receipts for expenses. Use when recording purchases, categorizing spending, balancing monthly totals, forecasting budgets.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "event-planner-pro",
+  "description": "Plan weddings, birthdays, and corporate events with budgets and checklists. Use when drafting budgets, building checklists, or coordinating vendors.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

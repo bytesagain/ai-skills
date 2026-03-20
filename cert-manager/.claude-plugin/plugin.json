@@ -1,0 +1,9 @@
+{
+  "name": "cert-manager",
+  "description": "An open-source and free self-hosted SSL certificates ACME tool, automates the full-cycle of issuance cert-manager, go, acme, acme-client, automation.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

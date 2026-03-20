@@ -1,0 +1,9 @@
+{
+  "name": "liquidity-monitor",
+  "description": "Monitor DeFi liquidity pools and TVL using DeFiLlama API. Use when tracking DeFi yields. Requires curl.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

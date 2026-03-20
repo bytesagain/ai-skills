@@ -1,0 +1,9 @@
+{
+  "name": "warehouse",
+  "description": "Design data warehouse schemas and optimize query pipelines. Use when ingesting datasets, transforming tables, tuning queries, or building aggregations.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "cet-prep",
+  "description": "Prepare for CET-4/6 exams with vocab drills, reading tips, and mock tests. Use when memorizing words, practicing listening, or making study plans.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

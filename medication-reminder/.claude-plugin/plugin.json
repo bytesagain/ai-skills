@@ -1,0 +1,9 @@
+{
+  "name": "medication-reminder",
+  "description": "Track medications with dosing schedules and intake history. Use when managing prescriptions.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

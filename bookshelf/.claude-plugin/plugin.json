@@ -1,0 +1,9 @@
+{
+  "name": "bookshelf",
+  "description": "Track reading progress, rate finished books, and manage your library. Use when logging books, reviewing reading stats, or planning reading goals.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

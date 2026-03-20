@@ -1,0 +1,9 @@
+{
+  "name": "option-calculator",
+  "description": "Price options, compute Greeks, and plot P&L diagrams with exercise analysis. Use when pricing options, calculating Greeks, visualizing profit-loss curves.",
+  "version": "2.4.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

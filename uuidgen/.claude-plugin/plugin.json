@@ -1,0 +1,9 @@
+{
+  "name": "uuidgen",
+  "description": "Generate UUIDs, short IDs, and nano IDs. Use when creating database keys, minting session tokens, generating unique filenames, or producing batch IDs.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

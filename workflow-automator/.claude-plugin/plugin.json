@@ -1,0 +1,9 @@
+{
+  "name": "workflow-automator",
+  "description": "Create and execute multi-step workflows with logging and scheduling. Use when automating repetitive tasks.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

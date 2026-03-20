@@ -1,0 +1,9 @@
+{
+  "name": "database-design",
+  "description": "Design database schemas with normalization, indexing, and migrations. Use when modeling tables, planning indexes, writing migration scripts.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

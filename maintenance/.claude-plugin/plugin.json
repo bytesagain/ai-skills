@@ -1,0 +1,9 @@
+{
+  "name": "maintenance",
+  "description": "Log home maintenance tasks, set reminders, and track repair history with checklists. Use when scheduling repairs, tracking appliance upkeep, inventorying.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

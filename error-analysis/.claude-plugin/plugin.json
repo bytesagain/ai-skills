@@ -1,0 +1,9 @@
+{
+  "name": "error-analysis",
+  "description": "Analyze wrong answers and generate variant practice problems from mistakes. Use when diagnosing errors, locating gaps, or drilling weak topics.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

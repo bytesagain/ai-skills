@@ -1,0 +1,9 @@
+{
+  "name": "intern-report",
+  "description": "Generate internship reports, daily logs, weekly summaries, and reflections. Use when writing logs, composing summaries, or drafting final intern reports.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

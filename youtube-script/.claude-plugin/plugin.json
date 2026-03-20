@@ -1,0 +1,9 @@
+{
+  "name": "youtube-script",
+  "description": "YouTube\u89c6\u9891\u811a\u672c\u3001\u6807\u9898A/B\u6d4b\u8bd5\u3001\u7f29\u7565\u56fe\u6587\u6848\u3001SEO\u4f18\u5316\u3001\u5f00\u5934Hook\u3001\u7ae0\u8282\u6807\u8bb0\u3002YouTube script writer with title testing, thumbnail copy, SEO optimization, hooks.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

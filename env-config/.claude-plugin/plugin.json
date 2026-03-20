@@ -1,0 +1,9 @@
+{
+  "name": "env-config",
+  "description": "Generate .env templates, validate variables, and merge environment configs. Use when scaffolding .env files, validating vars, merging configs.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

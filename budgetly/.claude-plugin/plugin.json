@@ -1,0 +1,9 @@
+{
+  "name": "budgetly",
+  "description": "Set category budgets, log expenses, and visualize spending limits. Use when tracking grocery costs, monitoring subscriptions, or forecasting spend.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

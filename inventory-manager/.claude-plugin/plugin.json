@@ -1,0 +1,9 @@
+{
+  "name": "inventory-manager",
+  "description": "Track inventory with stock levels, pricing, and low-stock alerts. Use when managing product inventory.",
+  "version": "3.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

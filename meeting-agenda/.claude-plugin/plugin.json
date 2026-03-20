@@ -1,0 +1,9 @@
+{
+  "name": "meeting-agenda",
+  "description": "Create agendas for standups, retros, 1-on-1s, and decision meetings with minutes. Use when planning standups, preparing retro agendas, capturing actions.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

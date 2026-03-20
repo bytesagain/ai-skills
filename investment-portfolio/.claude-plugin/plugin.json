@@ -1,0 +1,9 @@
+{
+  "name": "investment-portfolio",
+  "description": "Track investments with buy/sell records, allocation charts, and P/L analysis. Use when managing a stock or crypto portfolio, rebalancing, or comparing assets.",
+  "version": "4.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

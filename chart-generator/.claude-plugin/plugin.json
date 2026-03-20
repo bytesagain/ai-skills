@@ -1,0 +1,9 @@
+{
+  "name": "chart-generator",
+  "description": "Generate ASCII and HTML charts from data with bar, pie, and line plots. Use when visualizing CSV data, creating dashboards, or embedding charts.",
+  "version": "2.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

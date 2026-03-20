@@ -1,0 +1,9 @@
+{
+  "name": "queue",
+  "description": "Manage message queues with priorities and retry logic. Use when adding jobs, planning retry strategies, tracking delivery status, reviewing failed items.",
+  "version": "2.0.1",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}
