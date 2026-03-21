@@ -2966,6 +2966,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "mempool",
+      "source": "./mempool",
+      "description": "Analyze mempool operations. Use when you need to understand mempool mechanisms, evaluate protocol security, or reference on-chain concepts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "memwatch",
       "source": "./memwatch",
       "description": "Monitor RAM usage in real time and alert on high memory consumption thresholds. Use when tracking memory, identifying RAM hogs, setting alert thresholds.",
@@ -4776,6 +4782,12 @@
       "source": "./ui-component",
       "description": "Generate standalone HTML/CSS components: forms, cards, modals. Use when picking palettes, choosing fonts, laying out grids, adjusting spacing.",
       "version": "2.0.0"
+    },
+    {
+      "name": "uncle",
+      "source": "./uncle",
+      "description": "Analyze uncle operations. Use when you need to understand uncle mechanisms, evaluate protocol security, or reference on-chain concepts.",
+      "version": "1.0.0"
     },
     {
       "name": "unit-converter",
