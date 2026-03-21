@@ -1,0 +1,9 @@
+{
+  "name": "attestation",
+  "description": "Analyze attestation operations. Use when you need to understand attestation mechanisms, evaluate protocol security, or reference on-chain concepts.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

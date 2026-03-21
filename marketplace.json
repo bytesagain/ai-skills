@@ -122,6 +122,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "amm",
+      "source": "./amm",
+      "description": "Analyze amm operations. Use when you need to understand amm mechanisms, evaluate protocol security, or reference on-chain concepts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "amortize",
       "source": "./amortize",
       "description": "Calculate amortize financial metrics and business data. Use when tracking expenses, analyzing investments, or generating financial reports.",
@@ -227,6 +233,12 @@
       "name": "assert",
       "source": "./assert",
       "description": "Assertion patterns reference \u2014 guard clauses, preconditions, invariants, and contract programming. Use when writing defensive code, validating inputs, or implementing design-by-contract.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "attestation",
+      "source": "./attestation",
+      "description": "Analyze attestation operations. Use when you need to understand attestation mechanisms, evaluate protocol security, or reference on-chain concepts.",
       "version": "1.0.0"
     },
     {
@@ -662,6 +674,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "cex",
+      "source": "./cex",
+      "description": "Analyze cex operations. Use when you need to understand cex mechanisms, evaluate protocol security, or reference on-chain concepts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "chain",
       "source": "./chain",
       "description": "Chain of Responsibility reference \u2014 design pattern, middleware pipelines, command chains, blockchain basics. Use when building request processing pipelines or implementing handler chains.",
@@ -996,6 +1014,12 @@
       "source": "./config",
       "description": "Manage app configuration files with init, list, and add operations. Use when initializing configs, listing settings, switching environments.",
       "version": "2.0.0"
+    },
+    {
+      "name": "consensus",
+      "source": "./consensus",
+      "description": "Analyze consensus operations. Use when you need to understand consensus mechanisms, evaluate protocol security, or reference on-chain concepts.",
+      "version": "1.0.0"
     },
     {
       "name": "consent",
@@ -1928,6 +1952,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "finality",
+      "source": "./finality",
+      "description": "Analyze finality operations. Use when you need to understand finality mechanisms, evaluate protocol security, or reference on-chain concepts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "financial-machine-learning",
       "source": "./financial-machine-learning",
       "description": "Explore curated financial ML tools for trading, risk models, and predictions. Use when building models, benchmarking accuracy, or researching quant tools.",
@@ -1992,6 +2022,12 @@
       "source": "./flashcard",
       "description": "Study with spaced-repetition cards that surface hard items more often. Use when memorizing vocabulary, reviewing material, or drilling key concepts.",
       "version": "2.0.0"
+    },
+    {
+      "name": "flashloan",
+      "source": "./flashloan",
+      "description": "Analyze flashloan operations. Use when you need to understand flashloan mechanisms, evaluate protocol security, or reference on-chain concepts.",
+      "version": "1.0.0"
     },
     {
       "name": "flatten",
@@ -2160,6 +2196,12 @@
       "source": "./gaokao-essay",
       "description": "Generate Gaokao essays with argumentative and narrative templates and\u7d20\u6750. Use when practicing prompts, studying models, or drafting essay openings.",
       "version": "2.0.0"
+    },
+    {
+      "name": "gasless",
+      "source": "./gasless",
+      "description": "Analyze gasless operations. Use when you need to understand gasless mechanisms, evaluate protocol security, or reference on-chain concepts.",
+      "version": "1.0.0"
     },
     {
       "name": "gcal-manager",
@@ -2648,6 +2690,12 @@
       "version": "3.0.0"
     },
     {
+      "name": "launchpad",
+      "source": "./launchpad",
+      "description": "Analyze launchpad operations. Use when you need to understand launchpad mechanisms, evaluate protocol security, or reference on-chain concepts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "laundry",
       "source": "./laundry",
       "description": "Track laundry loads, view usage stats, and export reports in multiple formats. Use when logging wash cycles, reviewing patterns, exporting schedules.",
@@ -2742,6 +2790,12 @@
       "source": "./lint",
       "description": "Check code syntax, enforce style, and suggest auto-fixes with CI integration. Use when linting PRs, enforcing code style, detecting errors before merge.",
       "version": "2.0.0"
+    },
+    {
+      "name": "liquidity",
+      "source": "./liquidity",
+      "description": "Analyze liquidity operations. Use when you need to understand liquidity mechanisms, evaluate protocol security, or reference on-chain concepts.",
+      "version": "1.0.0"
     },
     {
       "name": "liquidity-monitor",
@@ -3002,6 +3056,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "mev",
+      "source": "./mev",
+      "description": "Analyze mev operations. Use when you need to understand mev mechanisms, evaluate protocol security, or reference on-chain concepts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "microservice-gen",
       "source": "./microservice-gen",
       "description": "A cloud-native Go microservices framework with cli tool for productivity. go zero, go, ai-native, ai-native-development, cloud-native, code-generation.",
@@ -3024,6 +3084,12 @@
       "source": "./mindmap",
       "description": "Create and visualize mind maps in the terminal with branching and export. Use when brainstorming ideas, organizing thoughts, exporting mind map structures.",
       "version": "2.0.0"
+    },
+    {
+      "name": "mining",
+      "source": "./mining",
+      "description": "Analyze mining operations. Use when you need to understand mining mechanisms, evaluate protocol security, or reference on-chain concepts.",
+      "version": "1.0.0"
     },
     {
       "name": "mix",
@@ -3102,6 +3168,12 @@
       "source": "./movie-review",
       "description": "Write film reviews, get recommendations, and manage watchlists with spoiler control. Use when drafting reviews, getting recs, comparing films side by side.",
       "version": "2.0.0"
+    },
+    {
+      "name": "multicall",
+      "source": "./multicall",
+      "description": "Analyze multicall operations. Use when you need to understand multicall mechanisms, evaluate protocol security, or reference on-chain concepts.",
+      "version": "1.0.0"
     },
     {
       "name": "music-playlist",
@@ -3293,6 +3365,12 @@
       "name": "orm-builder",
       "source": "./orm-builder",
       "description": "\ud83d\udcbe Database Tools incl. ORM, Migrations and Admin UI (Postgres, MySQL & MongoDB) [deprecated] orm-builder, scala, dao, database, datamapper, graphql.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "orphan",
+      "source": "./orphan",
+      "description": "Analyze orphan operations. Use when you need to understand orphan mechanisms, evaluate protocol security, or reference on-chain concepts.",
       "version": "1.0.0"
     },
     {
@@ -3926,6 +4004,18 @@
       "version": "1.0.0"
     },
     {
+      "name": "rugpull",
+      "source": "./rugpull",
+      "description": "Analyze rugpull operations. Use when you need to understand rugpull mechanisms, evaluate protocol security, or reference on-chain concepts.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "sandwich",
+      "source": "./sandwich",
+      "description": "Analyze sandwich operations. Use when you need to understand sandwich mechanisms, evaluate protocol security, or reference on-chain concepts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "scada",
       "source": "./scada",
       "description": "Supervisory control and data acquisition manager",
@@ -4142,6 +4232,12 @@
       "version": "4.0.0"
     },
     {
+      "name": "slashing",
+      "source": "./slashing",
+      "description": "Analyze slashing operations. Use when you need to understand slashing mechanisms, evaluate protocol security, or reference on-chain concepts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "sleep-tracker",
       "source": "./sleep-tracker",
       "description": "\u7761\u7720\u6539\u5584\u5de5\u5177\u3002\u7761\u7720\u5206\u6790\u3001\u6539\u5584\u5efa\u8bae\u3001\u4f5c\u606f\u89c4\u5212\u3001\u7761\u7720\u73af\u5883\u4f18\u5316\u3001\u5c0f\u7761\u6307\u5357\u3001\u7761\u7720\u65e5\u8bb0\u3002Sleep tracker with analysis, improvement tips, schedule planning, environment optimization, nap guide.",
@@ -4176,6 +4272,12 @@
       "source": "./slogan-maker",
       "description": "\u5e7f\u544a\u8bed\u751f\u6210\u5668\u3002\u54c1\u724c\u6807\u8bed\u521b\u4f5c\u3001\u884c\u4e1a\u5e7f\u544a\u8bed\u3001\u62bc\u97f5\u53e3\u53f7\u3001\u4e2d\u82f1\u7ffb\u8bd1\u3001\u6548\u679c\u6d4b\u8bd5\u3001\u7ecf\u5178\u8bed\u5e93\u3002Slogan maker with brand taglines, industry slogans, rhyming, translation, testing.",
       "version": "2.0.0"
+    },
+    {
+      "name": "slot",
+      "source": "./slot",
+      "description": "Analyze slot operations. Use when you need to understand slot mechanisms, evaluate protocol security, or reference on-chain concepts.",
+      "version": "1.0.0"
     },
     {
       "name": "smart-lights",
@@ -4320,6 +4422,12 @@
       "source": "./sslgen",
       "description": "Generate self-signed SSL certs and CAs for dev environments. Use when creating certs, validating CSRs, generating chains, formatting PEM.",
       "version": "3.0.0"
+    },
+    {
+      "name": "staking",
+      "source": "./staking",
+      "description": "Analyze staking operations. Use when you need to understand staking mechanisms, evaluate protocol security, or reference on-chain concepts.",
+      "version": "1.0.0"
     },
     {
       "name": "startup-tools",
@@ -4784,6 +4892,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "unbonding",
+      "source": "./unbonding",
+      "description": "Analyze unbonding operations. Use when you need to understand unbonding mechanisms, evaluate protocol security, or reference on-chain concepts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "uncle",
       "source": "./uncle",
       "description": "Analyze uncle operations. Use when you need to understand uncle mechanisms, evaluate protocol security, or reference on-chain concepts.",
@@ -4895,6 +5009,12 @@
       "name": "vitamin",
       "source": "./vitamin",
       "description": "Track vitamin and supplement intake with goals and reminders. Use when logging supplements, setting nutrition goals, reviewing history, or scheduling doses.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "vrf",
+      "source": "./vrf",
+      "description": "Analyze vrf operations. Use when you need to understand vrf mechanisms, evaluate protocol security, or reference on-chain concepts.",
       "version": "1.0.0"
     },
     {
