@@ -332,6 +332,12 @@
       "version": "3.0.0"
     },
     {
+      "name": "beta",
+      "source": "./beta",
+      "description": "Beta coefficient reference \u2014 CAPM, systematic risk, portfolio sensitivity, regression analysis. Use when measuring stock volatility relative to the market or constructing risk-adjusted portfolios.",
+      "version": "1.0.0"
+    },
+    {
       "name": "better-genshin-impact",
       "source": "./better-genshin-impact",
       "description": "\ud83d\udce6BetterGI \u00b7 \u66f4\u597d\u7684\u539f\u795e - \u81ea\u52a8\u62fe\u53d6 | \u81ea\u52a8\u5267\u60c5 | \u5168\u81ea\u52a8\u9493\u9c7c(AI) | \u5168\u81ea\u52a8\u4e03\u5723\u53ec\u5524 | \u81ea\u52a8\u4f10\u6728 | \u81ea\u52a8\u5237\u672c | \u81ea\u52a8\u91c7\u96c6/\u6316\u77ff/\u9504\u5730 | \u4e00\u6761\u9f99 | \u5168\u8fde\u97f3\u6e38 - UI A better genshin impact, c#, auto-play-game, automatic.",
@@ -416,6 +422,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "bonded",
+      "source": "./bonded",
+      "description": "Bonded warehouse reference \u2014 customs procedures, duty deferral, FTZ operations, compliance requirements. Use when managing bonded storage, customs clearance, or duty suspension logistics.",
+      "version": "1.0.0"
+    },
+    {
       "name": "bonds",
       "source": "./bonds",
       "description": "Record bond holdings, analyze yields, and track maturity dates. Use when managing fixed-income portfolios, comparing yields, or exporting data.",
@@ -467,6 +479,12 @@
       "name": "breaker",
       "source": "./breaker",
       "description": "Circuit breaker sizing and coordination tool. Use when json breaker tasks, csv breaker tasks, checking breaker status.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "breathe",
+      "source": "./breathe",
+      "description": "Breathing techniques reference \u2014 box breathing, 4-7-8, Wim Hof, pranayama, resonance breathing. Use when guiding breathwork for stress relief, focus, sleep, or athletic performance.",
       "version": "1.0.0"
     },
     {
@@ -602,6 +620,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "chain",
+      "source": "./chain",
+      "description": "Chain of Responsibility reference \u2014 design pattern, middleware pipelines, command chains, blockchain basics. Use when building request processing pipelines or implementing handler chains.",
+      "version": "1.0.0"
+    },
+    {
       "name": "changelog",
       "source": "./changelog",
       "description": "Parse commits and generate versioned changelogs in Markdown format. Use when preparing releases, formatting commit history, or detecting breaking changes.",
@@ -678,6 +702,12 @@
       "source": "./civil-service",
       "description": "Civil service exam study helper with quizzes and topic review (\u516c\u52a1\u5458\u8003\u8bd5). Use when preparing for exams.",
       "version": "3.0.0"
+    },
+    {
+      "name": "class",
+      "source": "./class",
+      "description": "Class & OOP reference \u2014 inheritance, polymorphism, composition, SOLID principles, design patterns. Use when designing class hierarchies, refactoring object-oriented code, or learning OOP concepts.",
+      "version": "1.0.0"
     },
     {
       "name": "classical-chinese",
@@ -902,6 +932,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "compost",
+      "source": "./compost",
+      "description": "Composting reference \u2014 methods, C:N ratio, thermophilic stages, vermicomposting, troubleshooting. Use when building compost systems, optimizing decomposition, or managing organic waste.",
+      "version": "1.0.0"
+    },
+    {
       "name": "compound",
       "source": "./compound",
       "description": "Calculate compound interest and investment growth using financial formulas. Use when you need to plan savings, compare rates, or project wealth.",
@@ -926,6 +962,18 @@
       "version": "2.0.0"
     },
     {
+      "name": "console",
+      "source": "./console",
+      "description": "Console & terminal output reference \u2014 logging levels, ANSI colors, debugging techniques, formatters. Use when styling terminal output, implementing log systems, or debugging with console tools.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "consolidation",
+      "source": "./consolidation",
+      "description": "Freight consolidation reference \u2014 LCL groupage, milk runs, cross-docking, and shipment merging strategies. Use when optimizing shipping costs, planning consolidated loads, or reducing freight spend.",
+      "version": "1.0.0"
+    },
+    {
       "name": "contact-book",
       "source": "./contact-book",
       "description": "Store personal contacts with tags, search, and relationship tracking. Use when adding contacts, searching details, planning follow-ups.",
@@ -935,6 +983,12 @@
       "name": "contactor",
       "source": "./contactor",
       "description": "Contactor and starter selection tool. Use when json contactor tasks, csv contactor tasks, checking contactor status.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "container",
+      "source": "./container",
+      "description": "Container technology reference \u2014 Docker, OCI images, namespaces, cgroups, and container runtime internals. Use when understanding container isolation, image layering, or debugging container issues.",
       "version": "1.0.0"
     },
     {
@@ -989,6 +1043,12 @@
       "name": "cookbook",
       "source": "./cookbook",
       "description": "Track cookbook personal activities and daily routines. Use when managing health goals, organizing tasks, or building productive habits.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "copy",
+      "source": "./copy",
+      "description": "Copy operations reference \u2014 file duplication, rsync patterns, CoW, buffer strategies, and cross-platform sync. Use when duplicating files, syncing directories, or implementing copy-on-write.",
       "version": "1.0.0"
     },
     {
@@ -1049,6 +1109,12 @@
       "name": "crawler",
       "source": "./crawler",
       "description": "Crawl websites, extract links, and scrape content with rate limiting. Use when scraping pages, extracting links, generating sitemaps.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "create",
+      "source": "./create",
+      "description": "Project scaffolding reference \u2014 boilerplate generation, directory structures, template engines, and init patterns. Use when bootstrapping new projects or generating starter code.",
       "version": "1.0.0"
     },
     {
@@ -1298,6 +1364,24 @@
       "version": "1.0.0"
     },
     {
+      "name": "decompress",
+      "source": "./decompress",
+      "description": "Decompression reference \u2014 archive formats, algorithms, streaming extraction, and corruption recovery. Use when extracting archives, choosing compression formats, or troubleshooting corrupt files.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "deconsolidation",
+      "source": "./deconsolidation",
+      "description": "Deconsolidation reference \u2014 container stripping, cargo breakdown, cross-dock operations, and LCL unpacking. Use when planning deconsolidation workflows or optimizing warehouse receiving.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "dedupe",
+      "source": "./dedupe",
+      "description": "Deduplication reference \u2014 exact matching, fuzzy matching, hash-based dedup, bloom filters, and data quality. Use when removing duplicate records, files, or data entries.",
+      "version": "1.0.0"
+    },
+    {
       "name": "deepfocus",
       "source": "./deepfocus",
       "description": "Run Pomodoro sessions with break timers and productivity tracking. Use when starting focus sessions, tracking streaks, reviewing productivity.",
@@ -1514,10 +1598,22 @@
       "version": "2.0.2"
     },
     {
+      "name": "dpa",
+      "source": "./dpa",
+      "description": "Data Processing Agreement reference \u2014 GDPR Article 28, processor obligations, sub-processor management, and cross-border transfers. Use when drafting or reviewing DPAs with vendors.",
+      "version": "1.0.0"
+    },
+    {
       "name": "draw",
       "source": "./draw",
       "description": "Create SVG diagrams with shapes, layers, and multi-format export. Use when generating graphics, building diagrams, arranging layouts.",
       "version": "2.0.0"
+    },
+    {
+      "name": "drawdown",
+      "source": "./drawdown",
+      "description": "Drawdown analysis reference \u2014 maximum drawdown, peak-to-trough, recovery time, risk metrics. Use when evaluating portfolio risk, stress-testing strategies, or measuring downside exposure.",
+      "version": "1.0.0"
     },
     {
       "name": "dream-interpreter",
@@ -1616,6 +1712,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "engine",
+      "source": "./engine",
+      "description": "Rule engine reference \u2014 decision tables, Rete algorithm, forward/backward chaining, and business rule management. Use when evaluating business rules, building decision trees, or implementing policy en",
+      "version": "1.0.0"
+    },
+    {
       "name": "env",
       "source": "./env",
       "description": "Manage environment variables with profiles, validation, and templating using bash. Use when you need to organize, switch, or audit env configs.",
@@ -1652,6 +1754,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "error",
+      "source": "./error",
+      "description": "Error handling reference \u2014 error types, exception patterns, HTTP status codes, retry strategies, and observability. Use when designing error handling, debugging failures, or implementing resilient sys",
+      "version": "1.0.0"
+    },
+    {
       "name": "error-analysis",
       "source": "./error-analysis",
       "description": "Analyze wrong answers and generate variant practice problems from mistakes. Use when diagnosing errors, locating gaps, or drilling weak topics.",
@@ -1673,6 +1781,12 @@
       "name": "etl",
       "source": "./etl",
       "description": "Build ETL pipelines with data ingestion, cleaning, and validation steps. Use when ingesting sources, transforming formats, validating data, or scheduling loads.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "eula",
+      "source": "./eula",
+      "description": "EULA drafting reference \u2014 license grant, restrictions, termination, IP ownership, and enforceability. Use when drafting or reviewing End User License Agreements for software products.",
       "version": "1.0.0"
     },
     {
@@ -1862,6 +1976,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "footer",
+      "source": "./footer",
+      "description": "Footer design reference \u2014 layout patterns, sticky footers, SEO, accessibility, legal requirements. Use when designing web page footers or implementing responsive footer components.",
+      "version": "1.0.0"
+    },
+    {
       "name": "forecast",
       "source": "./forecast",
       "description": "Calculate forecast financial metrics and business data. Use when tracking expenses, analyzing investments, or generating financial reports.",
@@ -2036,6 +2156,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "goal",
+      "source": "./goal",
+      "description": "Goal setting reference \u2014 SMART goals, OKRs, habit formation, accountability systems. Use when setting personal or professional goals, designing habit systems, or implementing OKR frameworks.",
+      "version": "1.0.0"
+    },
+    {
       "name": "golang",
       "source": "./golang",
       "description": "Build, test, lint, and format Go projects with integrated dev tooling. Use when compiling binaries, running tests, linting code, or formatting files.",
@@ -2138,6 +2264,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "header",
+      "source": "./header",
+      "description": "Header design reference \u2014 navigation patterns, sticky headers, responsive menus, accessibility. Use when designing website headers or implementing navigation components.",
+      "version": "1.0.0"
+    },
+    {
       "name": "headless-browser",
       "source": "./headless-browser",
       "description": "Automate browser tasks with scriptable headless browsing for tests and scraping. Use when scraping pages, running tests, or capturing screenshots.",
@@ -2207,6 +2339,12 @@
       "name": "http-client",
       "source": "./http-client",
       "description": "A command line tool and library for transferring data with URL syntax, supporting DICT, FILE, FTP, F http-client, c, c, client, http-client, ftp.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "hydrate",
+      "source": "./hydrate",
+      "description": "Hydration reference \u2014 daily water intake, electrolytes, dehydration signs, exercise hydration, rehydration protocols. Use when planning fluid intake for health, fitness, or recovery.",
       "version": "1.0.0"
     },
     {
@@ -2336,6 +2474,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "jit",
+      "source": "./jit",
+      "description": "Just-In-Time production reference \u2014 pull systems, kanban, takt time, inventory reduction. Use when implementing JIT manufacturing, designing pull-based workflows, or reducing inventory waste.",
+      "version": "1.0.0"
+    },
+    {
       "name": "job-scheduler",
       "source": "./job-scheduler",
       "description": "Enable Self-Service Operations: Give specific users access to your existing tools, services, and scr job-scheduler, groovy, ansible, audit, automation.",
@@ -2440,7 +2584,7 @@
     {
       "name": "ledger",
       "source": "./ledger",
-      "description": "Calculate ledger financial metrics and business data. Use when tracking expenses, analyzing investments, or generating financial reports.",
+      "description": "Double-entry bookkeeping and ledger reference \u2014 debits, credits, chart of accounts, journal entries, and financial statements. Use when understanding accounting fundamentals, designing ledger systems,",
       "version": "1.0.0"
     },
     {
@@ -2812,13 +2956,19 @@
     {
       "name": "modal",
       "source": "./modal",
-      "description": "Generate modal UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages.",
+      "description": "Modal dialog reference \u2014 accessible, performant modal windows for web and mobile. Use when building modal dialogs, understanding focus trapping, backdrop behavior, or implementing the HTML dialog elem",
       "version": "1.0.0"
     },
     {
       "name": "modbus",
       "source": "./modbus",
       "description": "Modbus communication protocol tool. Use when json modbus tasks, csv modbus tasks, checking modbus status.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "mood",
+      "source": "./mood",
+      "description": "Mood and emotional wellness reference \u2014 mood science, regulation strategies, journaling techniques, emotional literacy. Use when understanding emotional patterns, designing mood tracking systems, or i",
       "version": "1.0.0"
     },
     {
@@ -3062,6 +3212,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "pagination",
+      "source": "./pagination",
+      "description": "Pagination pattern reference \u2014 offset, cursor, keyset, and hybrid strategies for APIs and databases. Use when designing paginated endpoints, choosing pagination strategies, or optimizing large dataset",
+      "version": "1.0.0"
+    },
+    {
       "name": "paint",
       "source": "./paint",
       "description": "Generate color palettes, gradients, and textures. Use when creating harmonized palettes, previewing schemes, converting color spaces, making patterns.",
@@ -3280,7 +3436,7 @@
     {
       "name": "popover",
       "source": "./popover",
-      "description": "Generate popover UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages.",
+      "description": "Popover UI reference \u2014 the HTML Popover API, tooltip patterns, positioning strategies, and accessible floating elements. Use when building popovers, tooltips, dropdowns, or understanding the new Popov",
       "version": "1.0.0"
     },
     {
@@ -3570,6 +3726,18 @@
       "source": "./review-responder",
       "description": "\u8bc4\u4ef7\u56de\u590d\u52a9\u624b\u3002\u597d\u8bc4\u56de\u590d\u3001\u5dee\u8bc4\u5904\u7406\u3001\u56de\u590d\u6a21\u677f\u3001\u8bc4\u4ef7\u5206\u6790\u3001\u6539\u8fdb\u5efa\u8bae\u3001\u6279\u91cf\u56de\u590d\u3002Review response assistant with positive, negative, templates, analysis, improvement.",
       "version": "2.0.0"
+    },
+    {
+      "name": "reward",
+      "source": "./reward",
+      "description": "Reward system design reference \u2014 behavioral reinforcement, loyalty programs, gamification, incentive structures. Use when designing reward programs, loyalty systems, or behavioral incentive mechanisms",
+      "version": "1.0.0"
+    },
+    {
+      "name": "ribbon",
+      "source": "./ribbon",
+      "description": "Ribbon UI component reference \u2014 design patterns, accessibility, responsive layouts, implementation. Use when designing ribbon toolbars, implementing Office-style command bars, or building complex tool",
+      "version": "1.0.0"
     },
     {
       "name": "ring-security",
@@ -4010,6 +4178,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "stretch",
+      "source": "./stretch",
+      "description": "Stretching and flexibility reference \u2014 dynamic warm-ups, static holds, PNF techniques, and mobility routines. Use when designing warm-up protocols, improving flexibility, or preventing movement injuri",
+      "version": "1.0.0"
+    },
+    {
       "name": "stripe-manager",
       "source": "./stripe-manager",
       "description": "Manage Stripe payments, customers, and subscriptions from terminal. Use when tracking payments, checking balances, summarizing revenue, exporting data.",
@@ -4103,6 +4277,12 @@
       "name": "system-hardener",
       "source": "./system-hardener",
       "description": "Lynis - Security auditing tool for Linux, macOS, and UNIX-based systems. Assists with compliance tes system-hardener, shell, auditing, compliance, devops.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "tab",
+      "source": "./tab",
+      "description": "Tab UI component reference \u2014 design patterns, accessibility, state management, responsive tabs. Use when implementing tabbed interfaces, designing tab navigation, or building accessible tab components",
       "version": "1.0.0"
     },
     {
@@ -4272,6 +4452,12 @@
       "source": "./tokencount",
       "description": "Count words, characters, and estimate GPT tokens with readability. Use when tracking length, checking budgets, comparing complexity.",
       "version": "3.0.0"
+    },
+    {
+      "name": "tooltip",
+      "source": "./tooltip",
+      "description": "Tooltip UI component reference \u2014 positioning, accessibility, trigger patterns, animation. Use when implementing tooltips, popovers, or contextual help overlays in web interfaces.",
+      "version": "1.0.0"
     },
     {
       "name": "tpm",
@@ -4505,6 +4691,12 @@
       "name": "watch",
       "source": "./watch",
       "description": "Monitor file and directory changes using CLI watchers. Use when you need to watch for file modifications, track change history, filter events,",
+      "version": "1.0.0"
+    },
+    {
+      "name": "watermark",
+      "source": "./watermark",
+      "description": "Watermark reference \u2014 visible and invisible watermarking, steganography, copyright protection, detection. Use when implementing watermarks for images, documents, or media, or understanding digital rig",
       "version": "1.0.0"
     },
     {

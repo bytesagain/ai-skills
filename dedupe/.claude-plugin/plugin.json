@@ -1,0 +1,9 @@
+{
+  "name": "dedupe",
+  "description": "Deduplication reference \u2014 exact matching, fuzzy matching, hash-based dedup, bloom filters, and data quality. Use when removing duplicate records, files, or data entries.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

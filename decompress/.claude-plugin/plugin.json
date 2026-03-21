@@ -1,0 +1,9 @@
+{
+  "name": "decompress",
+  "description": "Decompression reference \u2014 archive formats, algorithms, streaming extraction, and corruption recovery. Use when extracting archives, choosing compression formats, or troubleshooting corrupt files.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}
