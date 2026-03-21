@@ -1,0 +1,9 @@
+{
+  "name": "biomass",
+  "description": "Biomass energy reference \u2014 feedstock properties, combustion, gasification, pyrolysis, and pelletization. Use when evaluating biomass resources, designing conversion systems, or calculating heating val",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

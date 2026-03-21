@@ -392,6 +392,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "biomass",
+      "source": "./biomass",
+      "description": "Biomass energy reference \u2014 feedstock properties, combustion, gasification, pyrolysis, and pelletization. Use when evaluating biomass resources, designing conversion systems, or calculating heating val",
+      "version": "1.0.0"
+    },
+    {
       "name": "bizplanner",
       "source": "./bizplanner",
       "description": "Create business plans, lean canvases, and financial projections. Use when pitching investors, planning startups, or modeling revenue scenarios.",
@@ -438,6 +444,12 @@
       "source": "./bmi-calculator",
       "description": "Calculate BMI, ideal weight, and health plans for adults and children. Use when checking body metrics, interpreting results, or tracking weight.",
       "version": "2.0.0"
+    },
+    {
+      "name": "bms",
+      "source": "./bms",
+      "description": "Battery Management System reference \u2014 cell balancing, SOC estimation, thermal management, and protection circuits. Use when designing BMS for lithium-ion packs, evaluating battery safety, or understan",
+      "version": "1.0.0"
     },
     {
       "name": "boiler",
