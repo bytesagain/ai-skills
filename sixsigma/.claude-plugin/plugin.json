@@ -1,0 +1,9 @@
+{
+  "name": "sixsigma",
+  "description": "Six Sigma methodology reference \u2014 DMAIC process, statistical tools, control charts, and capability analysis. Use when running improvement projects, analyzing process variation, or preparing for Six Si",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

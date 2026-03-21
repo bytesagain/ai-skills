@@ -1,0 +1,9 @@
+{
+  "name": "lidar",
+  "description": "LiDAR technology reference \u2014 point cloud processing, scan types, coordinate systems, and applications. Use when working with LiDAR data, configuring scanners, or processing 3D point clouds.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

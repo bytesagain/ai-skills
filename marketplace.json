@@ -62,6 +62,12 @@
       "version": "2.0.1"
     },
     {
+      "name": "agv",
+      "source": "./agv",
+      "description": "Automated guided vehicle route planner. Use when json agv tasks, csv agv tasks, checking agv status.",
+      "version": "1.0.0"
+    },
+    {
       "name": "ai-code-helper",
       "source": "./ai-code-helper",
       "description": "Review, validate, and generate code with AI-powered linting. Use when fixing bugs, generating boilerplate, formatting, or running analysis.",
@@ -107,6 +113,18 @@
       "name": "amortize",
       "source": "./amortize",
       "description": "Calculate amortize financial metrics and business data. Use when tracking expenses, analyzing investments, or generating financial reports.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "amr",
+      "source": "./amr",
+      "description": "Autonomous mobile robot fleet manager. Use when json amr tasks, csv amr tasks, checking amr status.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "andon",
+      "source": "./andon",
+      "description": "Andon alert and production status board. Use when json andon tasks, csv andon tasks, checking andon status.",
       "version": "1.0.0"
     },
     {
@@ -446,6 +464,12 @@
       "version": "3.0.3"
     },
     {
+      "name": "breaker",
+      "source": "./breaker",
+      "description": "Circuit breaker sizing and coordination tool. Use when json breaker tasks, csv breaker tasks, checking breaker status.",
+      "version": "1.0.0"
+    },
+    {
       "name": "brook",
       "source": "./brook",
       "description": "Configure cross-platform proxy and VPN tunnels with programmable rules. Use when setting up SOCKS proxies, bypassing firewalls, or routing traffic.",
@@ -473,6 +497,12 @@
       "name": "builder",
       "source": "./builder",
       "description": "builder tool for creating outputs",
+      "version": "1.0.0"
+    },
+    {
+      "name": "busbar",
+      "source": "./busbar",
+      "description": "Busbar current capacity calculator. Use when json busbar tasks, csv busbar tasks, checking busbar status.",
       "version": "1.0.0"
     },
     {
@@ -728,6 +758,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "cobot",
+      "source": "./cobot",
+      "description": "Collaborative robot task planner. Use when json cobot tasks, csv cobot tasks, checking cobot status.",
+      "version": "1.0.0"
+    },
+    {
       "name": "code-generator",
       "source": "./code-generator",
       "description": "Multi-language code generator. Generate functions, classes, API endpoints, CRUD operations, test code, refactoring suggestions, language conversion guides.",
@@ -872,6 +908,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "conduit",
+      "source": "./conduit",
+      "description": "Conduit fill and sizing calculator. Use when json conduit tasks, csv conduit tasks, checking conduit status.",
+      "version": "1.0.0"
+    },
+    {
       "name": "config",
       "source": "./config",
       "description": "Manage app configuration files with init, list, and add operations. Use when initializing configs, listing settings, switching environments.",
@@ -888,6 +930,12 @@
       "source": "./contact-book",
       "description": "Store personal contacts with tags, search, and relationship tracking. Use when adding contacts, searching details, planning follow-ups.",
       "version": "2.0.0"
+    },
+    {
+      "name": "contactor",
+      "source": "./contactor",
+      "description": "Contactor and starter selection tool. Use when json contactor tasks, csv contactor tasks, checking contactor status.",
+      "version": "1.0.0"
     },
     {
       "name": "container-analyzer",
@@ -1562,6 +1610,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "endeffector",
+      "source": "./endeffector",
+      "description": "End effector design reference \u2014 tool types, mounting standards, TCP calibration, and payload sizing. Use when selecting robot end-effectors, designing custom tooling, or configuring tool center points",
+      "version": "1.0.0"
+    },
+    {
       "name": "env",
       "source": "./env",
       "description": "Manage environment variables with profiles, validation, and templating using bash. Use when you need to organize, switch, or audit env configs.",
@@ -1764,6 +1818,12 @@
       "source": "./flowdo",
       "description": "Manage tasks in kanban columns with priorities and workflow tracking. Use when organizing tasks, moving items through stages, or tracking completion.",
       "version": "2.0.0"
+    },
+    {
+      "name": "fmea",
+      "source": "./fmea",
+      "description": "Failure mode and effects analysis tool. Use when json fmea tasks, csv fmea tasks, checking fmea status.",
+      "version": "1.0.0"
     },
     {
       "name": "focus",
@@ -2024,6 +2084,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "gripper",
+      "source": "./gripper",
+      "description": "Robot gripper reference \u2014 jaw types, force calculation, pneumatic vs electric, and end-effector selection. Use when designing gripping systems, selecting actuators, or sizing grippers for robotic appl",
+      "version": "1.0.0"
+    },
+    {
       "name": "guided-learning-cn",
       "source": "./guided-learning-cn",
       "description": "\u4e2d\u6587\u5f15\u5bfc\u5f0f\u5b66\u4e60\u52a9\u624b\u3002\u5b66\u4e60\u52a9\u624b\u3001\u77e5\u8bc6\u5b66\u4e60\u3001\u5b66\u4e60\u8ba1\u5212\u3001\u5b66\u4e60\u8def\u7ebf\u3001\u6982\u5ff5\u8bb2\u89e3\u3001\u590d\u4e60\u5907\u8003\u3001\u8003\u8bd5\u590d\u4e60\u3001\u8d39\u66fc\u5b66\u4e60\u6cd5\u3001\u5faa\u5e8f\u6e10\u8fdb\u5b66\u4e60\u3001\u5b66\u79d1\u8f85\u5bfc\u3001\u81ea\u5b66\u3001\u6559\u7a0b\u3001\u8bfe\u7a0b\u5b66\u4e60\u3001\u6559\u6750\u5b66\u4e60\u3001\u77e5\u8bc6\u70b9\u603b\u7ed3\u3001\u8bb0\u5fc6\u5361\u7247\u3001\u95ea\u5361\u3001Anki\u3001\u5b66\u4e60\u65b9\u6cd5\u3001\u4e00\u5bf9\u4e00\u8f85\u5bfc\u3001\u81ea\u6d4b\u8bd5\u5377\u3001\u9009\u62e9\u9898\u3001\u7b80\u7b54\u9898\u3002Chinese guided learning assistant w.",
@@ -2168,6 +2234,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "iiot",
+      "source": "./iiot",
+      "description": "Industrial IoT device and data manager. Use when json iiot tasks, csv iiot tasks, checking iiot status.",
+      "version": "1.0.0"
+    },
+    {
       "name": "image-labeler",
       "source": "./image-labeler",
       "description": "LabelImg is now part of the Label Studio community. The popular image annotation tool created by Tzu image-labeler, python, annotations, deep-learning.",
@@ -2220,6 +2292,12 @@
       "source": "./inventory-manager",
       "description": "Track inventory with stock levels, pricing, and low-stock alerts. Use when managing product inventory.",
       "version": "3.0.0"
+    },
+    {
+      "name": "inverter",
+      "source": "./inverter",
+      "description": "Inverter and VFD parameter calculator. Use when json inverter tasks, csv inverter tasks, checking inverter status.",
+      "version": "1.0.0"
     },
     {
       "name": "investment-portfolio",
@@ -2306,6 +2384,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "kaizen",
+      "source": "./kaizen",
+      "description": "Kaizen continuous improvement reference \u2014 event planning, PDCA cycle, gemba walks, and A3 problem solving. Use when running improvement events, coaching teams on continuous improvement, or documenting",
+      "version": "1.0.0"
+    },
+    {
       "name": "keyvault",
       "source": "./keyvault",
       "description": "Generate and manage passwords with strength auditing and secure vault storage. Use when creating strong passwords, rotating credentials, auditing vaults.",
@@ -2354,6 +2438,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "ledger",
+      "source": "./ledger",
+      "description": "Calculate ledger financial metrics and business data. Use when tracking expenses, analyzing investments, or generating financial reports.",
+      "version": "1.0.0"
+    },
+    {
       "name": "legal-advisor",
       "source": "./legal-advisor",
       "description": "Generate legal templates for labor, consumer, rental, and traffic disputes. Use when drafting dispute letters, reviewing tenant rights, preparing claims.",
@@ -2370,6 +2460,12 @@
       "source": "./license-picker",
       "description": "Choose and generate open source license files for projects. Use when selecting project licenses.",
       "version": "3.0.0"
+    },
+    {
+      "name": "lidar",
+      "source": "./lidar",
+      "description": "LiDAR technology reference \u2014 point cloud processing, scan types, coordinate systems, and applications. Use when working with LiDAR data, configuring scanners, or processing 3D point clouds.",
+      "version": "1.0.0"
     },
     {
       "name": "lifegoals",
@@ -2454,6 +2550,12 @@
       "source": "./loan-calculator",
       "description": "\u8d37\u6b3e\u8ba1\u7b97\u5668\u3002\u7b49\u989d\u672c\u606f/\u7b49\u989d\u672c\u91d1\u8ba1\u7b97\u3001\u65b9\u6848\u5bf9\u6bd4\u3001\u63d0\u524d\u8fd8\u6b3e\u5206\u6790\u3001\u8d37\u6b3e\u80fd\u529b\u8bc4\u4f30\u3001\u8fd8\u6b3e\u8ba1\u5212\u8868\u3001\u518d\u878d\u8d44\u5206\u6790\u3002Loan calculator with equal installment/principal, comparison, prepayment analysis, affordability, schedule.",
       "version": "2.0.0"
+    },
+    {
+      "name": "lockout",
+      "source": "./lockout",
+      "description": "Lockout tagout safety procedure manager. Use when json lockout tasks, csv lockout tasks, checking lockout status.",
+      "version": "1.0.0"
     },
     {
       "name": "logbook",
@@ -2708,6 +2810,18 @@
       "version": "3.0.0"
     },
     {
+      "name": "modal",
+      "source": "./modal",
+      "description": "Generate modal UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "modbus",
+      "source": "./modbus",
+      "description": "Modbus communication protocol tool. Use when json modbus tasks, csv modbus tasks, checking modbus status.",
+      "version": "1.0.0"
+    },
+    {
       "name": "moodring",
       "source": "./moodring",
       "description": "Log daily moods, spot emotional patterns, and review wellbeing trends over time. Use when logging mood, spotting patterns, reviewing weekly wellbeing.",
@@ -2918,6 +3032,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "osha",
+      "source": "./osha",
+      "description": "OSHA compliance reference \u2014 workplace safety standards, hazard categories, inspection prep, and recordkeeping. Use when reviewing safety regulations, preparing for audits, or building safety programs.",
+      "version": "1.0.0"
+    },
+    {
       "name": "outline",
       "source": "./outline",
       "description": "Generate document outlines with TOC, chapter planning, and hierarchy management. Use when structuring documents, planning chapters, creating outlines.",
@@ -3074,6 +3194,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "pid",
+      "source": "./pid",
+      "description": "PID controller tuning and simulation tool. Use when json pid tasks, csv pid tasks, checking pid status.",
+      "version": "1.0.0"
+    },
+    {
       "name": "pinduoduo-listing",
       "source": "./pinduoduo-listing",
       "description": "Write Pinduoduo product listings with SEO titles. Use when drafting headlines, optimizing detail pages, writing SKU copy, planning flash sale text.",
@@ -3106,7 +3232,7 @@
     {
       "name": "plc",
       "source": "./plc",
-      "description": "Programmable logic controller programming helper",
+      "description": "PLC programming reference \u2014 ladder logic, structured text, function blocks, and IEC 61131-3 standards. Use when writing PLC programs, debugging rungs, or reviewing automation logic.",
       "version": "1.0.0"
     },
     {
@@ -3128,6 +3254,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "poka-yoke",
+      "source": "./poka-yoke",
+      "description": "Mistake-proofing technique manager. Use when json poka yoke tasks, csv poka yoke tasks, checking poka yoke status.",
+      "version": "1.0.0"
+    },
+    {
       "name": "policy",
       "source": "./policy",
       "description": "Audit and enforce security policy baselines. Use when generating policy docs, checking compliance strength, rotating access controls, auditing configs.",
@@ -3146,6 +3278,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "popover",
+      "source": "./popover",
+      "description": "Generate popover UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages.",
+      "version": "1.0.0"
+    },
+    {
       "name": "portcheck",
       "source": "./portcheck",
       "description": "Scan open ports and validate network services. Use when checking port availability, validating firewall rules, generating reports, linting configs.",
@@ -3156,6 +3294,12 @@
       "source": "./portfolio",
       "description": "Manage investment portfolios. Use when adding positions, analyzing allocation, calculating returns, or generating rebalance advice.",
       "version": "3.4.0"
+    },
+    {
+      "name": "ppe",
+      "source": "./ppe",
+      "description": "Personal protective equipment tracker. Use when json ppe tasks, csv ppe tasks, checking ppe status.",
+      "version": "1.0.0"
     },
     {
       "name": "ppt-outline",
@@ -3338,6 +3482,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "rectifier",
+      "source": "./rectifier",
+      "description": "Rectifier circuit design calculator. Use when json rectifier tasks, csv rectifier tasks, checking rectifier status.",
+      "version": "1.0.0"
+    },
+    {
       "name": "redis",
       "source": "./redis",
       "description": "Connect, query, and monitor Redis instances. Use when checking key health, validating data types, generating backups, formatting results, linting configs.",
@@ -3371,6 +3521,12 @@
       "name": "registration",
       "source": "./registration",
       "description": "Manage registration records and attendee data. Use when logging sign-ups, checking capacity, converting export formats, generating confirmation reports.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "relay",
+      "source": "./relay",
+      "description": "Relay logic and wiring diagram helper. Use when json relay tasks, csv relay tasks, checking relay status.",
       "version": "1.0.0"
     },
     {
@@ -3456,6 +3612,12 @@
       "source": "./roomba-control",
       "description": "Command iRobot Roomba vacuums from the terminal. Use when starting cleans, configuring maps, checking status, listing schedules, adding no-go zones.",
       "version": "2.0.0"
+    },
+    {
+      "name": "rotate",
+      "source": "./rotate",
+      "description": "Generate rotate UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages.",
+      "version": "1.0.0"
     },
     {
       "name": "scada",
@@ -3620,6 +3782,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "sixsigma",
+      "source": "./sixsigma",
+      "description": "Six Sigma methodology reference \u2014 DMAIC process, statistical tools, control charts, and capability analysis. Use when running improvement projects, analyzing process variation, or preparing for Six Si",
+      "version": "1.0.0"
+    },
+    {
       "name": "sketch",
       "source": "./sketch",
       "description": "Generate ASCII art including boxes, tables, trees, and banners. Use when creating text diagrams.",
@@ -3725,6 +3893,12 @@
       "name": "sort",
       "source": "./sort",
       "description": "Sort files, lines, and columns with custom ordering and dedup. Use when scanning duplicates, monitoring changes, reporting results, alerting anomalies.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "spc",
+      "source": "./spc",
+      "description": "Statistical process control chart generator. Use when json spc tasks, csv spc tasks, checking spc status.",
       "version": "1.0.0"
     },
     {
@@ -3890,6 +4064,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "switchgear",
+      "source": "./switchgear",
+      "description": "Switchgear specification manager. Use when json switchgear tasks, csv switchgear tasks, checking switchgear status.",
+      "version": "1.0.0"
+    },
+    {
       "name": "symptom",
       "source": "./symptom",
       "description": "Log health symptoms, track patterns, and chart trends. Use when logging symptoms, tracking frequency, charting trends, reviewing patterns.",
@@ -3923,6 +4103,12 @@
       "name": "system-hardener",
       "source": "./system-hardener",
       "description": "Lynis - Security auditing tool for Linux, macOS, and UNIX-based systems. Assists with compliance tes system-hardener, shell, auditing, compliance, devops.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "tagout",
+      "source": "./tagout",
+      "description": "Tagout safety compliance tracker. Use when json tagout tasks, csv tagout tasks, checking tagout status.",
       "version": "1.0.0"
     },
     {
@@ -4122,6 +4308,12 @@
       "source": "./training-plan",
       "description": "Design training plans with curriculum, evaluation, and scheduling. Use when adding modules, prioritizing gaps, planning sessions, reviewing progress.",
       "version": "2.0.0"
+    },
+    {
+      "name": "transformer",
+      "source": "./transformer",
+      "description": "Transformer sizing and specification tool. Use when base64 transformer tasks, hex transformer tasks, upper transformer tasks.",
+      "version": "1.0.0"
     },
     {
       "name": "translator-pro",

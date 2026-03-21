@@ -1,0 +1,9 @@
+{
+  "name": "osha",
+  "description": "OSHA compliance reference \u2014 workplace safety standards, hazard categories, inspection prep, and recordkeeping. Use when reviewing safety regulations, preparing for audits, or building safety programs.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "endeffector",
+  "description": "End effector design reference \u2014 tool types, mounting standards, TCP calibration, and payload sizing. Use when selecting robot end-effectors, designing custom tooling, or configuring tool center points",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}
