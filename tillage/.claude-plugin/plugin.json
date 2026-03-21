@@ -1,0 +1,9 @@
+{
+  "name": "tillage",
+  "description": "Soil tillage reference \u2014 tillage types, equipment, soil preparation, conservation tillage, and no-till farming. Use when planning field operations, selecting tillage equipment, or managing soil health",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

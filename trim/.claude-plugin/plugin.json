@@ -1,0 +1,9 @@
+{
+  "name": "trim",
+  "description": "Data trimming reference \u2014 whitespace trimming, string cleanup, data truncation, outlier trimming, and signal processing. Use when cleaning text data, removing noise, or preparing datasets by trimming ",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "annotate",
+  "description": "Code and data annotation reference \u2014 type annotations, JSDoc/docstrings, data labeling for ML, and git blame annotation. Use when documenting code, adding type hints, labeling datasets, or tracing cod",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

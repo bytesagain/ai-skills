@@ -1,0 +1,9 @@
+{
+  "name": "tariff",
+  "description": "International trade tariff reference \u2014 HS codes, duty rates, trade agreements, customs valuation, and tariff classification. Use when classifying goods for import/export, calculating duties, or naviga",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

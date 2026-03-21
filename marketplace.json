@@ -32,6 +32,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "addon",
+      "source": "./addon",
+      "description": "Browser and software addon architecture reference \u2014 extension APIs, manifest formats, lifecycle hooks, and plugin security models. Use when building browser extensions, designing plugin systems, or un",
+      "version": "1.0.0"
+    },
+    {
       "name": "adversarial-robustness-toolbox",
       "source": "./adversarial-robustness-toolbox",
       "description": "Adversarial Robustness Toolbox (ART) - Python Library for Machine Learning Security - Evasion, Poiso adversarial robustness toolbox, python.",
@@ -92,6 +98,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "align",
+      "source": "./align",
+      "description": "Data and text alignment reference \u2014 sequence alignment, text formatting, memory alignment, and CSS/layout alignment. Use when aligning sequences, formatting columnar output, or understanding byte alig",
+      "version": "1.0.0"
+    },
+    {
       "name": "alipay-helper",
       "source": "./alipay-helper",
       "description": "Integrate WeChat Pay and Alipay with refund handling and callbacks. Use when adding payment flows, debugging webhooks, or testing sandbox.",
@@ -131,6 +143,12 @@
       "name": "animation",
       "source": "./animation",
       "description": "Generate CSS and SVG animation code snippets using bash and Python. Use when building UI animations, keyframes, or transition effects.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "annotate",
+      "source": "./annotate",
+      "description": "Code and data annotation reference \u2014 type annotations, JSDoc/docstrings, data labeling for ML, and git blame annotation. Use when documenting code, adding type hints, labeling datasets, or tracing cod",
       "version": "1.0.0"
     },
     {
@@ -204,6 +222,12 @@
       "source": "./arbitrage-finder",
       "description": "Scan cross-exchange price gaps and score arbitrage profitability. Use when comparing crypto prices, tracking spreads, or evaluating trades.",
       "version": "2.0.0"
+    },
+    {
+      "name": "assert",
+      "source": "./assert",
+      "description": "Assertion patterns reference \u2014 guard clauses, preconditions, invariants, and contract programming. Use when writing defensive code, validating inputs, or implementing design-by-contract.",
+      "version": "1.0.0"
     },
     {
       "name": "autohotkey",
@@ -359,6 +383,12 @@
       "name": "bingo",
       "source": "./bingo",
       "description": "Generate and play bingo cards with number calling and verification. Use when running bingo games.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "biogas",
+      "source": "./biogas",
+      "description": "Biogas technology reference \u2014 anaerobic digestion, methane yield, feedstock ratios, and upgrading. Use when designing biogas plants, optimizing digester performance, or evaluating feedstock options.",
       "version": "1.0.0"
     },
     {
@@ -1040,9 +1070,21 @@
       "version": "1.0.0"
     },
     {
+      "name": "conveyor",
+      "source": "./conveyor",
+      "description": "Conveyor system reference \u2014 belt types, motor sizing, throughput calculations, and material handling automation. Use when designing conveyor layouts, selecting belt types, or troubleshooting material ",
+      "version": "1.0.0"
+    },
+    {
       "name": "cookbook",
       "source": "./cookbook",
       "description": "Track cookbook personal activities and daily routines. Use when managing health goals, organizing tasks, or building productive habits.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "coppa",
+      "source": "./coppa",
+      "description": "COPPA compliance reference \u2014 children",
       "version": "1.0.0"
     },
     {
@@ -1502,6 +1544,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "disclaimer",
+      "source": "./disclaimer",
+      "description": "Disclaimer drafting reference \u2014 liability limitations, warranty exclusions, professional disclaimers, and regulatory requirements. Use when drafting disclaimers for websites, products, or professional",
+      "version": "1.0.0"
+    },
+    {
       "name": "discord-toolkit",
       "source": "./discord-toolkit",
       "description": "Manage Discord bots with messaging, channels, embeds, and role tools. Use when sending messages, managing channels, creating embeds.",
@@ -1790,6 +1838,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "event",
+      "source": "./event",
+      "description": "Event-driven architecture reference \u2014 event sourcing, pub/sub, CQRS, event buses, and stream processing. Use when designing event systems, implementing pub/sub, or building event-driven microservices.",
+      "version": "1.0.0"
+    },
+    {
       "name": "event-planner-pro",
       "source": "./event-planner-pro",
       "description": "Plan weddings, birthdays, and corporate events with budgets and checklists. Use when drafting budgets, building checklists, or coordinating vendors.",
@@ -1829,6 +1883,18 @@
       "name": "feedback",
       "source": "./feedback",
       "description": "Collect user feedback, categorize by theme, and track issue resolution. Use when gathering opinions, prioritizing bugs, or tracking fix progress.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "ferpa",
+      "source": "./ferpa",
+      "description": "FERPA compliance reference \u2014 student records privacy, educational rights, consent requirements, and institutional obligations under the Family Educational Rights and Privacy Act. Use when handling stu",
+      "version": "1.0.0"
+    },
+    {
+      "name": "fertigation",
+      "source": "./fertigation",
+      "description": "Fertigation reference \u2014 injecting fertilizers through irrigation systems, nutrient scheduling, injection methods, and crop-specific programs. Use when designing fertigation systems, calculating nutrie",
       "version": "1.0.0"
     },
     {
@@ -1914,6 +1980,12 @@
       "source": "./flashcard",
       "description": "Study with spaced-repetition cards that surface hard items more often. Use when memorizing vocabulary, reviewing material, or drilling key concepts.",
       "version": "2.0.0"
+    },
+    {
+      "name": "flatten",
+      "source": "./flatten",
+      "description": "Data flatten reference \u2014 nested-to-flat conversion, JSON/array flattening, dot-notation keys, depth control. Use when transforming hierarchical data into flat structures or normalizing nested records.",
+      "version": "1.0.0"
     },
     {
       "name": "flex",
@@ -2004,6 +2076,12 @@
       "source": "./fortune-teller",
       "description": "Draw tarot cards, cast I Ching hexagrams, and check daily fortunes for fun. Use when pulling spreads, casting hexagrams, or playing fortune games.",
       "version": "2.0.0"
+    },
+    {
+      "name": "freeport",
+      "source": "./freeport",
+      "description": "Free-port and free-trade zone reference \u2014 FTZ regulations, bonded logistics, duty deferral, re-export procedures. Use when planning warehouse operations in free-trade zones or managing customs-exempt ",
+      "version": "1.0.0"
     },
     {
       "name": "fridge",
@@ -2124,6 +2202,12 @@
       "source": "./geoip",
       "description": "Look up geographic location of IP addresses using ip-api.com. Use when tracing IPs. Requires curl.",
       "version": "3.0.0"
+    },
+    {
+      "name": "germination",
+      "source": "./germination",
+      "description": "Seed germination reference \u2014 imbibition, dormancy breaking, temperature/moisture requirements, testing protocols. Use when planning seed starting, evaluating germination rates, or troubleshooting poor",
+      "version": "1.0.0"
     },
     {
       "name": "gift-finder",
@@ -2822,6 +2906,12 @@
       "version": "3.0.0"
     },
     {
+      "name": "mediation",
+      "source": "./mediation",
+      "description": "Mediation and ADR reference \u2014 dispute resolution processes, mediator techniques, caucus strategy, settlement agreements. Use when preparing for mediation sessions, drafting settlement terms, or choosi",
+      "version": "1.0.0"
+    },
+    {
       "name": "medication-reminder",
       "source": "./medication-reminder",
       "description": "Track medications with dosing schedules and intake history. Use when managing prescriptions.",
@@ -3072,6 +3162,12 @@
       "source": "./nlp",
       "description": "Process text with NLP. Use when tokenizing, analyzing sentiment, extracting entities, summarizing documents, or measuring similarity.",
       "version": "3.4.0"
+    },
+    {
+      "name": "node",
+      "source": "./node",
+      "description": "Node.js runtime reference \u2014 event loop, modules, npm workflows, streams, cluster, debugging. Use when managing Node.js projects, troubleshooting runtime issues, or optimizing server performance.",
+      "version": "1.0.0"
     },
     {
       "name": "note-taker",
@@ -3332,10 +3428,22 @@
       "version": "2.0.0"
     },
     {
+      "name": "pesticide",
+      "source": "./pesticide",
+      "description": "Pesticide management reference \u2014 chemical classes, application methods, IPM strategies, residue limits, safety protocols. Use when selecting pest control products, calculating spray rates, or managing",
+      "version": "1.0.0"
+    },
+    {
       "name": "pet-care",
       "source": "./pet-care",
       "description": "Pet care guide with feeding, vaccination, and health logging. Use when caring for pets.",
       "version": "3.0.0"
+    },
+    {
+      "name": "phosphate",
+      "source": "./phosphate",
+      "description": "Phosphate fertilizer reference \u2014 P2O5 forms, application timing, soil testing, runoff management, crop requirements. Use when planning phosphorus fertilization programs or managing phosphate resources",
+      "version": "1.0.0"
     },
     {
       "name": "php-analyzer",
@@ -3462,6 +3570,12 @@
       "source": "./ppt-outline",
       "description": "PPT outline and HTML presentation generator. PPT\u5927\u7eb2\u3001PPT\u6a21\u677f\u3001\u6f14\u793a\u6587\u7a3f\u3001presentation\u3001PowerPoint\u3001\u5e7b\u706f\u7247\u3001slides\u3001HTML\u6f14\u793a\u6587\u7a3f\u3001HTML slides\u3001\u6d4f\u89c8\u5668\u6f14\u793a\u3001\u5546\u4e1a\u8def\u6f14\u3001pitch deck\u3001BP\u5546\u4e1a\u8ba1\u5212\u4e66\u3001business.",
       "version": "2.0.0"
+    },
+    {
+      "name": "precedent",
+      "source": "./precedent",
+      "description": "Legal precedent reference \u2014 stare decisis, case law hierarchy, distinguishing, overruling, persuasive authority. Use when researching binding case law, analyzing judicial reasoning, or building legal ",
+      "version": "1.0.0"
     },
     {
       "name": "press-release",
@@ -3734,6 +3848,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "rfid",
+      "source": "./rfid",
+      "description": "RFID technology reference \u2014 tag types, frequency bands, read ranges, EPC standards, inventory tracking. Use when designing RFID systems, selecting tags/readers, or implementing warehouse tracking solu",
+      "version": "1.0.0"
+    },
+    {
       "name": "ribbon",
       "source": "./ribbon",
       "description": "Ribbon UI component reference \u2014 design patterns, accessibility, responsive layouts, implementation. Use when designing ribbon toolbars, implementing Office-style command bars, or building complex tool",
@@ -3842,6 +3962,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "seedbed",
+      "source": "./seedbed",
+      "description": "Seedbed preparation reference \u2014 tillage methods, soil structure, moisture management, planting surface quality. Use when preparing fields for sowing, evaluating seedbed conditions, or selecting tillag",
+      "version": "1.0.0"
+    },
+    {
       "name": "seedgen",
       "source": "./seedgen",
       "description": "Generate reproducible seeds and deterministic test data. Use when creating random seeds, rotating salt values, auditing randomness, storing seed records.",
@@ -3881,6 +4007,12 @@
       "name": "shadow",
       "source": "./shadow",
       "description": "Generate and preview CSS shadow effects using CLI tools. Use when you need box-shadow, text-shadow, drop-shadow, layered shadows, presets, animations,",
+      "version": "1.0.0"
+    },
+    {
+      "name": "shell",
+      "source": "./shell",
+      "description": "Shell scripting reference \u2014 Bash syntax, redirections, process substitution, signal handling, debugging techniques. Use when writing shell scripts, troubleshooting Bash behavior, or automating system ",
       "version": "1.0.0"
     },
     {
@@ -3932,6 +4064,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "silo",
+      "source": "./silo",
+      "description": "Grain silo reference \u2014 storage types, aeration, moisture management, fumigation, and safe handling of bulk grain. Use when designing grain storage, managing post-harvest quality, or ensuring silo safe",
+      "version": "1.0.0"
+    },
+    {
       "name": "site-change-alert",
       "source": "./site-change-alert",
       "description": "Best and simplest tool for website change detection, web page monitoring, and website change alerts. site-change-alert, python, back-in-stock, change-alert.",
@@ -3972,6 +4110,12 @@
       "source": "./skill-template",
       "description": "OpenClaw Skill template generator. Create skill scaffolds, validate structure, enhance SKILL.md, generate command frameworks, tips, publish checklists.",
       "version": "2.0.0"
+    },
+    {
+      "name": "sku",
+      "source": "./sku",
+      "description": "SKU management reference \u2014 naming conventions, hierarchy design, lifecycle management, and inventory classification. Use when designing product catalogs, creating SKU schemas, or optimizing inventory ",
+      "version": "1.0.0"
     },
     {
       "name": "slack-automator",
@@ -4064,6 +4208,18 @@
       "version": "1.0.0"
     },
     {
+      "name": "sorter",
+      "source": "./sorter",
+      "description": "Sorting algorithm and system reference \u2014 comparison sorts, distribution sorts, parallel sorting, and industrial sortation. Use when choosing sorting strategies, understanding algorithmic complexity, o",
+      "version": "1.0.0"
+    },
+    {
+      "name": "sox",
+      "source": "./sox",
+      "description": "Sarbanes-Oxley Act compliance reference \u2014 SOX sections, internal controls, audit requirements, and IT governance. Use when evaluating SOX compliance, designing internal controls, or preparing for fina",
+      "version": "1.0.0"
+    },
+    {
       "name": "spc",
       "source": "./spc",
       "description": "Statistical process control chart generator. Use when json spc tasks, csv spc tasks, checking spc status.",
@@ -4097,6 +4253,12 @@
       "name": "spend-tracker",
       "source": "./spend-tracker",
       "description": "Track expenses, categorize spending, and generate finance reports. Use when logging purchases, checking balances, converting currencies, analyzing trends.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "split",
+      "source": "./split",
+      "description": "Data splitting techniques and strategies reference \u2014 partitioning datasets, string splitting, file splitting, and ML train/test splits. Use when dividing data, chunking files, or designing data partit",
       "version": "1.0.0"
     },
     {
@@ -4146,6 +4308,12 @@
       "source": "./startup-tools",
       "description": "\u521b\u4e1a\u5de5\u5177\u5305\u3002\u521b\u4e1a\u6e05\u5355\u3001\u516c\u53f8\u6ce8\u518c\u3001MVP\u89c4\u5212\u3001\u878d\u8d44\u51c6\u5907\u3001\u6cd5\u5f8b\u5408\u89c4\u3001\u589e\u957f\u7b56\u7565\u3002Startup toolkit with checklist, register, MVP planning, fundraise, legal compliance.",
       "version": "2.0.0"
+    },
+    {
+      "name": "statute",
+      "source": "./statute",
+      "description": "Legal statutes reference \u2014 statutory interpretation, legislative process, types of statutes, and citation formats. Use when researching laws, understanding statutory construction, or analyzing legisla",
+      "version": "1.0.0"
     },
     {
       "name": "step",
@@ -4200,6 +4368,12 @@
       "source": "./study-plan",
       "description": "Create study plans for exams with schedules and reminders. Use when adding tasks, planning reviews, tracking progress, prioritizing subjects.",
       "version": "2.0.0"
+    },
+    {
+      "name": "subpoena",
+      "source": "./subpoena",
+      "description": "Subpoena law reference \u2014 types of subpoenas, service requirements, compliance obligations, and motion to quash. Use when issuing, receiving, or responding to subpoenas in legal proceedings.",
+      "version": "1.0.0"
     },
     {
       "name": "subtitle-translator",
@@ -4304,6 +4478,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "tariff",
+      "source": "./tariff",
+      "description": "International trade tariff reference \u2014 HS codes, duty rates, trade agreements, customs valuation, and tariff classification. Use when classifying goods for import/export, calculating duties, or naviga",
+      "version": "1.0.0"
+    },
+    {
       "name": "task-planner",
       "source": "./task-planner",
       "description": "Plan and prioritize tasks with due dates and reminders. Use when adding tasks, listing priorities, tracking completion, planning schedules.",
@@ -4400,6 +4580,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "thresh",
+      "source": "./thresh",
+      "description": "Grain threshing reference \u2014 threshing methods, combine harvester operation, crop-specific settings, grain loss reduction, and post-harvest handling. Use when planning harvest operations, optimizing co",
+      "version": "1.0.0"
+    },
+    {
       "name": "tidyfiles",
       "source": "./tidyfiles",
       "description": "Sort and organize files into folders by type, date, or rules. Use when decluttering dirs, checking structure, running cleanup, generating reports.",
@@ -4409,6 +4595,12 @@
       "name": "tidyup",
       "source": "./tidyup",
       "description": "Find duplicates, reclaim disk space, and clean storage. Use when scanning dupes, checking usage, running cleanup, analyzing age, generating reports.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "tillage",
+      "source": "./tillage",
+      "description": "Soil tillage reference \u2014 tillage types, equipment, soil preparation, conservation tillage, and no-till farming. Use when planning field operations, selecting tillage equipment, or managing soil health",
       "version": "1.0.0"
     },
     {
@@ -4526,6 +4718,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "trim",
+      "source": "./trim",
+      "description": "Data trimming reference \u2014 whitespace trimming, string cleanup, data truncation, outlier trimming, and signal processing. Use when cleaning text data, removing noise, or preparing datasets by trimming ",
+      "version": "1.0.0"
+    },
+    {
       "name": "trivia",
       "source": "./trivia",
       "description": "Host trivia rounds with question banks, scoring, and boards. Use when running quizzes, checking answers, analyzing scores, generating rounds.",
@@ -4590,6 +4788,12 @@
       "source": "./uptime",
       "description": "Monitor website availability and response times. Use when checking site status, benchmarking latency, tracking uptime history, or alerting on outages.",
       "version": "3.0.0"
+    },
+    {
+      "name": "urea",
+      "source": "./urea",
+      "description": "Urea fertilizer reference \u2014 nitrogen management, application methods, volatilization loss, soil chemistry, and crop-specific rates. Use when planning nitrogen fertilization, calculating urea rates, or",
+      "version": "1.0.0"
     },
     {
       "name": "usb",

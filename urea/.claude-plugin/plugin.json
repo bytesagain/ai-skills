@@ -1,0 +1,9 @@
+{
+  "name": "urea",
+  "description": "Urea fertilizer reference \u2014 nitrogen management, application methods, volatilization loss, soil chemistry, and crop-specific rates. Use when planning nitrogen fertilization, calculating urea rates, or",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

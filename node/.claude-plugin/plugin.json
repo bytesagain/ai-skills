@@ -1,0 +1,9 @@
+{
+  "name": "node",
+  "description": "Node.js runtime reference \u2014 event loop, modules, npm workflows, streams, cluster, debugging. Use when managing Node.js projects, troubleshooting runtime issues, or optimizing server performance.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "addon",
+  "description": "Browser and software addon architecture reference \u2014 extension APIs, manifest formats, lifecycle hooks, and plugin security models. Use when building browser extensions, designing plugin systems, or un",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

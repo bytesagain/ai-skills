@@ -1,0 +1,9 @@
+{
+  "name": "assert",
+  "description": "Assertion patterns reference \u2014 guard clauses, preconditions, invariants, and contract programming. Use when writing defensive code, validating inputs, or implementing design-by-contract.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

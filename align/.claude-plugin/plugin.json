@@ -1,0 +1,9 @@
+{
+  "name": "align",
+  "description": "Data and text alignment reference \u2014 sequence alignment, text formatting, memory alignment, and CSS/layout alignment. Use when aligning sequences, formatting columnar output, or understanding byte alig",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}
