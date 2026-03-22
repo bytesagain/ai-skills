@@ -1,0 +1,9 @@
+{
+  "name": "optimism",
+  "description": "Optimism reference tool. Use when working with optimism in blockchain contexts.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

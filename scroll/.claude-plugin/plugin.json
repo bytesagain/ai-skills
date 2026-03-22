@@ -1,0 +1,9 @@
+{
+  "name": "scroll",
+  "description": "Scroll reference tool. Use when working with scroll in blockchain contexts.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}
