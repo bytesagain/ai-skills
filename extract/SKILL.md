@@ -1,83 +1,91 @@
 ---
 name: "extract"
 version: "1.0.0"
-description: "Process and transform extract data with fast CLI operations. Use when you need to manipulate, convert, or analyze content."
+description: "Data extraction reference — parsing, scraping, regex, and ETL extraction patterns. Use when pulling structured data from unstructured sources, designing scrapers, or building ETL pipelines."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [extract, atomic, cli, tool]
+tags: [extract, parsing, regex, scraping, etl, data, transform]
 category: "atomic"
 ---
 
-# extract
+# Extract — Data Extraction Reference
 
-Process and transform extract data with fast CLI operations. Use when you need to manipulate, convert, or analyze content.
+Quick-reference skill for data extraction techniques, parsing patterns, and ETL best practices.
+
+## When to Use
+
+- Extracting structured data from HTML, PDF, or log files
+- Writing regex patterns for field extraction
+- Designing ETL extraction layers
+- Parsing semi-structured formats (email headers, log lines, CSVs)
+- Choosing between scraping, API, and feed-based extraction
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of data extraction — methods, use cases, and extraction pipeline design.
 
-### `add`
+### `regex`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh regex
 ```
 
-Add new entry
+Regex extraction patterns — emails, URLs, dates, IPs, phone numbers, and more.
 
-### `list`
+### `html`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh html
 ```
 
-List all entries
+HTML/web extraction — CSS selectors, XPath, and DOM traversal strategies.
 
-### `search`
+### `text`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh text
 ```
 
-Search entries
+Text extraction — log parsing, delimiter handling, fixed-width fields.
 
-### `remove`
+### `pdf`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh pdf
 ```
 
-Remove entry by number
+PDF extraction — tools, table extraction, OCR fallbacks.
 
-### `export`
+### `etl`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh etl
 ```
 
-Export data to file
+ETL extraction patterns — incremental loads, CDC, watermarks, and idempotency.
 
-### `stats`
+### `tools`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh tools
 ```
 
-Show statistics
+Extraction tools — jq, grep, awk, sed, Beautiful Soup, Scrapy, Tesseract.
 
-### `config`
+### `pitfalls`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh pitfalls
 ```
 
-View or set config
+Common extraction mistakes — encoding, edge cases, and data quality issues.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `EXTRACT_DIR` | No | Data directory (default: ~/.extract/) |
-
-## Data Storage
-
-All data stored in `~/.extract/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `EXTRACT_DIR` | Data directory (default: ~/.extract/) |
 
 ---
 

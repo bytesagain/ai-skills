@@ -1,83 +1,91 @@
 ---
 name: "plc"
 version: "1.0.0"
-description: "Programmable logic controller programming helper"
+description: "PLC programming reference — ladder logic, structured text, function blocks, and IEC 61131-3 standards. Use when writing PLC programs, debugging rungs, or reviewing automation logic."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [plc, industrial, cli, tool]
+tags: [plc, industrial, automation, ladder-logic, iec-61131, structured-text]
 category: "industrial"
 ---
 
-# plc
+# PLC — Programmable Logic Controller Reference
 
-Programmable logic controller programming helper
+Quick-reference skill for PLC programming concepts, IEC 61131-3 languages, common instruction sets, and troubleshooting patterns.
+
+## When to Use
+
+- Writing or reviewing ladder logic programs
+- Debugging PLC faults and I/O issues
+- Choosing between Structured Text, Function Block, or Ladder
+- Looking up IEC 61131-3 data types and timer/counter instructions
+- Setting up communication protocols (Modbus, EtherNet/IP, Profinet)
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of PLC architecture — CPU, I/O modules, scan cycle, memory areas.
 
-### `add`
+### `languages`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh languages
 ```
 
-Add new entry
+IEC 61131-3 programming languages: Ladder Diagram (LD), Structured Text (ST), Function Block Diagram (FBD), Instruction List (IL), Sequential Function Chart (SFC).
 
-### `list`
+### `instructions`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh instructions
 ```
 
-List all entries
+Common PLC instructions — contacts, coils, timers (TON/TOF/TP), counters (CTU/CTD), math, comparison, move.
 
-### `search`
+### `datatypes`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh datatypes
 ```
 
-Search entries
+IEC 61131-3 data types: BOOL, INT, DINT, REAL, STRING, TIME, arrays, structs.
 
-### `remove`
+### `faults`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh faults
 ```
 
-Remove entry by number
+Common PLC fault codes and troubleshooting steps — CPU faults, I/O faults, communication errors.
 
-### `export`
+### `protocols`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh protocols
 ```
 
-Export data to file
+Industrial communication protocols — Modbus RTU/TCP, EtherNet/IP, Profinet, DeviceNet, OPC UA.
 
-### `stats`
+### `examples`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh examples
 ```
 
-Show statistics
+Example programs: motor start/stop, traffic light sequence, tank level control, conveyor interlock.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+Pre-commissioning checklist — wiring, grounding, I/O mapping, safety circuit verification.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `PLC_DIR` | No | Data directory (default: ~/.plc/) |
-
-## Data Storage
-
-All data stored in `~/.plc/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `PLC_DIR` | Data directory (default: ~/.plc/) |
 
 ---
 

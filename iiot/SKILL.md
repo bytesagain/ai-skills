@@ -1,7 +1,7 @@
 ---
 name: "iiot"
 version: "1.0.0"
-description: "Industrial IoT device and data manager"
+description: "Industrial IoT device and data manager. Use when json iiot tasks, csv iiot tasks, checking iiot status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "industrial"
 
 # iiot
 
-Industrial IoT device and data manager
-
+Industrial IoT device and data manager. Use when json iiot tasks, csv iiot tasks, checking iiot status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `IIOT_DIR` | No | Data directory (default: ~/.iiot/) |
-
-## Data Storage
-
-All data stored in `~/.iiot/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `IIOT_DIR` | Data directory (default: ~/.iiot/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

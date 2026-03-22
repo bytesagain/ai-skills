@@ -1,83 +1,91 @@
 ---
 name: "pagination"
 version: "1.0.0"
-description: "pagination tool"
+description: "Pagination pattern reference — offset, cursor, keyset, and hybrid strategies for APIs and databases. Use when designing paginated endpoints, choosing pagination strategies, or optimizing large dataset traversal."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [pagination, general, cli, tool]
+tags: [pagination, api, database, cursor, offset, keyset, performance]
 category: "general"
 ---
 
-# pagination
+# Pagination — Pagination Pattern Reference
 
-pagination tool
+Quick-reference skill for pagination strategies, trade-offs, and implementation patterns.
+
+## When to Use
+
+- Designing paginated REST or GraphQL APIs
+- Choosing between offset, cursor, and keyset pagination
+- Optimizing database queries for large datasets
+- Implementing infinite scroll or page-based navigation
+- Debugging pagination edge cases (duplicates, missing items)
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of pagination — why it exists, core concepts, and terminology.
 
-### `add`
+### `offset`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh offset
 ```
 
-Add new entry
+Offset-based pagination (LIMIT/OFFSET) — how it works, SQL examples, and pitfalls.
 
-### `list`
+### `cursor`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh cursor
 ```
 
-List all entries
+Cursor-based pagination — opaque tokens, GraphQL Relay spec, implementation details.
 
-### `search`
+### `keyset`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh keyset
 ```
 
-Search entries
+Keyset (seek) pagination — using WHERE clauses instead of OFFSET for O(1) performance.
 
-### `remove`
+### `compare`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh compare
 ```
 
-Remove entry by number
+Side-by-side comparison of all pagination strategies with trade-off matrix.
 
-### `export`
+### `pitfalls`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh pitfalls
 ```
 
-Export data to file
+Common pagination bugs: phantom reads, duplicates on insert, off-by-one errors.
 
-### `stats`
+### `api`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh api
 ```
 
-Show statistics
+API design patterns for pagination — headers, link relations, envelope formats.
 
-### `config`
+### `sql`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh sql
 ```
 
-View or set config
+SQL cookbook — optimized queries for each pagination strategy with index advice.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `PAGINATION_DIR` | No | Data directory (default: ~/.pagination/) |
-
-## Data Storage
-
-All data stored in `~/.pagination/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `PAGINATION_DIR` | Data directory (default: ~/.pagination/) |
 
 ---
 

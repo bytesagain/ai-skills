@@ -1,7 +1,7 @@
 ---
 name: "breaker"
 version: "1.0.0"
-description: "Circuit breaker sizing and coordination tool"
+description: "Circuit breaker sizing and coordination tool. Use when json breaker tasks, csv breaker tasks, checking breaker status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "electrical"
 
 # breaker
 
-Circuit breaker sizing and coordination tool
-
+Circuit breaker sizing and coordination tool. Use when json breaker tasks, csv breaker tasks, checking breaker status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `BREAKER_DIR` | No | Data directory (default: ~/.breaker/) |
-
-## Data Storage
-
-All data stored in `~/.breaker/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `BREAKER_DIR` | Data directory (default: ~/.breaker/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

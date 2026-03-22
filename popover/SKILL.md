@@ -1,83 +1,91 @@
 ---
 name: "popover"
 version: "1.0.0"
-description: "Generate popover UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages."
+description: "Popover UI reference — the HTML Popover API, tooltip patterns, positioning strategies, and accessible floating elements. Use when building popovers, tooltips, dropdowns, or understanding the new Popover API."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [popover, frontend, cli, tool]
+tags: [popover, tooltip, dropdown, floating-ui, top-layer, positioning]
 category: "frontend"
 ---
 
-# popover
+# Popover — Popover & Tooltip Reference
 
-Generate popover UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages.
+Quick-reference skill for popovers — the HTML Popover API, floating elements, positioning, and accessibility.
+
+## When to Use
+
+- Using the native HTML Popover API (popover attribute)
+- Building accessible tooltips and dropdowns
+- Positioning floating elements (Floating UI / Popper.js)
+- Understanding popover vs modal vs tooltip semantics
+- Handling edge cases: viewport clipping, scroll, resize
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+What popovers are, popover vs tooltip vs modal, when to use each.
 
-### `add`
+### `api`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh api
 ```
 
-Add new entry
+HTML Popover API — popover attribute, popovertarget, showPopover, events.
 
-### `list`
+### `positioning`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh positioning
 ```
 
-List all entries
+Positioning strategies — Floating UI, anchor positioning, flip, shift, offset.
 
-### `search`
+### `tooltip`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh tooltip
 ```
 
-Search entries
+Tooltip patterns — hover, focus, delay, arrow, accessible tooltips.
 
-### `remove`
+### `dropdown`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh dropdown
 ```
 
-Remove entry by number
+Dropdown menus — trigger, keyboard nav, nested menus, ARIA.
 
-### `export`
+### `css`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh css
 ```
 
-Export data to file
+Popover CSS — anchor positioning, animations, @starting-style.
 
-### `stats`
+### `accessibility`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh accessibility
 ```
 
-Show statistics
+Accessible popovers — ARIA patterns, keyboard interaction, live regions.
 
-### `config`
+### `libraries`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh libraries
 ```
 
-View or set config
+Popover libraries — Floating UI, Radix, Headless UI, Tippy.js.
 
 ### `help`
 
@@ -91,13 +99,6 @@ scripts/script.sh help
 scripts/script.sh version
 ```
 
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Description |
-|----------|-------------|
-| `POPOVER_DIR` | Data directory (default: ~/.popover/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

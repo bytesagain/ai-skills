@@ -1,7 +1,7 @@
 ---
 name: "roboguide"
 version: "1.0.0"
-description: "Robot path planning and simulation tool"
+description: "Robot path planning and simulation tool. Use when json roboguide tasks, csv roboguide tasks, checking roboguide status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "industrial"
 
 # roboguide
 
-Robot path planning and simulation tool
-
+Robot path planning and simulation tool. Use when json roboguide tasks, csv roboguide tasks, checking roboguide status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `ROBOGUIDE_DIR` | No | Data directory (default: ~/.roboguide/) |
-
-## Data Storage
-
-All data stored in `~/.roboguide/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `ROBOGUIDE_DIR` | Data directory (default: ~/.roboguide/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

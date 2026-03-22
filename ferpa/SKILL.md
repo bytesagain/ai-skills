@@ -1,83 +1,91 @@
 ---
 name: "ferpa"
 version: "1.0.0"
-description: "Run ferpa operations with simple CLI commands. Use when you need quick data processing or automation."
+description: "FERPA compliance reference — student records privacy, educational rights, consent requirements, and institutional obligations under the Family Educational Rights and Privacy Act. Use when handling student data, designing education software, or advising on records disclosure."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [ferpa, legal, cli, tool]
+tags: [ferpa, education, privacy, student-records, compliance, legal]
 category: "legal"
 ---
 
-# ferpa
+# FERPA — Student Privacy Compliance Reference
 
-Run ferpa operations with simple CLI commands. Use when you need quick data processing or automation.
+Quick-reference skill for FERPA requirements, student records handling, and educational privacy compliance.
+
+## When to Use
+
+- Determining what constitutes an "education record"
+- Understanding when parental vs student consent is required
+- Designing systems that handle student data
+- Handling records disclosure requests
+- Implementing FERPA-compliant data sharing policies
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of FERPA — scope, history, and key definitions.
 
-### `add`
+### `rights`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh rights
 ```
 
-Add new entry
+Student and parent rights under FERPA — access, amendment, consent, complaints.
 
-### `list`
+### `records`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh records
 ```
 
-List all entries
+What is (and isn't) an education record — definitions and examples.
 
-### `search`
+### `directory`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh directory
 ```
 
-Search entries
+Directory information — what can be disclosed without consent.
 
-### `remove`
+### `exceptions`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh exceptions
 ```
 
-Remove entry by number
+FERPA exceptions — when disclosure is permitted without consent.
 
-### `export`
+### `technology`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh technology
 ```
 
-Export data to file
+FERPA and technology — cloud services, LMS, edtech vendor agreements.
 
-### `stats`
+### `penalties`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh penalties
 ```
 
-Show statistics
+FERPA enforcement, penalties, and complaint procedures.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+FERPA compliance checklist for institutions and vendors.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `FERPA_DIR` | No | Data directory (default: ~/.ferpa/) |
-
-## Data Storage
-
-All data stored in `~/.ferpa/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `FERPA_DIR` | Data directory (default: ~/.ferpa/) |
 
 ---
 

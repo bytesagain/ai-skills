@@ -1,83 +1,91 @@
 ---
 name: "consolidation"
 version: "1.0.0"
-description: "Run consolidation operations with simple CLI commands. Use when you need quick data processing or automation."
+description: "Freight consolidation reference — LCL groupage, milk runs, cross-docking, and shipment merging strategies. Use when optimizing shipping costs, planning consolidated loads, or reducing freight spend."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [consolidation, logistics, cli, tool]
+tags: [consolidation, freight, shipping, logistics, lcl, groupage, cross-dock]
 category: "logistics"
 ---
 
-# consolidation
+# Consolidation — Freight Consolidation Reference
 
-Run consolidation operations with simple CLI commands. Use when you need quick data processing or automation.
+Quick-reference skill for shipment consolidation strategies, cost optimization, and logistics planning.
+
+## When to Use
+
+- Combining multiple small shipments into full container loads
+- Planning LCL (Less than Container Load) groupage
+- Designing cross-dock and merge-in-transit operations
+- Calculating consolidation savings vs direct shipping
+- Implementing milk run and zone-skip strategies
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of freight consolidation — concepts, types, and economics.
 
-### `add`
+### `lcl`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh lcl
 ```
 
-Add new entry
+LCL groupage — how ocean freight consolidation works from CFS to CFS.
 
-### `list`
+### `crossdock`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh crossdock
 ```
 
-List all entries
+Cross-docking operations — receive, sort, and ship without storage.
 
-### `search`
+### `milkrun`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh milkrun
 ```
 
-Search entries
+Milk run pickup routes — collecting from multiple suppliers in one trip.
 
-### `remove`
+### `savings`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh savings
 ```
 
-Remove entry by number
+Consolidation economics — cost calculations and break-even analysis.
 
-### `export`
+### `methods`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh methods
 ```
 
-Export data to file
+Consolidation methods: zone-skip, pool distribution, merge-in-transit.
 
-### `stats`
+### `planning`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh planning
 ```
 
-Show statistics
+Consolidation planning — order windows, weight breaks, and timing.
 
-### `config`
+### `risks`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh risks
 ```
 
-View or set config
+Consolidation risks and mitigation: delays, damage, customs complications.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `CONSOLIDATION_DIR` | No | Data directory (default: ~/.consolidation/) |
-
-## Data Storage
-
-All data stored in `~/.consolidation/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `CONSOLIDATION_DIR` | Data directory (default: ~/.consolidation/) |
 
 ---
 

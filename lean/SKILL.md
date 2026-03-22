@@ -1,83 +1,91 @@
 ---
 name: "lean"
 version: "1.0.0"
-description: "Lean manufacturing process optimizer"
+description: "Lean manufacturing reference — 5S, value stream mapping, waste elimination, and continuous flow. Use when optimizing production processes, reducing waste, or implementing lean principles."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [lean, industrial, cli, tool]
+tags: [lean, manufacturing, 5s, waste, value-stream, kaizen, industrial]
 category: "industrial"
 ---
 
-# lean
+# Lean — Lean Manufacturing Reference
 
-Lean manufacturing process optimizer
+Quick-reference skill for lean manufacturing principles, tools, and implementation patterns.
+
+## When to Use
+
+- Identifying and eliminating the 8 wastes (DOWNTIME)
+- Running a value stream mapping exercise
+- Implementing 5S workplace organization
+- Setting up pull systems and kanban flows
+- Coaching teams on continuous improvement culture
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of lean manufacturing — origins, core philosophy, Toyota Production System.
 
-### `add`
+### `wastes`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh wastes
 ```
 
-Add new entry
+The 8 wastes (DOWNTIME): Defects, Overproduction, Waiting, Non-utilized talent, Transportation, Inventory, Motion, Extra-processing.
 
-### `list`
+### `fives`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh fives
 ```
 
-List all entries
+5S methodology: Sort, Set in Order, Shine, Standardize, Sustain.
 
-### `search`
+### `vsm`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh vsm
 ```
 
-Search entries
+Value Stream Mapping — how to map current state, identify bottlenecks, design future state.
 
-### `remove`
+### `tools`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh tools
 ```
 
-Remove entry by number
+Lean tools overview: Poka-Yoke, Andon, Heijunka, Jidoka, Takt Time, SMED.
 
-### `export`
+### `metrics`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh metrics
 ```
 
-Export data to file
+Key lean metrics: OEE, cycle time, lead time, takt time, first pass yield.
 
-### `stats`
+### `examples`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh examples
 ```
 
-Show statistics
+Real-world lean implementation examples and before/after scenarios.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+Lean assessment checklist for evaluating current state maturity.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `LEAN_DIR` | No | Data directory (default: ~/.lean/) |
-
-## Data Storage
-
-All data stored in `~/.lean/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `LEAN_DIR` | Data directory (default: ~/.lean/) |
 
 ---
 

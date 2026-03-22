@@ -1,83 +1,91 @@
 ---
 name: "reward"
 version: "1.0.0"
-description: "Track reward personal activities and daily routines. Use when managing health goals, organizing tasks, or building productive habits."
+description: "Reward system design reference — behavioral reinforcement, loyalty programs, gamification, incentive structures. Use when designing reward programs, loyalty systems, or behavioral incentive mechanisms."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [reward, life, cli, tool]
+tags: [reward, incentive, loyalty, gamification, behavioral-design, motivation, reinforcement]
 category: "life"
 ---
 
-# reward
+# Reward — Reward System Design Reference
 
-Track reward personal activities and daily routines. Use when managing health goals, organizing tasks, or building productive habits.
+Quick-reference skill for designing effective reward systems, loyalty programs, and behavioral incentives.
+
+## When to Use
+
+- Designing loyalty or points-based reward programs
+- Understanding behavioral reinforcement principles
+- Creating gamification systems for apps or teams
+- Evaluating incentive structures for effectiveness
+- Building habit-forming product experiences
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Reward system fundamentals — behavioral science, reinforcement theory, types of rewards.
 
-### `add`
+### `schedules`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh schedules
 ```
 
-Add new entry
+Reinforcement schedules — fixed/variable ratio and interval, optimal engagement patterns.
 
-### `list`
+### `loyalty`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh loyalty
 ```
 
-List all entries
+Loyalty program design — points, tiers, coalition models, ROI metrics.
 
-### `search`
+### `gamification`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh gamification
 ```
 
-Search entries
+Gamification mechanics — badges, leaderboards, progress bars, streaks, challenges.
 
-### `remove`
+### `intrinsic`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh intrinsic
 ```
 
-Remove entry by number
+Intrinsic rewards — autonomy, mastery, purpose, flow states, meaningful work.
 
-### `export`
+### `pitfalls`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh pitfalls
 ```
 
-Export data to file
+Common reward design mistakes and unintended consequences.
 
-### `stats`
+### `workplace`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh workplace
 ```
 
-Show statistics
+Workplace incentives — recognition programs, bonus structures, team rewards.
 
-### `config`
+### `metrics`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh metrics
 ```
 
-View or set config
+Measuring reward effectiveness — engagement, retention, satisfaction, ROI.
 
 ### `help`
 
@@ -90,22 +98,6 @@ scripts/script.sh help
 ```bash
 scripts/script.sh version
 ```
-
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `REWARD_DIR` | No | Data directory (default: ~/.reward/) |
-
-## Data Storage
-
-All data stored in `~/.reward/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
 

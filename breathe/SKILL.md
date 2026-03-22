@@ -1,83 +1,91 @@
 ---
 name: "breathe"
 version: "1.0.0"
-description: "Track breathe personal activities and daily routines. Use when managing health goals, organizing tasks, or building habits."
+description: "Breathing techniques reference — box breathing, 4-7-8, Wim Hof, pranayama, resonance breathing. Use when guiding breathwork for stress relief, focus, sleep, or athletic performance."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [breathe, life, cli, tool]
+tags: [breathe, breathing, pranayama, meditation, stress, wellness, life]
 category: "life"
 ---
 
-# breathe
+# Breathe — Breathing Techniques Reference
 
-Track breathe personal activities and daily routines. Use when managing health goals, organizing tasks, or building habits.
+Quick-reference skill for evidence-based breathing techniques, their physiological effects, and practical applications.
+
+## When to Use
+
+- Guiding someone through a specific breathing exercise
+- Choosing the right breathwork technique for a goal (calm, energy, focus, sleep)
+- Understanding the science behind breathing and the autonomic nervous system
+- Designing a daily breathwork routine
+- Managing anxiety, panic, or stress through breath control
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of breathwork — the science of breathing and autonomic regulation.
 
-### `add`
+### `box`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh box
 ```
 
-Add new entry
+Box breathing (4-4-4-4) — Navy SEAL technique for calm focus.
 
-### `list`
+### `relaxing`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh relaxing
 ```
 
-List all entries
+4-7-8 breathing — Dr. Andrew Weil's relaxation technique for sleep and anxiety.
 
-### `search`
+### `wim`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh wim
 ```
 
-Search entries
+Wim Hof method — cyclic hyperventilation with cold exposure.
 
-### `remove`
+### `pranayama`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh pranayama
 ```
 
-Remove entry by number
+Yogic pranayama — Nadi Shodhana, Kapalabhati, Ujjayi, Bhramari.
 
-### `export`
+### `resonance`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh resonance
 ```
 
-Export data to file
+Resonance breathing — coherent breathing at 5-6 breaths/min for HRV optimization.
 
-### `stats`
+### `science`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh science
 ```
 
-Show statistics
+The physiology — diaphragm, CO₂ tolerance, vagus nerve, and autonomic balance.
 
-### `config`
+### `routines`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh routines
 ```
 
-View or set config
+Daily breathwork routines for different goals: morning energy, pre-sleep, focus.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `BREATHE_DIR` | No | Data directory (default: ~/.breathe/) |
-
-## Data Storage
-
-All data stored in `~/.breathe/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `BREATHE_DIR` | Data directory (default: ~/.breathe/) |
 
 ---
 

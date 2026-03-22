@@ -1,60 +1,109 @@
 ---
 name: "buffer"
 version: "1.0.0"
-description: "Manage a text buffer stack for quick copy-paste operations. Use when collecting text snippets, building output, or managing clipboard history."
+description: "Memory buffer reference — allocation strategies, ring buffers, protocol buffers, zero-copy, overflow prevention. Use when designing data buffers, debugging memory issues, or optimizing I/O throughput."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [buffer, memory, allocation, ring-buffer, io, performance, devtools]
+category: "devtools"
 ---
 
-# buffer
+# Buffer — Memory Buffer & Data Buffering Reference
 
-Manage a text buffer stack for quick copy-paste operations. Use when collecting text snippets, building output, or managing clipboard history.
+Quick-reference skill for memory buffer concepts, allocation strategies, common buffer patterns, and overflow prevention.
+
+## When to Use
+
+- Designing data buffers for streaming or I/O operations
+- Debugging buffer overflow or underrun issues
+- Choosing between buffer types (ring, double, protocol)
+- Optimizing memory allocation and throughput
+- Understanding zero-copy and DMA buffer patterns
 
 ## Commands
 
-### `push`
+### `intro`
 
 ```bash
-scripts/script.sh push <text>
+scripts/script.sh intro
 ```
 
-### `pop`
+Overview of buffers — what they are, why they matter, and core concepts.
+
+### `types`
 
 ```bash
-scripts/script.sh pop
+scripts/script.sh types
 ```
 
-### `peek`
+Buffer types — ring, double, circular, frame, protocol buffers.
+
+### `allocation`
 
 ```bash
-scripts/script.sh peek
+scripts/script.sh allocation
 ```
 
-### `list`
+Memory allocation strategies — stack, heap, pool, slab, mmap.
+
+### `overflow`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh overflow
 ```
 
-### `size`
+Buffer overflow — causes, prevention, security implications, safe coding.
+
+### `io`
 
 ```bash
-scripts/script.sh size
+scripts/script.sh io
 ```
 
-### `clear`
+I/O buffering — line, block, unbuffered, zero-copy, scatter-gather.
+
+### `patterns`
 
 ```bash
-scripts/script.sh clear
+scripts/script.sh patterns
 ```
 
-## Requirements
+Common buffer patterns — producer-consumer, back-pressure, watermarks.
 
-- bash 4.0+
+### `languages`
 
-## Data Storage
+```bash
+scripts/script.sh languages
+```
 
-Data stored in `~/.local/share/buffer/`.
+Buffer APIs across languages — C, Python, Node.js, Go, Rust.
+
+### `sizing`
+
+```bash
+scripts/script.sh sizing
+```
+
+Buffer sizing guide — how to calculate optimal buffer sizes.
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
+
+## Configuration
+
+| Variable | Description |
+|----------|-------------|
+| `BUFFER_DIR` | Data directory (default: ~/.buffer/) |
 
 ---
 

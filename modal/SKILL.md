@@ -1,83 +1,91 @@
 ---
 name: "modal"
 version: "1.0.0"
-description: "Generate modal UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages."
+description: "Modal dialog reference — accessible, performant modal windows for web and mobile. Use when building modal dialogs, understanding focus trapping, backdrop behavior, or implementing the HTML dialog element."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [modal, frontend, cli, tool]
+tags: [modal, dialog, popup, overlay, accessibility, focus-trap, ui]
 category: "frontend"
 ---
 
-# modal
+# Modal — Modal Dialog Reference
 
-Generate modal UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages.
+Quick-reference skill for modal dialogs — HTML dialog element, accessibility, focus management, and UI patterns.
+
+## When to Use
+
+- Building accessible modal dialogs for web applications
+- Using the native HTML `<dialog>` element
+- Implementing focus trapping and keyboard navigation
+- Understanding modal vs non-modal (modeless) dialogs
+- Handling backdrop clicks, escape key, and scroll locking
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+What modals are, modal vs modeless, when to use (and not use) modals.
 
-### `add`
+### `html`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh html
 ```
 
-Add new entry
+HTML `<dialog>` element — showModal, show, close, returnValue, forms.
 
-### `list`
+### `accessibility`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh accessibility
 ```
 
-List all entries
+Modal accessibility — ARIA roles, focus trap, keyboard nav, screen readers.
 
-### `search`
+### `focus`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh focus
 ```
 
-Search entries
+Focus management — trapping, restoring, tab order, inert attribute.
 
-### `remove`
+### `css`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh css
 ```
 
-Remove entry by number
+Modal styling — backdrop, animations, responsive, scroll lock.
 
-### `export`
+### `patterns`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh patterns
 ```
 
-Export data to file
+Modal UI patterns — confirmation, form, wizard, lightbox, alert.
 
-### `stats`
+### `frameworks`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh frameworks
 ```
 
-Show statistics
+Modal components in React, Vue, Angular — portals, composition, state.
 
-### `config`
+### `antipatterns`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh antipatterns
 ```
 
-View or set config
+Modal anti-patterns: modal hell, breaking back button, scroll jank.
 
 ### `help`
 
@@ -91,13 +99,6 @@ scripts/script.sh help
 scripts/script.sh version
 ```
 
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Description |
-|----------|-------------|
-| `MODAL_DIR` | Data directory (default: ~/.modal/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

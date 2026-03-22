@@ -1,83 +1,91 @@
 ---
 name: "freeport"
 version: "1.0.0"
-description: "Run freeport operations with simple CLI commands. Use when you need quick data processing or automation."
+description: "Free-port and free-trade zone reference — FTZ regulations, bonded logistics, duty deferral, re-export procedures. Use when planning warehouse operations in free-trade zones or managing customs-exempt cargo flows."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [freeport, logistics, cli, tool]
+tags: [freeport, ftz, free-trade-zone, customs, duty, bonded, logistics, trade]
 category: "logistics"
 ---
 
-# freeport
+# Freeport — Free-Trade Zone Reference
 
-Run freeport operations with simple CLI commands. Use when you need quick data processing or automation.
+Quick-reference skill for free-port operations, foreign-trade zones, and duty-free logistics.
+
+## When to Use
+
+- Setting up operations in a Foreign-Trade Zone (FTZ)
+- Understanding duty deferral, reduction, and elimination
+- Planning re-export logistics through free ports
+- Evaluating FTZ vs bonded warehouse trade-offs
+- Navigating customs procedures for zone-to-zone transfers
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of free ports and foreign-trade zones — history, purpose, legal framework.
 
-### `add`
+### `types`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh types
 ```
 
-Add new entry
+Types of free-trade zones — FTZ, SEZ, EPZ, bonded warehouse, freeport comparisons.
 
-### `list`
+### `benefits`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh benefits
 ```
 
-List all entries
+Key benefits — duty deferral, inverted tariff relief, re-export savings, cash flow.
 
-### `search`
+### `procedures`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh procedures
 ```
 
-Search entries
+Operational procedures — admission, manipulation, manufacturing, weekly entry.
 
-### `remove`
+### `customs`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh customs
 ```
 
-Remove entry by number
+Customs compliance — record-keeping, CBP audits, zone schedules, annual reports.
 
-### `export`
+### `global`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh global
 ```
 
-Export data to file
+Major global free ports — Singapore, Hong Kong, Dubai JAFZA, Shannon, Hamburg.
 
-### `stats`
+### `costs`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh costs
 ```
 
-Show statistics
+Cost-benefit analysis — activation fees, compliance costs, break-even calculations.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+FTZ readiness checklist — site evaluation, application, compliance setup.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `FREEPORT_DIR` | No | Data directory (default: ~/.freeport/) |
-
-## Data Storage
-
-All data stored in `~/.freeport/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `FREEPORT_DIR` | Data directory (default: ~/.freeport/) |
 
 ---
 

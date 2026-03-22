@@ -1,7 +1,7 @@
 ---
 name: "bos7000"
 version: "1.0.0"
-description: "BOS7000 industrial controller config tool"
+description: "BOS7000 industrial controller config tool. Use when json bos7000 tasks, csv bos7000 tasks, checking bos7000 status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "industrial"
 
 # bos7000
 
-BOS7000 industrial controller config tool
-
+BOS7000 industrial controller config tool. Use when json bos7000 tasks, csv bos7000 tasks, checking bos7000 status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `BOS7000_DIR` | No | Data directory (default: ~/.bos7000/) |
-
-## Data Storage
-
-All data stored in `~/.bos7000/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `BOS7000_DIR` | Data directory (default: ~/.bos7000/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

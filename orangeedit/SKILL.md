@@ -1,7 +1,7 @@
 ---
 name: "orangeedit"
 version: "1.0.0"
-description: "OrangeEdit PLC programming assistant"
+description: "OrangeEdit PLC programming assistant. Use when json orangeedit tasks, csv orangeedit tasks, checking orangeedit status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "industrial"
 
 # orangeedit
 
-OrangeEdit PLC programming assistant
-
+OrangeEdit PLC programming assistant. Use when json orangeedit tasks, csv orangeedit tasks, checking orangeedit status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `ORANGEEDIT_DIR` | No | Data directory (default: ~/.orangeedit/) |
-
-## Data Storage
-
-All data stored in `~/.orangeedit/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `ORANGEEDIT_DIR` | Data directory (default: ~/.orangeedit/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

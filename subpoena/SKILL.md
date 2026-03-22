@@ -1,83 +1,91 @@
 ---
 name: "subpoena"
 version: "1.0.0"
-description: "Run subpoena operations with simple CLI commands. Use when you need quick data processing or automation."
+description: "Subpoena law reference — types of subpoenas, service requirements, compliance obligations, and motion to quash. Use when issuing, receiving, or responding to subpoenas in legal proceedings."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [subpoena, legal, cli, tool]
+tags: [subpoena, legal, discovery, testimony, documents, court, litigation]
 category: "legal"
 ---
 
-# subpoena
+# Subpoena — Legal Subpoena Reference
 
-Run subpoena operations with simple CLI commands. Use when you need quick data processing or automation.
+Quick-reference skill for subpoena types, procedures, compliance, and challenges.
+
+## When to Use
+
+- Understanding types of subpoenas (ad testificandum, duces tecum)
+- Issuing subpoenas to witnesses or for documents
+- Responding to or complying with a subpoena
+- Filing motions to quash or modify subpoenas
+- Understanding contempt consequences for non-compliance
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of subpoenas — definition, purpose, and legal authority.
 
-### `add`
+### `types`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh types
 ```
 
-Add new entry
+Types of subpoenas — testimony, documents, deposition, administrative.
 
-### `list`
+### `procedure`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh procedure
 ```
 
-List all entries
+How to issue and serve a subpoena — rules and requirements.
 
-### `search`
+### `compliance`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh compliance
 ```
 
-Search entries
+Responding to subpoenas — obligations, timelines, and privilege.
 
-### `remove`
+### `quash`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh quash
 ```
 
-Remove entry by number
+Motions to quash or modify — grounds and procedures.
 
-### `export`
+### `federal`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh federal
 ```
 
-Export data to file
+Federal subpoena rules — FRCP Rule 45 details.
 
-### `stats`
+### `examples`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh examples
 ```
 
-Show statistics
+Practical subpoena scenarios and common issues.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+Subpoena issuance and response checklist.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `SUBPOENA_DIR` | No | Data directory (default: ~/.subpoena/) |
-
-## Data Storage
-
-All data stored in `~/.subpoena/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `SUBPOENA_DIR` | Data directory (default: ~/.subpoena/) |
 
 ---
 

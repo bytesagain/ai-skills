@@ -1,83 +1,91 @@
 ---
 name: "reimbursement"
 version: "1.0.0"
-description: "Calculate reimbursement financial metrics and business data. Use when tracking expenses, analyzing investments, or generating financial reports."
+description: "Expense reimbursement reference — policies, receipt rules, per diem rates, compliance. Use when designing reimbursement policies, understanding tax-deductible expenses, or processing employee claims."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [reimbursement, finance, cli, tool]
+tags: [reimbursement, expense, per-diem, travel-policy, receipts, compliance, tax-deduction]
 category: "finance"
 ---
 
-# reimbursement
+# Reimbursement — Expense Reimbursement Reference
 
-Calculate reimbursement financial metrics and business data. Use when tracking expenses, analyzing investments, or generating financial reports.
+Quick-reference skill for expense reimbursement policies, compliance rules, and best practices.
+
+## When to Use
+
+- Designing or reviewing company reimbursement policies
+- Understanding per diem rates and travel expense rules
+- Processing expense claims and receipt requirements
+- Ensuring tax compliance for employee reimbursements
+- Setting up expense categories and approval workflows
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Reimbursement fundamentals — types of expenses, accountable plan rules, key principles.
 
-### `add`
+### `categories`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh categories
 ```
 
-Add new entry
+Expense categories — travel, meals, lodging, transport, office, professional development.
 
-### `list`
+### `perdiem`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh perdiem
 ```
 
-List all entries
+Per diem rates — GSA rates, CONUS/OCONUS, meals breakdown, incidental expenses.
 
-### `search`
+### `receipts`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh receipts
 ```
 
-Search entries
+Receipt requirements — what needs receipts, digital receipt rules, missing receipt affidavits.
 
-### `remove`
+### `travel`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh travel
 ```
 
-Remove entry by number
+Travel expense rules — airfare, rental cars, mileage, lodging policies.
 
-### `export`
+### `compliance`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh compliance
 ```
 
-Export data to file
+Tax compliance — accountable vs non-accountable plans, IRS rules, reporting.
 
-### `stats`
+### `workflow`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh workflow
 ```
 
-Show statistics
+Approval workflows — submission deadlines, multi-level approval, exceptions.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+Reimbursement policy design checklist for organizations.
 
 ### `help`
 
@@ -90,22 +98,6 @@ scripts/script.sh help
 ```bash
 scripts/script.sh version
 ```
-
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `REIMBURSEMENT_DIR` | No | Data directory (default: ~/.reimbursement/) |
-
-## Data Storage
-
-All data stored in `~/.reimbursement/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
 

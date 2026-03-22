@@ -1,56 +1,109 @@
 ---
 name: "create"
 version: "1.0.0"
-description: "Scaffold projects, configs, and scripts from templates. Use when starting new projects."
+description: "Project scaffolding reference — boilerplate generation, directory structures, template engines, and init patterns. Use when bootstrapping new projects or generating starter code."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [create, scaffold, boilerplate, init, template, generator, devtools]
+category: "devtools"
 ---
 
-# create
+# Create — Project Scaffolding Reference
 
-Scaffold projects, configs, and scripts from templates. Use when starting new projects.
+Quick-reference skill for project scaffolding, boilerplate generation, and initialization patterns.
+
+## When to Use
+
+- Bootstrapping a new project from scratch
+- Generating directory structures and boilerplate files
+- Understanding popular scaffolding tools and templates
+- Setting up project conventions (linting, testing, CI/CD)
+- Creating custom project generators
 
 ## Commands
 
-### `project`
+### `intro`
 
 ```bash
-scripts/script.sh project <name>
+scripts/script.sh intro
 ```
 
-### `config`
+Overview of project scaffolding — why, when, and how.
+
+### `structures`
 
 ```bash
-scripts/script.sh config <type name>
+scripts/script.sh structures
 ```
 
-### `script`
+Standard directory structures for common project types.
+
+### `tools`
 
 ```bash
-scripts/script.sh script <name>
+scripts/script.sh tools
 ```
 
-### `readme`
+Popular scaffolding tools — create-react-app, cookiecutter, yeoman, etc.
+
+### `templates`
 
 ```bash
-scripts/script.sh readme <name>
+scripts/script.sh templates
 ```
 
-### `gitignore`
+Template engine patterns — variable substitution, conditionals, loops.
+
+### `configs`
 
 ```bash
-scripts/script.sh gitignore <lang>
+scripts/script.sh configs
 ```
 
-### `makefile`
+Essential config files every project needs — .gitignore, .editorconfig, CI, etc.
+
+### `conventions`
 
 ```bash
-scripts/script.sh makefile <name>
+scripts/script.sh conventions
 ```
 
-## Data Storage
+Project conventions — naming, versioning, commit messages, changelog.
 
-Data stored in `~/.local/share/create/`.
+### `monorepo`
+
+```bash
+scripts/script.sh monorepo
+```
+
+Monorepo scaffolding — workspaces, nx, turborepo, lerna.
+
+### `checklist`
+
+```bash
+scripts/script.sh checklist
+```
+
+New project checklist — from idea to first commit.
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
+
+## Configuration
+
+| Variable | Description |
+|----------|-------------|
+| `CREATE_DIR` | Data directory (default: ~/.create/) |
 
 ---
 

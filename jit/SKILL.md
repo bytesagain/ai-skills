@@ -1,83 +1,91 @@
 ---
 name: "jit"
 version: "1.0.0"
-description: "Just-in-time inventory optimizer"
+description: "Just-In-Time production reference — pull systems, kanban, takt time, inventory reduction. Use when implementing JIT manufacturing, designing pull-based workflows, or reducing inventory waste."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [jit, industrial, cli, tool]
+tags: [jit, just-in-time, kanban, pull-system, takt-time, inventory, manufacturing]
 category: "industrial"
 ---
 
-# jit
+# JIT — Just-In-Time Production Reference
 
-Just-in-time inventory optimizer
+Quick-reference skill for Just-In-Time manufacturing principles, pull systems, and inventory optimization.
+
+## When to Use
+
+- Implementing pull-based production systems
+- Calculating takt time and balancing production lines
+- Setting up kanban card systems and supermarkets
+- Reducing work-in-process inventory levels
+- Transitioning from push (MRP) to pull scheduling
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of JIT — origins in Toyota Production System, core principles, push vs pull.
 
-### `add`
+### `pillars`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh pillars
 ```
 
-Add new entry
+The foundational pillars of JIT: continuous flow, takt time, pull system, zero inventory target.
 
-### `list`
+### `kanban`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh kanban
 ```
 
-List all entries
+Kanban card systems — types, sizing formulas, rules, two-bin and multi-bin setups.
 
-### `search`
+### `takt`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh takt
 ```
 
-Search entries
+Takt time calculation, line balancing, and cycle time alignment.
 
-### `remove`
+### `leveling`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh leveling
 ```
 
-Remove entry by number
+Heijunka (production leveling) — smoothing volume and product mix, heijunka box.
 
-### `export`
+### `suppliers`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh suppliers
 ```
 
-Export data to file
+JIT supplier relationships — milk runs, frequent deliveries, supplier development.
 
-### `stats`
+### `barriers`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh barriers
 ```
 
-Show statistics
+Common JIT implementation barriers and countermeasures.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+JIT readiness assessment checklist for evaluating current state.
 
 ### `help`
 
@@ -90,22 +98,6 @@ scripts/script.sh help
 ```bash
 scripts/script.sh version
 ```
-
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `JIT_DIR` | No | Data directory (default: ~/.jit/) |
-
-## Data Storage
-
-All data stored in `~/.jit/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
 

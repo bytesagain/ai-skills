@@ -1,7 +1,7 @@
 ---
 name: "pid"
 version: "1.0.0"
-description: "PID controller tuning and simulation tool"
+description: "PID controller tuning and simulation tool. Use when json pid tasks, csv pid tasks, checking pid status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "industrial"
 
 # pid
 
-PID controller tuning and simulation tool
-
+PID controller tuning and simulation tool. Use when json pid tasks, csv pid tasks, checking pid status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `PID_DIR` | No | Data directory (default: ~/.pid/) |
-
-## Data Storage
-
-All data stored in `~/.pid/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `PID_DIR` | Data directory (default: ~/.pid/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

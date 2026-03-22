@@ -1,83 +1,91 @@
 ---
 name: "fertigation"
 version: "1.0.0"
-description: "Run fertigation operations with simple CLI commands. Use when you need quick data processing or automation."
+description: "Fertigation reference — injecting fertilizers through irrigation systems, nutrient scheduling, injection methods, and crop-specific programs. Use when designing fertigation systems, calculating nutrient rates, or managing drip/sprinkler fertilizer delivery."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [fertigation, agriculture, cli, tool]
+tags: [fertigation, irrigation, fertilizer, agriculture, nutrients, drip]
 category: "agriculture"
 ---
 
-# fertigation
+# Fertigation — Fertigation Systems Reference
 
-Run fertigation operations with simple CLI commands. Use when you need quick data processing or automation.
+Quick-reference skill for fertigation techniques, nutrient management, and injection system design.
+
+## When to Use
+
+- Designing fertigation systems for drip or sprinkler irrigation
+- Calculating fertilizer injection rates and concentrations
+- Selecting injection equipment (Venturi, positive displacement, proportional)
+- Planning nutrient schedules for different crop growth stages
+- Troubleshooting fertigation uniformity and compatibility issues
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of fertigation — principles, advantages, and system components.
 
-### `add`
+### `methods`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh methods
 ```
 
-Add new entry
+Injection methods — Venturi, diaphragm pump, piston pump, proportional dosing.
 
-### `list`
+### `nutrients`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh nutrients
 ```
 
-List all entries
+Fertilizer types for fertigation — solubility, compatibility, and stock solutions.
 
-### `search`
+### `scheduling`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh scheduling
 ```
 
-Search entries
+Nutrient scheduling by crop growth stage — vegetative, flowering, fruiting.
 
-### `remove`
+### `calculations`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh calculations
 ```
 
-Remove entry by number
+Injection rate calculations — ppm, EC targets, dilution ratios, flow rates.
 
-### `export`
+### `drip`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh drip
 ```
 
-Export data to file
+Drip fertigation specifics — emitter clogging prevention, acid injection, flushing.
 
-### `stats`
+### `monitoring`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh monitoring
 ```
 
-Show statistics
+Monitoring fertigation — EC, pH, runoff analysis, sensor placement.
 
-### `config`
+### `problems`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh problems
 ```
 
-View or set config
+Common fertigation problems — precipitates, uneven distribution, salt buildup.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `FERTIGATION_DIR` | No | Data directory (default: ~/.fertigation/) |
-
-## Data Storage
-
-All data stored in `~/.fertigation/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `FERTIGATION_DIR` | Data directory (default: ~/.fertigation/) |
 
 ---
 

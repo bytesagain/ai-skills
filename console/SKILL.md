@@ -1,56 +1,109 @@
 ---
 name: "console"
 version: "1.0.0"
-description: "Format console output with tables, banners, and colors. Use when building CLI interfaces."
+description: "Console & terminal output reference — logging levels, ANSI colors, debugging techniques, formatters. Use when styling terminal output, implementing log systems, or debugging with console tools."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [console, terminal, logging, ansi, debug, output, devtools, cli]
+category: "devtools"
 ---
 
-# console
+# Console — Console Output & Debugging Reference
 
-Format console output with tables, banners, and colors. Use when building CLI interfaces.
+Quick-reference skill for console output formatting, logging systems, ANSI escape codes, and debugging techniques.
+
+## When to Use
+
+- Formatting terminal output with colors and styles
+- Implementing a logging system with proper levels
+- Debugging with browser/Node.js console methods
+- Building CLI tools with professional output
+- Understanding ANSI escape codes and terminal capabilities
 
 ## Commands
 
-### `table`
+### `intro`
 
 ```bash
-scripts/script.sh table <file>
+scripts/script.sh intro
 ```
 
-### `banner`
+Overview of console output — streams, TTY detection, output principles.
+
+### `ansi`
 
 ```bash
-scripts/script.sh banner <text>
+scripts/script.sh ansi
 ```
 
-### `box`
+ANSI escape codes — colors, styles, cursor control, 256-color and truecolor.
+
+### `logging`
 
 ```bash
-scripts/script.sh box <text>
+scripts/script.sh logging
 ```
 
-### `color`
+Log levels and best practices — DEBUG, INFO, WARN, ERROR, FATAL.
+
+### `browser`
 
 ```bash
-scripts/script.sh color <text color>
+scripts/script.sh browser
 ```
 
-### `hr`
+Browser console API — log, table, group, time, profile, assert.
+
+### `node`
 
 ```bash
-scripts/script.sh hr <length>
+scripts/script.sh node
 ```
 
-### `list`
+Node.js console and util — inspect, format, debug module, chalk.
+
+### `cli`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh cli
 ```
 
-## Data Storage
+CLI output patterns — progress bars, spinners, tables, prompts.
 
-Data stored in `~/.local/share/console/`.
+### `debug`
+
+```bash
+scripts/script.sh debug
+```
+
+Debugging techniques — breakpoints, stack traces, conditional logging.
+
+### `tools`
+
+```bash
+scripts/script.sh tools
+```
+
+Console tools and libraries — chalk, winston, pino, log4j, structlog.
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
+
+## Configuration
+
+| Variable | Description |
+|----------|-------------|
+| `CONSOLE_DIR` | Data directory (default: ~/.console/) |
 
 ---
 

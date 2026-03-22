@@ -1,56 +1,109 @@
 ---
 name: "shell"
 version: "1.0.0"
-description: "Analyze and optimize shell scripts with linting and profiling. Use when checking script quality, finding common errors, or benchmarking commands."
+description: "Shell scripting reference — Bash syntax, redirections, process substitution, signal handling, debugging techniques. Use when writing shell scripts, troubleshooting Bash behavior, or automating system tasks."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [shell, bash, scripting, linux, unix, terminal, automation, devtools]
+category: "devtools"
 ---
 
-# shell
+# Shell — Shell Scripting Reference
 
-Analyze and optimize shell scripts with linting and profiling. Use when checking script quality, finding common errors, or benchmarking commands.
+Quick-reference skill for Bash shell scripting, built-in features, and best practices.
+
+## When to Use
+
+- Writing reliable Bash scripts with proper error handling
+- Understanding redirections, pipes, and process substitution
+- Managing signals, traps, and background processes
+- Debugging shell scripts with set options and tracing
+- Choosing between shell features and external tools
 
 ## Commands
 
-### `lint`
+### `intro`
 
 ```bash
-scripts/script.sh lint <file>
+scripts/script.sh intro
 ```
 
-### `functions`
+Overview of shell scripting — Bash features, shebang, execution, portability.
+
+### `variables`
 
 ```bash
-scripts/script.sh functions <file>
+scripts/script.sh variables
 ```
 
-### `stats`
+Variables — declaration, scope, arrays, parameter expansion, special variables.
+
+### `control`
 
 ```bash
-scripts/script.sh stats <file>
+scripts/script.sh control
 ```
 
-### `explain`
+Control flow — if/else, case, for, while, until, select, functions.
+
+### `redirections`
 
 ```bash
-scripts/script.sh explain <cmd>
+scripts/script.sh redirections
 ```
 
-### `benchmark`
+Redirections and pipes — stdin/stdout/stderr, heredocs, process substitution.
+
+### `safety`
 
 ```bash
-scripts/script.sh benchmark <cmd count>
+scripts/script.sh safety
 ```
 
-### `aliases`
+Safety practices — set -euo pipefail, quoting, shellcheck, error handling.
+
+### `tools`
 
 ```bash
-scripts/script.sh aliases
+scripts/script.sh tools
 ```
 
-## Data Storage
+Essential tools — awk, sed, grep, find, xargs, cut, sort, jq patterns.
 
-Data stored in `~/.local/share/shell/`.
+### `signals`
+
+```bash
+scripts/script.sh signals
+```
+
+Signals and traps — SIGTERM, SIGINT, cleanup handlers, background jobs.
+
+### `checklist`
+
+```bash
+scripts/script.sh checklist
+```
+
+Shell script quality checklist.
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
+
+## Configuration
+
+| Variable | Description |
+|----------|-------------|
+| `SHELL_DIR` | Data directory (default: ~/.shell/) |
 
 ---
 

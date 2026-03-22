@@ -1,7 +1,7 @@
 ---
 name: "robotstudio"
 version: "1.0.0"
-description: "Robot simulation and programming helper"
+description: "Robot simulation and programming helper. Use when json robotstudio tasks, csv robotstudio tasks, checking robotstudio status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "industrial"
 
 # robotstudio
 
-Robot simulation and programming helper
-
+Robot simulation and programming helper. Use when json robotstudio tasks, csv robotstudio tasks, checking robotstudio status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `ROBOTSTUDIO_DIR` | No | Data directory (default: ~/.robotstudio/) |
-
-## Data Storage
-
-All data stored in `~/.robotstudio/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `ROBOTSTUDIO_DIR` | Data directory (default: ~/.robotstudio/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

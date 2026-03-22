@@ -1,7 +1,7 @@
 ---
 name: "switchgear"
 version: "1.0.0"
-description: "Switchgear specification manager"
+description: "Switchgear specification manager. Use when json switchgear tasks, csv switchgear tasks, checking switchgear status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "electrical"
 
 # switchgear
 
-Switchgear specification manager
-
+Switchgear specification manager. Use when json switchgear tasks, csv switchgear tasks, checking switchgear status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `SWITCHGEAR_DIR` | No | Data directory (default: ~/.switchgear/) |
-
-## Data Storage
-
-All data stored in `~/.switchgear/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `SWITCHGEAR_DIR` | Data directory (default: ~/.switchgear/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

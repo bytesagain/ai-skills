@@ -1,7 +1,7 @@
 ---
 name: "modbus"
 version: "1.0.0"
-description: "Modbus communication protocol tool"
+description: "Modbus communication protocol tool. Use when json modbus tasks, csv modbus tasks, checking modbus status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "industrial"
 
 # modbus
 
-Modbus communication protocol tool
-
+Modbus communication protocol tool. Use when json modbus tasks, csv modbus tasks, checking modbus status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `MODBUS_DIR` | No | Data directory (default: ~/.modbus/) |
-
-## Data Storage
-
-All data stored in `~/.modbus/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `MODBUS_DIR` | Data directory (default: ~/.modbus/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

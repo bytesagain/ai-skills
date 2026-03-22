@@ -1,7 +1,7 @@
 ---
 name: "ppe"
 version: "1.0.0"
-description: "Personal protective equipment tracker"
+description: "Personal protective equipment tracker. Use when json ppe tasks, csv ppe tasks, checking ppe status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "safety"
 
 # ppe
 
-Personal protective equipment tracker
-
+Personal protective equipment tracker. Use when json ppe tasks, csv ppe tasks, checking ppe status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `PPE_DIR` | No | Data directory (default: ~/.ppe/) |
-
-## Data Storage
-
-All data stored in `~/.ppe/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `PPE_DIR` | Data directory (default: ~/.ppe/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

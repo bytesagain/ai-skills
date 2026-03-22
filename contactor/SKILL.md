@@ -1,7 +1,7 @@
 ---
 name: "contactor"
 version: "1.0.0"
-description: "Contactor and starter selection tool"
+description: "Contactor and starter selection tool. Use when json contactor tasks, csv contactor tasks, checking contactor status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "electrical"
 
 # contactor
 
-Contactor and starter selection tool
-
+Contactor and starter selection tool. Use when json contactor tasks, csv contactor tasks, checking contactor status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `CONTACTOR_DIR` | No | Data directory (default: ~/.contactor/) |
-
-## Data Storage
-
-All data stored in `~/.contactor/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `CONTACTOR_DIR` | Data directory (default: ~/.contactor/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

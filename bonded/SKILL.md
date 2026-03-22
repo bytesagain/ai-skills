@@ -1,83 +1,91 @@
 ---
 name: "bonded"
 version: "1.0.0"
-description: "Run bonded operations with simple CLI commands. Use when you need quick data processing or automation."
+description: "Bonded warehouse reference — customs procedures, duty deferral, FTZ operations, compliance requirements. Use when managing bonded storage, customs clearance, or duty suspension logistics."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [bonded, logistics, cli, tool]
+tags: [bonded, warehouse, customs, duty, ftz, logistics, trade, compliance]
 category: "logistics"
 ---
 
-# bonded
+# Bonded — Bonded Warehouse & Customs Operations Reference
 
-Run bonded operations with simple CLI commands. Use when you need quick data processing or automation.
+Quick-reference skill for bonded warehouse management, customs procedures, duty deferral mechanisms, and trade compliance.
+
+## When to Use
+
+- Setting up or managing a bonded warehouse facility
+- Understanding duty deferral and suspension mechanisms
+- Planning customs clearance procedures for imported goods
+- Evaluating Free Trade Zone (FTZ) vs bonded warehouse options
+- Ensuring compliance with customs regulations
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of bonded warehousing — purpose, types, and regulatory framework.
 
-### `add`
+### `types`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh types
 ```
 
-Add new entry
+Types of bonded facilities — public, private, FTZ, bonded manufacturing.
 
-### `list`
+### `procedures`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh procedures
 ```
 
-List all entries
+Key procedures — entry, storage, withdrawal, re-export, and duty payment.
 
-### `search`
+### `duties`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh duties
 ```
 
-Search entries
+Duty deferral mechanisms — suspension, drawback, inverted tariffs.
 
-### `remove`
+### `compliance`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh compliance
 ```
 
-Remove entry by number
+Compliance requirements — record keeping, audits, bond types, penalties.
 
-### `export`
+### `benefits`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh benefits
 ```
 
-Export data to file
+Business benefits — cash flow, re-export savings, strategic inventory.
 
-### `stats`
+### `global`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh global
 ```
 
-Show statistics
+Global bonded warehouse systems — US, EU, China, UK comparisons.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+Bonded warehouse setup and operations checklist.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `BONDED_DIR` | No | Data directory (default: ~/.bonded/) |
-
-## Data Storage
-
-All data stored in `~/.bonded/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `BONDED_DIR` | Data directory (default: ~/.bonded/) |
 
 ---
 

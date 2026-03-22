@@ -1,83 +1,91 @@
 ---
 name: "tooltip"
 version: "1.0.0"
-description: "Generate tooltip UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages."
+description: "Tooltip UI component reference — positioning, accessibility, trigger patterns, animation. Use when implementing tooltips, popovers, or contextual help overlays in web interfaces."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [tooltip, frontend, cli, tool]
+tags: [tooltip, popover, ui-component, a11y, positioning, overlay, frontend]
 category: "frontend"
 ---
 
-# tooltip
+# Tooltip — Tooltip UI Component Reference
 
-Generate tooltip UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages.
+Quick-reference skill for tooltip design, positioning logic, accessibility, and implementation patterns.
+
+## When to Use
+
+- Adding contextual help text to UI elements
+- Implementing hover/focus information overlays
+- Choosing between tooltips, popovers, and toggletips
+- Making tooltips accessible to keyboard and screen reader users
+- Handling tooltip positioning and collision detection
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Tooltip overview — types, when to use, tooltip vs popover vs toggletip.
 
-### `add`
+### `anatomy`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh anatomy
 ```
 
-Add new entry
+Tooltip anatomy — trigger, content, arrow, positioning, delay.
 
-### `list`
+### `positioning`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh positioning
 ```
 
-List all entries
+Positioning logic — placement options, collision detection, flip and shift.
 
-### `search`
+### `accessibility`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh accessibility
 ```
 
-Search entries
+Accessibility — ARIA patterns, keyboard support, screen readers, touch devices.
 
-### `remove`
+### `triggers`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh triggers
 ```
 
-Remove entry by number
+Trigger patterns — hover, focus, click, long-press, programmatic.
 
-### `export`
+### `content`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh content
 ```
 
-Export data to file
+Content guidelines — what belongs in tooltips, writing style, rich content.
 
-### `stats`
+### `css`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh css
 ```
 
-Show statistics
+CSS implementation — positioning, animations, arrow rendering, theming.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+Tooltip design and implementation checklist.
 
 ### `help`
 
@@ -90,22 +98,6 @@ scripts/script.sh help
 ```bash
 scripts/script.sh version
 ```
-
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `TOOLTIP_DIR` | No | Data directory (default: ~/.tooltip/) |
-
-## Data Storage
-
-All data stored in `~/.tooltip/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
 

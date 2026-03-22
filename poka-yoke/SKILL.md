@@ -1,7 +1,7 @@
 ---
 name: "poka-yoke"
 version: "1.0.0"
-description: "Mistake-proofing technique manager"
+description: "Mistake-proofing technique manager. Use when json poka yoke tasks, csv poka yoke tasks, checking poka yoke status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "industrial"
 
 # poka-yoke
 
-Mistake-proofing technique manager
-
+Mistake-proofing technique manager. Use when json poka yoke tasks, csv poka yoke tasks, checking poka yoke status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `POKA_YOKE_DIR` | No | Data directory (default: ~/.poka-yoke/) |
-
-## Data Storage
-
-All data stored in `~/.poka-yoke/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `POKA_YOKE_DIR` | Data directory (default: ~/.poka-yoke/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

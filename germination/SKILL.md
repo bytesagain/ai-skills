@@ -1,83 +1,91 @@
 ---
 name: "germination"
 version: "1.0.0"
-description: "Run germination operations with simple CLI commands. Use when you need quick data processing or automation."
+description: "Seed germination reference — imbibition, dormancy breaking, temperature/moisture requirements, testing protocols. Use when planning seed starting, evaluating germination rates, or troubleshooting poor emergence."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [germination, agriculture, cli, tool]
+tags: [germination, seed, agriculture, planting, dormancy, emergence, propagation]
 category: "agriculture"
 ---
 
-# germination
+# Germination — Seed Germination Reference
 
-Run germination operations with simple CLI commands. Use when you need quick data processing or automation.
+Quick-reference skill for seed germination science, testing, and practical growing.
+
+## When to Use
+
+- Planning seed starting schedules for crops
+- Troubleshooting poor germination rates
+- Breaking seed dormancy with scarification or stratification
+- Running germination tests to evaluate seed viability
+- Optimizing temperature and moisture for emergence
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of germination — phases, biology, key factors.
 
-### `add`
+### `conditions`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh conditions
 ```
 
-Add new entry
+Optimal conditions — temperature, moisture, oxygen, light requirements by crop.
 
-### `list`
+### `dormancy`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh dormancy
 ```
 
-List all entries
+Seed dormancy types and breaking methods — stratification, scarification, leaching.
 
-### `search`
+### `testing`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh testing
 ```
 
-Search entries
+Germination testing protocols — ISTA rules, paper towel test, tetrazolium.
 
-### `remove`
+### `crops`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh crops
 ```
 
-Remove entry by number
+Germination data for common crops — days, temperature, depth, rate benchmarks.
 
-### `export`
+### `problems`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh problems
 ```
 
-Export data to file
+Troubleshooting poor germination — damping off, crusting, seed age, pathogens.
 
-### `stats`
+### `enhancement`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh enhancement
 ```
 
-Show statistics
+Seed enhancement — priming, pelleting, coating, biopriming techniques.
 
-### `config`
+### `schedule`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh schedule
 ```
 
-View or set config
+Germination scheduling — calculating start dates, hardening off, transplant timing.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `GERMINATION_DIR` | No | Data directory (default: ~/.germination/) |
-
-## Data Storage
-
-All data stored in `~/.germination/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `GERMINATION_DIR` | Data directory (default: ~/.germination/) |
 
 ---
 

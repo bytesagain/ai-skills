@@ -1,83 +1,91 @@
 ---
 name: "beta"
 version: "1.0.0"
-description: "Calculate beta financial metrics and business data. Use when tracking expenses, analyzing investments, or generating reports."
+description: "Beta coefficient reference — CAPM, systematic risk, portfolio sensitivity, regression analysis. Use when measuring stock volatility relative to the market or constructing risk-adjusted portfolios."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [beta, finance, cli, tool]
+tags: [beta, capm, risk, portfolio, volatility, finance, regression]
 category: "finance"
 ---
 
-# beta
+# Beta — Beta Coefficient & Systematic Risk Reference
 
-Calculate beta financial metrics and business data. Use when tracking expenses, analyzing investments, or generating reports.
+Quick-reference skill for understanding and applying the beta coefficient in finance, portfolio management, and risk analysis.
+
+## When to Use
+
+- Calculating a stock's beta relative to a benchmark index
+- Understanding systematic vs unsystematic risk
+- Applying CAPM to estimate expected returns
+- Constructing beta-neutral or target-beta portfolios
+- Interpreting regression output for asset sensitivity
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of beta — definition, intuition, and role in modern finance.
 
-### `add`
+### `capm`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh capm
 ```
 
-Add new entry
+Capital Asset Pricing Model — formula, assumptions, and expected return calculation.
 
-### `list`
+### `calculate`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh calculate
 ```
 
-List all entries
+How to calculate beta — regression method, covariance/variance method, and practical steps.
 
-### `search`
+### `interpret`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh interpret
 ```
 
-Search entries
+Interpreting beta values — what β>1, β=1, β<1, and β<0 mean in practice.
 
-### `remove`
+### `types`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh types
 ```
 
-Remove entry by number
+Types of beta — levered vs unlevered, adjusted beta, fundamental beta, bottom-up beta.
 
-### `export`
+### `portfolio`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh portfolio
 ```
 
-Export data to file
+Portfolio beta — weighted average calculation, target beta, beta hedging strategies.
 
-### `stats`
+### `pitfalls`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh pitfalls
 ```
 
-Show statistics
+Common pitfalls — estimation window, benchmark choice, non-stationarity, and survivorship bias.
 
-### `config`
+### `examples`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh examples
 ```
 
-View or set config
+Worked examples with real-world beta scenarios and calculations.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `BETA_DIR` | No | Data directory (default: ~/.beta/) |
-
-## Data Storage
-
-All data stored in `~/.beta/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `BETA_DIR` | Data directory (default: ~/.beta/) |
 
 ---
 

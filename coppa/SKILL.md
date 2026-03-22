@@ -1,83 +1,91 @@
 ---
 name: "coppa"
 version: "1.0.0"
-description: "Run coppa operations with simple CLI commands. Use when you need quick data processing or automation."
+description: "COPPA compliance reference — children's online privacy, parental consent, data collection rules, FTC enforcement. Use when building apps for children under 13 or reviewing COPPA obligations."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [coppa, legal, cli, tool]
+tags: [coppa, privacy, children, ftc, parental-consent, online-safety, legal]
 category: "legal"
 ---
 
-# coppa
+# COPPA — Children's Online Privacy Protection Act Reference
 
-Run coppa operations with simple CLI commands. Use when you need quick data processing or automation.
+Quick-reference skill for COPPA compliance, parental consent mechanisms, and FTC enforcement guidelines.
+
+## When to Use
+
+- Building websites or apps directed at children under 13
+- Reviewing data collection practices for COPPA compliance
+- Implementing verifiable parental consent mechanisms
+- Understanding FTC enforcement actions and penalties
+- Auditing third-party SDKs for child-directed services
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of COPPA — history, purpose, scope, and the FTC's role.
 
-### `add`
+### `scope`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh scope
 ```
 
-Add new entry
+Who COPPA applies to — operators, child-directed services, mixed-audience sites, and actual knowledge standard.
 
-### `list`
+### `data`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh data
 ```
 
-List all entries
+Personal information defined under COPPA — what counts as PI for children.
 
-### `search`
+### `consent`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh consent
 ```
 
-Search entries
+Verifiable Parental Consent (VPC) methods approved by the FTC.
 
-### `remove`
+### `notice`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh notice
 ```
 
-Remove entry by number
+Privacy notice requirements — what must be disclosed and how.
 
-### `export`
+### `safeharbor`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh safeharbor
 ```
 
-Export data to file
+COPPA Safe Harbor programs and self-regulatory frameworks.
 
-### `stats`
+### `enforcement`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh enforcement
 ```
 
-Show statistics
+FTC enforcement actions, penalties, and notable COPPA cases.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+COPPA compliance checklist for app and website developers.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `COPPA_DIR` | No | Data directory (default: ~/.coppa/) |
-
-## Data Storage
-
-All data stored in `~/.coppa/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `COPPA_DIR` | Data directory (default: ~/.coppa/) |
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: "agv"
 version: "1.0.0"
-description: "Automated guided vehicle route planner"
+description: "Automated guided vehicle route planner. Use when json agv tasks, csv agv tasks, checking agv status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "industrial"
 
 # agv
 
-Automated guided vehicle route planner
-
+Automated guided vehicle route planner. Use when json agv tasks, csv agv tasks, checking agv status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `AGV_DIR` | No | Data directory (default: ~/.agv/) |
-
-## Data Storage
-
-All data stored in `~/.agv/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `AGV_DIR` | Data directory (default: ~/.agv/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

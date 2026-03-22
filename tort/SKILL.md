@@ -1,83 +1,91 @@
 ---
 name: "tort"
 version: "1.0.0"
-description: "Run tort operations with simple CLI commands. Use when you need quick data processing or automation."
+description: "Tort law reference — negligence, intentional torts, strict liability, damages, and defenses. Use when analyzing civil wrongs, understanding liability theories, or evaluating personal injury claims."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [tort, legal, cli, tool]
+tags: [tort, negligence, liability, damages, personal-injury, legal, civil-law]
 category: "legal"
 ---
 
-# tort
+# Tort — Tort Law Reference
 
-Run tort operations with simple CLI commands. Use when you need quick data processing or automation.
+Quick-reference skill for tort law principles, liability theories, and damages.
+
+## When to Use
+
+- Analyzing negligence claims (duty, breach, causation, damages)
+- Understanding intentional torts (assault, battery, trespass)
+- Evaluating strict liability claims (products, animals, abnormal activities)
+- Calculating damages (compensatory, punitive, nominal)
+- Identifying available defenses (contributory negligence, assumption of risk)
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of tort law — definition, categories, purpose.
 
-### `add`
+### `negligence`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh negligence
 ```
 
-Add new entry
+Negligence analysis — duty, breach, causation, damages.
 
-### `list`
+### `intentional`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh intentional
 ```
 
-List all entries
+Intentional torts — assault, battery, false imprisonment, IIED.
 
-### `search`
+### `strict`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh strict
 ```
 
-Search entries
+Strict liability — products liability, abnormally dangerous activities.
 
-### `remove`
+### `damages`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh damages
 ```
 
-Remove entry by number
+Types of damages — compensatory, punitive, nominal, and calculation.
 
-### `export`
+### `defenses`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh defenses
 ```
 
-Export data to file
+Tort defenses — contributory negligence, comparative fault, immunity.
 
-### `stats`
+### `examples`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh examples
 ```
 
-Show statistics
+Landmark tort cases and practical scenarios.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+Tort claim analysis checklist.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `TORT_DIR` | No | Data directory (default: ~/.tort/) |
-
-## Data Storage
-
-All data stored in `~/.tort/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `TORT_DIR` | Data directory (default: ~/.tort/) |
 
 ---
 

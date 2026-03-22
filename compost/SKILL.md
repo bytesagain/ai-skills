@@ -1,83 +1,91 @@
 ---
 name: "compost"
 version: "1.0.0"
-description: "Run compost operations with simple CLI commands. Use when you need quick data processing or automation."
+description: "Composting reference — methods, C:N ratio, thermophilic stages, vermicomposting, troubleshooting. Use when building compost systems, optimizing decomposition, or managing organic waste."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [compost, agriculture, cli, tool]
+tags: [compost, agriculture, soil, organic, decomposition, carbon-nitrogen, vermiculture]
 category: "agriculture"
 ---
 
-# compost
+# Compost — Composting Science & Practice Reference
 
-Run compost operations with simple CLI commands. Use when you need quick data processing or automation.
+Quick-reference skill for composting methods, the science of decomposition, and practical troubleshooting.
+
+## When to Use
+
+- Setting up a composting system (home, farm, or municipal)
+- Optimizing carbon-to-nitrogen ratios for faster decomposition
+- Troubleshooting compost problems (smell, slow breakdown, pests)
+- Choosing between composting methods (hot, cold, vermi, bokashi)
+- Understanding the microbiology and thermophilic stages
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of composting — what it is, why it matters, and the basic science.
 
-### `add`
+### `ratio`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh ratio
 ```
 
-Add new entry
+Carbon-to-nitrogen ratio — the key to successful composting.
 
-### `list`
+### `methods`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh methods
 ```
 
-List all entries
+Composting methods — hot, cold, vermicomposting, bokashi, in-vessel.
 
-### `search`
+### `stages`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh stages
 ```
 
-Search entries
+Decomposition stages — mesophilic, thermophilic, cooling, curing.
 
-### `remove`
+### `materials`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh materials
 ```
 
-Remove entry by number
+What to compost — greens, browns, and what to avoid.
 
-### `export`
+### `troubleshoot`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh troubleshoot
 ```
 
-Export data to file
+Troubleshooting — smells, pests, slow decomposition, wet/dry problems.
 
-### `stats`
+### `quality`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh quality
 ```
 
-Show statistics
+Compost quality assessment — maturity tests, nutrient content, application rates.
 
-### `config`
+### `systems`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh systems
 ```
 
-View or set config
+Composting systems — bins, tumblers, windrows, static piles, aerated systems.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `COMPOST_DIR` | No | Data directory (default: ~/.compost/) |
-
-## Data Storage
-
-All data stored in `~/.compost/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `COMPOST_DIR` | Data directory (default: ~/.compost/) |
 
 ---
 

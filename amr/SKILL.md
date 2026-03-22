@@ -1,7 +1,7 @@
 ---
 name: "amr"
 version: "1.0.0"
-description: "Autonomous mobile robot fleet manager"
+description: "Autonomous mobile robot fleet manager. Use when json amr tasks, csv amr tasks, checking amr status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "industrial"
 
 # amr
 
-Autonomous mobile robot fleet manager
-
+Autonomous mobile robot fleet manager. Use when json amr tasks, csv amr tasks, checking amr status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `AMR_DIR` | No | Data directory (default: ~/.amr/) |
-
-## Data Storage
-
-All data stored in `~/.amr/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `AMR_DIR` | Data directory (default: ~/.amr/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

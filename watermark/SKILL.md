@@ -1,83 +1,91 @@
 ---
 name: "watermark"
 version: "1.0.0"
-description: "Generate watermark UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages."
+description: "Watermark reference — visible and invisible watermarking, steganography, copyright protection, detection. Use when implementing watermarks for images, documents, or media, or understanding digital rights management."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [watermark, frontend, cli, tool]
+tags: [watermark, steganography, copyright, drm, image-protection, digital-forensics, content-authenticity]
 category: "frontend"
 ---
 
-# watermark
+# Watermark — Watermarking Reference
 
-Generate watermark UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages.
+Quick-reference skill for watermarking techniques, implementation, and digital content protection.
+
+## When to Use
+
+- Adding visible watermarks to images and documents
+- Understanding invisible/digital watermarking for tracking
+- Implementing CSS/canvas watermarks in web applications
+- Protecting intellectual property and detecting unauthorized use
+- Understanding steganography and content authenticity
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Watermarking overview — types, purposes, visible vs invisible, history.
 
-### `add`
+### `visible`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh visible
 ```
 
-Add new entry
+Visible watermarks — design principles, placement, opacity, tamper resistance.
 
-### `list`
+### `invisible`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh invisible
 ```
 
-List all entries
+Invisible watermarks — frequency domain, LSB, spread spectrum, robustness.
 
-### `search`
+### `web`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh web
 ```
 
-Search entries
+Web watermarking — CSS overlay, canvas-based, DOM watermarks, anti-removal.
 
-### `remove`
+### `document`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh document
 ```
 
-Remove entry by number
+Document watermarking — PDF, print, forensic tracking, canary traps.
 
-### `export`
+### `ai`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh ai
 ```
 
-Export data to file
+AI watermarking — C2PA standard, AI-generated content marking, detection.
 
-### `stats`
+### `attacks`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh attacks
 ```
 
-Show statistics
+Watermark attacks — removal, distortion, collusion, and countermeasures.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+Watermark implementation checklist for different use cases.
 
 ### `help`
 
@@ -90,22 +98,6 @@ scripts/script.sh help
 ```bash
 scripts/script.sh version
 ```
-
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `WATERMARK_DIR` | No | Data directory (default: ~/.watermark/) |
-
-## Data Storage
-
-All data stored in `~/.watermark/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
 

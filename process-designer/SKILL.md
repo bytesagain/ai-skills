@@ -1,7 +1,7 @@
 ---
 name: "process-designer"
 version: "1.0.0"
-description: "Process flow design and optimization tool"
+description: "Process flow design and optimization tool. Use when json process designer tasks, csv process designer tasks, checking process designer status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "industrial"
 
 # process-designer
 
-Process flow design and optimization tool
-
+Process flow design and optimization tool. Use when json process designer tasks, csv process designer tasks, checking process designer status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `PROCESS_DESIGNER_DIR` | No | Data directory (default: ~/.process-designer/) |
-
-## Data Storage
-
-All data stored in `~/.process-designer/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `PROCESS_DESIGNER_DIR` | Data directory (default: ~/.process-designer/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

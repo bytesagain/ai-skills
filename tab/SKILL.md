@@ -1,83 +1,91 @@
 ---
 name: "tab"
 version: "1.0.0"
-description: "Generate tab UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages."
+description: "Tab UI component reference — design patterns, accessibility, state management, responsive tabs. Use when implementing tabbed interfaces, designing tab navigation, or building accessible tab components."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [tab, frontend, cli, tool]
+tags: [tab, tabs, ui-component, navigation, a11y, frontend, tabpanel]
 category: "frontend"
 ---
 
-# tab
+# Tab — Tab UI Component Reference
 
-Generate tab UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages.
+Quick-reference skill for tab component design, accessibility patterns, and implementation.
+
+## When to Use
+
+- Implementing tabbed content panels in web applications
+- Designing tab navigation for sections of related content
+- Making tabs accessible with proper ARIA roles and keyboard support
+- Choosing between tabs, accordions, and other navigation patterns
+- Building responsive tab components that work on mobile
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Tab component overview — when to use tabs, types, alternatives.
 
-### `add`
+### `anatomy`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh anatomy
 ```
 
-Add new entry
+Tab anatomy — tab list, tab buttons, tab panels, indicators, badges.
 
-### `list`
+### `patterns`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh patterns
 ```
 
-List all entries
+Design patterns — horizontal, vertical, scrollable, closeable, draggable tabs.
 
-### `search`
+### `accessibility`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh accessibility
 ```
 
-Search entries
+Accessibility — ARIA roles, keyboard navigation, focus management, screen readers.
 
-### `remove`
+### `state`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh state
 ```
 
-Remove entry by number
+State management — controlled vs uncontrolled, lazy loading, URL sync, persistence.
 
-### `export`
+### `responsive`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh responsive
 ```
 
-Export data to file
+Responsive strategies — scrollable tabs, dropdown conversion, priority tabs, swipe.
 
-### `stats`
+### `css`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh css
 ```
 
-Show statistics
+CSS implementation — indicator animations, theming, variants, transitions.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+Tab component design and implementation checklist.
 
 ### `help`
 
@@ -90,22 +98,6 @@ scripts/script.sh help
 ```bash
 scripts/script.sh version
 ```
-
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `TAB_DIR` | No | Data directory (default: ~/.tab/) |
-
-## Data Storage
-
-All data stored in `~/.tab/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
 

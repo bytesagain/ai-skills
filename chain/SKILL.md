@@ -1,60 +1,109 @@
 ---
 name: "chain"
 version: "1.0.0"
-description: "Build and run named command chains with logging and status tracking. Use when creating multi-step workflows or automating sequential tasks."
+description: "Chain of Responsibility reference — design pattern, middleware pipelines, command chains, blockchain basics. Use when building request processing pipelines or implementing handler chains."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [chain, design-pattern, pipeline, middleware, handler, workflow]
+category: "general"
 ---
 
-# chain
+# Chain — Chain Pattern & Pipeline Reference
 
-Build and run named command chains with logging and status tracking. Use when creating multi-step workflows or automating sequential tasks.
+Quick-reference skill for chain-based design patterns, middleware pipelines, and sequential processing architectures.
+
+## When to Use
+
+- Implementing Chain of Responsibility design pattern
+- Building middleware pipelines (Express, Koa, Django)
+- Designing multi-step data processing workflows
+- Understanding promise chains and async pipelines
+- Building event processing or filter chains
 
 ## Commands
 
-### `create`
+### `intro`
 
 ```bash
-scripts/script.sh create <name>
+scripts/script.sh intro
 ```
 
-### `add`
+Overview of chain patterns — concept, variants, and applications.
+
+### `responsibility`
 
 ```bash
-scripts/script.sh add <name cmd>
+scripts/script.sh responsibility
 ```
 
-### `run`
+Chain of Responsibility design pattern — GoF pattern with examples.
+
+### `middleware`
 
 ```bash
-scripts/script.sh run <name>
+scripts/script.sh middleware
 ```
 
-### `list`
+Middleware chains — Express, Koa, Django, and custom implementations.
+
+### `promise`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh promise
 ```
 
-### `show`
+Promise chains and async pipelines — chaining, error handling, patterns.
+
+### `pipeline`
 
 ```bash
-scripts/script.sh show <name>
+scripts/script.sh pipeline
 ```
 
-### `remove`
+Unix pipeline philosophy and data transformation chains.
+
+### `filter`
 
 ```bash
-scripts/script.sh remove <name>
+scripts/script.sh filter
 ```
 
-## Requirements
+Filter chains — servlet filters, interceptors, decorators.
 
-- bash 4.0+
+### `blockchain`
 
-## Data Storage
+```bash
+scripts/script.sh blockchain
+```
 
-Data stored in `~/.local/share/chain/`.
+Blockchain fundamentals — hash chains, blocks, consensus basics.
+
+### `examples`
+
+```bash
+scripts/script.sh examples
+```
+
+Implementation examples across languages and frameworks.
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
+
+## Configuration
+
+| Variable | Description |
+|----------|-------------|
+| `CHAIN_DIR` | Data directory (default: ~/.chain/) |
 
 ---
 

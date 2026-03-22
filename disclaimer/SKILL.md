@@ -1,83 +1,91 @@
 ---
 name: "disclaimer"
 version: "1.0.0"
-description: "Run disclaimer operations with simple CLI commands. Use when you need quick data processing or automation."
+description: "Disclaimer drafting reference — liability limitations, warranty exclusions, professional disclaimers, and regulatory requirements. Use when drafting disclaimers for websites, products, or professional services."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [disclaimer, legal, cli, tool]
+tags: [disclaimer, liability, warranty, legal, compliance, terms, disclosure]
 category: "legal"
 ---
 
-# disclaimer
+# Disclaimer — Legal Disclaimer Reference
 
-Run disclaimer operations with simple CLI commands. Use when you need quick data processing or automation.
+Quick-reference skill for disclaimer types, drafting guidelines, and regulatory requirements.
+
+## When to Use
+
+- Drafting website disclaimers or terms pages
+- Understanding liability limitation language
+- Creating product or service warranty exclusions
+- Writing professional advice disclaimers (medical, financial, legal)
+- Ensuring regulatory compliance for disclosures
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of disclaimers — purpose, enforceability, and legal basis.
 
-### `add`
+### `types`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh types
 ```
 
-Add new entry
+Disclaimer types — warranty, liability, professional, affiliate, and more.
 
-### `list`
+### `website`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh website
 ```
 
-List all entries
+Website disclaimer essentials — content, placement, and best practices.
 
-### `search`
+### `professional`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh professional
 ```
 
-Search entries
+Professional disclaimers — medical, financial, legal, and educational.
 
-### `remove`
+### `product`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh product
 ```
 
-Remove entry by number
+Product disclaimers and warranty exclusions.
 
-### `export`
+### `regulatory`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh regulatory
 ```
 
-Export data to file
+Regulatory disclaimers — FTC, SEC, FDA, and industry-specific requirements.
 
-### `stats`
+### `drafting`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh drafting
 ```
 
-Show statistics
+Drafting guidelines — language, structure, and common pitfalls.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+Disclaimer audit checklist for comprehensive coverage.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `DISCLAIMER_DIR` | No | Data directory (default: ~/.disclaimer/) |
-
-## Data Storage
-
-All data stored in `~/.disclaimer/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `DISCLAIMER_DIR` | Data directory (default: ~/.disclaimer/) |
 
 ---
 

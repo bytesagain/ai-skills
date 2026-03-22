@@ -1,7 +1,7 @@
 ---
 name: "conduit"
 version: "1.0.0"
-description: "Conduit fill and sizing calculator"
+description: "Conduit fill and sizing calculator. Use when json conduit tasks, csv conduit tasks, checking conduit status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "electrical"
 
 # conduit
 
-Conduit fill and sizing calculator
-
+Conduit fill and sizing calculator. Use when json conduit tasks, csv conduit tasks, checking conduit status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `CONDUIT_DIR` | No | Data directory (default: ~/.conduit/) |
-
-## Data Storage
-
-All data stored in `~/.conduit/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `CONDUIT_DIR` | Data directory (default: ~/.conduit/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

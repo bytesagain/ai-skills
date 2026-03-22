@@ -1,83 +1,91 @@
 ---
 name: "footer"
 version: "1.0.0"
-description: "Generate footer UI elements and design assets. Use when building interfaces, creating components, or styling web pages."
+description: "Footer design reference — layout patterns, sticky footers, SEO, accessibility, legal requirements. Use when designing web page footers or implementing responsive footer components."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [footer, frontend, cli, tool]
+tags: [footer, web, ui, layout, html, css, frontend, accessibility]
 category: "frontend"
 ---
 
-# footer
+# Footer — Web Footer Design & Implementation Reference
 
-Generate footer UI elements and design assets. Use when building interfaces, creating components, or styling web pages.
+Quick-reference skill for designing and implementing web page footers, covering layout patterns, accessibility, responsive behavior, and best practices.
+
+## When to Use
+
+- Designing a website footer layout with proper structure
+- Implementing sticky or fixed footer behavior
+- Adding legal/compliance content (copyright, privacy, terms)
+- Making footers accessible and SEO-friendly
+- Building responsive footer components
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of footer design — purpose, anatomy, and design principles.
 
-### `add`
+### `patterns`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh patterns
 ```
 
-Add new entry
+Common footer layout patterns — fat footer, minimal, mega footer, sitemap-style.
 
-### `list`
+### `sticky`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh sticky
 ```
 
-List all entries
+Sticky footer techniques — flexbox, grid, and classic methods.
 
-### `search`
+### `html`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh html
 ```
 
-Search entries
+Semantic HTML structure for footers — proper tags, ARIA roles, landmarks.
 
-### `remove`
+### `css`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh css
 ```
 
-Remove entry by number
+CSS patterns for responsive footer layouts — grid, flexbox, media queries.
 
-### `export`
+### `legal`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh legal
 ```
 
-Export data to file
+Legal and compliance content — copyright notices, privacy links, cookie consent.
 
-### `stats`
+### `accessibility`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh accessibility
 ```
 
-Show statistics
+Accessibility best practices — navigation, contrast, screen readers, WCAG.
 
-### `config`
+### `examples`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh examples
 ```
 
-View or set config
+Real-world footer examples and code snippets.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `FOOTER_DIR` | No | Data directory (default: ~/.footer/) |
-
-## Data Storage
-
-All data stored in `~/.footer/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `FOOTER_DIR` | Data directory (default: ~/.footer/) |
 
 ---
 

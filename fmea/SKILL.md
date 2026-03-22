@@ -1,7 +1,7 @@
 ---
 name: "fmea"
 version: "1.0.0"
-description: "Failure mode and effects analysis tool"
+description: "Failure mode and effects analysis tool. Use when json fmea tasks, csv fmea tasks, checking fmea status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "industrial"
 
 # fmea
 
-Failure mode and effects analysis tool
-
+Failure mode and effects analysis tool. Use when json fmea tasks, csv fmea tasks, checking fmea status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `FMEA_DIR` | No | Data directory (default: ~/.fmea/) |
-
-## Data Storage
-
-All data stored in `~/.fmea/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `FMEA_DIR` | Data directory (default: ~/.fmea/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

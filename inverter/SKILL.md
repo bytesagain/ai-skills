@@ -1,7 +1,7 @@
 ---
 name: "inverter"
 version: "1.0.0"
-description: "Inverter and VFD parameter calculator"
+description: "Inverter and VFD parameter calculator. Use when json inverter tasks, csv inverter tasks, checking inverter status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "electrical"
 
 # inverter
 
-Inverter and VFD parameter calculator
-
+Inverter and VFD parameter calculator. Use when json inverter tasks, csv inverter tasks, checking inverter status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `INVERTER_DIR` | No | Data directory (default: ~/.inverter/) |
-
-## Data Storage
-
-All data stored in `~/.inverter/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `INVERTER_DIR` | Data directory (default: ~/.inverter/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

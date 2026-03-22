@@ -1,83 +1,91 @@
 ---
 name: "pesticide"
 version: "1.0.0"
-description: "Run pesticide operations with simple CLI commands. Use when you need quick data processing or automation."
+description: "Pesticide management reference — chemical classes, application methods, IPM strategies, residue limits, safety protocols. Use when selecting pest control products, calculating spray rates, or managing pesticide compliance."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [pesticide, agriculture, cli, tool]
+tags: [pesticide, agriculture, ipm, herbicide, insecticide, fungicide, crop-protection]
 category: "agriculture"
 ---
 
-# pesticide
+# Pesticide — Pesticide Management Reference
 
-Run pesticide operations with simple CLI commands. Use when you need quick data processing or automation.
+Quick-reference skill for pesticide classification, application, safety, and integrated pest management.
+
+## When to Use
+
+- Selecting appropriate pesticides for specific pests
+- Calculating application rates and spray volumes
+- Implementing Integrated Pest Management (IPM) programs
+- Understanding pre-harvest intervals and residue limits
+- Managing pesticide safety and regulatory compliance
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of pesticides — classification, mode of action, regulatory framework.
 
-### `add`
+### `classes`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh classes
 ```
 
-Add new entry
+Chemical classes — organophosphates, pyrethroids, neonicotinoids, biologicals.
 
-### `list`
+### `ipm`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh ipm
 ```
 
-List all entries
+Integrated Pest Management — thresholds, scouting, biological control, cultural practices.
 
-### `search`
+### `application`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh application
 ```
 
-Search entries
+Application methods — spraying, seed treatment, soil drench, fumigation, rates.
 
-### `remove`
+### `safety`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh safety
 ```
 
-Remove entry by number
+Safety protocols — PPE, REI, PHI, storage, disposal, emergency response.
 
-### `export`
+### `resistance`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh resistance
 ```
 
-Export data to file
+Resistance management — IRAC/FRAC/HRAC groups, rotation strategies, monitoring.
 
-### `stats`
+### `regulations`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh regulations
 ```
 
-Show statistics
+Regulatory framework — EPA registration, MRLs, label law, record-keeping.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+Pesticide application and compliance checklist.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `PESTICIDE_DIR` | No | Data directory (default: ~/.pesticide/) |
-
-## Data Storage
-
-All data stored in `~/.pesticide/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `PESTICIDE_DIR` | Data directory (default: ~/.pesticide/) |
 
 ---
 

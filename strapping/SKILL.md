@@ -1,83 +1,91 @@
 ---
 name: "strapping"
 version: "1.0.0"
-description: "Run strapping operations with simple CLI commands. Use when you need quick data processing or automation."
+description: "Cargo strapping and banding reference — steel, polyester, and polypropylene strapping, tensioning tools, load securing standards, and packaging best practices. Use when securing pallets, bundling products, or selecting strapping materials."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [strapping, logistics, cli, tool]
+tags: [strapping, banding, packaging, cargo, logistics, load-securing, palletizing]
 category: "logistics"
 ---
 
-# strapping
+# Strapping — Cargo Strapping & Banding Reference
 
-Run strapping operations with simple CLI commands. Use when you need quick data processing or automation.
+Quick-reference skill for strapping materials, tools, techniques, and load securing standards.
+
+## When to Use
+
+- Selecting strapping material for specific load types
+- Calculating strap tension and break strength requirements
+- Securing palletized cargo for transport
+- Choosing between steel, PET, and PP strapping
+- Complying with load securing regulations
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of strapping — purpose, materials, and industry applications.
 
-### `add`
+### `materials`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh materials
 ```
 
-Add new entry
+Strapping materials compared — steel, polyester (PET), polypropylene (PP).
 
-### `list`
+### `tools`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh tools
 ```
 
-List all entries
+Strapping tools — manual, pneumatic, battery-powered tensioners and sealers.
 
-### `search`
+### `techniques`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh techniques
 ```
 
-Search entries
+Strapping techniques — patterns, placement, and tensioning methods.
 
-### `remove`
+### `sizing`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh sizing
 ```
 
-Remove entry by number
+Strap sizing guide — width, thickness, break strength calculations.
 
-### `export`
+### `standards`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh standards
 ```
 
-Export data to file
+Load securing standards — EUMOS, EN 12195, DOT regulations.
 
-### `stats`
+### `examples`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh examples
 ```
 
-Show statistics
+Real-world strapping applications across industries.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+Strapping quality and safety checklist.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `STRAPPING_DIR` | No | Data directory (default: ~/.strapping/) |
-
-## Data Storage
-
-All data stored in `~/.strapping/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `STRAPPING_DIR` | Data directory (default: ~/.strapping/) |
 
 ---
 

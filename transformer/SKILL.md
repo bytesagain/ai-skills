@@ -1,7 +1,7 @@
 ---
 name: "transformer"
 version: "1.0.0"
-description: "Transformer sizing and specification tool"
+description: "Transformer sizing and specification tool. Use when base64 transformer tasks, hex transformer tasks, upper transformer tasks."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "electrical"
 
 # transformer
 
-Transformer sizing and specification tool
-
+Transformer sizing and specification tool. Use when base64 transformer tasks, hex transformer tasks, upper transformer tasks.
 ## Commands
 
 ### `status`
@@ -103,18 +102,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `TRANSFORMER_DIR` | No | Data directory (default: ~/.transformer/) |
-
-## Data Storage
-
-All data stored in `~/.transformer/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `TRANSFORMER_DIR` | Data directory (default: ~/.transformer/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

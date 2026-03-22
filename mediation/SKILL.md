@@ -1,83 +1,91 @@
 ---
 name: "mediation"
 version: "1.0.0"
-description: "Run mediation operations with simple CLI commands. Use when you need quick data processing or automation."
+description: "Mediation and ADR reference — dispute resolution processes, mediator techniques, caucus strategy, settlement agreements. Use when preparing for mediation sessions, drafting settlement terms, or choosing between ADR methods."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [mediation, legal, cli, tool]
+tags: [mediation, adr, dispute-resolution, arbitration, negotiation, settlement, legal]
 category: "legal"
 ---
 
-# mediation
+# Mediation — Alternative Dispute Resolution Reference
 
-Run mediation operations with simple CLI commands. Use when you need quick data processing or automation.
+Quick-reference skill for mediation processes, techniques, and settlement practices.
+
+## When to Use
+
+- Preparing for a mediation session as party or counsel
+- Choosing between mediation, arbitration, and litigation
+- Understanding mediator techniques and caucus strategy
+- Drafting enforceable settlement agreements
+- Evaluating when mediation is appropriate or inappropriate
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of mediation — definition, principles, comparison with litigation and arbitration.
 
-### `add`
+### `process`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh process
 ```
 
-Add new entry
+Mediation process stages — opening, joint session, caucus, negotiation, closure.
 
-### `list`
+### `techniques`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh techniques
 ```
 
-List all entries
+Mediator techniques — reframing, reality testing, BATNA analysis, anchoring.
 
-### `search`
+### `types`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh types
 ```
 
-Search entries
+ADR spectrum — negotiation, mediation, med-arb, arbitration, early neutral evaluation.
 
-### `remove`
+### `preparation`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh preparation
 ```
 
-Remove entry by number
+Mediation preparation — position statements, BATNA/WATNA, authority, documents.
 
-### `export`
+### `settlement`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh settlement
 ```
 
-Export data to file
+Settlement agreements — essential terms, enforceability, tax implications.
 
-### `stats`
+### `ethics`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh ethics
 ```
 
-Show statistics
+Mediator ethics — neutrality, confidentiality, self-determination, conflicts.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+Mediation readiness checklist for parties and counsel.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `MEDIATION_DIR` | No | Data directory (default: ~/.mediation/) |
-
-## Data Storage
-
-All data stored in `~/.mediation/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `MEDIATION_DIR` | Data directory (default: ~/.mediation/) |
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: "workvisual"
 version: "1.0.0"
-description: "WorkVisual project configuration manager"
+description: "WorkVisual project configuration manager. Use when json workvisual tasks, csv workvisual tasks, checking workvisual status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "industrial"
 
 # workvisual
 
-WorkVisual project configuration manager
-
+WorkVisual project configuration manager. Use when json workvisual tasks, csv workvisual tasks, checking workvisual status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `WORKVISUAL_DIR` | No | Data directory (default: ~/.workvisual/) |
-
-## Data Storage
-
-All data stored in `~/.workvisual/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `WORKVISUAL_DIR` | Data directory (default: ~/.workvisual/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

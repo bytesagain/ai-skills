@@ -1,83 +1,91 @@
 ---
 name: "phosphate"
 version: "1.0.0"
-description: "Run phosphate operations with simple CLI commands. Use when you need quick data processing or automation."
+description: "Phosphate fertilizer reference — P2O5 forms, application timing, soil testing, runoff management, crop requirements. Use when planning phosphorus fertilization programs or managing phosphate resources."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [phosphate, agriculture, cli, tool]
+tags: [phosphate, phosphorus, fertilizer, agriculture, soil, nutrient, p2o5]
 category: "agriculture"
 ---
 
-# phosphate
+# Phosphate — Phosphorus Fertilizer Reference
 
-Run phosphate operations with simple CLI commands. Use when you need quick data processing or automation.
+Quick-reference skill for phosphorus nutrition, fertilizer products, and management.
+
+## When to Use
+
+- Planning phosphorus fertilization for crops
+- Interpreting soil test phosphorus levels
+- Selecting phosphate fertilizer products and forms
+- Managing environmental phosphorus runoff risks
+- Understanding phosphorus cycling in soil
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of phosphorus in agriculture — role, cycling, global reserves.
 
-### `add`
+### `products`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh products
 ```
 
-Add new entry
+Phosphate fertilizer products — MAP, DAP, TSP, rock phosphate, SSP.
 
-### `list`
+### `soiltest`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh soiltest
 ```
 
-List all entries
+Soil phosphorus testing — Bray, Olsen, Mehlich, interpretation tables.
 
-### `search`
+### `placement`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh placement
 ```
 
-Search entries
+Application methods — broadcast, band, starter, foliar, timing.
 
-### `remove`
+### `crops`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh crops
 ```
 
-Remove entry by number
+Crop phosphorus requirements and removal rates.
 
-### `export`
+### `cycling`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh cycling
 ```
 
-Export data to file
+Phosphorus cycling — fixation, mineralization, pH effects, mycorrhizae.
 
-### `stats`
+### `environmental`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh environmental
 ```
 
-Show statistics
+Environmental management — runoff, P index, eutrophication, 4R stewardship.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+Phosphorus management planning checklist.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `PHOSPHATE_DIR` | No | Data directory (default: ~/.phosphate/) |
-
-## Data Storage
-
-All data stored in `~/.phosphate/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `PHOSPHATE_DIR` | Data directory (default: ~/.phosphate/) |
 
 ---
 

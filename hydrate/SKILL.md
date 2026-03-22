@@ -1,83 +1,91 @@
 ---
 name: "hydrate"
 version: "1.0.0"
-description: "Track hydrate personal activities and daily routines. Use when managing health goals, organizing tasks, or building habits."
+description: "Hydration reference — daily water intake, electrolytes, dehydration signs, exercise hydration, rehydration protocols. Use when planning fluid intake for health, fitness, or recovery."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [hydrate, life, cli, tool]
+tags: [hydrate, water, electrolytes, dehydration, health, fitness, life]
 category: "life"
 ---
 
-# hydrate
+# Hydrate — Hydration & Fluid Balance Reference
 
-Track hydrate personal activities and daily routines. Use when managing health goals, organizing tasks, or building habits.
+Quick-reference skill for understanding hydration science, calculating fluid needs, and managing electrolyte balance for health and performance.
+
+## When to Use
+
+- Calculating daily water intake requirements
+- Planning hydration strategies for exercise or hot weather
+- Recognizing and addressing dehydration symptoms
+- Understanding electrolyte balance and supplementation
+- Designing rehydration protocols for illness or recovery
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of hydration — why water matters and how the body regulates fluids.
 
-### `add`
+### `intake`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh intake
 ```
 
-Add new entry
+Daily water intake guidelines — how much, when, and adjustment factors.
 
-### `list`
+### `electrolytes`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh electrolytes
 ```
 
-List all entries
+Electrolyte guide — sodium, potassium, magnesium, calcium roles and sources.
 
-### `search`
+### `signs`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh signs
 ```
 
-Search entries
+Dehydration signs and stages — mild, moderate, severe symptoms.
 
-### `remove`
+### `exercise`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh exercise
 ```
 
-Remove entry by number
+Exercise hydration — pre, during, post workout fluid and electrolyte strategies.
 
-### `export`
+### `rehydrate`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh rehydrate
 ```
 
-Export data to file
+Rehydration protocols — ORS formula, illness recovery, hangover recovery.
 
-### `stats`
+### `myths`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh myths
 ```
 
-Show statistics
+Hydration myths debunked — 8 glasses, clear urine, overhydration risks.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+Daily hydration checklist and tracking tips.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `HYDRATE_DIR` | No | Data directory (default: ~/.hydrate/) |
-
-## Data Storage
-
-All data stored in `~/.hydrate/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `HYDRATE_DIR` | Data directory (default: ~/.hydrate/) |
 
 ---
 

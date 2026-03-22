@@ -1,7 +1,7 @@
 ---
 name: "lockout"
 version: "1.0.0"
-description: "Lockout tagout safety procedure manager"
+description: "Lockout tagout safety procedure manager. Use when json lockout tasks, csv lockout tasks, checking lockout status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "safety"
 
 # lockout
 
-Lockout tagout safety procedure manager
-
+Lockout tagout safety procedure manager. Use when json lockout tasks, csv lockout tasks, checking lockout status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `LOCKOUT_DIR` | No | Data directory (default: ~/.lockout/) |
-
-## Data Storage
-
-All data stored in `~/.lockout/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `LOCKOUT_DIR` | Data directory (default: ~/.lockout/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

@@ -1,83 +1,91 @@
 ---
 name: "goal"
 version: "1.0.0"
-description: "Track goal personal activities and daily routines. Use when managing health goals, organizing tasks, or building productive habits."
+description: "Goal setting reference — SMART goals, OKRs, habit formation, accountability systems. Use when setting personal or professional goals, designing habit systems, or implementing OKR frameworks."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [goal, life, cli, tool]
+tags: [goal-setting, smart-goals, okr, habits, productivity, motivation, accountability]
 category: "life"
 ---
 
-# goal
+# Goal — Goal Setting & Achievement Reference
 
-Track goal personal activities and daily routines. Use when managing health goals, organizing tasks, or building productive habits.
+Quick-reference skill for goal-setting frameworks, habit formation, and personal achievement systems.
+
+## When to Use
+
+- Setting SMART goals or defining OKRs
+- Designing habit formation and tracking systems
+- Understanding motivation science and goal psychology
+- Building accountability structures
+- Reviewing and adjusting goals systematically
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Goal setting fundamentals — why goals work, common pitfalls, research-backed principles.
 
-### `add`
+### `smart`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh smart
 ```
 
-Add new entry
+SMART goal framework — Specific, Measurable, Achievable, Relevant, Time-bound with examples.
 
-### `list`
+### `okr`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh okr
 ```
 
-List all entries
+OKR framework — Objectives and Key Results, scoring, cadence, alignment.
 
-### `search`
+### `habits`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh habits
 ```
 
-Search entries
+Habit formation science — cue-routine-reward, atomic habits, implementation intentions.
 
-### `remove`
+### `planning`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh planning
 ```
 
-Remove entry by number
+Goal decomposition — breaking big goals into milestones, sprints, and daily actions.
 
-### `export`
+### `motivation`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh motivation
 ```
 
-Export data to file
+Motivation science — intrinsic vs extrinsic, self-determination theory, overcoming plateaus.
 
-### `stats`
+### `review`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh review
 ```
 
-Show statistics
+Review systems — weekly reviews, retrospectives, course correction, celebration.
 
-### `config`
+### `pitfalls`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh pitfalls
 ```
 
-View or set config
+Common goal-setting mistakes and evidence-based countermeasures.
 
 ### `help`
 
@@ -90,22 +98,6 @@ scripts/script.sh help
 ```bash
 scripts/script.sh version
 ```
-
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `GOAL_DIR` | No | Data directory (default: ~/.goal/) |
-
-## Data Storage
-
-All data stored in `~/.goal/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: "busbar"
 version: "1.0.0"
-description: "Busbar current capacity calculator"
+description: "Busbar current capacity calculator. Use when json busbar tasks, csv busbar tasks, checking busbar status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "electrical"
 
 # busbar
 
-Busbar current capacity calculator
-
+Busbar current capacity calculator. Use when json busbar tasks, csv busbar tasks, checking busbar status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `BUSBAR_DIR` | No | Data directory (default: ~/.busbar/) |
-
-## Data Storage
-
-All data stored in `~/.busbar/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `BUSBAR_DIR` | Data directory (default: ~/.busbar/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

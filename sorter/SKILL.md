@@ -1,83 +1,91 @@
 ---
 name: "sorter"
 version: "1.0.0"
-description: "Run sorter operations with simple CLI commands. Use when you need quick data processing or automation."
+description: "Sorting algorithm and system reference — comparison sorts, distribution sorts, parallel sorting, and industrial sortation. Use when choosing sorting strategies, understanding algorithmic complexity, or designing physical sortation systems."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [sorter, logistics, cli, tool]
+tags: [sorter, sorting, algorithm, logistics, warehouse, sortation]
 category: "logistics"
 ---
 
-# sorter
+# Sorter — Sorting Reference
 
-Run sorter operations with simple CLI commands. Use when you need quick data processing or automation.
+Quick-reference skill for sorting algorithms, complexity analysis, and industrial sortation systems.
+
+## When to Use
+
+- Choosing the right sorting algorithm for a dataset
+- Understanding time/space complexity of sorting methods
+- Designing physical sortation systems for warehouses
+- Optimizing sort performance for large-scale data processing
+- Comparing stable vs unstable sorts for specific use cases
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of sorting — classification, stability, and when to use what.
 
-### `add`
+### `comparison`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh comparison
 ```
 
-Add new entry
+Comparison-based sorts — quicksort, mergesort, heapsort, timsort.
 
-### `list`
+### `distribution`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh distribution
 ```
 
-List all entries
+Distribution sorts — counting sort, radix sort, bucket sort.
 
-### `search`
+### `simple`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh simple
 ```
 
-Search entries
+Simple sorts — insertion, selection, bubble, and when they actually win.
 
-### `remove`
+### `parallel`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh parallel
 ```
 
-Remove entry by number
+Parallel and external sorting — merge sort for disk, MapReduce, GPU sorts.
 
-### `export`
+### `choosing`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh choosing
 ```
 
-Export data to file
+Decision guide — which sort for which situation, with benchmarks.
 
-### `stats`
+### `physical`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh physical
 ```
 
-Show statistics
+Physical sortation systems — warehouse sorters, postal sorting, and throughput.
 
-### `config`
+### `tricks`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh tricks
 ```
 
-View or set config
+Sorting tricks — partial sorts, nth element, stability hacks, presorted data.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `SORTER_DIR` | No | Data directory (default: ~/.sorter/) |
-
-## Data Storage
-
-All data stored in `~/.sorter/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `SORTER_DIR` | Data directory (default: ~/.sorter/) |
 
 ---
 

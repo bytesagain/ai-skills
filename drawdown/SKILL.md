@@ -1,83 +1,91 @@
 ---
 name: "drawdown"
 version: "1.0.0"
-description: "Calculate drawdown financial metrics and business data. Use when tracking expenses, analyzing investments, or generating reports."
+description: "Drawdown analysis reference — maximum drawdown, peak-to-trough, recovery time, risk metrics. Use when evaluating portfolio risk, stress-testing strategies, or measuring downside exposure."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [drawdown, finance, cli, tool]
+tags: [drawdown, risk, portfolio, maximum-drawdown, recovery, finance, volatility]
 category: "finance"
 ---
 
-# drawdown
+# Drawdown — Drawdown Analysis & Risk Measurement Reference
 
-Calculate drawdown financial metrics and business data. Use when tracking expenses, analyzing investments, or generating reports.
+Quick-reference skill for understanding, calculating, and applying drawdown metrics in portfolio management and risk analysis.
+
+## When to Use
+
+- Measuring maximum drawdown of a portfolio or strategy
+- Comparing risk profiles of different investments
+- Setting stop-loss levels based on historical drawdowns
+- Stress-testing strategies against worst-case scenarios
+- Evaluating fund manager performance through drawdown lens
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of drawdown — definition, significance, and types.
 
-### `add`
+### `calculate`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh calculate
 ```
 
-Add new entry
+How to calculate drawdown — formulas, step-by-step, and time series methods.
 
-### `list`
+### `metrics`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh metrics
 ```
 
-List all entries
+Key drawdown metrics — MDD, Calmar ratio, Ulcer Index, pain index.
 
-### `search`
+### `historical`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh historical
 ```
 
-Search entries
+Major historical drawdowns — market crashes, recovery timelines.
 
-### `remove`
+### `management`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh management
 ```
 
-Remove entry by number
+Drawdown management — position sizing, stop-losses, risk budgeting.
 
-### `export`
+### `recovery`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh recovery
 ```
 
-Export data to file
+Recovery analysis — math of recovery, time to recover, asymmetry of losses.
 
-### `stats`
+### `comparison`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh comparison
 ```
 
-Show statistics
+Drawdown vs other risk measures — volatility, VaR, CVaR, Sortino.
 
-### `config`
+### `examples`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh examples
 ```
 
-View or set config
+Worked examples with calculations and strategy evaluation.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `DRAWDOWN_DIR` | No | Data directory (default: ~/.drawdown/) |
-
-## Data Storage
-
-All data stored in `~/.drawdown/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `DRAWDOWN_DIR` | Data directory (default: ~/.drawdown/) |
 
 ---
 

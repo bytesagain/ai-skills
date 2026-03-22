@@ -1,7 +1,7 @@
 ---
 name: "photoshop"
 version: "1.0.0"
-description: "Image editing and graphic design assistant"
+description: "Image editing and graphic design assistant. Use when json photoshop tasks, csv photoshop tasks, checking photoshop status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "media"
 
 # photoshop
 
-Image editing and graphic design assistant
-
+Image editing and graphic design assistant. Use when json photoshop tasks, csv photoshop tasks, checking photoshop status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `PHOTOSHOP_DIR` | No | Data directory (default: ~/.photoshop/) |
-
-## Data Storage
-
-All data stored in `~/.photoshop/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `PHOTOSHOP_DIR` | Data directory (default: ~/.photoshop/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

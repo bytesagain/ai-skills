@@ -1,83 +1,91 @@
 ---
 name: "kanban"
 version: "1.0.0"
-description: "Kanban board and workflow manager"
+description: "Kanban system reference — board design, WIP limits, pull signals, and flow metrics. Use when implementing kanban boards, managing work-in-progress, or optimizing workflow."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [kanban, industrial, cli, tool]
+tags: [kanban, agile, workflow, wip, pull-system, industrial]
 category: "industrial"
 ---
 
-# kanban
+# Kanban — Kanban System Reference
 
-Kanban board and workflow manager
+Quick-reference skill for kanban board design, WIP limits, pull-based workflow, and flow optimization.
+
+## When to Use
+
+- Designing a kanban board for production or software teams
+- Setting and adjusting WIP limits
+- Measuring flow metrics (lead time, throughput, CFD)
+- Transitioning from push to pull system
+- Troubleshooting bottlenecks in workflow
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Kanban origins, core principles, and pull system fundamentals.
 
-### `add`
+### `board`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh board
 ```
 
-Add new entry
+Board design patterns — columns, swimlanes, card design, physical vs digital.
 
-### `list`
+### `wip`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh wip
 ```
 
-List all entries
+WIP limits — how to set, adjust, and enforce work-in-progress constraints.
 
-### `search`
+### `metrics`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh metrics
 ```
 
-Search entries
+Flow metrics: lead time, cycle time, throughput, cumulative flow diagram.
 
-### `remove`
+### `signals`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh signals
 ```
 
-Remove entry by number
+Pull signals — card-based, bin-based, electronic kanban, and replenishment triggers.
 
-### `export`
+### `practices`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh practices
 ```
 
-Export data to file
+Core practices: visualize work, limit WIP, manage flow, make policies explicit.
 
-### `stats`
+### `examples`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh examples
 ```
 
-Show statistics
+Kanban implementation examples in manufacturing and software.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+Kanban readiness and health assessment checklist.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `KANBAN_DIR` | No | Data directory (default: ~/.kanban/) |
-
-## Data Storage
-
-All data stored in `~/.kanban/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `KANBAN_DIR` | Data directory (default: ~/.kanban/) |
 
 ---
 

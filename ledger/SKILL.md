@@ -1,83 +1,91 @@
 ---
 name: "ledger"
 version: "1.0.0"
-description: "Calculate ledger financial metrics and business data. Use when tracking expenses, analyzing investments, or generating financial reports."
+description: "Double-entry bookkeeping and ledger reference — debits, credits, chart of accounts, journal entries, and financial statements. Use when understanding accounting fundamentals, designing ledger systems, or implementing financial record-keeping."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [ledger, finance, cli, tool]
+tags: [ledger, accounting, double-entry, bookkeeping, journal, financial]
 category: "finance"
 ---
 
-# ledger
+# Ledger — Double-Entry Bookkeeping Reference
 
-Calculate ledger financial metrics and business data. Use when tracking expenses, analyzing investments, or generating financial reports.
+Quick-reference skill for ledger accounting — double-entry bookkeeping, journal entries, and financial statements.
+
+## When to Use
+
+- Understanding double-entry bookkeeping principles
+- Designing ledger database schemas
+- Recording journal entries (debits and credits)
+- Building chart of accounts
+- Generating financial statements (balance sheet, income statement)
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+What a ledger is, double-entry principle, the accounting equation.
 
-### `add`
+### `accounts`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh accounts
 ```
 
-Add new entry
+Chart of accounts — account types, numbering conventions, normal balances.
 
-### `list`
+### `entries`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh entries
 ```
 
-List all entries
+Journal entries — recording transactions, debits and credits, examples.
 
-### `search`
+### `statements`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh statements
 ```
 
-Search entries
+Financial statements — balance sheet, income statement, cash flow.
 
-### `remove`
+### `cycle`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh cycle
 ```
 
-Remove entry by number
+The accounting cycle — from transaction to financial statements.
 
-### `export`
+### `schema`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh schema
 ```
 
-Export data to file
+Ledger database schema design — tables, immutability, audit trail.
 
-### `stats`
+### `tools`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh tools
 ```
 
-Show statistics
+Ledger tools — plaintext accounting (hledger, beancount), QuickBooks.
 
-### `config`
+### `rules`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh rules
 ```
 
-View or set config
+Key accounting rules — GAAP, accrual vs cash basis, materiality.
 
 ### `help`
 
@@ -91,13 +99,6 @@ scripts/script.sh help
 scripts/script.sh version
 ```
 
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Description |
-|----------|-------------|
-| `LEDGER_DIR` | Data directory (default: ~/.ledger/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

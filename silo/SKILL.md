@@ -1,83 +1,91 @@
 ---
 name: "silo"
 version: "1.0.0"
-description: "Run silo operations with simple CLI commands. Use when you need quick data processing or automation."
+description: "Grain silo reference — storage types, aeration, moisture management, fumigation, and safe handling of bulk grain. Use when designing grain storage, managing post-harvest quality, or ensuring silo safety."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [silo, agriculture, cli, tool]
+tags: [silo, grain, storage, agriculture, aeration, post-harvest]
 category: "agriculture"
 ---
 
-# silo
+# Silo — Grain Storage Reference
 
-Run silo operations with simple CLI commands. Use when you need quick data processing or automation.
+Quick-reference skill for grain silo types, storage management, and post-harvest quality preservation.
+
+## When to Use
+
+- Selecting silo types for different grains and capacities
+- Managing grain moisture, temperature, and aeration
+- Planning fumigation and pest control in stored grain
+- Understanding silo safety hazards and prevention
+- Calculating storage capacity and filling procedures
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of grain storage — silo types, capacity, and basic principles.
 
-### `add`
+### `moisture`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh moisture
 ```
 
-Add new entry
+Moisture management — safe storage levels, drying, and equilibrium moisture.
 
-### `list`
+### `aeration`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh aeration
 ```
 
-List all entries
+Aeration systems — fan sizing, airflow patterns, cooling strategies.
 
-### `search`
+### `pests`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh pests
 ```
 
-Search entries
+Stored grain pests — insects, fungi, rodents, and control methods.
 
-### `remove`
+### `fumigation`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh fumigation
 ```
 
-Remove entry by number
+Fumigation procedures — phosphine, heat treatment, and safety protocols.
 
-### `export`
+### `capacity`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh capacity
 ```
 
-Export data to file
+Storage capacity calculations — bin dimensions, bushel conversions, test weight.
 
-### `stats`
+### `safety`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh safety
 ```
 
-Show statistics
+Silo safety — engulfment hazards, confined space, dust explosions, gas monitoring.
 
-### `config`
+### `quality`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh quality
 ```
 
-View or set config
+Grain quality assessment — grading, sampling, and deterioration indicators.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `SILO_DIR` | No | Data directory (default: ~/.silo/) |
-
-## Data Storage
-
-All data stored in `~/.silo/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `SILO_DIR` | Data directory (default: ~/.silo/) |
 
 ---
 

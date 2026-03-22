@@ -1,83 +1,91 @@
 ---
 name: "header"
 version: "1.0.0"
-description: "Generate header UI elements and design assets. Use when building interfaces, creating components, or styling web pages."
+description: "Header design reference — navigation patterns, sticky headers, responsive menus, accessibility. Use when designing website headers or implementing navigation components."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [header, frontend, cli, tool]
+tags: [header, navigation, web, ui, navbar, responsive, frontend, menu]
 category: "frontend"
 ---
 
-# header
+# Header — Web Header & Navigation Design Reference
 
-Generate header UI elements and design assets. Use when building interfaces, creating components, or styling web pages.
+Quick-reference skill for designing and implementing web page headers, navigation bars, and responsive menu systems.
+
+## When to Use
+
+- Designing a website header with primary navigation
+- Implementing sticky/fixed header behavior with scroll effects
+- Building responsive hamburger menus and mobile navigation
+- Making headers accessible with proper ARIA roles
+- Choosing the right navigation pattern for the site type
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of header design — purpose, anatomy, and core principles.
 
-### `add`
+### `patterns`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh patterns
 ```
 
-Add new entry
+Navigation patterns — horizontal nav, mega menu, sidebar, breadcrumbs.
 
-### `list`
+### `sticky`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh sticky
 ```
 
-List all entries
+Sticky and fixed header techniques — scroll behavior, shrinking, reveal-on-scroll.
 
-### `search`
+### `responsive`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh responsive
 ```
 
-Search entries
+Responsive navigation — hamburger menus, off-canvas, priority+ pattern.
 
-### `remove`
+### `html`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh html
 ```
 
-Remove entry by number
+Semantic HTML for headers — proper landmarks, ARIA roles, skip navigation.
 
-### `export`
+### `css`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh css
 ```
 
-Export data to file
+CSS patterns for headers — flexbox layouts, dropdowns, transitions.
 
-### `stats`
+### `accessibility`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh accessibility
 ```
 
-Show statistics
+Accessibility — keyboard navigation, focus management, screen reader support.
 
-### `config`
+### `examples`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh examples
 ```
 
-View or set config
+Real-world header examples and implementation patterns.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `HEADER_DIR` | No | Data directory (default: ~/.header/) |
-
-## Data Storage
-
-All data stored in `~/.header/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `HEADER_DIR` | Data directory (default: ~/.header/) |
 
 ---
 

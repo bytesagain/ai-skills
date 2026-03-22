@@ -1,56 +1,109 @@
 ---
 name: "class"
 version: "1.0.0"
-description: "Generate class boilerplate for Python, Java, Go, and Rust. Use when scaffolding classes or data models."
+description: "Class & OOP reference — inheritance, polymorphism, composition, SOLID principles, design patterns. Use when designing class hierarchies, refactoring object-oriented code, or learning OOP concepts."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [class, oop, inheritance, polymorphism, solid, design-patterns, devtools]
+category: "devtools"
 ---
 
-# class
+# Class — Object-Oriented Programming Reference
 
-Generate class boilerplate for Python, Java, Go, and Rust. Use when scaffolding classes or data models.
+Quick-reference skill for OOP concepts, class design, SOLID principles, and common design patterns.
+
+## When to Use
+
+- Designing class hierarchies and choosing inheritance vs composition
+- Applying SOLID principles to refactor code
+- Understanding polymorphism, encapsulation, and abstraction
+- Choosing the right design pattern for a problem
+- Comparing OOP across languages (Java, Python, TypeScript, C++)
 
 ## Commands
 
-### `python`
+### `intro`
 
 ```bash
-scripts/script.sh python <name>
+scripts/script.sh intro
 ```
 
-### `java`
+OOP fundamentals — classes, objects, the four pillars.
+
+### `solid`
 
 ```bash
-scripts/script.sh java <name>
+scripts/script.sh solid
 ```
 
-### `go`
+SOLID principles — SRP, OCP, LSP, ISP, DIP explained with examples.
+
+### `inheritance`
 
 ```bash
-scripts/script.sh go <name>
+scripts/script.sh inheritance
 ```
 
-### `typescript`
+Inheritance vs composition — when to use each, diamond problem, mixins.
+
+### `patterns`
 
 ```bash
-scripts/script.sh typescript <name>
+scripts/script.sh patterns
 ```
 
-### `rust`
+Essential design patterns — Factory, Strategy, Observer, Singleton, Builder.
+
+### `access`
 
 ```bash
-scripts/script.sh rust <name>
+scripts/script.sh access
 ```
 
-### `list`
+Access modifiers and encapsulation — public, private, protected across languages.
+
+### `abstract`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh abstract
 ```
 
-## Data Storage
+Abstract classes, interfaces, and protocols — contracts and polymorphism.
 
-Data stored in `~/.local/share/class/`.
+### `pitfalls`
+
+```bash
+scripts/script.sh pitfalls
+```
+
+Common OOP pitfalls — God class, deep hierarchies, over-engineering.
+
+### `comparison`
+
+```bash
+scripts/script.sh comparison
+```
+
+OOP across languages — Java, Python, TypeScript, Go, Rust.
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
+
+## Configuration
+
+| Variable | Description |
+|----------|-------------|
+| `CLASS_DIR` | Data directory (default: ~/.class/) |
 
 ---
 

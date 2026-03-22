@@ -1,7 +1,7 @@
 ---
 name: "rectifier"
 version: "1.0.0"
-description: "Rectifier circuit design calculator"
+description: "Rectifier circuit design calculator. Use when json rectifier tasks, csv rectifier tasks, checking rectifier status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "electrical"
 
 # rectifier
 
-Rectifier circuit design calculator
-
+Rectifier circuit design calculator. Use when json rectifier tasks, csv rectifier tasks, checking rectifier status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `RECTIFIER_DIR` | No | Data directory (default: ~/.rectifier/) |
-
-## Data Storage
-
-All data stored in `~/.rectifier/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `RECTIFIER_DIR` | Data directory (default: ~/.rectifier/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

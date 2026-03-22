@@ -1,83 +1,91 @@
 ---
 name: "manifest"
 version: "1.0.0"
-description: "Run manifest operations with simple CLI commands. Use when you need quick data processing or automation."
+description: "Shipping manifest reference — bill of lading, packing lists, cargo documentation, EDI formats. Use when preparing shipment paperwork, validating manifest data, or troubleshooting customs documentation."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [manifest, logistics, cli, tool]
+tags: [manifest, shipping, bill-of-lading, cargo, customs, packing-list, logistics]
 category: "logistics"
 ---
 
-# manifest
+# Manifest — Shipping Manifest Reference
 
-Run manifest operations with simple CLI commands. Use when you need quick data processing or automation.
+Quick-reference skill for cargo manifests, bills of lading, and shipping documentation.
+
+## When to Use
+
+- Preparing cargo manifests for ocean, air, or land shipments
+- Understanding bill of lading types and requirements
+- Creating packing lists that match manifest data
+- Filing electronic manifests (AMS/ACI) with customs
+- Resolving manifest discrepancies and holds
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of shipping manifests — purpose, legal requirements, document hierarchy.
 
-### `add`
+### `bol`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh bol
 ```
 
-Add new entry
+Bill of Lading — types, fields, negotiable vs non-negotiable, switch B/L.
 
-### `list`
+### `packing`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh packing
 ```
 
-List all entries
+Packing lists — contents, format, harmonization with commercial invoice.
 
-### `search`
+### `air`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh air
 ```
 
-Search entries
+Air cargo manifests — AWB, HAWB, MAWB, e-freight requirements.
 
-### `remove`
+### `ocean`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh ocean
 ```
 
-Remove entry by number
+Ocean manifests — container manifest, stowage plan, ISF 10+2 filing.
 
-### `export`
+### `electronic`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh electronic
 ```
 
-Export data to file
+Electronic manifests — AMS, ACI, ENS, EDI/XML formats, filing deadlines.
 
-### `stats`
+### `discrepancies`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh discrepancies
 ```
 
-Show statistics
+Manifest discrepancies — shorts, overs, damages, amendment procedures.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+Manifest preparation checklist — completeness, accuracy, compliance.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `MANIFEST_DIR` | No | Data directory (default: ~/.manifest/) |
-
-## Data Storage
-
-All data stored in `~/.manifest/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `MANIFEST_DIR` | Data directory (default: ~/.manifest/) |
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: "relay"
 version: "1.0.0"
-description: "Relay logic and wiring diagram helper"
+description: "Relay logic and wiring diagram helper. Use when json relay tasks, csv relay tasks, checking relay status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "electrical"
 
 # relay
 
-Relay logic and wiring diagram helper
-
+Relay logic and wiring diagram helper. Use when json relay tasks, csv relay tasks, checking relay status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `RELAY_DIR` | No | Data directory (default: ~/.relay/) |
-
-## Data Storage
-
-All data stored in `~/.relay/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `RELAY_DIR` | Data directory (default: ~/.relay/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

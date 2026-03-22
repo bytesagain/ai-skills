@@ -1,7 +1,7 @@
 ---
 name: "eplan"
 version: "1.0.0"
-description: "Electrical planning and schematic design tool"
+description: "Electrical planning and schematic design tool. Use when json eplan tasks, csv eplan tasks, checking eplan status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "electrical"
 
 # eplan
 
-Electrical planning and schematic design tool
-
+Electrical planning and schematic design tool. Use when json eplan tasks, csv eplan tasks, checking eplan status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `EPLAN_DIR` | No | Data directory (default: ~/.eplan/) |
-
-## Data Storage
-
-All data stored in `~/.eplan/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `EPLAN_DIR` | Data directory (default: ~/.eplan/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

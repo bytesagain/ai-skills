@@ -1,83 +1,91 @@
 ---
 name: "precedent"
 version: "1.0.0"
-description: "Run precedent operations with simple CLI commands. Use when you need quick data processing or automation."
+description: "Legal precedent reference — stare decisis, case law hierarchy, distinguishing, overruling, persuasive authority. Use when researching binding case law, analyzing judicial reasoning, or building legal arguments."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [precedent, legal, cli, tool]
+tags: [precedent, stare-decisis, case-law, judicial, legal, authority, common-law]
 category: "legal"
 ---
 
-# precedent
+# Precedent — Legal Precedent Reference
 
-Run precedent operations with simple CLI commands. Use when you need quick data processing or automation.
+Quick-reference skill for the doctrine of precedent, case law analysis, and stare decisis.
+
+## When to Use
+
+- Determining which court decisions are binding in your jurisdiction
+- Distinguishing or analogizing prior cases
+- Understanding ratio decidendi vs obiter dicta
+- Researching whether a precedent has been overruled or modified
+- Building persuasive legal arguments from case law
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of legal precedent — stare decisis, common law tradition, purpose.
 
-### `add`
+### `hierarchy`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh hierarchy
 ```
 
-Add new entry
+Court hierarchy — binding vs persuasive authority, federal/state systems.
 
-### `list`
+### `analysis`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh analysis
 ```
 
-List all entries
+Case analysis — ratio decidendi, obiter dicta, material facts, holdings.
 
-### `search`
+### `distinguishing`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh distinguishing
 ```
 
-Search entries
+Distinguishing precedent — factual differences, legal distinctions, narrow/broad readings.
 
-### `remove`
+### `overruling`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh overruling
 ```
 
-Remove entry by number
+Overruling and modifying precedent — when courts reverse themselves.
 
-### `export`
+### `research`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh research
 ```
 
-Export data to file
+Case law research — citation formats, Shepardizing, KeyCite, databases.
 
-### `stats`
+### `writing`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh writing
 ```
 
-Show statistics
+Using precedent in legal writing — IRAC, analogical reasoning, synthesis.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+Case law analysis and application checklist.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `PRECEDENT_DIR` | No | Data directory (default: ~/.precedent/) |
-
-## Data Storage
-
-All data stored in `~/.precedent/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `PRECEDENT_DIR` | Data directory (default: ~/.precedent/) |
 
 ---
 

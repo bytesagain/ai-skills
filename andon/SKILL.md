@@ -1,7 +1,7 @@
 ---
 name: "andon"
 version: "1.0.0"
-description: "Andon alert and production status board"
+description: "Andon alert and production status board. Use when json andon tasks, csv andon tasks, checking andon status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "industrial"
 
 # andon
 
-Andon alert and production status board
-
+Andon alert and production status board. Use when json andon tasks, csv andon tasks, checking andon status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `ANDON_DIR` | No | Data directory (default: ~/.andon/) |
-
-## Data Storage
-
-All data stored in `~/.andon/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `ANDON_DIR` | Data directory (default: ~/.andon/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

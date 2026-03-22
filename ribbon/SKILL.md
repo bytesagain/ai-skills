@@ -1,83 +1,91 @@
 ---
 name: "ribbon"
 version: "1.0.0"
-description: "Generate ribbon UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages."
+description: "Ribbon UI component reference — design patterns, accessibility, responsive layouts, implementation. Use when designing ribbon toolbars, implementing Office-style command bars, or building complex toolbar UIs."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [ribbon, frontend, cli, tool]
+tags: [ribbon, toolbar, ui-component, command-bar, office-ui, tabbed-toolbar, frontend]
 category: "frontend"
 ---
 
-# ribbon
+# Ribbon — Ribbon UI Component Reference
 
-Generate ribbon UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages.
+Quick-reference skill for ribbon toolbar design patterns, implementation, and best practices.
+
+## When to Use
+
+- Designing ribbon-style toolbars for complex applications
+- Implementing tabbed command bars with grouped actions
+- Adapting Office-style UI patterns for web applications
+- Making ribbon interfaces accessible and responsive
+- Organizing large command sets into discoverable groups
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Ribbon UI overview — history, anatomy, when to use vs alternatives.
 
-### `add`
+### `anatomy`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh anatomy
 ```
 
-Add new entry
+Ribbon anatomy — tabs, groups, controls, contextual tabs, backstage view.
 
-### `list`
+### `patterns`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh patterns
 ```
 
-List all entries
+Design patterns — command organization, progressive disclosure, adaptive layout.
 
-### `search`
+### `controls`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh controls
 ```
 
-Search entries
+Ribbon control types — buttons, split buttons, galleries, drop-downs, spinners.
 
-### `remove`
+### `responsive`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh responsive
 ```
 
-Remove entry by number
+Responsive ribbon design — collapse priorities, overflow menus, compact modes.
 
-### `export`
+### `accessibility`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh accessibility
 ```
 
-Export data to file
+Accessibility — keyboard navigation, KeyTips, screen reader support, ARIA roles.
 
-### `stats`
+### `css`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh css
 ```
 
-Show statistics
+CSS implementation patterns — flexbox layout, theming, animations.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+Ribbon UI design review checklist.
 
 ### `help`
 
@@ -90,22 +98,6 @@ scripts/script.sh help
 ```bash
 scripts/script.sh version
 ```
-
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `RIBBON_DIR` | No | Data directory (default: ~/.ribbon/) |
-
-## Data Storage
-
-All data stored in `~/.ribbon/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
 

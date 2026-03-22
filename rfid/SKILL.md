@@ -1,83 +1,91 @@
 ---
 name: "rfid"
 version: "1.0.0"
-description: "Run rfid operations with simple CLI commands. Use when you need quick data processing or automation."
+description: "RFID technology reference — tag types, frequency bands, read ranges, EPC standards, inventory tracking. Use when designing RFID systems, selecting tags/readers, or implementing warehouse tracking solutions."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [rfid, logistics, cli, tool]
+tags: [rfid, nfc, epc, tag, reader, inventory, tracking, logistics]
 category: "logistics"
 ---
 
-# rfid
+# RFID — Radio-Frequency Identification Reference
 
-Run rfid operations with simple CLI commands. Use when you need quick data processing or automation.
+Quick-reference skill for RFID technology, standards, and implementation.
+
+## When to Use
+
+- Selecting RFID tags and readers for warehouse or retail
+- Understanding frequency bands and read range trade-offs
+- Implementing EPC/SGTIN encoding for supply chain
+- Designing RFID read zones and antenna placement
+- Comparing RFID vs barcode for inventory management
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of RFID — how it works, components, active vs passive.
 
-### `add`
+### `frequencies`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh frequencies
 ```
 
-Add new entry
+Frequency bands — LF, HF, UHF, microwave, read range, use cases.
 
-### `list`
+### `tags`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh tags
 ```
 
-List all entries
+Tag types — passive, semi-passive, active, inlays, hard tags, form factors.
 
-### `search`
+### `standards`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh standards
 ```
 
-Search entries
+Standards — EPC Gen2, ISO 18000, NFC (ISO 14443/15693), GS1 encoding.
 
-### `remove`
+### `readers`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh readers
 ```
 
-Remove entry by number
+Readers and antennas — fixed, handheld, portal, sensitivity, protocols.
 
-### `export`
+### `applications`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh applications
 ```
 
-Export data to file
+Applications — retail, warehouse, asset tracking, access control, healthcare.
 
-### `stats`
+### `challenges`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh challenges
 ```
 
-Show statistics
+Challenges — metal/liquid interference, collision, privacy, cost analysis.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+RFID implementation planning checklist.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `RFID_DIR` | No | Data directory (default: ~/.rfid/) |
-
-## Data Storage
-
-All data stored in `~/.rfid/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `RFID_DIR` | Data directory (default: ~/.rfid/) |
 
 ---
 

@@ -1,83 +1,91 @@
 ---
 name: "seedbed"
 version: "1.0.0"
-description: "Run seedbed operations with simple CLI commands. Use when you need quick data processing or automation."
+description: "Seedbed preparation reference — tillage methods, soil structure, moisture management, planting surface quality. Use when preparing fields for sowing, evaluating seedbed conditions, or selecting tillage equipment."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [seedbed, agriculture, cli, tool]
+tags: [seedbed, tillage, soil, planting, agriculture, cultivation, sowing]
 category: "agriculture"
 ---
 
-# seedbed
+# Seedbed — Seedbed Preparation Reference
 
-Run seedbed operations with simple CLI commands. Use when you need quick data processing or automation.
+Quick-reference skill for seedbed preparation, tillage methods, and planting surface management.
+
+## When to Use
+
+- Preparing field seedbeds for crop planting
+- Selecting tillage equipment and sequence
+- Evaluating soil moisture for optimal seedbed work
+- Troubleshooting emergence problems related to seedbed quality
+- Balancing seedbed quality with soil conservation
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of seedbed preparation — goals, soil physics, tilth requirements.
 
-### `add`
+### `tillage`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh tillage
 ```
 
-Add new entry
+Tillage systems — conventional, minimum-till, strip-till, no-till comparison.
 
-### `list`
+### `equipment`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh equipment
 ```
 
-List all entries
+Tillage equipment — moldboard plow, chisel, disk, field cultivator, harrow.
 
-### `search`
+### `moisture`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh moisture
 ```
 
-Search entries
+Soil moisture management — timing, ribbon test, compaction avoidance.
 
-### `remove`
+### `structure`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh structure
 ```
 
-Remove entry by number
+Soil structure for seedbeds — aggregate size, bulk density, porosity targets.
 
-### `export`
+### `crops`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh crops
 ```
 
-Export data to file
+Seedbed requirements by crop — fine vs coarse, depth, firmness.
 
-### `stats`
+### `problems`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh problems
 ```
 
-Show statistics
+Troubleshooting — crusting, cloddy seedbeds, compaction, poor emergence.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+Seedbed preparation quality checklist.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `SEEDBED_DIR` | No | Data directory (default: ~/.seedbed/) |
-
-## Data Storage
-
-All data stored in `~/.seedbed/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `SEEDBED_DIR` | Data directory (default: ~/.seedbed/) |
 
 ---
 

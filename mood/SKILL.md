@@ -1,83 +1,91 @@
 ---
 name: "mood"
 version: "1.0.0"
-description: "mood tool"
+description: "Mood and emotional wellness reference — mood science, regulation strategies, journaling techniques, emotional literacy. Use when understanding emotional patterns, designing mood tracking systems, or improving emotional regulation."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [mood, general, cli, tool]
+tags: [mood, emotions, wellness, mental-health, emotional-regulation, journaling, psychology]
 category: "general"
 ---
 
-# mood
+# Mood — Mood & Emotional Wellness Reference
 
-mood tool
+Quick-reference skill for understanding mood science, emotional regulation, and wellness practices.
+
+## When to Use
+
+- Understanding the science of moods and emotions
+- Learning emotional regulation techniques
+- Designing mood tracking or journaling systems
+- Identifying mood patterns and triggers
+- Building emotional literacy and resilience
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Mood science fundamentals — emotions vs moods, affect theory, neuroscience basics.
 
-### `add`
+### `wheel`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh wheel
 ```
 
-Add new entry
+Emotion taxonomy — Plutchik's wheel, granular emotion vocabulary, intensity levels.
 
-### `list`
+### `regulation`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh regulation
 ```
 
-List all entries
+Emotional regulation strategies — CBT techniques, reappraisal, grounding, distress tolerance.
 
-### `search`
+### `triggers`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh triggers
 ```
 
-Search entries
+Mood triggers — HALT framework, environmental factors, cognitive distortions.
 
-### `remove`
+### `journaling`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh journaling
 ```
 
-Remove entry by number
+Mood journaling techniques — structured prompts, tracking patterns, gratitude practice.
 
-### `export`
+### `lifestyle`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh lifestyle
 ```
 
-Export data to file
+Lifestyle factors — sleep, exercise, nutrition, social connection, nature exposure.
 
-### `stats`
+### `tracking`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh tracking
 ```
 
-Show statistics
+Mood tracking systems — scales, frequency, pattern recognition, data visualization.
 
-### `config`
+### `resilience`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh resilience
 ```
 
-View or set config
+Building emotional resilience — stress inoculation, growth mindset, social support.
 
 ### `help`
 
@@ -90,22 +98,6 @@ scripts/script.sh help
 ```bash
 scripts/script.sh version
 ```
-
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `MOOD_DIR` | No | Data directory (default: ~/.mood/) |
-
-## Data Storage
-
-All data stored in `~/.mood/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: "bos6000"
 version: "1.0.0"
-description: "BOS6000 industrial controller config tool"
+description: "BOS6000 industrial controller config tool. Use when json bos6000 tasks, csv bos6000 tasks, checking bos6000 status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "industrial"
 
 # bos6000
 
-BOS6000 industrial controller config tool
-
+BOS6000 industrial controller config tool. Use when json bos6000 tasks, csv bos6000 tasks, checking bos6000 status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `BOS6000_DIR` | No | Data directory (default: ~/.bos6000/) |
-
-## Data Storage
-
-All data stored in `~/.bos6000/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `BOS6000_DIR` | Data directory (default: ~/.bos6000/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

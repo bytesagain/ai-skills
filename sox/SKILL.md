@@ -1,83 +1,91 @@
 ---
 name: "sox"
 version: "1.0.0"
-description: "Run sox operations with simple CLI commands. Use when you need quick data processing or automation."
+description: "Sarbanes-Oxley Act compliance reference — SOX sections, internal controls, audit requirements, and IT governance. Use when evaluating SOX compliance, designing internal controls, or preparing for financial audits."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [sox, legal, cli, tool]
+tags: [sox, sarbanes-oxley, compliance, audit, internal-controls, financial-reporting, legal]
 category: "legal"
 ---
 
-# sox
+# SOX — Sarbanes-Oxley Act Compliance Reference
 
-Run sox operations with simple CLI commands. Use when you need quick data processing or automation.
+Quick-reference skill for Sarbanes-Oxley Act requirements, internal controls, and audit compliance.
+
+## When to Use
+
+- Understanding SOX section requirements (302, 404, 906)
+- Designing internal controls over financial reporting (ICFR)
+- Preparing for SOX compliance audits
+- Implementing IT general controls (ITGCs)
+- Evaluating material weakness vs significant deficiency
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of the Sarbanes-Oxley Act — history, purpose, and key provisions.
 
-### `add`
+### `sections`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh sections
 ```
 
-Add new entry
+Key SOX sections: 302, 404, 409, 802, 906 and their requirements.
 
-### `list`
+### `controls`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh controls
 ```
 
-List all entries
+Internal controls framework — COSO components, control types, and design principles.
 
-### `search`
+### `itgc`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh itgc
 ```
 
-Search entries
+IT General Controls — access management, change management, operations, and SDLC.
 
-### `remove`
+### `audit`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh audit
 ```
 
-Remove entry by number
+SOX audit process — planning, testing, reporting, and remediation.
 
-### `export`
+### `penalties`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh penalties
 ```
 
-Export data to file
+SOX penalties and enforcement — criminal and civil consequences for non-compliance.
 
-### `stats`
+### `examples`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh examples
 ```
 
-Show statistics
+Real-world SOX compliance scenarios and common findings.
 
-### `config`
+### `checklist`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh checklist
 ```
 
-View or set config
+SOX compliance readiness checklist for organizations.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `SOX_DIR` | No | Data directory (default: ~/.sox/) |
-
-## Data Storage
-
-All data stored in `~/.sox/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `SOX_DIR` | Data directory (default: ~/.sox/) |
 
 ---
 

@@ -1,83 +1,91 @@
 ---
 name: "stretch"
 version: "1.0.0"
-description: "stretch tool"
+description: "Stretching and flexibility reference — dynamic warm-ups, static holds, PNF techniques, and mobility routines. Use when designing warm-up protocols, improving flexibility, or preventing movement injuries."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [stretch, general, cli, tool]
+tags: [stretch, flexibility, mobility, warm-up, recovery, fitness]
 category: "general"
 ---
 
-# stretch
+# Stretch — Stretching & Flexibility Reference
 
-stretch tool
+Quick-reference skill for stretching science, mobility routines, and flexibility protocols.
+
+## When to Use
+
+- Designing pre-workout warm-up routines
+- Creating post-workout cooldown stretches
+- Understanding PNF and dynamic stretching methods
+- Building mobility programs for specific body areas
+- Preventing common movement-related injuries
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of stretching science — types, when to use each, and physiology.
 
-### `add`
+### `dynamic`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh dynamic
 ```
 
-Add new entry
+Dynamic stretching routines for pre-workout activation.
 
-### `list`
+### `static`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh static
 ```
 
-List all entries
+Static stretching holds for post-workout cooldown and flexibility gains.
 
-### `search`
+### `pnf`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh pnf
 ```
 
-Search entries
+PNF (Proprioceptive Neuromuscular Facilitation) — advanced stretching techniques.
 
-### `remove`
+### `mobility`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh mobility
 ```
 
-Remove entry by number
+Joint mobility drills for shoulders, hips, ankles, and thoracic spine.
 
-### `export`
+### `routines`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh routines
 ```
 
-Export data to file
+Complete stretching routines: morning, desk worker, pre-run, post-lift.
 
-### `stats`
+### `anatomy`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh anatomy
 ```
 
-Show statistics
+Key muscle groups and their stretching patterns.
 
-### `config`
+### `mistakes`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh mistakes
 ```
 
-View or set config
+Common stretching mistakes and injury prevention guidelines.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `STRETCH_DIR` | No | Data directory (default: ~/.stretch/) |
-
-## Data Storage
-
-All data stored in `~/.stretch/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `STRETCH_DIR` | Data directory (default: ~/.stretch/) |
 
 ---
 

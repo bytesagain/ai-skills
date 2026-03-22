@@ -1,75 +1,43 @@
 ---
 name: "ssh"
 version: "1.0.0"
-description: "Manage SSH connections, keys, and tunnels using CLI tools. Use when you need to add, remove, test, tunnel, or configure SSH hosts and key management."
+description: "SSH reference — key management, tunneling, hardening, config patterns. Use when configuring SSH access, setting up tunnels, debugging connections, or hardening SSH servers."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [ssh, general, cli, tool]
+tags: [ssh, security, tunneling, keys, openssh, sshd, remote-access]
 category: "general"
 ---
 
-# ssh
+# SSH — Secure Shell Reference
 
-Manage SSH connections, keys, and tunnels using CLI tools. Use when you need to add, remove, test, tunnel, or configure SSH hosts and key management.
+Quick-reference skill for SSH configuration, key management, tunneling, and security hardening.
+
+## When to Use
+
+- Setting up SSH key pairs and agent forwarding
+- Configuring SSH client config (~/.ssh/config) patterns
+- Creating port forwards, reverse tunnels, and SOCKS proxies
+- Hardening sshd_config for production servers
+- Debugging SSH connection failures
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+SSH fundamentals — protocol overview, authentication methods, connection flow.
 
-### `add`
+### `keys`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh keys
 ```
 
-Add new entry
-
-### `list`
-
-```bash
-scripts/script.sh list
-```
-
-List all entries
-
-### `search`
-
-```bash
-scripts/script.sh search
-```
-
-Search entries
-
-### `remove`
-
-```bash
-scripts/script.sh remove
-```
-
-Remove entry by number
-
-### `export`
-
-```bash
-scripts/script.sh export
-```
-
-Export data to file
-
-### `stats`
-
-```bash
-scripts/script.sh stats
-```
-
-Show statistics
+Key management — generating, converting, and distributing SSH keys.
 
 ### `config`
 
@@ -77,7 +45,47 @@ Show statistics
 scripts/script.sh config
 ```
 
-View or set config
+SSH client config patterns — ~/.ssh/config examples, ProxyJump, multiplexing.
+
+### `tunnels`
+
+```bash
+scripts/script.sh tunnels
+```
+
+Port forwarding — local, remote, dynamic (SOCKS), and tunnel use cases.
+
+### `hardening`
+
+```bash
+scripts/script.sh hardening
+```
+
+Server hardening — sshd_config best practices, fail2ban, key-only auth.
+
+### `agent`
+
+```bash
+scripts/script.sh agent
+```
+
+SSH agent — agent forwarding, ssh-add, agent socket, security considerations.
+
+### `troubleshoot`
+
+```bash
+scripts/script.sh troubleshoot
+```
+
+Debugging SSH — verbose mode, common errors, permission issues.
+
+### `escapes`
+
+```bash
+scripts/script.sh escapes
+```
+
+SSH escape sequences — session control, on-the-fly port forwards.
 
 ### `help`
 
@@ -90,22 +98,6 @@ scripts/script.sh help
 ```bash
 scripts/script.sh version
 ```
-
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `SSH_DIR` | No | Data directory (default: ~/.ssh/) |
-
-## Data Storage
-
-All data stored in `~/.ssh/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
 
 ---
 

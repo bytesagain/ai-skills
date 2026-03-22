@@ -1,56 +1,109 @@
 ---
 name: "copy"
 version: "1.0.0"
-description: "Copy files with verification and sync support. Use when backing up or verifying copies."
+description: "Copy operations reference — file duplication, rsync patterns, CoW, buffer strategies, and cross-platform sync. Use when duplicating files, syncing directories, or implementing copy-on-write."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [copy, file, rsync, sync, duplicate, backup, devtools]
+category: "devtools"
 ---
 
-# copy
+# Copy — File & Data Copy Operations Reference
 
-Copy files with verification and sync support. Use when backing up or verifying copies.
+Quick-reference skill for file copy strategies, rsync patterns, copy-on-write, and cross-platform synchronization.
+
+## When to Use
+
+- Duplicating files or directory trees with specific filters
+- Setting up rsync-based backups or mirrors
+- Understanding copy-on-write (CoW) behavior
+- Implementing efficient copy strategies for large datasets
+- Troubleshooting copy failures and permission issues
 
 ## Commands
 
-### `file`
+### `intro`
 
 ```bash
-scripts/script.sh file <src dest>
+scripts/script.sh intro
 ```
 
-### `dir`
+Overview of copy operations — types, semantics, and platform differences.
+
+### `rsync`
 
 ```bash
-scripts/script.sh dir <src dest>
+scripts/script.sh rsync
 ```
 
-### `sync`
+Rsync patterns — common flags, partial transfers, and include/exclude rules.
+
+### `cow`
 
 ```bash
-scripts/script.sh sync <src dest>
+scripts/script.sh cow
 ```
 
-### `verify`
+Copy-on-Write (CoW) — reflinks, filesystem support, and when to use.
+
+### `patterns`
 
 ```bash
-scripts/script.sh verify <src dest>
+scripts/script.sh patterns
 ```
 
-### `safe`
+Common copy patterns — mirroring, incremental, differential, snapshot.
+
+### `filters`
 
 ```bash
-scripts/script.sh safe <src dest>
+scripts/script.sh filters
 ```
 
-### `recent`
+File filtering techniques — by extension, date, size, and gitignore integration.
+
+### `performance`
 
 ```bash
-scripts/script.sh recent <dir dest>
+scripts/script.sh performance
 ```
 
-## Data Storage
+Performance optimization — buffer sizes, parallel copy, and I/O tuning.
 
-Data stored in `~/.local/share/copy/`.
+### `errors`
+
+```bash
+scripts/script.sh errors
+```
+
+Common copy errors, permissions issues, and troubleshooting guide.
+
+### `checklist`
+
+```bash
+scripts/script.sh checklist
+```
+
+Pre-copy and post-copy verification checklist.
+
+### `help`
+
+```bash
+scripts/script.sh help
+```
+
+### `version`
+
+```bash
+scripts/script.sh version
+```
+
+## Configuration
+
+| Variable | Description |
+|----------|-------------|
+| `COPY_DIR` | Data directory (default: ~/.copy/) |
 
 ---
 

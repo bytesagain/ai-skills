@@ -1,83 +1,91 @@
 ---
 name: "conveyor"
 version: "1.0.0"
-description: "Run conveyor operations with simple CLI commands. Use when you need quick data processing or automation."
+description: "Conveyor system reference — belt types, motor sizing, throughput calculations, and material handling automation. Use when designing conveyor layouts, selecting belt types, or troubleshooting material handling systems."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [conveyor, logistics, cli, tool]
+tags: [conveyor, material-handling, belt, automation, warehouse, logistics]
 category: "logistics"
 ---
 
-# conveyor
+# Conveyor — Conveyor System Reference
 
-Run conveyor operations with simple CLI commands. Use when you need quick data processing or automation.
+Quick-reference skill for conveyor types, engineering calculations, and material handling design.
+
+## When to Use
+
+- Selecting conveyor types for warehouse or manufacturing
+- Calculating belt speed, throughput, and motor power
+- Designing conveyor layouts for sorting and distribution
+- Troubleshooting belt tracking, slippage, and jams
+- Planning automated material handling systems
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of conveyor systems — types, applications, and selection criteria.
 
-### `add`
+### `types`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh types
 ```
 
-Add new entry
+Conveyor types: belt, roller, chain, screw, pneumatic, and more.
 
-### `list`
+### `sizing`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh sizing
 ```
 
-List all entries
+Engineering calculations — belt speed, throughput, motor power, incline limits.
 
-### `search`
+### `layout`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh layout
 ```
 
-Search entries
+Layout design — curves, merges, diverts, accumulation zones.
 
-### `remove`
+### `controls`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh controls
 ```
 
-Remove entry by number
+Controls and sensors — photoeyes, encoders, VFDs, PLC logic.
 
-### `export`
+### `sorting`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh sorting
 ```
 
-Export data to file
+Sortation systems — shoe sorters, crossbelt, tilt-tray, and pop-up diverts.
 
-### `stats`
+### `maintenance`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh maintenance
 ```
 
-Show statistics
+Preventive maintenance schedules, common failures, and troubleshooting.
 
-### `config`
+### `safety`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh safety
 ```
 
-View or set config
+Conveyor safety standards, guarding, e-stops, and lockout/tagout.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `CONVEYOR_DIR` | No | Data directory (default: ~/.conveyor/) |
-
-## Data Storage
-
-All data stored in `~/.conveyor/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `CONVEYOR_DIR` | Data directory (default: ~/.conveyor/) |
 
 ---
 

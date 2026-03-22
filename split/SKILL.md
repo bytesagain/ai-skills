@@ -1,83 +1,91 @@
 ---
 name: "split"
 version: "1.0.0"
-description: "Process and transform split data with fast CLI operations. Use when you need to manipulate, convert, or analyze content."
+description: "Data splitting techniques and strategies reference — partitioning datasets, string splitting, file splitting, and ML train/test splits. Use when dividing data, chunking files, or designing data partitioning strategies."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [split, atomic, cli, tool]
+tags: [split, partition, chunk, divide, data-processing, tokenize, atomic]
 category: "atomic"
 ---
 
-# split
+# Split — Data Splitting Reference
 
-Process and transform split data with fast CLI operations. Use when you need to manipulate, convert, or analyze content.
+Quick-reference skill for data splitting techniques, partitioning strategies, and practical patterns.
+
+## When to Use
+
+- Splitting strings by delimiters, patterns, or fixed widths
+- Partitioning datasets for ML training/validation/test
+- Dividing large files into manageable chunks
+- Database sharding and horizontal partitioning
+- Understanding split strategies for distributed systems
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of data splitting — concepts, common use cases, and terminology.
 
-### `add`
+### `string`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh string
 ```
 
-Add new entry
+String splitting techniques — delimiters, regex, fixed-width, tokenization.
 
-### `list`
+### `file`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh file
 ```
 
-List all entries
+File splitting methods — by size, lines, patterns, and round-robin.
 
-### `search`
+### `dataset`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh dataset
 ```
 
-Search entries
+ML dataset splitting — train/val/test, stratified, time-series, k-fold.
 
-### `remove`
+### `database`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh database
 ```
 
-Remove entry by number
+Database partitioning — horizontal, vertical, hash, range, and list.
 
-### `export`
+### `strategies`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh strategies
 ```
 
-Export data to file
+Splitting strategies for distributed systems — consistent hashing, sharding keys.
 
-### `stats`
+### `examples`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh examples
 ```
 
-Show statistics
+Practical split examples across languages and tools.
 
-### `config`
+### `pitfalls`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh pitfalls
 ```
 
-View or set config
+Common pitfalls and best practices when splitting data.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `SPLIT_DIR` | No | Data directory (default: ~/.split/) |
-
-## Data Storage
-
-All data stored in `~/.split/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `SPLIT_DIR` | Data directory (default: ~/.split/) |
 
 ---
 

@@ -1,83 +1,91 @@
 ---
 name: "flatten"
 version: "1.0.0"
-description: "Process and transform flatten data with fast CLI operations. Use when you need to manipulate, convert, or analyze content."
+description: "Data flatten reference — nested-to-flat conversion, JSON/array flattening, dot-notation keys, depth control. Use when transforming hierarchical data into flat structures or normalizing nested records."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [flatten, atomic, cli, tool]
+tags: [flatten, data, nested, json, array, transform, normalize, atomic]
 category: "atomic"
 ---
 
-# flatten
+# Flatten — Data Flattening Reference
 
-Process and transform flatten data with fast CLI operations. Use when you need to manipulate, convert, or analyze content.
+Quick-reference skill for flattening nested data structures into flat key-value pairs or single-level arrays.
+
+## When to Use
+
+- Converting deeply nested JSON into flat dot-notation objects
+- Flattening multi-dimensional arrays into single-level lists
+- Normalizing hierarchical API responses for tabular storage
+- Preparing nested data for CSV export or database insertion
+- Controlling flatten depth for partial flattening
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of data flattening — what it means, why it matters, core concepts.
 
-### `add`
+### `json`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh json
 ```
 
-Add new entry
+JSON object flattening — dot-notation keys, bracket notation, separator options.
 
-### `list`
+### `array`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh array
 ```
 
-List all entries
+Array flattening — multi-dimensional to single-level, depth-limited flatten.
 
-### `search`
+### `algorithms`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh algorithms
 ```
 
-Search entries
+Flattening algorithms — recursive vs iterative, stack-based, BFS approaches.
 
-### `remove`
+### `languages`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh languages
 ```
 
-Remove entry by number
+Flatten implementations across languages — JavaScript, Python, Go, Bash, SQL.
 
-### `export`
+### `edgecases`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh edgecases
 ```
 
-Export data to file
+Edge cases — circular references, null values, mixed types, empty containers.
 
-### `stats`
+### `unflatten`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh unflatten
 ```
 
-Show statistics
+Reverse operation — reconstructing nested structures from flat key-value pairs.
 
-### `config`
+### `patterns`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh patterns
 ```
 
-View or set config
+Real-world patterns — ETL pipelines, log normalization, config merging.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `FLATTEN_DIR` | No | Data directory (default: ~/.flatten/) |
-
-## Data Storage
-
-All data stored in `~/.flatten/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `FLATTEN_DIR` | Data directory (default: ~/.flatten/) |
 
 ---
 

@@ -1,83 +1,91 @@
 ---
 name: "gstack"
 version: "1.0.0"
-description: "Apply Garry Tan's Claude Code setup with 10 tools for structured AI dev. Use when enforcing reviews, managing releases, or running QA audit passes."
+description: "AI-assisted development workflow reference — structured prompting, code review gates, release management, and QA audit patterns. Use when setting up AI dev workflows, enforcing review discipline, or running systematic code quality passes."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [gstack, general, cli, tool]
+tags: [gstack, ai-dev, workflow, code-review, release, QA, prompting, development]
 category: "general"
 ---
 
-# gstack
+# Gstack — AI-Assisted Development Workflow
 
-Apply Garry Tan's Claude Code setup with 10 tools for structured AI dev. Use when enforcing reviews, managing releases, or running QA audit passes.
+Quick-reference for structured AI development workflows, code review gates, and quality assurance patterns.
+
+## When to Use
+
+- Setting up AI-assisted development workflows with clear review gates
+- Writing structured prompts for AI coding assistants
+- Managing release cycles with AI-generated code
+- Running QA audit passes on codebases
+- Establishing coding standards for AI-human collaboration
 
 ## Commands
 
-### `status`
+### `intro`
 
 ```bash
-scripts/script.sh status
+scripts/script.sh intro
 ```
 
-Show current status
+Overview of AI-assisted development — philosophy, workflow structure, and tooling.
 
-### `add`
+### `prompting`
 
 ```bash
-scripts/script.sh add
+scripts/script.sh prompting
 ```
 
-Add new entry
+Structured prompting patterns — task decomposition, context management, and constraints.
 
-### `list`
+### `review`
 
 ```bash
-scripts/script.sh list
+scripts/script.sh review
 ```
 
-List all entries
+Code review gates — what to check, review checklist, and common AI mistakes.
 
-### `search`
+### `release`
 
 ```bash
-scripts/script.sh search
+scripts/script.sh release
 ```
 
-Search entries
+Release management — versioning, changelogs, and deployment gates.
 
-### `remove`
+### `qa`
 
 ```bash
-scripts/script.sh remove
+scripts/script.sh qa
 ```
 
-Remove entry by number
+QA audit passes — systematic quality checks across a codebase.
 
-### `export`
+### `standards`
 
 ```bash
-scripts/script.sh export
+scripts/script.sh standards
 ```
 
-Export data to file
+Coding standards for AI-generated code — consistency, safety, and maintainability.
 
-### `stats`
+### `context`
 
 ```bash
-scripts/script.sh stats
+scripts/script.sh context
 ```
 
-Show statistics
+Context management — AGENTS.md, CLAUDE.md, and project documentation patterns.
 
-### `config`
+### `pitfalls`
 
 ```bash
-scripts/script.sh config
+scripts/script.sh pitfalls
 ```
 
-View or set config
+Common pitfalls in AI-assisted development and how to avoid them.
 
 ### `help`
 
@@ -93,19 +101,9 @@ scripts/script.sh version
 
 ## Configuration
 
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `GSTACK_DIR` | No | Data directory (default: ~/.gstack/) |
-
-## Data Storage
-
-All data stored in `~/.gstack/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+| Variable | Description |
+|----------|-------------|
+| `GSTACK_DIR` | Data directory (default: ~/.gstack/) |
 
 ---
 

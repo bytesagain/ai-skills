@@ -1,7 +1,7 @@
 ---
 name: "tagout"
 version: "1.0.0"
-description: "Tagout safety compliance tracker"
+description: "Tagout safety compliance tracker. Use when json tagout tasks, csv tagout tasks, checking tagout status."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
@@ -11,8 +11,7 @@ category: "safety"
 
 # tagout
 
-Tagout safety compliance tracker
-
+Tagout safety compliance tracker. Use when json tagout tasks, csv tagout tasks, checking tagout status.
 ## Commands
 
 ### `status`
@@ -95,18 +94,9 @@ scripts/script.sh version
 
 Use `scripts/script.sh config <key> <value>` to set preferences.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `TAGOUT_DIR` | No | Data directory (default: ~/.tagout/) |
-
-## Data Storage
-
-All data stored in `~/.tagout/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
+| Variable | Description |
+|----------|-------------|
+| `TAGOUT_DIR` | Data directory (default: ~/.tagout/) |
 ---
 
 *Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*
