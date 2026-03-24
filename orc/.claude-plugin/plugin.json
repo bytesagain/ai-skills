@@ -1,0 +1,9 @@
+{
+  "name": "orc",
+  "description": "Apache ORC columnar storage format reference. File structure with stripes and indexes, schema types with evolution rules, compression codecs (ZLIB/SNAPPY/ZSTD), orc-tools CLI, Python/Java writer APIs,",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -16,8 +16,8 @@
     {
       "name": "acmesh",
       "source": "./acmesh",
-      "description": "Manage ACME/SSL certificates with issuance, renewal, and revocation. Use when provisioning certs or checking SSL status.",
-      "version": "3.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Acmesh concepts, best practices, and implementation patterns.",
+      "version": "4.0.1"
     },
     {
       "name": "actuator",
@@ -40,8 +40,8 @@
     {
       "name": "adversarial-robustness-toolbox",
       "source": "./adversarial-robustness-toolbox",
-      "description": "Adversarial Robustness Toolbox (ART) - Python Library for Machine Learning Security - Evasion, Poiso adversarial robustness toolbox, python.",
-      "version": "2.0.1"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Adversarial Robustness Toolbox concepts, best practices, and impl...",
+      "version": "3.0.2"
     },
     {
       "name": "adwords",
@@ -58,8 +58,8 @@
     {
       "name": "agent-ops-framework",
       "source": "./agent-ops-framework",
-      "description": "Orchestrate multi-agent teams with task pipelines and quality gates. Use when coordinating agents, enforcing reviews, or tracking tasks.",
-      "version": "2.0.0"
+      "description": "AI agent operations reference \u2014 multi-agent architectures, ReAct and chain-of-thought patterns, tool-use conventions, prompt injection defense, and evaluation metrics",
+      "version": "8.0.0"
     },
     {
       "name": "agent-toolkit",
@@ -84,6 +84,12 @@
       "source": "./ai-prompt-library",
       "description": "FULL Augment Code, Claude Code, Cluely, CodeBuddy, Comet, Cursor, Devin AI, Junie, Kiro, Leap.new, L system prompts and models of ai tools, python, ai, bolt.",
       "version": "2.0.0"
+    },
+    {
+      "name": "aide",
+      "source": "./aide",
+      "description": "AIDE file integrity monitoring reference. Database initialization, integrity checks, update workflow, aide.conf configuration, selection rules, report parsing, and production deployment with CIS bench",
+      "version": "1.0.0"
     },
     {
       "name": "alert",
@@ -130,8 +136,8 @@
     {
       "name": "amortize",
       "source": "./amortize",
-      "description": "Calculate amortize financial metrics and business data. Use when tracking expenses, analyzing investments, or generating financial reports.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Amortize concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "amr",
@@ -166,8 +172,8 @@
     {
       "name": "antlr4",
       "source": "./antlr4",
-      "description": "ANTLR (ANother Tool for Language Recognition) is a powerful parser generator for reading, processing antlr4, java, antlr, antlr4, cpp, csharp.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Antlr4 concepts, best practices, and implementation patterns.",
+      "version": "3.0.2"
     },
     {
       "name": "api-docs",
@@ -184,8 +190,8 @@
     {
       "name": "api-router",
       "source": "./api-router",
-      "description": "Gorilla: Training and Evaluating LLMs for Function Calls (Tool Calls) api-router, python, api, api-documentation, chatgpt, claude-api.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for API Router concepts, best practices, and implementation patterns.",
+      "version": "3.0.2"
     },
     {
       "name": "api-tester-cn",
@@ -214,20 +220,32 @@
     {
       "name": "apollo-client",
       "source": "./apollo-client",
-      "description": "Manage GraphQL queries, caching, and state with Apollo Client. Use when building React apps, debugging cache, or optimizing GraphQL fetches.",
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Apollo Client concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
+    },
+    {
+      "name": "apparmor",
+      "source": "./apparmor",
+      "description": "Apparmor reference tool. Use when working with apparmor in sysops contexts.",
       "version": "1.0.0"
     },
     {
       "name": "appsmith",
       "source": "./appsmith",
-      "description": "Platform to build admin panels, internal tools, and dashboards. Integrates with 25+ databases and an appsmith, typescript, admin-dashboard, admin-panels.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Appsmith concepts, best practices, and implementation patterns.",
+      "version": "3.0.2"
     },
     {
       "name": "arbitrage-finder",
       "source": "./arbitrage-finder",
-      "description": "Scan cross-exchange price gaps and score arbitrage profitability. Use when comparing crypto prices, tracking spreads, or evaluating trades.",
-      "version": "2.0.0"
+      "description": "Reference tool for blockchain and crypto \u2014 covers intro, quickstart, patterns and more. Quick lookup for Arbitrage Finder concepts, best practices, and imple...",
+      "version": "3.0.2"
+    },
+    {
+      "name": "arrow",
+      "source": "./arrow",
+      "description": "Apache Arrow in-memory columnar format reference. Zero-copy data exchange, columnar memory layout with validity bitmaps, pyarrow Table/RecordBatch/compute, Arrow Flight RPC for high-performance transf",
+      "version": "1.0.0"
     },
     {
       "name": "assert",
@@ -248,10 +266,16 @@
       "version": "1.0.0"
     },
     {
+      "name": "auditd",
+      "source": "./auditd",
+      "description": "Linux Audit Framework reference. auditctl rules for file watches and syscall auditing, auditd.conf configuration, ausearch log queries, aureport summaries, audit.log format, CIS/PCI-DSS compliance rul",
+      "version": "1.0.0"
+    },
+    {
       "name": "autohotkey",
       "source": "./autohotkey",
-      "description": "AutoHotkey - macro-creation and automation-oriented scripting utility for Windows. autohotkey, c++, autohotkey, automation, c-plus-plus, hotkeys.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Autohotkey concepts, best practices, and implementation patterns.",
+      "version": "3.0.2"
     },
     {
       "name": "awesome-cheatsheets",
@@ -262,8 +286,8 @@
     {
       "name": "awesome-cloudflare",
       "source": "./awesome-cloudflare",
-      "description": "\u26c5\ufe0f \u7cbe\u9009\u7684 Cloudflare \u5de5\u5177\u3001\u5f00\u6e90\u9879\u76ee\u3001\u6307\u5357\u3001\u535a\u5ba2\u548c\u5176\u4ed6\u8d44\u6e90\u5217\u8868\u3002/ \u26c5\ufe0f A curated list of Cloudflare tools, open source projects awesome cloudflare.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Awesome Cloudflare concepts, best practices, and implementation p...",
+      "version": "3.0.2"
     },
     {
       "name": "awesome-postgres",
@@ -292,8 +316,8 @@
     {
       "name": "backuptool",
       "source": "./backuptool",
-      "description": "Create timestamped backups with compression, rotation, and scheduling. Use when archiving directories, restoring snapshots, or managing retention.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Backuptool concepts, best practices, and implementation patterns.",
+      "version": "2.0.4"
     },
     {
       "name": "badge",
@@ -304,14 +328,14 @@
     {
       "name": "banner",
       "source": "./banner",
-      "description": "Create ASCII art banners and styled text for terminal displays. Use when decorating CLI output, generating headers, or adding flair to scripts.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Banner concepts, best practices, and implementation patterns.",
+      "version": "3.0.2"
     },
     {
       "name": "base64",
       "source": "./base64",
-      "description": "Encode and decode Base64 strings and files from the terminal. Use when encoding binary data, decoding API payloads, or converting file content.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Base64 concepts, best practices, and implementation patterns.",
+      "version": "2.0.4"
     },
     {
       "name": "bash-themes",
@@ -334,8 +358,8 @@
     {
       "name": "bcc",
       "source": "./bcc",
-      "description": "Trace Linux kernel events with BPF for I/O, networking, and CPU analysis. Use when profiling syscalls, diagnosing latency, or monitoring I/O.",
-      "version": "2.0.0"
+      "description": "bcc reference tool",
+      "version": "3.0.0"
     },
     {
       "name": "beancount",
@@ -364,8 +388,8 @@
     {
       "name": "benchmark",
       "source": "./benchmark",
-      "description": "Run performance benchmarks and stress tests using Python profiling tools. Use when you need to measure, compare, or analyze system and application performance.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Benchmark concepts, best practices, and implementation patterns.",
+      "version": "2.0.4"
     },
     {
       "name": "benchmark-tool",
@@ -382,8 +406,8 @@
     {
       "name": "better-genshin-impact",
       "source": "./better-genshin-impact",
-      "description": "\ud83d\udce6BetterGI \u00b7 \u66f4\u597d\u7684\u539f\u795e - \u81ea\u52a8\u62fe\u53d6 | \u81ea\u52a8\u5267\u60c5 | \u5168\u81ea\u52a8\u9493\u9c7c(AI) | \u5168\u81ea\u52a8\u4e03\u5723\u53ec\u5524 | \u81ea\u52a8\u4f10\u6728 | \u81ea\u52a8\u5237\u672c | \u81ea\u52a8\u91c7\u96c6/\u6316\u77ff/\u9504\u5730 | \u4e00\u6761\u9f99 | \u5168\u8fde\u97f3\u6e38 - UI A better genshin impact, c#, auto-play-game, automatic.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Better Genshin Impact concepts, best practices, and implementatio...",
+      "version": "3.0.2"
     },
     {
       "name": "bigdata",
@@ -404,6 +428,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "binomial",
+      "source": "./binomial",
+      "description": "Binomial reference tool. Use when working with binomial in finance contexts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "biogas",
       "source": "./biogas",
       "description": "Biogas technology reference \u2014 anaerobic digestion, methane yield, feedstock ratios, and upgrading. Use when designing biogas plants, optimizing digester performance, or evaluating feedstock options.",
@@ -419,6 +449,12 @@
       "name": "bizplanner",
       "source": "./bizplanner",
       "description": "Create business plans, lean canvases, and financial projections. Use when pitching investors, planning startups, or modeling revenue scenarios.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "black-scholes",
+      "source": "./black-scholes",
+      "description": "Black Scholes reference tool. Use when working with black scholes in finance contexts.",
       "version": "1.0.0"
     },
     {
@@ -562,8 +598,8 @@
     {
       "name": "brook",
       "source": "./brook",
-      "description": "Configure cross-platform proxy and VPN tunnels with programmable rules. Use when setting up SOCKS proxies, bypassing firewalls, or routing traffic.",
-      "version": "2.0.0"
+      "description": "brook",
+      "version": "3.0.0"
     },
     {
       "name": "browser-devtools",
@@ -574,8 +610,8 @@
     {
       "name": "browser-fingerprinting",
       "source": "./browser-fingerprinting",
-      "description": "Analysis of Bot Protection systems with available countermeasures \ud83d\udebf. How to defeat anti-bot system \ud83d\udc7b browser fingerprinting, javascript, abck, arkose.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Browser Fingerprinting concepts, best practices, and implementati...",
+      "version": "3.0.2"
     },
     {
       "name": "budgetly",
@@ -586,8 +622,8 @@
     {
       "name": "builder",
       "source": "./builder",
-      "description": "builder tool for creating outputs",
-      "version": "1.0.0"
+      "description": "Software build systems reference \u2014 Make, CMake, Bazel, Gradle, incremental builds, remote caching, and dependency management",
+      "version": "5.0.0"
     },
     {
       "name": "busbar",
@@ -610,8 +646,8 @@
     {
       "name": "cad",
       "source": "./cad",
-      "description": "Computer-aided design assistant",
-      "version": "1.0.0"
+      "description": "cad reference tool",
+      "version": "2.0.2"
     },
     {
       "name": "cairo",
@@ -628,14 +664,14 @@
     {
       "name": "calculus",
       "source": "./calculus",
-      "description": "Compute derivatives, integrals, limits, and series step by step. Use when solving calculus problems, plotting functions, or verifying integrals.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Calculus concepts, best practices, and implementation patterns.",
+      "version": "2.0.5"
     },
     {
       "name": "calendar-planner-cn",
       "source": "./calendar-planner-cn",
-      "description": "\u65e5\u7a0b\u89c4\u5212\u5de5\u5177\u3002\u5468\u8ba1\u5212\u3001\u6708\u8ba1\u5212\u3001\u65f6\u95f4\u5757\u3001\u4f1a\u8bae\u5b89\u6392\u3001\u622a\u6b62\u65e5\u671f\u7ba1\u7406\u3001\u5de5\u4f5c\u751f\u6d3b\u5e73\u8861\u3002Calendar planner with weekly, monthly, time-blocking, meeting scheduling, deadline management.",
-      "version": "2.0.0"
+      "description": "\u4e2d\u56fd\u65e5\u5386\u4e0e\u8282\u6c14\u53c2\u8003 \u2014 \u519c\u5386\u9634\u9633\u5408\u5386\u539f\u7406\u3001\u4e8c\u5341\u56db\u8282\u6c14\u3001\u5929\u5e72\u5730\u652f\u7eaa\u5e74\u3001\u95f0\u6708\u89c4\u5219\u3001\u4f20\u7edf\u8282\u65e5\u901f\u67e5",
+      "version": "3.0.0"
     },
     {
       "name": "calendar-planner-pro",
@@ -664,14 +700,14 @@
     {
       "name": "capistrano",
       "source": "./capistrano",
-      "description": "Automate deployments over SSH with Ruby-based release workflows. Use when deploying Rails apps, managing releases, or configuring multi-stage deploys.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Capistrano concepts, best practices, and implementation patterns.",
+      "version": "3.0.2"
     },
     {
       "name": "caption",
       "source": "./caption",
-      "description": "Generate captions for images, videos, and social media posts. Use when writing post captions, creating accessibility text, or batch-processing media.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Caption concepts, best practices, and implementation patterns.",
+      "version": "2.0.5"
     },
     {
       "name": "cashflow",
@@ -682,20 +718,20 @@
     {
       "name": "cc-switch",
       "source": "./cc-switch",
-      "description": "A cross-platform desktop All-in-One assistant tool for Claude Code, Codex, OpenCode, openclaw & Gemi cc switch, rust, ai-tools, claude-code, codex.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Cc Switch concepts, best practices, and implementation patterns.",
+      "version": "3.0.2"
     },
     {
       "name": "cert-manager",
       "source": "./cert-manager",
-      "description": "An open-source and free self-hosted SSL certificates ACME tool, automates the full-cycle of issuance cert-manager, go, acme, acme-client, automation.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Cert Manager concepts, best practices, and implementation patterns.",
+      "version": "3.0.2"
     },
     {
       "name": "certcheck",
       "source": "./certcheck",
-      "description": "Check SSL certificates on remote domains for expiry and chain validity. Use when auditing SSL health.",
-      "version": "3.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Certcheck concepts, best practices, and implementation patterns.",
+      "version": "4.0.2"
     },
     {
       "name": "cet-prep",
@@ -707,6 +743,12 @@
       "name": "cex",
       "source": "./cex",
       "description": "Analyze cex operations. Use when you need to understand cex mechanisms, evaluate protocol security, or reference on-chain concepts.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "cgroup",
+      "source": "./cgroup",
+      "description": "Cgroup reference tool. Use when working with cgroup in sysops contexts.",
       "version": "1.0.0"
     },
     {
@@ -772,14 +814,20 @@
     {
       "name": "chinese-calendar-cn",
       "source": "./chinese-calendar-cn",
-      "description": "Chinese calendar with zodiac, festivals, and solar terms (\u4e2d\u6587). Use when checking lunar dates.",
-      "version": "3.0.0"
+      "description": "\u4e2d\u56fd\u519c\u5386\u5de5\u5177\u3002\u8282\u6c14\u67e5\u8be2\u3001\u751f\u8096\u5e74\u4efd\u3001\u9ec4\u9053\u5409\u65e5\u3001\u4f20\u7edf\u8282\u65e5\u3001\u5929\u5e72\u5730\u652f\u3001\u519c\u5386\u8f6c\u6362\u3002Chinese lunar calendar with solar terms, zodiac, auspicious dates, festivals, and Heavenly Stems.",
+      "version": "5.0.1"
     },
     {
       "name": "chinese-lunar-calendar",
       "source": "./chinese-lunar-calendar",
       "description": "Chinese content writing and editing toolkit. Use when generating articles, polishing copy, creating outlines, tracking trends, or adapting content for Chinese platforms.",
       "version": "3.0.1"
+    },
+    {
+      "name": "chroot",
+      "source": "./chroot",
+      "description": "Chroot reference tool. Use when working with chroot in sysops contexts.",
+      "version": "1.0.0"
     },
     {
       "name": "ci-cd-pipeline",
@@ -790,8 +838,14 @@
     {
       "name": "civil-service",
       "source": "./civil-service",
-      "description": "Civil service exam study helper with quizzes and topic review (\u516c\u52a1\u5458\u8003\u8bd5). Use when preparing for exams.",
-      "version": "3.0.0"
+      "description": "Public administration reference \u2014 civil service systems, government standards, e-government maturity, FISMA compliance, and FOI process",
+      "version": "5.0.0"
+    },
+    {
+      "name": "clamav",
+      "source": "./clamav",
+      "description": "ClamAV open-source antivirus reference. clamscan, freshclam database updates, clamd daemon configuration, custom signatures, quarantine workflows, automated scanning, and performance tuning.",
+      "version": "1.0.0"
     },
     {
       "name": "class",
@@ -808,14 +862,14 @@
     {
       "name": "classify",
       "source": "./classify",
-      "description": "Train and run text classification models using keyword-based and TF-IDF methods. Use when you need to categorize, label,",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Classify concepts, best practices, and implementation patterns.",
+      "version": "2.0.4"
     },
     {
       "name": "clean",
       "source": "./clean",
-      "description": "Scan and clean up files including duplicates, temp files, and caches using system tools. Use when you need to find and remove junk files,",
-      "version": "1.0.0"
+      "description": "clean",
+      "version": "2.0.2"
     },
     {
       "name": "cleaning",
@@ -838,8 +892,8 @@
     {
       "name": "clip-history",
       "source": "./clip-history",
-      "description": "Clipboard history manager for saving and searching text snippets. Use when managing copied text.",
-      "version": "3.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Clip History concepts, best practices, and implementation patterns.",
+      "version": "4.0.2"
     },
     {
       "name": "clipbox",
@@ -868,8 +922,8 @@
     {
       "name": "cms",
       "source": "./cms",
-      "description": "Manage web content with page creation, media library, and templates. Use when building site pages, organizing media assets, or versioning content.",
-      "version": "2.0.0"
+      "description": "cms reference tool",
+      "version": "2.0.3"
     },
     {
       "name": "cnc",
@@ -916,8 +970,8 @@
     {
       "name": "code-viewer",
       "source": "./code-viewer",
-      "description": "Display source files with syntax highlighting and Git decorations. Use when reading code, inspecting file diffs, or reviewing configs in terminal.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Code Viewer concepts, best practices, and implementation patterns.",
+      "version": "3.0.2"
     },
     {
       "name": "codepal",
@@ -932,10 +986,16 @@
       "version": "1.0.0"
     },
     {
+      "name": "coldwallet",
+      "source": "./coldwallet",
+      "description": "Coldwallet reference tool. Use when working with coldwallet in blockchain contexts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "color-palette-cn",
       "source": "./color-palette-cn",
-      "description": "\u914d\u8272\u65b9\u6848\u751f\u6210\u3001\u8272\u5f69\u548c\u8c10(\u4e92\u8865/\u7c7b\u4f3c/\u4e09\u8272)\u3001\u54c1\u724c\u914d\u8272\u3001\u5bf9\u6bd4\u5ea6\u68c0\u67e5(WCAG)\u3001\u989c\u8272\u683c\u5f0f\u8f6c\u6362(HEX/RGB/HSL)\u3001\u6d41\u884c\u8272\u63a8\u8350\u3002Color palette generator with harmony, brand colors, WCAG contrast check, format conversion.",
-      "version": "2.0.0"
+      "description": "\u4e2d\u56fd\u4f20\u7edf\u8272\u5f69\u53c2\u8003 \u2014 \u4e94\u8272\u4f53\u7cfb\u3001RGB/CMYK/Pantone\u8272\u503c\u5bf9\u7167\u3001\u6545\u5bab\u914d\u8272\u65b9\u6848\u3001\u5370\u5237\u8272\u5dee\u5904\u7406",
+      "version": "4.0.0"
     },
     {
       "name": "colorlab",
@@ -994,8 +1054,8 @@
     {
       "name": "compass",
       "source": "./compass",
-      "description": "Audit security posture and manage credential rotation schedules. Use when auditing passwords, rotating credentials, generating secure tokens.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Compass concepts, best practices, and implementation patterns.",
+      "version": "2.0.4"
     },
     {
       "name": "compensation-calc",
@@ -1006,8 +1066,8 @@
     {
       "name": "compile",
       "source": "./compile",
-      "description": "Validate, lint, and format source code across multiple languages. Use when checking syntax, formatting files, running lint passes, validating builds.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Compile concepts, best practices, and implementation patterns.",
+      "version": "2.0.4"
     },
     {
       "name": "compliance",
@@ -1018,8 +1078,8 @@
     {
       "name": "compose",
       "source": "./compose",
-      "description": "Create music compositions with chords, melodies, and audio analysis. Use when writing progressions, arranging parts, analyzing audio tracks.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Compose concepts, best practices, and implementation patterns.",
+      "version": "2.0.4"
     },
     {
       "name": "compost",
@@ -1036,8 +1096,8 @@
     {
       "name": "conduit",
       "source": "./conduit",
-      "description": "Conduit fill and sizing calculator. Use when json conduit tasks, csv conduit tasks, checking conduit status.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Conduit concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "config",
@@ -1090,8 +1150,8 @@
     {
       "name": "container-analyzer",
       "source": "./container-analyzer",
-      "description": "Inspect Docker image layers and find size optimization opportunities. Use when auditing image sizes, comparing layers, benchmarking builds.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Container Analyzer concepts, best practices, and implementation p...",
+      "version": "2.0.3"
     },
     {
       "name": "container-desktop",
@@ -1102,8 +1162,8 @@
     {
       "name": "container-inspect",
       "source": "./container-inspect",
-      "description": "Explore Docker image layers and diagnose container build issues. Use when inspecting layers, debugging failures, checking configurations.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Container Inspect concepts, best practices, and implementation pa...",
+      "version": "3.0.2"
     },
     {
       "name": "container-labs",
@@ -1114,8 +1174,8 @@
     {
       "name": "container-runner",
       "source": "./container-runner",
-      "description": "Run and manage OCI containers and pods with Podman rootless mode. Use when launching containers, managing pods, building images.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Container Runner concepts, best practices, and implementation pat...",
+      "version": "3.0.2"
     },
     {
       "name": "content-calendar-scheduler",
@@ -1132,8 +1192,8 @@
     {
       "name": "convert",
       "source": "./convert",
-      "description": "Convert between file formats, units, currencies, encodings, and color codes using Python. Use when you need universal data transformation.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Convert concepts, best practices, and implementation patterns.",
+      "version": "2.0.4"
     },
     {
       "name": "conveyor",
@@ -1174,14 +1234,14 @@
     {
       "name": "core",
       "source": "./core",
-      "description": "AdonisJS is a TypeScript-first web framework for building web apps and API servers. It comes with su core, typescript, core, framework, mvc-framework.",
-      "version": "2.0.0"
+      "description": "core reference tool",
+      "version": "3.0.0"
     },
     {
       "name": "count",
       "source": "./count",
-      "description": "Count words, lines, and characters with frequency analysis tools. Use when counting frequencies, analyzing text length, aggregating file stats.",
-      "version": "1.0.0"
+      "description": "count",
+      "version": "2.0.3"
     },
     {
       "name": "court-prep",
@@ -1210,14 +1270,14 @@
     {
       "name": "cpuwatch",
       "source": "./cpuwatch",
-      "description": "Watch real-time CPU utilization with per-core breakdown and alerts. Use when monitoring spikes, identifying runaway processes, tracking cores.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Cpuwatch concepts, best practices, and implementation patterns.",
+      "version": "2.0.4"
     },
     {
       "name": "crawler",
       "source": "./crawler",
-      "description": "Crawl websites, extract links, and scrape content with rate limiting. Use when scraping pages, extracting links, generating sitemaps.",
-      "version": "1.0.0"
+      "description": "Web crawling and scraping reference \u2014 robots.txt protocol, Scrapy framework, anti-bot detection, headless browsers, and legal considerations",
+      "version": "3.0.0"
     },
     {
       "name": "create",
@@ -1228,8 +1288,8 @@
     {
       "name": "credential-tester",
       "source": "./credential-tester",
-      "description": "Test authentication credentials against HTTP, SSH, and FTP services. Use when validating access credentials.",
-      "version": "3.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Credential Tester concepts, best practices, and implementation pa...",
+      "version": "4.0.2"
     },
     {
       "name": "cron-expression",
@@ -1240,8 +1300,8 @@
     {
       "name": "cronhelp",
       "source": "./cronhelp",
-      "description": "Manage crontab entries with add, remove, and listing. Use when editing cron jobs.",
-      "version": "3.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Cronhelp concepts, best practices, and implementation patterns.",
+      "version": "4.0.2"
     },
     {
       "name": "cronjob",
@@ -1252,8 +1312,8 @@
     {
       "name": "crypt",
       "source": "./crypt",
-      "description": "Encrypt, decrypt, hash, and sign data using standard cryptographic algorithms. Use when you need data protection or integrity verification.",
-      "version": "1.0.0"
+      "description": "crypt",
+      "version": "2.0.2"
     },
     {
       "name": "crypto-defi",
@@ -1270,14 +1330,14 @@
     {
       "name": "crypto-news-feed",
       "source": "./crypto-news-feed",
-      "description": "Aggregate crypto news with sentiment analysis and personalized feeds. Use when scanning headlines, analyzing sentiment, filtering by token.",
-      "version": "2.0.0"
+      "description": "Reference tool for blockchain and crypto \u2014 covers intro, formulas, regulations and more. Quick lookup for Crypto News Feed concepts, best practices, and impl...",
+      "version": "3.0.2"
     },
     {
       "name": "crypto-tax-calc",
       "source": "./crypto-tax-calc",
-      "description": "Calculate crypto taxes by importing trades and generating tax reports. Use when importing trades, calculating gains, generating tax reports.",
-      "version": "2.0.0"
+      "description": "Cryptocurrency tax reference \u2014 IRS guidance, FIFO/LIFO/HIFO cost basis methods, Form 8949, tax loss harvesting, and DeFi transaction categorization",
+      "version": "3.0.0"
     },
     {
       "name": "crypto-tracker-cn",
@@ -1288,8 +1348,20 @@
     {
       "name": "crypto-whale-tracker",
       "source": "./crypto-whale-tracker",
-      "description": "Track large crypto transactions and whale movements using CoinGecko API. Use when monitoring whale activity. Requires curl.",
-      "version": "3.0.0"
+      "description": "Reference tool for blockchain and crypto \u2014 covers intro, quickstart, patterns and more. Quick lookup for Crypto Whale Tracker concepts, best practices, and i...",
+      "version": "4.0.2"
+    },
+    {
+      "name": "csp",
+      "source": "./csp",
+      "description": "Csp reference tool. Use when working with csp in devtools contexts.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "csrf",
+      "source": "./csrf",
+      "description": "Csrf reference tool. Use when working with csrf in devtools contexts.",
+      "version": "1.0.0"
     },
     {
       "name": "css-helper",
@@ -1312,8 +1384,8 @@
     {
       "name": "curl",
       "source": "./curl",
-      "description": "Send HTTP requests and test API endpoints using Python urllib. Use when you need to debug, test, or interact with web services.",
-      "version": "1.0.0"
+      "description": "curl reference tool",
+      "version": "2.0.2"
     },
     {
       "name": "currconv",
@@ -1354,8 +1426,8 @@
     {
       "name": "data-dashboard",
       "source": "./data-dashboard",
-      "description": "\ud83d\udd25 \u4eba\u4eba\u53ef\u7528\u7684\u5f00\u6e90 BI \u5de5\u5177\uff0c\u6570\u636e\u53ef\u89c6\u5316\u795e\u5668\u3002An open-source BI tool alternative to Tableau. data-dashboard, java, apache-doris, business-intelligence, data-analysis.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Data Dashboard concepts, best practices, and implementation patte...",
+      "version": "2.0.4"
     },
     {
       "name": "data-labeler",
@@ -1378,8 +1450,8 @@
     {
       "name": "dataset-loader",
       "source": "./dataset-loader",
-      "description": "\ud83e\udd17 The largest hub of ready-to-use dataset-loader for AI models with fast, easy-to-use and efficient data m dataset-loader, python, ai.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Dataset Loader concepts, best practices, and implementation patte...",
+      "version": "2.0.4"
     },
     {
       "name": "datasets",
@@ -1408,19 +1480,25 @@
     {
       "name": "db-chat",
       "source": "./db-chat",
-      "description": "AI-driven database tool and SQL client, The hottest GUI client, supporting MySQL, Oracle, PostgreSQL db-chat, java, ai, bi, chatgpt, clickhouse.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Db Chat concepts, best practices, and implementation patterns.",
+      "version": "2.0.4"
     },
     {
       "name": "db-explorer",
       "source": "./db-explorer",
-      "description": "Browse database tables and run SQL queries across multiple engines. Use when exploring schemas, running queries, comparing databases.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Db Explorer concepts, best practices, and implementation patterns.",
+      "version": "2.0.4"
     },
     {
       "name": "dbeaver",
       "source": "./dbeaver",
-      "description": "Connect to databases with a universal SQL client for major engines. Use when querying databases, browsing schemas, exporting results.",
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Dbeaver concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
+    },
+    {
+      "name": "dcf",
+      "source": "./dcf",
+      "description": "Dcf reference tool. Use when working with dcf in finance contexts.",
       "version": "1.0.0"
     },
     {
@@ -1496,6 +1574,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "delta",
+      "source": "./delta",
+      "description": "Delta reference tool. Use when working with delta in finance contexts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "deploy-helper",
       "source": "./deploy-helper",
       "description": "One-command deployment assistant. Generate Dockerfiles, docker-compose configs, Nginx configs, CI/CD pipelines, Vercel/Netlify configs, Kubernetes manifests.",
@@ -1510,8 +1594,8 @@
     {
       "name": "deployer",
       "source": "./deployer",
-      "description": "Deploy PHP apps with zero-downtime releases and framework support. Use when deploying Laravel, running releases, configuring recipes.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Deployer concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "depreciation",
@@ -1528,8 +1612,8 @@
     {
       "name": "dev-environment",
       "source": "./dev-environment",
-      "description": "macOS development environment setup: Easy-to-understand instructions with automated setup scripts f dev setup, python, android-development, aws, bash, cli.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Dev Environment concepts, best practices, and implementation patt...",
+      "version": "2.0.4"
     },
     {
       "name": "dev-setup",
@@ -1540,32 +1624,32 @@
     {
       "name": "dev-utilities",
       "source": "./dev-utilities",
-      "description": "Collection of handy online tools for developers, with great UX. it tools, vue, converter, developer-productivity, developer-tools, frontend.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Dev Utilities concepts, best practices, and implementation patterns.",
+      "version": "2.0.4"
     },
     {
       "name": "devops-bash-tools",
       "source": "./devops-bash-tools",
-      "description": "Run 1000+ DevOps scripts for AWS, GCP, K8s, Docker, and CI/CD tasks. Use when automating cloud ops, managing clusters, scripting pipelines.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Devops Bash Tools concepts, best practices, and implementation pa...",
+      "version": "2.0.4"
     },
     {
       "name": "devops-journey",
       "source": "./devops-journey",
-      "description": "This repository started out as a learning in public project for myself and has now become a structur devops-journey, shell, ansible, backup, containers.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Devops Journey concepts, best practices, and implementation patte...",
+      "version": "2.0.4"
     },
     {
       "name": "devops-scripts",
       "source": "./devops-scripts",
-      "description": "1000+ DevOps Bash Scripts - AWS, GCP, Kubernetes, Docker, CI/CD, APIs, SQL, PostgreSQL, MySQL, Hive, devops bash tools, shell, api, aws, bash, ci.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Devops Scripts concepts, best practices, and implementation patte...",
+      "version": "2.0.4"
     },
     {
       "name": "dex-aggregator",
       "source": "./dex-aggregator",
-      "description": "Aggregate DEX prices and DeFi protocol data using DeFiLlama API. Use when comparing token prices. Requires curl.",
-      "version": "3.0.0"
+      "description": "DEX aggregation reference \u2014 routing algorithms, 1inch Fusion mode, CowSwap batch auctions, sandwich attack protection, and swap API endpoints",
+      "version": "4.0.0"
     },
     {
       "name": "dialog",
@@ -1600,14 +1684,14 @@
     {
       "name": "diff",
       "source": "./diff",
-      "description": "Compare files and directories, merge changes, and generate patches. Use when comparing versions, merging changes, generating patch files.",
-      "version": "1.0.0"
+      "description": "diff reference tool",
+      "version": "2.0.4"
     },
     {
       "name": "diffview",
       "source": "./diffview",
-      "description": "Visualize file diffs side-by-side with syntax-highlighted change views. Use when reviewing changes, comparing versions, inspecting merge results.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Diffview concepts, best practices, and implementation patterns.",
+      "version": "3.0.2"
     },
     {
       "name": "disclaimer",
@@ -1618,14 +1702,14 @@
     {
       "name": "discord-toolkit",
       "source": "./discord-toolkit",
-      "description": "Manage Discord bots with messaging, channels, embeds, and role tools. Use when sending messages, managing channels, creating embeds.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Discord Toolkit concepts, best practices, and implementation patt...",
+      "version": "3.0.2"
     },
     {
       "name": "disk",
       "source": "./disk",
-      "description": "Monitor disk usage, find space hogs, and get cleanup suggestions. Use when checking space, finding large files, monitoring partitions.",
-      "version": "1.0.0"
+      "description": "disk reference tool",
+      "version": "2.0.3"
     },
     {
       "name": "diskmon",
@@ -1636,8 +1720,8 @@
     {
       "name": "diskview",
       "source": "./diskview",
-      "description": "Display disk usage and free space across mounted filesystems clearly. Use when checking mounts, comparing utilization, monitoring capacity.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Diskview concepts, best practices, and implementation patterns.",
+      "version": "2.0.4"
     },
     {
       "name": "dispute-letter",
@@ -1654,8 +1738,8 @@
     {
       "name": "dnscheck",
       "source": "./dnscheck",
-      "description": "Query DNS records and diagnose domain resolution and email configs. Use when checking propagation, debugging resolution, verifying SPF records.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Dnscheck concepts, best practices, and implementation patterns.",
+      "version": "2.0.5"
     },
     {
       "name": "doc-summarize-pro",
@@ -1732,26 +1816,26 @@
     {
       "name": "dream-interpreter",
       "source": "./dream-interpreter",
-      "description": "Interpret dream symbols and maintain a dream journal. Use when analyzing dreams.",
-      "version": "3.0.0"
+      "description": "Reference tool for life \u2014 covers intro, guide, tips and more. Quick lookup for Dream Interpreter concepts, best practices, and implementation patterns.",
+      "version": "4.0.2"
     },
     {
       "name": "dropfinder",
       "source": "./dropfinder",
-      "description": "Aggregate and track crypto airdrops \u2014 find eligible drops, set reminders, and generate participation checklists across EVM and Solana systems. Use when you n.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Dropfinder concepts, best practices, and implementation patterns.",
+      "version": "2.0.4"
     },
     {
       "name": "dropship-helper",
       "source": "./dropship-helper",
-      "description": "Calculate dropshipping margins, ROI, and breakeven points. Use when evaluating product profitability.",
-      "version": "3.0.0"
+      "description": "Reference tool for business \u2014 covers intro, formulas, regulations and more. Quick lookup for Dropship Helper concepts, best practices, and implementation pat...",
+      "version": "4.0.2"
     },
     {
       "name": "dupfinder",
       "source": "./dupfinder",
-      "description": "Scan directories for duplicate files by hash to reclaim disk space. Use when finding duplicates, reclaiming space, comparing checksums.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Dupfinder concepts, best practices, and implementation patterns.",
+      "version": "2.0.5"
     },
     {
       "name": "eam",
@@ -1792,8 +1876,8 @@
     {
       "name": "embed",
       "source": "./embed",
-      "description": "Generate and search text embedding vectors using TF-IDF and cosine similarity. Use when you need semantic search or text similarity analysis.",
-      "version": "1.0.0"
+      "description": "embed",
+      "version": "2.0.2"
     },
     {
       "name": "emojilist",
@@ -1810,14 +1894,14 @@
     {
       "name": "encode",
       "source": "./encode",
-      "description": "Encode text to base64, URL-safe strings, and HTML entity formats. Use when encoding payloads, escaping URLs, converting HTML entities.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Encode concepts, best practices, and implementation patterns.",
+      "version": "2.0.5"
     },
     {
       "name": "encrypt",
       "source": "./encrypt",
-      "description": "Encrypt files, generate hashes, and manage keys for secure storage. Use when encrypting files, generating hashes, managing keys.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Encrypt concepts, best practices, and implementation patterns.",
+      "version": "2.0.5"
     },
     {
       "name": "endeffector",
@@ -1834,8 +1918,8 @@
     {
       "name": "env",
       "source": "./env",
-      "description": "Manage environment variables with profiles, validation, and templating using bash. Use when you need to organize, switch, or audit env configs.",
-      "version": "1.0.0"
+      "description": "env reference tool",
+      "version": "2.0.2"
     },
     {
       "name": "env-config",
@@ -1846,8 +1930,8 @@
     {
       "name": "envcheck",
       "source": "./envcheck",
-      "description": "Validate .env files with missing-key detection and format linting. Use when auditing envs, detecting missing vars, comparing environments.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Envcheck concepts, best practices, and implementation patterns.",
+      "version": "2.0.4"
     },
     {
       "name": "epoch",
@@ -1936,14 +2020,20 @@
     {
       "name": "fakerjs",
       "source": "./fakerjs",
-      "description": "Generate realistic test data: names, addresses, companies, dates, and more. Use when seeding databases, mocking APIs, or building demo datasets.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Fakerjs concepts, best practices, and implementation patterns.",
+      "version": "3.0.2"
     },
     {
       "name": "favicon",
       "source": "./favicon",
       "description": "Fetch and download favicons from any website for your design projects. Use when grabbing icons, checking availability, or previewing favicon renders.",
       "version": "3.0.0"
+    },
+    {
+      "name": "feather",
+      "source": "./feather",
+      "description": "Apache Feather/Arrow IPC format reference. V1 vs V2 format differences, pyarrow.feather read/write with compression, R arrow package integration, Arrow type system, Feather vs Parquet benchmarks, pand",
+      "version": "1.0.0"
     },
     {
       "name": "feedback",
@@ -1978,14 +2068,14 @@
     {
       "name": "file-converter-pro",
       "source": "./file-converter-pro",
-      "description": "\ud83d\udcbe Self-hosted online file converter. Supports 1000+ formats \u2699\ufe0f file converter pro, typescript, bun, conversion, convert, converter.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for File Converter PRO concepts, best practices, and implementation p...",
+      "version": "2.0.4"
     },
     {
       "name": "filewatch",
       "source": "./filewatch",
-      "description": "Monitor files for changes and trigger actions on modification events. Use when watching config changes, triggering rebuilds, or tracking file versions.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Filewatch concepts, best practices, and implementation patterns.",
+      "version": "2.0.4"
     },
     {
       "name": "finality",
@@ -1996,8 +2086,8 @@
     {
       "name": "financial-machine-learning",
       "source": "./financial-machine-learning",
-      "description": "Explore curated financial ML tools for trading, risk models, and predictions. Use when building models, benchmarking accuracy, or researching quant tools.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Financial Machine Learning concepts, best practices, and implemen...",
+      "version": "2.0.2"
     },
     {
       "name": "finder",
@@ -2008,8 +2098,8 @@
     {
       "name": "finetune",
       "source": "./finetune",
-      "description": "Manage model fine-tuning datasets using CLI tools. Use when preparing, validating, or transforming training data for LLM fine-tuning.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Finetune concepts, best practices, and implementation patterns.",
+      "version": "2.0.4"
     },
     {
       "name": "finml-toolkit",
@@ -2020,7 +2110,13 @@
     {
       "name": "firewall-manager",
       "source": "./firewall-manager",
-      "description": "Simple tool to configure Windows Filtering Platform (WFP) which can configure network activity on yo firewall-manager, c, arm64, firewall, foss, network.",
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Firewall Manager concepts, best practices, and implementation pat...",
+      "version": "2.0.4"
+    },
+    {
+      "name": "firewalld",
+      "source": "./firewalld",
+      "description": "Firewalld reference tool. Use when working with firewalld in sysops contexts.",
       "version": "1.0.0"
     },
     {
@@ -2044,8 +2140,8 @@
     {
       "name": "fitness-plan",
       "source": "./fitness-plan",
-      "description": "Generate workout plans for muscle gain, fat loss, or shaping with diet tips. Use when creating schedules, planning cycles, or designing routines.",
-      "version": "2.0.0"
+      "description": "Exercise science and training reference \u2014 progressive overload, ACSM guidelines, rep ranges, training splits, injury prevention, and 1RM estimation formulas",
+      "version": "6.0.0"
     },
     {
       "name": "fixture",
@@ -2080,8 +2176,8 @@
     {
       "name": "flip",
       "source": "./flip",
-      "description": "Generate flip UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages.",
-      "version": "1.0.0"
+      "description": "flip reference tool",
+      "version": "2.0.0"
     },
     {
       "name": "flowdo",
@@ -2128,8 +2224,8 @@
     {
       "name": "fontpreview",
       "source": "./fontpreview",
-      "description": "Preview installed fonts, list typefaces, and check typography details. Use when browsing system fonts, previewing rendering, or comparing font styles.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Fontpreview concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "footer",
@@ -2146,8 +2242,8 @@
     {
       "name": "forecast-model",
       "source": "./forecast-model",
-      "description": "Tool for producing high quality forecasts for time series data that has multiple seasonality with li forecast-model, python, forecasting, python.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Forecast Model concepts, best practices, and implementation patte...",
+      "version": "2.0.1"
     },
     {
       "name": "format",
@@ -2188,8 +2284,8 @@
     {
       "name": "fund-advisor-pro",
       "source": "./fund-advisor-pro",
-      "description": "Calculate DCA with annualized rates and plan rebalancing strategies easily. Use when modeling growth, comparing allocations, or simulating drawdown scenarios.",
-      "version": "2.0.0"
+      "description": "Reference tool for business \u2014 covers intro, quickstart, patterns and more. Quick lookup for Fund Advisor PRO concepts, best practices, and implementation pat...",
+      "version": "3.0.1"
     },
     {
       "name": "funnel-analyzer",
@@ -2200,8 +2296,8 @@
     {
       "name": "funnlp",
       "source": "./funnlp",
-      "description": "Detect sensitive words, extract phone/ID numbers, and run Chinese NLP tasks. Use when filtering content, extracting entities, or detecting text language.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Funnlp concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "furnace",
@@ -2218,8 +2314,8 @@
     {
       "name": "gallery",
       "source": "./gallery",
-      "description": "Generate gallery UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Gallery concepts, best practices, and implementation patterns.",
+      "version": "2.0.1"
     },
     {
       "name": "gaokao-essay",
@@ -2236,8 +2332,14 @@
     {
       "name": "gcal-manager",
       "source": "./gcal-manager",
-      "description": "Manage Google Calendar events, check availability, and view daily agendas. Use when listing events, creating entries, or checking free time slots.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Gcal Manager concepts, best practices, and implementation patterns.",
+      "version": "3.0.1"
+    },
+    {
+      "name": "gdb",
+      "source": "./gdb",
+      "description": "Gdb reference tool. Use when working with gdb in devtools contexts.",
+      "version": "1.0.0"
     },
     {
       "name": "gdpr",
@@ -2260,8 +2362,8 @@
     {
       "name": "genai-toolbox",
       "source": "./genai-toolbox",
-      "description": "Connect AI agents to databases via MCP with schema-aware query support. Use when querying DBs from agents, configuring connections, or benchmarking.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Genai Toolbox concepts, best practices, and implementation patterns.",
+      "version": "2.0.1"
     },
     {
       "name": "genai-toolkit",
@@ -2284,8 +2386,8 @@
     {
       "name": "geoip",
       "source": "./geoip",
-      "description": "Look up geographic location of IP addresses using ip-api.com. Use when tracing IPs. Requires curl.",
-      "version": "3.0.0"
+      "description": "geoip",
+      "version": "4.0.0"
     },
     {
       "name": "germination",
@@ -2296,8 +2398,8 @@
     {
       "name": "gift-finder",
       "source": "./gift-finder",
-      "description": "Recommend gifts by person, budget, and occasion with creative card ideas. Use when picking birthday gifts, finding presents, or writing greetings.",
-      "version": "2.0.0"
+      "description": "Reference tool for life \u2014 covers intro, quickstart, patterns and more. Quick lookup for Gift Finder concepts, best practices, and implementation patterns.",
+      "version": "3.0.1"
     },
     {
       "name": "gitbuddy",
@@ -2314,8 +2416,8 @@
     {
       "name": "gitignore",
       "source": "./gitignore",
-      "description": "Generate .gitignore files from templates for any language or framework fast. Use when starting repos, adding ignores, or checking ignored patterns.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Gitignore concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "gitlog",
@@ -2338,8 +2440,8 @@
     {
       "name": "gpio",
       "source": "./gpio",
-      "description": "Control GPIO pins on Raspberry Pi or embedded boards with logging support. Use when reading sensors, toggling relays, or logging pin state changes.",
-      "version": "1.0.0"
+      "description": "gpio reference tool",
+      "version": "2.0.2"
     },
     {
       "name": "gpt",
@@ -2350,8 +2452,8 @@
     {
       "name": "gpu-helper",
       "source": "./gpu-helper",
-      "description": "Lightweight, open-source control tool for ASUS laptops and ROG Ally. Manage performance modes, fans, g helper, c#, ally, amd, armoury, armoury-crate.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for GPU Helper concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "gradient",
@@ -2374,13 +2476,19 @@
     {
       "name": "graphql-client",
       "source": "./graphql-client",
-      "description": "The industry-leading GraphQL client for TypeScript, JavaScript, React, Vue, Angular, and more. Apoll apollo client, typescript, graphql-client.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Graphql Client concepts, best practices, and implementation patte...",
+      "version": "2.0.2"
     },
     {
       "name": "gripper",
       "source": "./gripper",
       "description": "Robot gripper reference \u2014 jaw types, force calculation, pneumatic vs electric, and end-effector selection. Use when designing gripping systems, selecting actuators, or sizing grippers for robotic appl",
+      "version": "1.0.0"
+    },
+    {
+      "name": "grpc",
+      "source": "./grpc",
+      "description": "Grpc reference tool. Use when working with grpc in devtools contexts.",
       "version": "1.0.0"
     },
     {
@@ -2392,8 +2500,8 @@
     {
       "name": "gymlog",
       "source": "./gymlog",
-      "description": "Log workouts, track sets and reps, and chart training progress over time. Use when recording sessions, tracking PRs, or reviewing weekly volume.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Gymlog concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "habit",
@@ -2428,8 +2536,8 @@
     {
       "name": "hashtag",
       "source": "./hashtag",
-      "description": "Research trending hashtags, score relevance, and generate optimized tag sets. Use when finding trends, scoring tags, or analyzing competitor hashtags.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Hashtag concepts, best practices, and implementation patterns.",
+      "version": "2.0.4"
     },
     {
       "name": "hazmat",
@@ -2446,8 +2554,8 @@
     {
       "name": "headless-browser",
       "source": "./headless-browser",
-      "description": "Automate browser tasks with scriptable headless browsing for tests and scraping. Use when scraping pages, running tests, or capturing screenshots.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Headless Browser concepts, best practices, and implementation pat...",
+      "version": "2.0.1"
     },
     {
       "name": "headline",
@@ -2488,14 +2596,20 @@
     {
       "name": "homeassistant-toolkit",
       "source": "./homeassistant-toolkit",
-      "description": "Control Home Assistant devices and automations from the terminal directly. Use when toggling lights, listing entities, or triggering automation scripts.",
-      "version": "2.0.0"
+      "description": "Reference tool for life \u2014 covers intro, quickstart, patterns and more. Quick lookup for Homeassistant Toolkit concepts, best practices, and implementation pa...",
+      "version": "3.0.1"
     },
     {
       "name": "horoscope",
       "source": "./horoscope",
       "description": "Read daily horoscopes, check zodiac compatibility, and explore sign traits. Use when checking fortunes, matching compatibility, or analyzing sign traits.",
       "version": "2.0.0"
+    },
+    {
+      "name": "hotwallet",
+      "source": "./hotwallet",
+      "description": "Hotwallet reference tool. Use when working with hotwallet in blockchain contexts.",
+      "version": "1.0.0"
     },
     {
       "name": "hr-toolkit",
@@ -2518,8 +2632,8 @@
     {
       "name": "http-client",
       "source": "./http-client",
-      "description": "A command line tool and library for transferring data with URL syntax, supporting DICT, FILE, FTP, F http-client, c, c, client, http-client, ftp.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for HTTP Client concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "hydrate",
@@ -2566,14 +2680,14 @@
     {
       "name": "image-labeler",
       "source": "./image-labeler",
-      "description": "LabelImg is now part of the Label Studio community. The popular image annotation tool created by Tzu image-labeler, python, annotations, deep-learning.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Image Labeler concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "image-processor",
       "source": "./image-processor",
-      "description": "ImageMagick is a free, open-source software suite for creating, editing, converting, and displaying image-processor, c, command-line-image-tool.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Image Processor concepts, best practices, and implementation patt...",
+      "version": "2.0.3"
     },
     {
       "name": "image-prompt",
@@ -2582,10 +2696,16 @@
       "version": "2.1.0"
     },
     {
+      "name": "implied-vol",
+      "source": "./implied-vol",
+      "description": "Implied Vol reference tool. Use when working with implied vol in finance contexts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "infra-importer",
       "source": "./infra-importer",
-      "description": "CLI tool to generate terraform files from existing infrastructure (reverse Terraform). Infrastructur infra-importer, go, aws, cloud, gcp, golang.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Infra Importer concepts, best practices, and implementation patte...",
+      "version": "2.0.1"
     },
     {
       "name": "infra-wrapper",
@@ -2620,8 +2740,8 @@
     {
       "name": "inventory-manager",
       "source": "./inventory-manager",
-      "description": "Track inventory with stock levels, pricing, and low-stock alerts. Use when managing product inventory.",
-      "version": "3.0.0"
+      "description": "Inventory management reference \u2014 SKU systems, FIFO/LIFO valuation, barcode formats, ABC analysis, EOQ formula, and WMS migration",
+      "version": "5.0.0"
     },
     {
       "name": "inverter",
@@ -2644,7 +2764,19 @@
     {
       "name": "iperf",
       "source": "./iperf",
-      "description": "Measure TCP/UDP/SCTP bandwidth between hosts with detailed throughput data. Use when benchmarking speed, testing links, or diagnosing network bottlenecks.",
+      "description": "iperf",
+      "version": "2.0.1"
+    },
+    {
+      "name": "iptables",
+      "source": "./iptables",
+      "description": "Iptables reference tool. Use when working with iptables in sysops contexts.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "irr",
+      "source": "./irr",
+      "description": "Irr reference tool. Use when working with irr in finance contexts.",
       "version": "1.0.0"
     },
     {
@@ -2656,7 +2788,13 @@
     {
       "name": "it-tools",
       "source": "./it-tools",
-      "description": "Access handy dev utilities for encoding, hashing, formatting, and converting. Use when encoding Base64, generating UUIDs, formatting JSON, or converting.",
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for It Tools concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
+    },
+    {
+      "name": "jail",
+      "source": "./jail",
+      "description": "Jail reference tool. Use when working with jail in sysops contexts.",
       "version": "1.0.0"
     },
     {
@@ -2664,6 +2802,12 @@
       "source": "./jd-writer",
       "description": "Write job descriptions with requirements, perks, and inclusivity language. Use when drafting postings, writing requirements, or checking JD inclusivity.",
       "version": "2.0.0"
+    },
+    {
+      "name": "jensen",
+      "source": "./jensen",
+      "description": "Jensen reference tool. Use when working with jensen in finance contexts.",
+      "version": "1.0.0"
     },
     {
       "name": "jit",
@@ -2674,8 +2818,8 @@
     {
       "name": "job-scheduler",
       "source": "./job-scheduler",
-      "description": "Enable Self-Service Operations: Give specific users access to your existing tools, services, and scr job-scheduler, groovy, ansible, audit, automation.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Job Scheduler concepts, best practices, and implementation patterns.",
+      "version": "2.0.1"
     },
     {
       "name": "job-search-assistant",
@@ -2690,10 +2834,16 @@
       "version": "2.0.0"
     },
     {
+      "name": "journald",
+      "source": "./journald",
+      "description": "Journald reference tool. Use when working with journald in sysops contexts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "js-compiler",
       "source": "./js-compiler",
-      "description": "Compile, bundle, and optimize JavaScript with high-performance build tools. Use when bundling modules, minifying builds, or analyzing bundle output sizes.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for JS Compiler concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "json-visualizer",
@@ -2710,8 +2860,8 @@
     {
       "name": "jwtdecode",
       "source": "./jwtdecode",
-      "description": "Decode and inspect JWT tokens showing header, payload, and expiry. Use when debugging auth tokens, inspecting claims, checking token expiration.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Jwtdecode concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "kafka",
@@ -2728,8 +2878,8 @@
     {
       "name": "keyvault",
       "source": "./keyvault",
-      "description": "Generate and manage passwords with strength auditing and secure vault storage. Use when creating strong passwords, rotating credentials, auditing vaults.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Keyvault concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "labor-law",
@@ -2746,8 +2896,8 @@
     {
       "name": "launchpad",
       "source": "./launchpad",
-      "description": "Analyze launchpad operations. Use when you need to understand launchpad mechanisms, evaluate protocol security, or reference on-chain concepts.",
-      "version": "1.0.0"
+      "description": "Reference tool for blockchain and crypto \u2014 covers intro, formulas, regulations and more. Quick lookup for Launchpad concepts, best practices, and implementat...",
+      "version": "2.0.1"
     },
     {
       "name": "laundry",
@@ -2794,14 +2944,14 @@
     {
       "name": "license",
       "source": "./license",
-      "description": "Manage software license keys with generation, rotation, and audit tracking. Use when generating keys, auditing licenses, rotating expired credentials.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for License concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "license-picker",
       "source": "./license-picker",
-      "description": "Choose and generate open source license files for projects. Use when selecting project licenses.",
-      "version": "3.0.0"
+      "description": "Open source license reference \u2014 SPDX identifiers, permissive vs copyleft comparison, license compatibility matrix, patent clauses, and compliance scanning tools",
+      "version": "6.0.0"
     },
     {
       "name": "lidar",
@@ -2824,8 +2974,8 @@
     {
       "name": "linecount",
       "source": "./linecount",
-      "description": "Count source lines by language, exclude comments, and compare codebase sizes. Use when measuring codebase size, comparing projects, reporting LOC stats.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Linecount concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "link-checker",
@@ -2836,8 +2986,8 @@
     {
       "name": "linkbox",
       "source": "./linkbox",
-      "description": "Save, organize, and check bookmarks with tagging and link validation. Use when managing bookmarks. Requires curl for checking.",
-      "version": "3.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Linkbox concepts, best practices, and implementation patterns.",
+      "version": "2.0.1"
     },
     {
       "name": "linkedin-post",
@@ -2854,14 +3004,14 @@
     {
       "name": "liquidity",
       "source": "./liquidity",
-      "description": "Analyze liquidity operations. Use when you need to understand liquidity mechanisms, evaluate protocol security, or reference on-chain concepts.",
-      "version": "1.0.0"
+      "description": "Reference tool for blockchain and crypto \u2014 covers intro, formulas, regulations and more. Quick lookup for Liquidity concepts, best practices, and implementat...",
+      "version": "2.0.1"
     },
     {
       "name": "liquidity-monitor",
       "source": "./liquidity-monitor",
-      "description": "Monitor DeFi liquidity pools and TVL using DeFiLlama API. Use when tracking DeFi yields. Requires curl.",
-      "version": "3.0.0"
+      "description": "DeFi liquidity analysis reference \u2014 AMM mechanics, Uniswap V2/V3 math, Curve StableSwap, impermanent loss calculation, and MEV protection strategies",
+      "version": "4.0.0"
     },
     {
       "name": "live-stream-script",
@@ -2890,14 +3040,14 @@
     {
       "name": "load-balancer",
       "source": "./load-balancer",
-      "description": "Manage load balancer configurations and server pools using CLI tools. Use when you need to create, test, or rotate backend server pools.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Load Balancer concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "load-tester",
       "source": "./load-tester",
-      "description": "Run HTTP load tests to benchmark throughput, latency, and error rates under stress. Use when stress-testing APIs, benchmarking performance, simulating load.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Load Tester concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "loan-calculator",
@@ -2926,14 +3076,14 @@
     {
       "name": "logrotate",
       "source": "./logrotate",
-      "description": "Rotate, compress, and clean old log files to keep directories tidy automatically. Use when rotating logs, compressing old files, freeing disk space.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Logrotate concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "logscope",
       "source": "./logscope",
-      "description": "Analyze web server logs with real-time dashboards and traffic breakdowns. Use when reviewing access logs, identifying top pages, monitoring visitor stats.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Logscope concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "loto",
@@ -2948,16 +3098,22 @@
       "version": "1.0.0"
     },
     {
+      "name": "ltrace",
+      "source": "./ltrace",
+      "description": "Ltrace reference tool. Use when working with ltrace in devtools contexts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "lunardate",
       "source": "./lunardate",
-      "description": "Look up Chinese lunar dates, zodiac signs, festivals, and daily auspiciousness. Use when converting dates, checking festivals, looking up zodiac years.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Lunardate concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "lyrics",
       "source": "./lyrics",
-      "description": "Save and search song lyrics in a personal collection. Use when managing lyrics.",
-      "version": "3.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Lyrics concepts, best practices, and implementation patterns.",
+      "version": "2.0.4"
     },
     {
       "name": "macd",
@@ -2986,8 +3142,8 @@
     {
       "name": "mailcheck",
       "source": "./mailcheck",
-      "description": "Validate emails by checking MX, SPF/DKIM records, and SMTP connectivity. Use when verifying addresses, diagnosing delivery failures, checking DNS mail.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Mailcheck concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "maintenance",
@@ -3004,14 +3160,14 @@
     {
       "name": "manager",
       "source": "./manager",
-      "description": "Manage tasks and projects with priorities and status tracking. Use when organizing work.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Manager concepts, best practices, and implementation patterns.",
+      "version": "2.0.4"
     },
     {
       "name": "markpad",
       "source": "./markpad",
-      "description": "Preview, convert, and validate Markdown with TOC generation and HTML export. Use when previewing MD, generating TOC, converting Markdown to HTML.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Markpad concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "math-solver",
@@ -3022,14 +3178,14 @@
     {
       "name": "mathbox",
       "source": "./mathbox",
-      "description": "Solve math \u2014 statistics, primes, sequences, formulas \u2014 in the terminal. Use when computing stats, checking primes, evaluating formulas, exploring sequences.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Mathbox concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "md-convert",
       "source": "./md-convert",
-      "description": "Convert PDF, DOCX, HTML, and PPTX files to clean Markdown via Markitdown. Use when converting PDFs to MD, extracting DOCX text, migrating to Markdown.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Md Convert concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "mealplan",
@@ -3112,8 +3268,8 @@
     {
       "name": "mesh-network",
       "source": "./mesh-network",
-      "description": "Configure encrypted overlay mesh networks focused on performance and simplicity. Use when setting up VPN meshes, connecting nodes, managing tunnels.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Mesh Network concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "mev",
@@ -3172,8 +3328,8 @@
     {
       "name": "mlfinlab",
       "source": "./mlfinlab",
-      "description": "Apply ML to finance with portfolio optimization, signals, and backtesting tools. Use when building trading models, optimizing portfolios, backtesting.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Mlfinlab concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "mock",
@@ -3200,6 +3356,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "monte-carlo",
+      "source": "./monte-carlo",
+      "description": "Monte Carlo reference tool. Use when working with monte carlo in finance contexts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "mood",
       "source": "./mood",
       "description": "Mood and emotional wellness reference \u2014 mood science, regulation strategies, journaling techniques, emotional literacy. Use when understanding emotional patterns, designing mood tracking systems, or i",
@@ -3208,8 +3370,8 @@
     {
       "name": "moodring",
       "source": "./moodring",
-      "description": "Log daily moods, spot emotional patterns, and review wellbeing trends over time. Use when logging mood, spotting patterns, reviewing weekly wellbeing.",
-      "version": "2.0.0"
+      "description": "Reference tool for life \u2014 covers intro, quickstart, patterns and more. Quick lookup for Moodring concepts, best practices, and implementation patterns.",
+      "version": "2.0.4"
     },
     {
       "name": "mortgage-calculator",
@@ -3242,6 +3404,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "multisig",
+      "source": "./multisig",
+      "description": "Multisig reference tool. Use when working with multisig in blockchain contexts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "music-playlist",
       "source": "./music-playlist",
       "description": "Curate playlists by mood and scene with track analysis and year-end summaries. Use when building playlists, discovering music, summarizing yearly listening.",
@@ -3250,14 +3418,20 @@
     {
       "name": "mychef",
       "source": "./mychef",
-      "description": "Manage recipes, plan daily meals, and organize ingredients with a kitchen helper. Use when looking up recipes, planning cooking, organizing shopping lists.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Mychef concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "name-generator",
       "source": "./name-generator",
       "description": "Generate names for babies, brands, and pen names with meaning analysis. Use when brainstorming names, picking brand names, choosing names with meanings.",
       "version": "2.0.0"
+    },
+    {
+      "name": "namespace",
+      "source": "./namespace",
+      "description": "Namespace reference tool. Use when working with namespace in sysops contexts.",
+      "version": "1.0.0"
     },
     {
       "name": "nda-generator",
@@ -3280,8 +3454,8 @@
     {
       "name": "netwatch",
       "source": "./netwatch",
-      "description": "Monitor internet traffic in real time with per-process bandwidth dashboards. Use when watching bandwidth, finding traffic hogs, monitoring network activity.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Netwatch concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "network-config",
@@ -3292,20 +3466,32 @@
     {
       "name": "network-speed",
       "source": "./network-speed",
-      "description": "Measure TCP, UDP, and SCTP bandwidth between hosts with throughput benchmarks. Use when testing speed, benchmarking links, comparing protocol performance.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Network Speed concepts, best practices, and implementation patterns.",
+      "version": "2.0.1"
     },
     {
       "name": "networkmanager",
       "source": "./networkmanager",
-      "description": "Manage Wi-Fi, VPN, and network connections on Linux with troubleshooting tools. Use when configuring Wi-Fi, managing VPNs, troubleshooting connectivity.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Networkmanager concepts, best practices, and implementation patte...",
+      "version": "2.0.2"
     },
     {
       "name": "newsletter-writer",
       "source": "./newsletter-writer",
       "description": "Newsletter\u90ae\u4ef6\u5185\u5bb9\u751f\u6210\u3001\u6807\u9898\u4f18\u5316\u3001\u53d7\u4f17\u5206\u7c7b\u3001A/B\u6d4b\u8bd5\u6587\u6848\u3001\u53d1\u9001\u65f6\u95f4\u5efa\u8bae\u3001\u6548\u679c\u5206\u6790\u3002Newsletter content writer with subject optimization, audience segmentation, A/B testing, scheduling.",
       "version": "2.0.0"
+    },
+    {
+      "name": "nft",
+      "source": "./nft",
+      "description": "Nft reference tool. Use when working with nft in blockchain contexts.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "nftables",
+      "source": "./nftables",
+      "description": "Nftables reference tool. Use when working with nftables in sysops contexts.",
+      "version": "1.0.0"
     },
     {
       "name": "nginx-config",
@@ -3318,6 +3504,12 @@
       "source": "./nlp",
       "description": "Process text with NLP. Use when tokenizing, analyzing sentiment, extracting entities, summarizing documents, or measuring similarity.",
       "version": "3.4.0"
+    },
+    {
+      "name": "nmap",
+      "source": "./nmap",
+      "description": "Nmap reference tool. Use when working with nmap in devtools contexts.",
+      "version": "1.0.0"
     },
     {
       "name": "node",
@@ -3346,8 +3538,8 @@
     {
       "name": "notion-powertools",
       "source": "./notion-powertools",
-      "description": "Manage Notion pages, databases, and blocks via API from the command line. Use when creating pages, querying databases, syncing Notion content via CLI.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Notion Powertools concepts, best practices, and implementation pa...",
+      "version": "3.0.1"
     },
     {
       "name": "notion-template",
@@ -3362,16 +3554,22 @@
       "version": "1.0.0"
     },
     {
+      "name": "npv",
+      "source": "./npv",
+      "description": "Npv reference tool. Use when working with npv in finance contexts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "nutrition-label",
       "source": "./nutrition-label",
-      "description": "Generate nutrition labels and track daily intake. Use when analyzing food nutrition.",
-      "version": "3.0.0"
+      "description": "Reference tool for life \u2014 covers intro, quickstart, patterns and more. Quick lookup for Nutrition Label concepts, best practices, and implementation patterns.",
+      "version": "4.0.1"
     },
     {
       "name": "observability",
       "source": "./observability",
-      "description": "SigNoz is an open-source observability platform native to OpenTelemetry with logs, traces and metric observability, typescript, apm, application-monitoring.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Observability concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "obv",
@@ -3394,8 +3592,8 @@
     {
       "name": "omni",
       "source": "./omni",
-      "description": "Boost productivity with an all-in-one terminal toolkit for tasks and automation. Use when running utilities, automating tasks, streamlining workflows.",
-      "version": "1.0.0"
+      "description": "omni reference tool",
+      "version": "2.0.2"
     },
     {
       "name": "omni-tool",
@@ -3406,14 +3604,20 @@
     {
       "name": "omni-tools",
       "source": "./omni-tools",
-      "description": "Self-hosted collection of powerful web-based tools for everyday tasks. No ads, no tracking, just fas omni tools, typescript, alternative, converter.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Omni Tools concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "onchain-analyzer",
       "source": "./onchain-analyzer",
-      "description": "Analyze blockchain data with address lookups and transaction inspection. Use when investigating on-chain activity. Requires curl.",
-      "version": "3.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, formulas, regulations and more. Quick lookup for Onchain Analyzer concepts, best practices, and implementation pa...",
+      "version": "4.0.1"
+    },
+    {
+      "name": "openapi",
+      "source": "./openapi",
+      "description": "Openapi reference tool. Use when working with openapi in devtools contexts.",
+      "version": "1.0.0"
     },
     {
       "name": "optimism",
@@ -3434,6 +3638,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "orc",
+      "source": "./orc",
+      "description": "Apache ORC columnar storage format reference. File structure with stripes and indexes, schema types with evolution rules, compression codecs (ZLIB/SNAPPY/ZSTD), orc-tools CLI, Python/Java writer APIs,",
+      "version": "1.0.0"
+    },
+    {
       "name": "orders",
       "source": "./orders",
       "description": "Track orders locally. Use when creating orders, checking status, updating quantities, canceling, or generating sales reports.",
@@ -3442,8 +3652,8 @@
     {
       "name": "orm-builder",
       "source": "./orm-builder",
-      "description": "\ud83d\udcbe Database Tools incl. ORM, Migrations and Admin UI (Postgres, MySQL & MongoDB) [deprecated] orm-builder, scala, dao, database, datamapper, graphql.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for ORM Builder concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "orphan",
@@ -3472,14 +3682,14 @@
     {
       "name": "page-builder",
       "source": "./page-builder",
-      "description": "Free and Open source Web Builder Framework. Next generation tool for building templates without codi page-builder, typescript, drag-and-drop, framework.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Page Builder concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "page-saver",
       "source": "./page-saver",
-      "description": "\u2b1b\ufe0f CLI tool and library for saving complete web pages as a single HTML file page-saver, rust, come-and-take-it, e-hoarding, its-mine.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Page Saver concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "pagination",
@@ -3542,6 +3752,12 @@
       "version": "3.0.1"
     },
     {
+      "name": "payback",
+      "source": "./payback",
+      "description": "Payback reference tool. Use when working with payback in finance contexts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "paycheck",
       "source": "./paycheck",
       "description": "Calculate salary breakdowns with taxes and deductions. Use when estimating take-home pay, checking withholdings, comparing deductions, analyzing components.",
@@ -3568,14 +3784,14 @@
     {
       "name": "perf-analyzer",
       "source": "./perf-analyzer",
-      "description": "Profile Linux performance with perf_events and ftrace. Use when scanning CPU hotspots, monitoring syscalls, reporting flame graphs, alerting on spikes.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Perf Analyzer concepts, best practices, and implementation patterns.",
+      "version": "2.0.1"
     },
     {
       "name": "perf-tools",
       "source": "./perf-tools",
-      "description": "Trace Linux system performance bottlenecks in real time. Use when scanning disk I/O, monitoring latency, reporting CPU usage, alerting on memory leaks.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Perf Tools concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "performance-review",
@@ -3610,8 +3826,8 @@
     {
       "name": "pet-care",
       "source": "./pet-care",
-      "description": "Pet care guide with feeding, vaccination, and health logging. Use when caring for pets.",
-      "version": "3.0.0"
+      "description": "Reference tool for life \u2014 covers intro, quickstart, patterns and more. Quick lookup for Pet Care concepts, best practices, and implementation patterns.",
+      "version": "4.0.1"
     },
     {
       "name": "phosphate",
@@ -3622,8 +3838,8 @@
     {
       "name": "php-analyzer",
       "source": "./php-analyzer",
-      "description": "PHP Static Analysis Tool - discover bugs in your code without running it! php-analyzer, php, php, php7, php-analyzer, static-analysis.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Php Analyzer concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "pickup-lines",
@@ -3652,8 +3868,8 @@
     {
       "name": "piston",
       "source": "./piston",
-      "description": "Piston and cylinder design calculator",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Piston concepts, best practices, and implementation patterns.",
+      "version": "2.0.1"
     },
     {
       "name": "pitch-deck",
@@ -3682,8 +3898,8 @@
     {
       "name": "poem",
       "source": "./poem",
-      "description": "Compose and refine poems across multiple styles. Use when drafting verse, checking meter and rhyme, converting prose to poetry, generating themed poems.",
-      "version": "1.0.0"
+      "description": "poem reference tool",
+      "version": "2.0.2"
     },
     {
       "name": "poem-generator",
@@ -3700,14 +3916,14 @@
     {
       "name": "policy",
       "source": "./policy",
-      "description": "Audit and enforce security policy baselines. Use when generating policy docs, checking compliance strength, rotating access controls, auditing configs.",
-      "version": "1.0.0"
+      "description": "Reference tool for business \u2014 covers intro, quickstart, patterns and more. Quick lookup for Policy concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "policy-reader",
       "source": "./policy-reader",
-      "description": "Analyze privacy policies and terms of service documents. Use when reviewing legal documents.",
-      "version": "3.0.0"
+      "description": "Reference tool for business \u2014 covers intro, quickstart, patterns and more. Quick lookup for Policy Reader concepts, best practices, and implementation patterns.",
+      "version": "4.0.1"
     },
     {
       "name": "polymarket-screener",
@@ -3724,8 +3940,8 @@
     {
       "name": "portcheck",
       "source": "./portcheck",
-      "description": "Scan open ports and validate network services. Use when checking port availability, validating firewall rules, generating reports, linting configs.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Portcheck concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "portfolio",
@@ -3766,8 +3982,8 @@
     {
       "name": "privacy",
       "source": "./privacy",
-      "description": "Audit and harden privacy settings across systems. Use when generating reports, checking data exposure, rotating encryption keys, auditing access logs.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Privacy concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "privacy-policy",
@@ -3808,14 +4024,14 @@
     {
       "name": "profile",
       "source": "./profile",
-      "description": "Analyze code and system performance profiles using profiling tools. Use when identifying bottlenecks, hotspots, or memory issues in applications.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Profile concepts, best practices, and implementation patterns.",
+      "version": "2.0.1"
     },
     {
       "name": "profit",
       "source": "./profit",
-      "description": "Calculate profit margins, breakeven points, and revenue forecasts using CLI tools. Use when analyzing business financials.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Profit concepts, best practices, and implementation patterns.",
+      "version": "2.0.1"
     },
     {
       "name": "prompt-generator",
@@ -3832,8 +4048,8 @@
     {
       "name": "prophet",
       "source": "./prophet",
-      "description": "Forecast time-series data with seasonal trend modeling. Use when predicting sales, checking model accuracy, converting frequencies, analyzing growth.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Prophet concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "prototype",
@@ -3850,8 +4066,8 @@
     {
       "name": "quant-finance",
       "source": "./quant-finance",
-      "description": "MlFinLab helps portfolio managers and traders who want to use the power of machine learning by quant-finance, python, algorithmic-trading, finance.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, formulas, regulations and more. Quick lookup for Quant Finance concepts, best practices, and implementation patte...",
+      "version": "2.0.3"
     },
     {
       "name": "queue",
@@ -3868,8 +4084,8 @@
     {
       "name": "quickfind",
       "source": "./quickfind",
-      "description": "Search files and directories faster than find. Use when locating nested files, planning directory cleanups, tracking recent changes, reviewing metadata.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Quickfind concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "quicknote",
@@ -3946,14 +4162,14 @@
     {
       "name": "refactor",
       "source": "./refactor",
-      "description": "Analyze code quality and suggest refactoring improvements using static analysis. Use when cleaning up or improving codebases.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Refactor concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "regex-builder",
       "source": "./regex-builder",
-      "description": "Construct and test regex patterns with visual reference. Use when building expressions, scoring efficiency, ranking match results, reviewing history.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Regex Builder concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "regexpal",
@@ -3982,8 +4198,8 @@
     {
       "name": "render-debugger",
       "source": "./render-debugger",
-      "description": "render-debugger by Welldone Software monkey patches React to notify you about potentially avoidab why did you render, javascript, component, hooks-tracking.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Render Debugger concepts, best practices, and implementation patt...",
+      "version": "2.0.3"
     },
     {
       "name": "renko",
@@ -3994,8 +4210,8 @@
     {
       "name": "repo-bundler",
       "source": "./repo-bundler",
-      "description": "\ud83d\udce6 Repomix is a powerful tool that packs your entire repository into a single, AI-friendly file. Perf repo-bundler, typescript, ai, anthropic.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Repo Bundler concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "resignation-letter",
@@ -4006,8 +4222,8 @@
     {
       "name": "responsive-tester",
       "source": "./responsive-tester",
-      "description": "A modified web browser that helps in responsive web development. A web developer",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Responsive Tester concepts, best practices, and implementation pa...",
+      "version": "2.0.1"
     },
     {
       "name": "retirement-planner",
@@ -4048,13 +4264,19 @@
     {
       "name": "ring-security",
       "source": "./ring-security",
-      "description": "Control Ring doorbells and cameras from the terminal. Use when scanning motion events, auditing device access, checking firmware, reporting activity.",
-      "version": "2.0.0"
+      "description": "Reference tool for life \u2014 covers intro, quickstart, patterns and more. Quick lookup for Ring Security concepts, best practices, and implementation patterns.",
+      "version": "3.0.1"
     },
     {
       "name": "rivalwatch",
       "source": "./rivalwatch",
       "description": "Generate competitor analysis with SWOT and market positioning. Use when comparing features, checking market share, analyzing differentiation strategies.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "rkhunter",
+      "source": "./rkhunter",
+      "description": "Rkhunter reference tool. Use when working with rkhunter in sysops contexts.",
       "version": "1.0.0"
     },
     {
@@ -4072,8 +4294,8 @@
     {
       "name": "roi",
       "source": "./roi",
-      "description": "Calculate and compare return on investment across projects using financial models. Use when evaluating investment decisions.",
-      "version": "1.0.0"
+      "description": "roi reference tool",
+      "version": "2.0.2"
     },
     {
       "name": "room",
@@ -4084,8 +4306,8 @@
     {
       "name": "roomba-control",
       "source": "./roomba-control",
-      "description": "Command iRobot Roomba vacuums from the terminal. Use when starting cleans, configuring maps, checking status, listing schedules, adding no-go zones.",
-      "version": "2.0.0"
+      "description": "Reference tool for life \u2014 covers intro, quickstart, patterns and more. Quick lookup for Roomba Control concepts, best practices, and implementation patterns.",
+      "version": "3.0.1"
     },
     {
       "name": "rotate",
@@ -4100,9 +4322,21 @@
       "version": "1.0.0"
     },
     {
+      "name": "rsyslog",
+      "source": "./rsyslog",
+      "description": "RSyslog advanced system logging reference. RainerScript configuration, input/output modules (imtcp/imfile/omfwd/omelasticsearch), templates with property replacer, content-based filtering, TLS-encrypt",
+      "version": "1.0.0"
+    },
+    {
       "name": "rugpull",
       "source": "./rugpull",
       "description": "Analyze rugpull operations. Use when you need to understand rugpull mechanisms, evaluate protocol security, or reference on-chain concepts.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "sandbox",
+      "source": "./sandbox",
+      "description": "Sandbox reference tool. Use when working with sandbox in sysops contexts.",
       "version": "1.0.0"
     },
     {
@@ -4126,8 +4360,8 @@
     {
       "name": "schema",
       "source": "./schema",
-      "description": "Design and manage database schemas using CLI tools. Use when you need to create tables, columns, indexes, relations, validate, migrate, diff,",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Schema concepts, best practices, and implementation patterns.",
+      "version": "2.0.1"
     },
     {
       "name": "schema-builder",
@@ -4150,26 +4384,26 @@
     {
       "name": "secret-encrypt",
       "source": "./secret-encrypt",
-      "description": "Encrypt, rotate, and manage application secrets securely. Use when scanning exposed credentials, monitoring expiry, reporting access, alerting on violations.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Secret Encrypt concepts, best practices, and implementation patte...",
+      "version": "2.0.1"
     },
     {
       "name": "secret-sealer",
       "source": "./secret-sealer",
-      "description": "A Kubernetes controller and tool for one-way encrypted Secrets sealed secrets, go, devops-workflow, encrypt-secrets, gitops, kubernetes.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Secret Sealer concepts, best practices, and implementation patterns.",
+      "version": "2.0.1"
     },
     {
       "name": "security-roadmap",
       "source": "./security-roadmap",
-      "description": "A collection of hacking tools, resources and references to practice ethical hacking. hacker roadmap, python, exploitation, frameworks, hacking, hacking-tool.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Security Roadmap concepts, best practices, and implementation pat...",
+      "version": "2.0.1"
     },
     {
       "name": "security-suite",
       "source": "./security-suite",
-      "description": "security-suite Hacking Tools Pack \u2013 A Penetration Testing Framework security-suite, python, brute-force-attacks, desktop, exploitation, finder.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Security Suite concepts, best practices, and implementation patte...",
+      "version": "2.0.1"
     },
     {
       "name": "seedbed",
@@ -4184,6 +4418,18 @@
       "version": "3.0.1"
     },
     {
+      "name": "seedphrase",
+      "source": "./seedphrase",
+      "description": "Seedphrase reference tool. Use when working with seedphrase in blockchain contexts.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "selinux",
+      "source": "./selinux",
+      "description": "SELinux mandatory access control reference. Enforcing/permissive modes, security contexts, booleans, policy modules, file labeling, port management, and troubleshooting with audit2why and sealert.",
+      "version": "1.0.0"
+    },
+    {
       "name": "sensor",
       "source": "./sensor",
       "description": "Read and manage IoT sensor data from the terminal. Use when polling readings, checking device connectivity, converting units, analyzing telemetry trends.",
@@ -4192,20 +4438,20 @@
     {
       "name": "server-dashboard",
       "source": "./server-dashboard",
-      "description": "Build and deploy software across server fleets with pipelines. Use when orchestrating deploys, monitoring services, aggregating metrics.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Server Dashboard concepts, best practices, and implementation pat...",
+      "version": "2.0.1"
     },
     {
       "name": "serverless-runner",
       "source": "./serverless-runner",
-      "description": "Laf is a vibrant cloud development platform that provides essential tools like cloud functions, data serverless-runner, typescript, cloudbase, faas.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Serverless Runner concepts, best practices, and implementation pa...",
+      "version": "2.0.1"
     },
     {
       "name": "servo",
       "source": "./servo",
-      "description": "Servo motor configuration and tuning tool",
-      "version": "1.0.0"
+      "description": "servo",
+      "version": "2.0.0"
     },
     {
       "name": "session",
@@ -4228,14 +4474,14 @@
     {
       "name": "shell-ai",
       "source": "./shell-ai",
-      "description": "A command-line productivity tool powered by AI large language models like GPT-5, will help you accom shell gpt, python, chatgpt, cheat-sheet, cli, commands.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Shell AI concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "shell-gpt",
       "source": "./shell-gpt",
-      "description": "Run AI-powered shell commands and prompts for faster terminal workflows. Use when generating scripts, comparing outputs, evaluating prompts.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Shell Gpt concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "shell-script",
@@ -4258,14 +4504,20 @@
     {
       "name": "shopify-toolkit",
       "source": "./shopify-toolkit",
-      "description": "Manage Shopify products, orders, inventory, and collections via API. Use when syncing catalogs, monitoring orders, automating stock, notifying events.",
-      "version": "2.0.0"
+      "description": "Shopify development reference \u2014 Liquid templates, Admin/Storefront API, theme architecture, OAuth, checkout extensibility, and CLI commands.",
+      "version": "7.0.0"
     },
     {
       "name": "short-drama-writer",
       "source": "./short-drama-writer",
       "description": "Draft vertical short drama scripts with plot and character design. Use when writing episodes, outlining arcs, crafting hooks, designing cliffhangers.",
       "version": "2.0.0"
+    },
+    {
+      "name": "sidechain",
+      "source": "./sidechain",
+      "description": "Sidechain reference tool. Use when working with sidechain in blockchain contexts.",
+      "version": "1.0.0"
     },
     {
       "name": "signup",
@@ -4288,14 +4540,14 @@
     {
       "name": "site-inspector",
       "source": "./site-inspector",
-      "description": "Analyze websites with OSINT reconnaissance and security scanning. Use when inspecting headers, checking DNS, analyzing SSL certs, generating reports.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Site Inspector concepts, best practices, and implementation patte...",
+      "version": "2.0.1"
     },
     {
       "name": "sitemapper",
       "source": "./sitemapper",
-      "description": "Generate and analyze XML sitemaps for SEO audits. Use when creating sitemaps, planning site structure, validating format, searching indexed pages.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Sitemapper concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "sixsigma",
@@ -4312,8 +4564,8 @@
     {
       "name": "sketch-board",
       "source": "./sketch-board",
-      "description": "\u5f00\u6e90\u767d\u677f\u5de5\u5177\uff08SaaS\uff09\uff0c\u4e00\u4f53\u5316\u767d\u677f\uff0c\u5305\u542b\u601d\u7ef4\u5bfc\u56fe\u3001\u6d41\u7a0b\u56fe\u3001\u81ea\u7531\u753b\u7b49\u3002All in one open-source whiteboard tool with mind, flowchart, free sketch-board, typescript, collaboration, drawing.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Sketch Board concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "skill-template",
@@ -4384,8 +4636,8 @@
     {
       "name": "smart-lights",
       "source": "./smart-lights",
-      "description": "Control Philips Hue lights with colors, effects, and schedules. Use when setting scenes, running effects, checking bulbs, analyzing energy, generating presets.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Smart Lights concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "sms",
@@ -4402,8 +4654,8 @@
     {
       "name": "social-automator",
       "source": "./social-automator",
-      "description": "\ud83d\udcf7 Instagram Bot - Tool for automated Instagram interactions social-automator, python, automation, bot, clarifai, instagram.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Social Automator concepts, best practices, and implementation pat...",
+      "version": "2.0.1"
     },
     {
       "name": "social-copywriter",
@@ -4414,8 +4666,8 @@
     {
       "name": "social-scraper",
       "source": "./social-scraper",
-      "description": "An advanced Twitter scraping & OSINT tool written in Python that doesn",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Social Scraper concepts, best practices, and implementation patte...",
+      "version": "2.0.2"
     },
     {
       "name": "sop-writer",
@@ -4436,6 +4688,12 @@
       "version": "1.0.0"
     },
     {
+      "name": "sortino",
+      "source": "./sortino",
+      "description": "Sortino reference tool. Use when working with sortino in finance contexts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "sox",
       "source": "./sox",
       "description": "Sarbanes-Oxley Act compliance reference \u2014 SOX sections, internal controls, audit requirements, and IT governance. Use when evaluating SOX compliance, designing internal controls, or preparing for fina",
@@ -4444,8 +4702,8 @@
     {
       "name": "spc",
       "source": "./spc",
-      "description": "Statistical process control chart generator. Use when json spc tasks, csv spc tasks, checking spc status.",
-      "version": "1.0.0"
+      "description": "spc reference tool",
+      "version": "2.0.0"
     },
     {
       "name": "spec-workflow",
@@ -4474,8 +4732,8 @@
     {
       "name": "spend-tracker",
       "source": "./spend-tracker",
-      "description": "Track expenses, categorize spending, and generate finance reports. Use when logging purchases, checking balances, converting currencies, analyzing trends.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Spend Tracker concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "split",
@@ -4492,8 +4750,8 @@
     {
       "name": "sql-scanner",
       "source": "./sql-scanner",
-      "description": "Detect SQL injection vulnerabilities and assess DB security. Use when checking queries, validating sanitization, generating tests, formatting reports.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for SQL Scanner concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "sqlformat",
@@ -4504,14 +4762,14 @@
     {
       "name": "sshkey",
       "source": "./sshkey",
-      "description": "Generate, list, copy, and test SSH keys without complex flags. Use when scanning keys, monitoring expiry, reporting fingerprints, alerting weak algorithms.",
-      "version": "3.0.1"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Sshkey concepts, best practices, and implementation patterns.",
+      "version": "2.0.1"
     },
     {
       "name": "ssl-cert-manager",
       "source": "./ssl-cert-manager",
-      "description": "A pure Unix shell script ACME client for SSL / TLS certificate automation ssl cert manager, shell, acme, acme-challenge, acme-protocol, acme-v2.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for SSL Cert Manager concepts, best practices, and implementation pat...",
+      "version": "2.0.1"
     },
     {
       "name": "ssl-checker",
@@ -4529,6 +4787,12 @@
       "name": "staking",
       "source": "./staking",
       "description": "Analyze staking operations. Use when you need to understand staking mechanisms, evaluate protocol security, or reference on-chain concepts.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "starknet",
+      "source": "./starknet",
+      "description": "Starknet reference tool. Use when working with starknet in blockchain contexts.",
       "version": "1.0.0"
     },
     {
@@ -4574,10 +4838,16 @@
       "version": "2.0.0"
     },
     {
+      "name": "strace",
+      "source": "./strace",
+      "description": "Strace reference tool. Use when working with strace in devtools contexts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "streakup",
       "source": "./streakup",
-      "description": "Build better habits by tracking daily streaks and progress. Use when logging habits, checking streaks, analyzing consistency, generating reports.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Streakup concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "stretch",
@@ -4588,8 +4858,8 @@
     {
       "name": "stripe-manager",
       "source": "./stripe-manager",
-      "description": "Manage Stripe payments, customers, and subscriptions from terminal. Use when tracking payments, checking balances, summarizing revenue, exporting data.",
-      "version": "2.0.0"
+      "description": "Stripe payment platform reference \u2014 PaymentIntents, webhooks, PCI compliance, 3DS/SCA, Radar fraud rules, and CLI commands.",
+      "version": "5.0.0"
     },
     {
       "name": "student",
@@ -4618,8 +4888,8 @@
     {
       "name": "subtitle-translator",
       "source": "./subtitle-translator",
-      "description": "Video translation and dubbing tool powered by LLMs. The video translator offers 100 language transla subtitle-translator, go, dubbing, localization, tts.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Subtitle Translator concepts, best practices, and implementation ...",
+      "version": "2.0.1"
     },
     {
       "name": "succession-plan",
@@ -4642,7 +4912,13 @@
     {
       "name": "svg-optimizer",
       "source": "./svg-optimizer",
-      "description": "Optimize SVG files by removing metadata and minifying paths. Use when previewing output, generating assets, converting formats, cleaning vectors.",
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Svg Optimizer concepts, best practices, and implementation patterns.",
+      "version": "2.0.1"
+    },
+    {
+      "name": "swagger",
+      "source": "./swagger",
+      "description": "Swagger reference tool. Use when working with swagger in devtools contexts.",
       "version": "1.0.0"
     },
     {
@@ -4684,13 +4960,25 @@
     {
       "name": "sysinfo-fetch",
       "source": "./sysinfo-fetch",
-      "description": "A maintained, feature-rich and performance oriented, neofetch like system information tool. sysinfo-fetch, c, bsdfetch, command-line, sysinfo-fetch, fetch.",
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Sysinfo Fetch concepts, best practices, and implementation patterns.",
+      "version": "2.0.1"
+    },
+    {
+      "name": "syslog",
+      "source": "./syslog",
+      "description": "Syslog protocol and daemon reference. RFC 5424, facility/severity codes, remote logging over TCP/UDP/TLS, logrotate integration, logger testing, and log security hardening.",
       "version": "1.0.0"
     },
     {
       "name": "system-hardener",
       "source": "./system-hardener",
-      "description": "Lynis - Security auditing tool for Linux, macOS, and UNIX-based systems. Assists with compliance tes system-hardener, shell, auditing, compliance, devops.",
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for System Hardener concepts, best practices, and implementation patt...",
+      "version": "2.0.1"
+    },
+    {
+      "name": "systemd",
+      "source": "./systemd",
+      "description": "Systemd reference tool. Use when working with systemd in sysops contexts.",
       "version": "1.0.0"
     },
     {
@@ -4742,6 +5030,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "tcpdump",
+      "source": "./tcpdump",
+      "description": "Tcpdump reference tool. Use when working with tcpdump in devtools contexts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "teacher-toolkit",
       "source": "./teacher-toolkit",
       "description": "\u6559\u5e08\u5de5\u5177\u7bb1\u3002\u6559\u6848\u8bbe\u8ba1\u3001\u8bc4\u5206\u6807\u51c6(Rubric)\u3001\u8bfe\u5802\u6d3b\u52a8\u3001\u8bc4\u4f30\u8bbe\u8ba1\u3001\u5b66\u751f\u53cd\u9988\u3001\u5bb6\u957f\u6c9f\u901a\u3002Teacher toolkit with lesson planning, rubrics, activities, assessments, student feedback.",
@@ -4768,8 +5062,8 @@
     {
       "name": "terms",
       "source": "./terms",
-      "description": "Store, rotate, and audit API keys and tokens securely. Use when generating keys, checking strength, rotating tokens, auditing credentials.",
-      "version": "1.0.0"
+      "description": "terms",
+      "version": "2.0.2"
     },
     {
       "name": "terms-of-service",
@@ -4780,14 +5074,14 @@
     {
       "name": "terraform-helper",
       "source": "./terraform-helper",
-      "description": "Generate production-ready Terraform HCL for cloud providers. Use when validating configs, generating modules, formatting HCL, linting plans.",
-      "version": "2.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Terraform Helper concepts, best practices, and implementation pat...",
+      "version": "3.0.1"
     },
     {
       "name": "tesla-commander",
       "source": "./tesla-commander",
-      "description": "Control Tesla vehicles from terminal: climate, charging, locks, location. Use when checking status, configuring climate, listing charges, adding schedules.",
-      "version": "2.0.0"
+      "description": "Reference tool for life \u2014 covers intro, quickstart, patterns and more. Quick lookup for Tesla Commander concepts, best practices, and implementation patterns.",
+      "version": "3.0.1"
     },
     {
       "name": "test-generator",
@@ -4810,14 +5104,14 @@
     {
       "name": "text-mining",
       "source": "./text-mining",
-      "description": "Web mining module for Python, with tools for scraping, natural language processing, machine learning text-mining, python, machine-learning.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, formulas, regulations and more. Quick lookup for Text Mining concepts, best practices, and implementation patterns.",
+      "version": "2.0.1"
     },
     {
       "name": "theme",
       "source": "./theme",
-      "description": "Generate and manage UI color themes using CLI tools. Use when you need to create, preview, apply, import, or export dark/light mode themes, palettes,",
-      "version": "1.0.0"
+      "description": "theme",
+      "version": "2.0.0"
     },
     {
       "name": "thesaurus",
@@ -4830,6 +5124,12 @@
       "source": "./thesis-helper",
       "description": "\u8bba\u6587\u5199\u4f5c\u52a9\u624b\u3002\u8bba\u6587\u5927\u7eb2\u751f\u6210\u3001\u6587\u732e\u7efc\u8ff0\u6846\u67b6\u3001\u6458\u8981\u751f\u6210\u3001\u5f15\u7528\u683c\u5f0f\u8f6c\u6362\u3001\u683c\u5f0f\u89c4\u8303\u68c0\u67e5\u3001\u7b54\u8fa9\u51c6\u5907\u3002Thesis helper with outline generation, literature review, abstract writing, citation formatting, style guide.",
       "version": "2.0.0"
+    },
+    {
+      "name": "theta",
+      "source": "./theta",
+      "description": "Theta reference tool. Use when working with theta in finance contexts.",
+      "version": "1.0.0"
     },
     {
       "name": "thresh",
@@ -4846,8 +5146,8 @@
     {
       "name": "tidyup",
       "source": "./tidyup",
-      "description": "Find duplicates, reclaim disk space, and clean storage. Use when scanning dupes, checking usage, running cleanup, analyzing age, generating reports.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Tidyup concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "tillage",
@@ -4912,26 +5212,26 @@
     {
       "name": "trace",
       "source": "./trace",
-      "description": "Track and debug application logs using CLI tracing tools. Use when you need to start trace sessions, search logs, filter by level, tail output,",
-      "version": "1.0.0"
+      "description": "trace",
+      "version": "2.0.0"
     },
     {
       "name": "traceroute-visual",
       "source": "./traceroute-visual",
-      "description": "Visualize network paths with hop latency and geo mapping. Use when ingesting traces, transforming hops, querying routes, aggregating stats.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Traceroute Visual concepts, best practices, and implementation pa...",
+      "version": "2.0.1"
     },
     {
       "name": "trademark-helper",
       "source": "./trademark-helper",
-      "description": "Check trademark availability and Nice classification codes. Use when registering brands.",
-      "version": "3.0.0"
+      "description": "Reference tool for business \u2014 covers intro, quickstart, patterns and more. Quick lookup for Trademark Helper concepts, best practices, and implementation pat...",
+      "version": "4.0.1"
     },
     {
       "name": "traffic-replay",
       "source": "./traffic-replay",
-      "description": "GoReplay is an open-source tool for capturing and replaying live HTTP traffic into a test environmen traffic-replay, go, devops, go, qa, testing.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Traffic Replay concepts, best practices, and implementation patte...",
+      "version": "2.0.2"
     },
     {
       "name": "training-plan",
@@ -4964,6 +5264,12 @@
       "version": "2.0.0"
     },
     {
+      "name": "treynor",
+      "source": "./treynor",
+      "description": "Treynor reference tool. Use when working with treynor in finance contexts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "trigger",
       "source": "./trigger",
       "description": "Set up event triggers with webhooks, file watchers, and automation. Use when adding rules, planning flows, tracking events, reviewing triggers, building chains.",
@@ -4973,6 +5279,12 @@
       "name": "trim",
       "source": "./trim",
       "description": "Data trimming reference \u2014 whitespace trimming, string cleanup, data truncation, outlier trimming, and signal processing. Use when cleaning text data, removing noise, or preparing datasets by trimming ",
+      "version": "1.0.0"
+    },
+    {
+      "name": "tripwire",
+      "source": "./tripwire",
+      "description": "Tripwire host-based IDS reference. Cryptographic key setup, database initialization, integrity checks, policy rules with severity levels, twcfg.txt configuration, and report analysis with twprint.",
       "version": "1.0.0"
     },
     {
@@ -5008,8 +5320,8 @@
     {
       "name": "typescript-backend-toolkit",
       "source": "./typescript-backend-toolkit",
-      "description": "Production-ready Express.js/TypeScript framework with auto-generated OpenAPI, Artisan-style CLI, plu typescript backend toolkit, typescript, boilerplate.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Typescript Backend Toolkit concepts, best practices, and implemen...",
+      "version": "2.0.1"
     },
     {
       "name": "ui-component",
@@ -5062,13 +5374,19 @@
     {
       "name": "usb",
       "source": "./usb",
-      "description": "List and manage USB devices and storage from the terminal. Use when enumerating devices, formatting drives, mounting volumes, or diagnosing connections.",
-      "version": "1.0.0"
+      "description": "usb reference tool",
+      "version": "2.0.2"
     },
     {
       "name": "useragent-parser",
       "source": "./useragent-parser",
-      "description": "UAParser.js - The Essential Web Development Tool for User-Agent Detection. Detect Browsers, OS, Devi ua parser js, javascript, analytics, bot-detection.",
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Useragent Parser concepts, best practices, and implementation pat...",
+      "version": "2.0.2"
+    },
+    {
+      "name": "utxo",
+      "source": "./utxo",
+      "description": "Utxo reference tool. Use when working with utxo in blockchain contexts.",
       "version": "1.0.0"
     },
     {
@@ -5076,6 +5394,12 @@
       "source": "./uuidgen",
       "description": "Generate UUIDs, short IDs, and nano IDs. Use when creating database keys, minting session tokens, generating unique filenames, or producing batch IDs.",
       "version": "3.0.0"
+    },
+    {
+      "name": "valgrind",
+      "source": "./valgrind",
+      "description": "Valgrind reference tool. Use when working with valgrind in devtools contexts.",
+      "version": "1.0.0"
     },
     {
       "name": "validator",
@@ -5098,14 +5422,20 @@
     {
       "name": "vector",
       "source": "./vector",
-      "description": "Perform vector math and similarity operations using CLI tools. Use when you need dot products, cosine similarity, distance metrics, normalization,",
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Vector concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
+    },
+    {
+      "name": "vega",
+      "source": "./vega",
+      "description": "Vega reference tool. Use when working with vega in finance contexts.",
       "version": "1.0.0"
     },
     {
       "name": "video-fetcher",
       "source": "./video-fetcher",
-      "description": "\ud83d\udc7e Fast and simple video download library and CLI tool written in Go video-fetcher, go, bilibili, crawler, download, downloader.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Video Fetcher concepts, best practices, and implementation patterns.",
+      "version": "2.0.1"
     },
     {
       "name": "video-script-creator",
@@ -5116,8 +5446,8 @@
     {
       "name": "video-toolbox",
       "source": "./video-toolbox",
-      "description": "Process video files with ffmpeg for conversion, trimming, and compression. Use when editing videos. Requires ffmpeg.",
-      "version": "3.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, guide, tips and more. Quick lookup for Video Toolbox concepts, best practices, and implementation patterns.",
+      "version": "4.0.1"
     },
     {
       "name": "viral",
@@ -5164,14 +5494,14 @@
     {
       "name": "wakatime-lite",
       "source": "./wakatime-lite",
-      "description": "Track coding time and review productivity stats. Use when logging dev hours, analyzing time per project, setting focus goals, or reviewing summaries.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Wakatime Lite concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "wallet-tracker",
       "source": "./wallet-tracker",
-      "description": "Track crypto wallet balances and transactions using Blockstream API. Use when monitoring wallets. Requires curl.",
-      "version": "3.0.0"
+      "description": "Crypto wallet analytics reference \u2014 address formats, on-chain analytics, transaction tracing, hardware wallets, and approval revocation",
+      "version": "5.0.0"
     },
     {
       "name": "warehouse",
@@ -5182,8 +5512,8 @@
     {
       "name": "watch",
       "source": "./watch",
-      "description": "Monitor file and directory changes using CLI watchers. Use when you need to watch for file modifications, track change history, filter events,",
-      "version": "1.0.0"
+      "description": "watch",
+      "version": "2.0.0"
     },
     {
       "name": "watermark",
@@ -5194,14 +5524,14 @@
     {
       "name": "weathernow",
       "source": "./weathernow",
-      "description": "Fetch current weather and forecasts for any city. Use when checking temperature, planning outdoor activities, comparing forecasts, or packing for trips.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Weathernow concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "web-check",
       "source": "./web-check",
-      "description": "Analyze websites with OSINT: DNS, SSL, headers, and tech detection. Use when auditing domains, inspecting headers, fingerprinting stacks, or reviewing DNS.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Web Check concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     },
     {
       "name": "web-module-runner",
@@ -5252,16 +5582,22 @@
       "version": "2.0.0"
     },
     {
+      "name": "whitepaper",
+      "source": "./whitepaper",
+      "description": "Whitepaper reference tool. Use when working with whitepaper in blockchain contexts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "whois-checker",
       "source": "./whois-checker",
-      "description": "Look up domain WHOIS information with expiry and registrar details. Use when researching domains.",
-      "version": "3.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Whois Checker concepts, best practices, and implementation patterns.",
+      "version": "4.0.1"
     },
     {
       "name": "windows-setup",
       "source": "./windows-setup",
-      "description": "PowerShell script for automation of routine tasks done after fresh installations of Windows 10 / Ser win10 initial setup script, powershell, powershell.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Windows Setup concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "wine",
@@ -5276,10 +5612,16 @@
       "version": "3.4.0"
     },
     {
+      "name": "wireshark",
+      "source": "./wireshark",
+      "description": "Wireshark reference tool. Use when working with wireshark in devtools contexts.",
+      "version": "1.0.0"
+    },
+    {
       "name": "wordcraft",
       "source": "./wordcraft",
-      "description": "Analyze text, build outlines, and craft polished writing. Use when outlining articles, scoring readability, counting words, ranking keywords, or editing.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Wordcraft concepts, best practices, and implementation patterns.",
+      "version": "2.0.3"
     },
     {
       "name": "work-report-writer",
@@ -5290,8 +5632,8 @@
     {
       "name": "workflow-automator",
       "source": "./workflow-automator",
-      "description": "Create and execute multi-step workflows with logging and scheduling. Use when automating repetitive tasks.",
-      "version": "3.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Workflow Automator concepts, best practices, and implementation p...",
+      "version": "4.0.1"
     },
     {
       "name": "workflow-builder",
@@ -5304,6 +5646,12 @@
       "source": "./wp-manager",
       "description": "Manage WordPress sites with cookie auth, page CRUD, duplicate detection, and batch cleanup. Requires curl.",
       "version": "4.0.0"
+    },
+    {
+      "name": "xss",
+      "source": "./xss",
+      "description": "Xss reference tool. Use when working with xss in devtools contexts.",
+      "version": "1.0.0"
     },
     {
       "name": "yamlcheck",
@@ -5344,8 +5692,8 @@
     {
       "name": "zsh-themes",
       "source": "./zsh-themes",
-      "description": "\ud83d\ude43 A delightful community-driven (with 2,400+ contributors) framework for managing your zsh configu zsh-themes, shell, cli, cli-app, oh-my-zsh.",
-      "version": "1.0.0"
+      "description": "Reference tool for devtools \u2014 covers intro, quickstart, patterns and more. Quick lookup for Zsh Themes concepts, best practices, and implementation patterns.",
+      "version": "2.0.2"
     }
   ]
 }

@@ -1,0 +1,9 @@
+{
+  "name": "swagger",
+  "description": "Swagger reference tool. Use when working with swagger in devtools contexts.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

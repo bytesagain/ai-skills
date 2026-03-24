@@ -1,0 +1,9 @@
+{
+  "name": "selinux",
+  "description": "SELinux mandatory access control reference. Enforcing/permissive modes, security contexts, booleans, policy modules, file labeling, port management, and troubleshooting with audit2why and sealert.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

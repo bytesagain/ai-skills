@@ -1,0 +1,9 @@
+{
+  "name": "rsyslog",
+  "description": "RSyslog advanced system logging reference. RainerScript configuration, input/output modules (imtcp/imfile/omfwd/omelasticsearch), templates with property replacer, content-based filtering, TLS-encrypt",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

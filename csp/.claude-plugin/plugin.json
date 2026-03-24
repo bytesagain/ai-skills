@@ -1,0 +1,9 @@
+{
+  "name": "csp",
+  "description": "Csp reference tool. Use when working with csp in devtools contexts.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

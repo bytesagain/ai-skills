@@ -1,0 +1,9 @@
+{
+  "name": "feather",
+  "description": "Apache Feather/Arrow IPC format reference. V1 vs V2 format differences, pyarrow.feather read/write with compression, R arrow package integration, Arrow type system, Feather vs Parquet benchmarks, pand",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "wireshark",
+  "description": "Wireshark reference tool. Use when working with wireshark in devtools contexts.",
+  "version": "1.0.0",
+  "author": {
+    "name": "BytesAgain",
+    "url": "https://bytesagain.com"
+  }
+}
