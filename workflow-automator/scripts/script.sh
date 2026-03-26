@@ -1,155 +1,255 @@
 #!/usr/bin/env bash
+# workflow-automator — Workflow Automator reference tool. Use when working with workflow automator in data contexts.
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-VERSION="3.0.0"
-SCRIPT_NAME="workflow-automator"
-DATA_DIR="$HOME/.local/share/workflow-automator"
-mkdir -p "$DATA_DIR"
+VERSION="4.0.0"
 
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+show_help() {
+    cat << 'HELPEOF'
+workflow-automator v$VERSION — Workflow Automator Reference Tool
 
-_info()  { echo "[INFO]  $*"; }
-_error() { echo "[ERROR] $*" >&2; }
-die()    { _error "$@"; exit 1; }
+Usage: workflow-automator <command>
 
-cmd_create() {
-    local name="${2:-}"
-    local steps="${3:-}"
-    [ -z "$name" ] && die "Usage: $SCRIPT_NAME create <name steps>"
-    echo '$3' | tr ';' '\n' > $DATA_DIR/$2.flow && echo 'Created workflow: $2'
+Commands:
+  intro           Overview and core concepts
+  quickstart      Getting started guide
+  patterns        Common patterns and best practices
+  debugging       Debugging and troubleshooting
+  performance     Performance optimization tips
+  security        Security considerations
+  migration       Migration and upgrade guide
+  cheatsheet      Quick reference cheat sheet
+  help              Show this help
+  version           Show version
+
+Powered by BytesAgain | bytesagain.com
+HELPEOF
 }
 
-cmd_run() {
-    local name="${2:-}"
-    [ -z "$name" ] && die "Usage: $SCRIPT_NAME run <name>"
-    local i=0; while IFS= read -r step; do i=$((i+1)); echo "Step $i: $step"; eval "$step" || echo 'WARN: step failed'; done < $DATA_DIR/$2.flow
+cmd_intro() {
+    cat << 'EOF'
+# Workflow Automator — Overview
+
+## What is Workflow Automator?
+Workflow Automator (workflow-automator) is a specialized tool/concept in the data domain.
+It provides essential capabilities for professionals working with workflow automator.
+
+## Key Concepts
+- Core workflow automator principles and fundamentals
+- How workflow automator fits into the broader data ecosystem  
+- Essential terminology every practitioner should know
+
+## Why Workflow Automator Matters
+Understanding workflow automator is critical for:
+- Improving efficiency in data workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic workflow automator concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
+EOF
 }
 
-cmd_list() {
-    ls $DATA_DIR/*.flow 2>/dev/null | xargs -I{} basename {} .flow || echo 'No workflows'
+cmd_quickstart() {
+    cat << 'EOF'
+# Workflow Automator — Quick Start Guide
+
+## Prerequisites
+- Basic understanding of data concepts
+- Required tools and access credentials
+- System meeting minimum requirements
+
+## Installation
+1. Download or clone the workflow automator package
+2. Install dependencies
+3. Configure initial settings
+4. Verify installation
+
+## First Steps
+1. Run the hello-world example
+2. Review the default configuration
+3. Try a simple real-world task
+4. Explore available commands and options
+
+## Next Steps
+- Read the full documentation
+- Join the community forum
+- Try advanced features
+- Set up automated workflows
+EOF
 }
 
-cmd_show() {
-    local name="${2:-}"
-    [ -z "$name" ] && die "Usage: $SCRIPT_NAME show <name>"
-    cat -n $DATA_DIR/$2.flow 2>/dev/null || echo 'Not found'
+cmd_patterns() {
+    cat << 'EOF'
+# Workflow Automator — Common Patterns & Best Practices
+
+## Design Patterns
+1. **Standard Pattern**: The most common approach for workflow automator
+2. **Scalable Pattern**: For high-volume or distributed scenarios
+3. **Resilient Pattern**: For fault-tolerant implementations
+
+## Best Practices
+- Follow the principle of least privilege
+- Use version control for all configurations
+- Implement comprehensive logging
+- Test changes in staging before production
+- Document all custom configurations
+
+## Anti-Patterns to Avoid
+- Hardcoding credentials or configuration
+- Skipping validation and error handling
+- Ignoring monitoring and alerting
+- Making changes without documentation
+- Over-engineering simple solutions
+EOF
 }
 
-cmd_log() {
-    local name="${2:-}"
-    [ -z "$name" ] && die "Usage: $SCRIPT_NAME log <name>"
-    cat $DATA_DIR/$2.log 2>/dev/null || echo 'No log'
+cmd_debugging() {
+    cat << 'EOF'
+# Workflow Automator — Debugging Guide
+
+## Common Errors
+1. **Connection refused**: Check service status and network
+2. **Permission denied**: Verify credentials and access rights
+3. **Timeout**: Check network, increase limits, optimize queries
+4. **Invalid input**: Validate data format and encoding
+
+## Debugging Tools
+- Built-in logging and diagnostics
+- Network analysis tools (tcpdump, wireshark)
+- System monitoring (top, htop, iostat)
+- Application-specific debug modes
+
+## Debug Workflow
+1. Reproduce the issue consistently
+2. Check logs for error messages
+3. Isolate the failing component
+4. Test with minimal configuration
+5. Apply fix and verify
+EOF
 }
 
-cmd_status() {
-    local name="${2:-}"
-    [ -z "$name" ] && die "Usage: $SCRIPT_NAME status <name>"
-    [ -f $DATA_DIR/$2.flow ] && echo 'Exists: $2' || echo 'Not found: $2'
+cmd_performance() {
+    cat << 'EOF'
+# Workflow Automator — Performance Optimization
+
+## Key Metrics
+- Response time / latency
+- Throughput / operations per second
+- Resource utilization (CPU, memory, I/O)
+- Error rate and retry frequency
+
+## Optimization Strategies
+1. **Caching**: Reduce redundant operations
+2. **Batching**: Group small operations
+3. **Indexing**: Speed up data lookups
+4. **Compression**: Reduce data transfer size
+5. **Parallel Processing**: Utilize multiple cores
+
+## Monitoring
+- Set up baseline performance metrics
+- Configure alerts for anomalies
+- Track trends over time
+- Regular capacity planning reviews
+EOF
 }
 
-cmd_template() {
-    local type="${2:-}"
-    [ -z "$type" ] && die "Usage: $SCRIPT_NAME template <type>"
-    case $2 in deploy) echo 'git pull;make build;make test;make deploy';; backup) echo 'tar czf backup.tar.gz .;scp backup.tar.gz server:';; *) echo 'Types: deploy, backup, release';; esac
+cmd_security() {
+    cat << 'EOF'
+# Workflow Automator — Security Considerations
+
+## Authentication & Authorization
+- Use strong, unique credentials
+- Implement role-based access control
+- Enable multi-factor authentication where possible
+- Regularly review and rotate credentials
+
+## Data Protection
+- Encrypt data at rest and in transit
+- Implement proper backup procedures
+- Follow data retention policies
+- Sanitize inputs to prevent injection
+
+## Network Security
+- Use firewalls and network segmentation
+- Monitor for suspicious activity
+- Keep all software patched and updated
+- Disable unnecessary services and ports
+EOF
 }
 
-cmd_help() {
-    echo "$SCRIPT_NAME v$VERSION"
-    echo ""
-    echo "Commands:"
-    printf "  %-25s\n" "create <name steps>"
-    printf "  %-25s\n" "run <name>"
-    printf "  %-25s\n" "list"
-    printf "  %-25s\n" "show <name>"
-    printf "  %-25s\n" "log <name>"
-    printf "  %-25s\n" "status <name>"
-    printf "  %-25s\n" "template <type>"
-    printf "  %%-25s\n" "help"
-    echo ""
-    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
+cmd_migration() {
+    cat << 'EOF'
+# Workflow Automator — Migration & Upgrade Guide
+
+## Pre-Migration Checklist
+- [ ] Current system fully documented
+- [ ] Complete backup taken and verified
+- [ ] Target environment prepared
+- [ ] Rollback plan documented
+- [ ] Stakeholders notified
+
+## Migration Steps
+1. Prepare target environment
+2. Export data from source
+3. Transform data if needed
+4. Import to target
+5. Verify data integrity
+6. Update configurations
+7. Test all functionality
+8. Switch traffic / go live
+
+## Post-Migration
+- Monitor for errors and performance
+- Verify all integrations working
+- Update documentation
+- Decommission old system after confirmation
+EOF
 }
 
-cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+cmd_cheatsheet() {
+    cat << 'EOF'
+# Workflow Automator — Quick Reference
 
-main() {
-    local cmd="${1:-help}"
-    case "$cmd" in
-        create) shift; cmd_create "$@" ;;
-        run) shift; cmd_run "$@" ;;
-        list) shift; cmd_list "$@" ;;
-        show) shift; cmd_show "$@" ;;
-        log) shift; cmd_log "$@" ;;
-        status) shift; cmd_status "$@" ;;
-        template) shift; cmd_template "$@" ;;
-        help) cmd_help ;;
-        version) cmd_version ;;
-        *) die "Unknown: $cmd" ;;
-    esac
+## Essential Commands
+| Command | Description |
+|---------|-------------|
+| help | Show available commands |
+| version | Display version info |
+| intro | Overview and fundamentals |
+| troubleshooting | Common problems and fixes |
+
+## Common Workflows
+1. **Setup**: install → configure → verify → test
+2. **Daily**: check → monitor → report → review
+3. **Issue**: diagnose → isolate → fix → verify → document
+
+## Key Shortcuts
+- Use tab completion for commands
+- Check logs first when troubleshooting
+- Always backup before making changes
+- Document everything you change
+EOF
 }
 
-main "$@"
+CMD="${1:-help}"
+shift 2>/dev/null || true
+
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    quickstart) cmd_quickstart "$@" ;;
+    patterns) cmd_patterns "$@" ;;
+    debugging) cmd_debugging "$@" ;;
+    performance) cmd_performance "$@" ;;
+    security) cmd_security "$@" ;;
+    migration) cmd_migration "$@" ;;
+    cheatsheet) cmd_cheatsheet "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "workflow-automator v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: workflow-automator help"; exit 1 ;;
+esac

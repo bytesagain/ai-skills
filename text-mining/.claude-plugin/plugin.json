@@ -1,9 +1,0 @@
-{
-  "name": "text-mining",
-  "description": "Web mining module for Python, with tools for scraping, natural language processing, machine learning text-mining, python, machine-learning.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

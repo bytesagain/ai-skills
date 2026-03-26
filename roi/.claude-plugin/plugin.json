@@ -1,9 +1,0 @@
-{
-  "name": "roi",
-  "description": "Calculate and compare return on investment across projects using financial models. Use when evaluating investment decisions.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

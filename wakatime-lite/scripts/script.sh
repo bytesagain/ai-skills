@@ -1,101 +1,255 @@
 #!/usr/bin/env bash
-# wakatime-lite - Productivity and task management tool
+# wakatime-lite — Wakatime Lite reference tool. Use when working with wakatime lite in devtools contexts.
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
-VERSION="1.0.0"
-DATA_DIR="${WAKATIME_LITE_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/wakatime-lite}"
-DB="$DATA_DIR/data.log"
-mkdir -p "$DATA_DIR"
+
+VERSION="2.0.2"
 
 show_help() {
-    cat << EOF
-wakatime-lite v$VERSION
+    cat << 'HELPEOF'
+wakatime-lite v$VERSION — Wakatime Lite Reference Tool
 
-Productivity and task management tool
-
-Usage: wakatime-lite <command> [args]
+Usage: wakatime-lite <command>
 
 Commands:
-  add                  Add item
-  list                 List items
-  done                 Mark done
-  priority             Set priority
-  today                Today view
-  week                 Week view
-  remind               Set reminder
-  stats                Statistics
-  clear                Clear completed
-  export               Export
-  help                 Show this help
-  version              Show version
+  intro           Overview and core concepts
+  quickstart      Getting started guide
+  patterns        Common patterns and best practices
+  debugging       Debugging and troubleshooting
+  performance     Performance optimization tips
+  security        Security considerations
+  migration       Migration and upgrade guide
+  cheatsheet      Quick reference cheat sheet
+  help              Show this help
+  version           Show version
 
-Data: \$DATA_DIR
+Powered by BytesAgain | bytesagain.com
+HELPEOF
+}
+
+cmd_intro() {
+    cat << 'EOF'
+# Wakatime Lite — Overview
+
+## What is Wakatime Lite?
+Wakatime Lite (wakatime-lite) is a specialized tool/concept in the devtools domain.
+It provides essential capabilities for professionals working with wakatime lite.
+
+## Key Concepts
+- Core wakatime lite principles and fundamentals
+- How wakatime lite fits into the broader devtools ecosystem  
+- Essential terminology every practitioner should know
+
+## Why Wakatime Lite Matters
+Understanding wakatime lite is critical for:
+- Improving efficiency in devtools workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic wakatime lite concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
 EOF
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+cmd_quickstart() {
+    cat << 'EOF'
+# Wakatime Lite — Quick Start Guide
 
-cmd_add() {
-    echo "$(date +%Y-%m-%d) $*" >> "$DB"; echo "  Added: $*"
-    _log "add" "${1:-}"
+## Prerequisites
+- Basic understanding of devtools concepts
+- Required tools and access credentials
+- System meeting minimum requirements
+
+## Installation
+1. Download or clone the wakatime lite package
+2. Install dependencies
+3. Configure initial settings
+4. Verify installation
+
+## First Steps
+1. Run the hello-world example
+2. Review the default configuration
+3. Try a simple real-world task
+4. Explore available commands and options
+
+## Next Steps
+- Read the full documentation
+- Join the community forum
+- Try advanced features
+- Set up automated workflows
+EOF
 }
 
-cmd_list() {
-    [ -f "$DB" ] && cat "$DB" || echo "  (empty)"
-    _log "list" "${1:-}"
+cmd_patterns() {
+    cat << 'EOF'
+# Wakatime Lite — Common Patterns & Best Practices
+
+## Design Patterns
+1. **Standard Pattern**: The most common approach for wakatime lite
+2. **Scalable Pattern**: For high-volume or distributed scenarios
+3. **Resilient Pattern**: For fault-tolerant implementations
+
+## Best Practices
+- Follow the principle of least privilege
+- Use version control for all configurations
+- Implement comprehensive logging
+- Test changes in staging before production
+- Document all custom configurations
+
+## Anti-Patterns to Avoid
+- Hardcoding credentials or configuration
+- Skipping validation and error handling
+- Ignoring monitoring and alerting
+- Making changes without documentation
+- Over-engineering simple solutions
+EOF
 }
 
-cmd_done() {
-    echo "  Completed: $1"
-    _log "done" "${1:-}"
+cmd_debugging() {
+    cat << 'EOF'
+# Wakatime Lite — Debugging Guide
+
+## Common Errors
+1. **Connection refused**: Check service status and network
+2. **Permission denied**: Verify credentials and access rights
+3. **Timeout**: Check network, increase limits, optimize queries
+4. **Invalid input**: Validate data format and encoding
+
+## Debugging Tools
+- Built-in logging and diagnostics
+- Network analysis tools (tcpdump, wireshark)
+- System monitoring (top, htop, iostat)
+- Application-specific debug modes
+
+## Debug Workflow
+1. Reproduce the issue consistently
+2. Check logs for error messages
+3. Isolate the failing component
+4. Test with minimal configuration
+5. Apply fix and verify
+EOF
 }
 
-cmd_priority() {
-    echo "  $1 -> priority: ${2:-medium}"
-    _log "priority" "${1:-}"
+cmd_performance() {
+    cat << 'EOF'
+# Wakatime Lite — Performance Optimization
+
+## Key Metrics
+- Response time / latency
+- Throughput / operations per second
+- Resource utilization (CPU, memory, I/O)
+- Error rate and retry frequency
+
+## Optimization Strategies
+1. **Caching**: Reduce redundant operations
+2. **Batching**: Group small operations
+3. **Indexing**: Speed up data lookups
+4. **Compression**: Reduce data transfer size
+5. **Parallel Processing**: Utilize multiple cores
+
+## Monitoring
+- Set up baseline performance metrics
+- Configure alerts for anomalies
+- Track trends over time
+- Regular capacity planning reviews
+EOF
 }
 
-cmd_today() {
-    echo "  Today $(date +%Y-%m-%d):"; grep "$(date +%Y-%m-%d)" "$DB" 2>/dev/null || echo "  Nothing scheduled"
-    _log "today" "${1:-}"
+cmd_security() {
+    cat << 'EOF'
+# Wakatime Lite — Security Considerations
+
+## Authentication & Authorization
+- Use strong, unique credentials
+- Implement role-based access control
+- Enable multi-factor authentication where possible
+- Regularly review and rotate credentials
+
+## Data Protection
+- Encrypt data at rest and in transit
+- Implement proper backup procedures
+- Follow data retention policies
+- Sanitize inputs to prevent injection
+
+## Network Security
+- Use firewalls and network segmentation
+- Monitor for suspicious activity
+- Keep all software patched and updated
+- Disable unnecessary services and ports
+EOF
 }
 
-cmd_week() {
-    echo "  This week overview"
-    _log "week" "${1:-}"
+cmd_migration() {
+    cat << 'EOF'
+# Wakatime Lite — Migration & Upgrade Guide
+
+## Pre-Migration Checklist
+- [ ] Current system fully documented
+- [ ] Complete backup taken and verified
+- [ ] Target environment prepared
+- [ ] Rollback plan documented
+- [ ] Stakeholders notified
+
+## Migration Steps
+1. Prepare target environment
+2. Export data from source
+3. Transform data if needed
+4. Import to target
+5. Verify data integrity
+6. Update configurations
+7. Test all functionality
+8. Switch traffic / go live
+
+## Post-Migration
+- Monitor for errors and performance
+- Verify all integrations working
+- Update documentation
+- Decommission old system after confirmation
+EOF
 }
 
-cmd_remind() {
-    echo "  Reminder: $1 at ${2:-tomorrow}"
-    _log "remind" "${1:-}"
+cmd_cheatsheet() {
+    cat << 'EOF'
+# Wakatime Lite — Quick Reference
+
+## Essential Commands
+| Command | Description |
+|---------|-------------|
+| help | Show available commands |
+| version | Display version info |
+| intro | Overview and fundamentals |
+| troubleshooting | Common problems and fixes |
+
+## Common Workflows
+1. **Setup**: install → configure → verify → test
+2. **Daily**: check → monitor → report → review
+3. **Issue**: diagnose → isolate → fix → verify → document
+
+## Key Shortcuts
+- Use tab completion for commands
+- Check logs first when troubleshooting
+- Always backup before making changes
+- Document everything you change
+EOF
 }
 
-cmd_stats() {
-    echo "  Total: $(wc -l < "$DB" 2>/dev/null || echo 0)"
-    _log "stats" "${1:-}"
-}
+CMD="${1:-help}"
+shift 2>/dev/null || true
 
-cmd_clear() {
-    echo "  Cleared completed items"
-    _log "clear" "${1:-}"
-}
-
-cmd_export() {
-    [ -f "$DB" ] && cat "$DB" || echo "No data"
-    _log "export" "${1:-}"
-}
-
-case "${1:-help}" in
-    add) shift; cmd_add "$@" ;;
-    list) shift; cmd_list "$@" ;;
-    done) shift; cmd_done "$@" ;;
-    priority) shift; cmd_priority "$@" ;;
-    today) shift; cmd_today "$@" ;;
-    week) shift; cmd_week "$@" ;;
-    remind) shift; cmd_remind "$@" ;;
-    stats) shift; cmd_stats "$@" ;;
-    clear) shift; cmd_clear "$@" ;;
-    export) shift; cmd_export "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "wakatime-lite v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    quickstart) cmd_quickstart "$@" ;;
+    patterns) cmd_patterns "$@" ;;
+    debugging) cmd_debugging "$@" ;;
+    performance) cmd_performance "$@" ;;
+    security) cmd_security "$@" ;;
+    migration) cmd_migration "$@" ;;
+    cheatsheet) cmd_cheatsheet "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "wakatime-lite v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: wakatime-lite help"; exit 1 ;;
 esac

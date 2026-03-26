@@ -1,9 +1,0 @@
-{
-  "name": "trace",
-  "description": "Track and debug application logs using CLI tracing tools. Use when you need to start trace sessions, search logs, filter by level, tail output,",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

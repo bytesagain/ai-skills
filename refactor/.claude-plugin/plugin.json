@@ -1,9 +1,0 @@
-{
-  "name": "refactor",
-  "description": "Analyze code quality and suggest refactoring improvements using static analysis. Use when cleaning up or improving codebases.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

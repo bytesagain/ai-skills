@@ -1,364 +1,255 @@
 #!/usr/bin/env bash
-# Encrypt — sysops tool
+# encrypt — Encrypt reference tool. Use when working with encrypt in security contexts.
 # Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-DATA_DIR="${HOME}/.local/share/encrypt"
-mkdir -p "$DATA_DIR"
+VERSION="2.0.5"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+show_help() {
+    cat << 'HELPEOF'
+encrypt v$VERSION — Encrypt Reference Tool
 
-_version() { echo "encrypt v2.0.0"; }
+Usage: encrypt <command>
 
-_help() {
-    echo "Encrypt v2.0.0 — sysops toolkit"
-    echo ""
-    echo "Usage: encrypt <command> [args]"
-    echo ""
-    echo "Commands:"
-    echo "  scan               Scan"
-    echo "  monitor            Monitor"
-    echo "  report             Report"
-    echo "  alert              Alert"
-    echo "  top                Top"
-    echo "  usage              Usage"
-    echo "  check              Check"
-    echo "  fix                Fix"
-    echo "  cleanup            Cleanup"
-    echo "  backup             Backup"
-    echo "  restore            Restore"
-    echo "  log                Log"
-    echo "  benchmark          Benchmark"
-    echo "  compare            Compare"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
+Commands:
+  intro           Overview and core concepts
+  quickstart      Getting started guide
+  patterns        Common patterns and best practices
+  debugging       Debugging and troubleshooting
+  performance     Performance optimization tips
+  security        Security considerations
+  migration       Migration and upgrade guide
+  cheatsheet      Quick reference cheat sheet
+  help              Show this help
+  version           Show version
+
+Powered by BytesAgain | bytesagain.com
+HELPEOF
 }
 
-_stats() {
-    echo "=== Encrypt Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Since: $(head -1 "$DATA_DIR/history.log" 2>/dev/null | cut -d'|' -f1 || echo 'N/A')"
+cmd_intro() {
+    cat << 'EOF'
+# Encrypt — Overview
+
+## What is Encrypt?
+Encrypt (encrypt) is a specialized tool/concept in the security domain.
+It provides essential capabilities for professionals working with encrypt.
+
+## Key Concepts
+- Core encrypt principles and fundamentals
+- How encrypt fits into the broader security ecosystem  
+- Essential terminology every practitioner should know
+
+## Why Encrypt Matters
+Understanding encrypt is critical for:
+- Improving efficiency in security workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic encrypt concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
+EOF
 }
 
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "" >> "$out"
-            echo "]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    echo "$name,$ts,$val" >> "$out"
-                done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Encrypt Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-                echo "" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
-    esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
+cmd_quickstart() {
+    cat << 'EOF'
+# Encrypt — Quick Start Guide
+
+## Prerequisites
+- Basic understanding of security concepts
+- Required tools and access credentials
+- System meeting minimum requirements
+
+## Installation
+1. Download or clone the encrypt package
+2. Install dependencies
+3. Configure initial settings
+4. Verify installation
+
+## First Steps
+1. Run the hello-world example
+2. Review the default configuration
+3. Try a simple real-world task
+4. Explore available commands and options
+
+## Next Steps
+- Read the full documentation
+- Join the community forum
+- Try advanced features
+- Set up automated workflows
+EOF
 }
 
-_status() {
-    echo "=== Encrypt Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    local last=$(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo "never")
-    echo "  Last activity: $last"
-    echo "  Status: OK"
+cmd_patterns() {
+    cat << 'EOF'
+# Encrypt — Common Patterns & Best Practices
+
+## Design Patterns
+1. **Standard Pattern**: The most common approach for encrypt
+2. **Scalable Pattern**: For high-volume or distributed scenarios
+3. **Resilient Pattern**: For fault-tolerant implementations
+
+## Best Practices
+- Follow the principle of least privilege
+- Use version control for all configurations
+- Implement comprehensive logging
+- Test changes in staging before production
+- Document all custom configurations
+
+## Anti-Patterns to Avoid
+- Hardcoding credentials or configuration
+- Skipping validation and error handling
+- Ignoring monitoring and alerting
+- Making changes without documentation
+- Over-engineering simple solutions
+EOF
 }
 
-_search() {
-    local term="${1:?Usage: encrypt search <term>}"
-    echo "Searching for: $term"
-    local found=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local matches=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$matches" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$matches" | while read -r line; do
-                echo "    $line"
-                found=$((found + 1))
-            done
-        fi
-    done
-    [ $found -eq 0 ] && echo "  No matches found."
+cmd_debugging() {
+    cat << 'EOF'
+# Encrypt — Debugging Guide
+
+## Common Errors
+1. **Connection refused**: Check service status and network
+2. **Permission denied**: Verify credentials and access rights
+3. **Timeout**: Check network, increase limits, optimize queries
+4. **Invalid input**: Validate data format and encoding
+
+## Debugging Tools
+- Built-in logging and diagnostics
+- Network analysis tools (tcpdump, wireshark)
+- System monitoring (top, htop, iostat)
+- Application-specific debug modes
+
+## Debug Workflow
+1. Reproduce the issue consistently
+2. Check logs for error messages
+3. Isolate the failing component
+4. Test with minimal configuration
+5. Apply fix and verify
+EOF
 }
 
-_recent() {
-    echo "=== Recent Activity ==="
-    if [ -f "$DATA_DIR/history.log" ]; then
-        tail -20 "$DATA_DIR/history.log" | while IFS='' read -r line; do
-            echo "  $line"
-        done
-    else
-        echo "  No activity yet."
-    fi
+cmd_performance() {
+    cat << 'EOF'
+# Encrypt — Performance Optimization
+
+## Key Metrics
+- Response time / latency
+- Throughput / operations per second
+- Resource utilization (CPU, memory, I/O)
+- Error rate and retry frequency
+
+## Optimization Strategies
+1. **Caching**: Reduce redundant operations
+2. **Batching**: Group small operations
+3. **Indexing**: Speed up data lookups
+4. **Compression**: Reduce data transfer size
+5. **Parallel Processing**: Utilize multiple cores
+
+## Monitoring
+- Set up baseline performance metrics
+- Configure alerts for anomalies
+- Track trends over time
+- Regular capacity planning reviews
+EOF
 }
 
-# Main dispatch
-case "${1:-help}" in
-    scan)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent scan entries:"
-            tail -20 "$DATA_DIR/scan.log" 2>/dev/null || echo "  No entries yet. Use: encrypt scan <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/scan.log"
-            local total=$(wc -l < "$DATA_DIR/scan.log")
-            echo "  [Encrypt] scan: $input"
-            echo "  Saved. Total scan entries: $total"
-            _log "scan" "$input"
-        fi
-        ;;
-    monitor)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent monitor entries:"
-            tail -20 "$DATA_DIR/monitor.log" 2>/dev/null || echo "  No entries yet. Use: encrypt monitor <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/monitor.log"
-            local total=$(wc -l < "$DATA_DIR/monitor.log")
-            echo "  [Encrypt] monitor: $input"
-            echo "  Saved. Total monitor entries: $total"
-            _log "monitor" "$input"
-        fi
-        ;;
-    report)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent report entries:"
-            tail -20 "$DATA_DIR/report.log" 2>/dev/null || echo "  No entries yet. Use: encrypt report <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/report.log"
-            local total=$(wc -l < "$DATA_DIR/report.log")
-            echo "  [Encrypt] report: $input"
-            echo "  Saved. Total report entries: $total"
-            _log "report" "$input"
-        fi
-        ;;
-    alert)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent alert entries:"
-            tail -20 "$DATA_DIR/alert.log" 2>/dev/null || echo "  No entries yet. Use: encrypt alert <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/alert.log"
-            local total=$(wc -l < "$DATA_DIR/alert.log")
-            echo "  [Encrypt] alert: $input"
-            echo "  Saved. Total alert entries: $total"
-            _log "alert" "$input"
-        fi
-        ;;
-    top)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent top entries:"
-            tail -20 "$DATA_DIR/top.log" 2>/dev/null || echo "  No entries yet. Use: encrypt top <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/top.log"
-            local total=$(wc -l < "$DATA_DIR/top.log")
-            echo "  [Encrypt] top: $input"
-            echo "  Saved. Total top entries: $total"
-            _log "top" "$input"
-        fi
-        ;;
-    usage)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent usage entries:"
-            tail -20 "$DATA_DIR/usage.log" 2>/dev/null || echo "  No entries yet. Use: encrypt usage <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/usage.log"
-            local total=$(wc -l < "$DATA_DIR/usage.log")
-            echo "  [Encrypt] usage: $input"
-            echo "  Saved. Total usage entries: $total"
-            _log "usage" "$input"
-        fi
-        ;;
-    check)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent check entries:"
-            tail -20 "$DATA_DIR/check.log" 2>/dev/null || echo "  No entries yet. Use: encrypt check <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/check.log"
-            local total=$(wc -l < "$DATA_DIR/check.log")
-            echo "  [Encrypt] check: $input"
-            echo "  Saved. Total check entries: $total"
-            _log "check" "$input"
-        fi
-        ;;
-    fix)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent fix entries:"
-            tail -20 "$DATA_DIR/fix.log" 2>/dev/null || echo "  No entries yet. Use: encrypt fix <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/fix.log"
-            local total=$(wc -l < "$DATA_DIR/fix.log")
-            echo "  [Encrypt] fix: $input"
-            echo "  Saved. Total fix entries: $total"
-            _log "fix" "$input"
-        fi
-        ;;
-    cleanup)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent cleanup entries:"
-            tail -20 "$DATA_DIR/cleanup.log" 2>/dev/null || echo "  No entries yet. Use: encrypt cleanup <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/cleanup.log"
-            local total=$(wc -l < "$DATA_DIR/cleanup.log")
-            echo "  [Encrypt] cleanup: $input"
-            echo "  Saved. Total cleanup entries: $total"
-            _log "cleanup" "$input"
-        fi
-        ;;
-    backup)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent backup entries:"
-            tail -20 "$DATA_DIR/backup.log" 2>/dev/null || echo "  No entries yet. Use: encrypt backup <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/backup.log"
-            local total=$(wc -l < "$DATA_DIR/backup.log")
-            echo "  [Encrypt] backup: $input"
-            echo "  Saved. Total backup entries: $total"
-            _log "backup" "$input"
-        fi
-        ;;
-    restore)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent restore entries:"
-            tail -20 "$DATA_DIR/restore.log" 2>/dev/null || echo "  No entries yet. Use: encrypt restore <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/restore.log"
-            local total=$(wc -l < "$DATA_DIR/restore.log")
-            echo "  [Encrypt] restore: $input"
-            echo "  Saved. Total restore entries: $total"
-            _log "restore" "$input"
-        fi
-        ;;
-    log)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent log entries:"
-            tail -20 "$DATA_DIR/log.log" 2>/dev/null || echo "  No entries yet. Use: encrypt log <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/log.log"
-            local total=$(wc -l < "$DATA_DIR/log.log")
-            echo "  [Encrypt] log: $input"
-            echo "  Saved. Total log entries: $total"
-            _log "log" "$input"
-        fi
-        ;;
-    benchmark)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent benchmark entries:"
-            tail -20 "$DATA_DIR/benchmark.log" 2>/dev/null || echo "  No entries yet. Use: encrypt benchmark <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/benchmark.log"
-            local total=$(wc -l < "$DATA_DIR/benchmark.log")
-            echo "  [Encrypt] benchmark: $input"
-            echo "  Saved. Total benchmark entries: $total"
-            _log "benchmark" "$input"
-        fi
-        ;;
-    compare)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent compare entries:"
-            tail -20 "$DATA_DIR/compare.log" 2>/dev/null || echo "  No entries yet. Use: encrypt compare <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/compare.log"
-            local total=$(wc -l < "$DATA_DIR/compare.log")
-            echo "  [Encrypt] compare: $input"
-            echo "  Saved. Total compare entries: $total"
-            _log "compare" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown command: $1"
-        echo "Run 'encrypt help' for available commands."
-        exit 1
-        ;;
+cmd_security() {
+    cat << 'EOF'
+# Encrypt — Security Considerations
+
+## Authentication & Authorization
+- Use strong, unique credentials
+- Implement role-based access control
+- Enable multi-factor authentication where possible
+- Regularly review and rotate credentials
+
+## Data Protection
+- Encrypt data at rest and in transit
+- Implement proper backup procedures
+- Follow data retention policies
+- Sanitize inputs to prevent injection
+
+## Network Security
+- Use firewalls and network segmentation
+- Monitor for suspicious activity
+- Keep all software patched and updated
+- Disable unnecessary services and ports
+EOF
+}
+
+cmd_migration() {
+    cat << 'EOF'
+# Encrypt — Migration & Upgrade Guide
+
+## Pre-Migration Checklist
+- [ ] Current system fully documented
+- [ ] Complete backup taken and verified
+- [ ] Target environment prepared
+- [ ] Rollback plan documented
+- [ ] Stakeholders notified
+
+## Migration Steps
+1. Prepare target environment
+2. Export data from source
+3. Transform data if needed
+4. Import to target
+5. Verify data integrity
+6. Update configurations
+7. Test all functionality
+8. Switch traffic / go live
+
+## Post-Migration
+- Monitor for errors and performance
+- Verify all integrations working
+- Update documentation
+- Decommission old system after confirmation
+EOF
+}
+
+cmd_cheatsheet() {
+    cat << 'EOF'
+# Encrypt — Quick Reference
+
+## Essential Commands
+| Command | Description |
+|---------|-------------|
+| help | Show available commands |
+| version | Display version info |
+| intro | Overview and fundamentals |
+| troubleshooting | Common problems and fixes |
+
+## Common Workflows
+1. **Setup**: install → configure → verify → test
+2. **Daily**: check → monitor → report → review
+3. **Issue**: diagnose → isolate → fix → verify → document
+
+## Key Shortcuts
+- Use tab completion for commands
+- Check logs first when troubleshooting
+- Always backup before making changes
+- Document everything you change
+EOF
+}
+
+CMD="${1:-help}"
+shift 2>/dev/null || true
+
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    quickstart) cmd_quickstart "$@" ;;
+    patterns) cmd_patterns "$@" ;;
+    debugging) cmd_debugging "$@" ;;
+    performance) cmd_performance "$@" ;;
+    security) cmd_security "$@" ;;
+    migration) cmd_migration "$@" ;;
+    cheatsheet) cmd_cheatsheet "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "encrypt v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: encrypt help"; exit 1 ;;
 esac

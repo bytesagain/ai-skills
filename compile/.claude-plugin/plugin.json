@@ -1,9 +1,0 @@
-{
-  "name": "compile",
-  "description": "Validate, lint, and format source code across multiple languages. Use when checking syntax, formatting files, running lint passes, validating builds.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

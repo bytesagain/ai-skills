@@ -1,9 +1,0 @@
-{
-  "name": "logrotate",
-  "description": "Rotate, compress, and clean old log files to keep directories tidy automatically. Use when rotating logs, compressing old files, freeing disk space.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

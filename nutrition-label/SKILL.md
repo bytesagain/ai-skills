@@ -1,50 +1,34 @@
 ---
 name: "nutrition-label"
-version: "3.0.0"
-description: "Generate nutrition labels and track daily intake. Use when analyzing food nutrition."
+version: "4.0.1"
+description: "Reference tool for life — covers intro, quickstart, patterns and more. Quick lookup for Nutrition Label concepts, best practices, and implementation patterns."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [nutrition,label, reference]
+category: "life"
 ---
 
-# nutrition-label
+# Nutrition Label
 
-Generate nutrition labels and track daily intake. Use when analyzing food nutrition.
+Reference tool for life — covers intro, quickstart, patterns and more. Quick lookup for Nutrition Label concepts, best practices, and implementation patterns. No API keys or credentials required.
 
 ## Commands
 
-### `create`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-```bash
-scripts/script.sh create <food cal protein carbs fat>
-```
+## Output Format
 
-### `lookup`
-
-```bash
-scripts/script.sh lookup <food>
-```
-
-### `daily`
-
-```bash
-scripts/script.sh daily
-```
-
-### `compare`
-
-```bash
-scripts/script.sh compare <f1 f2>
-```
-
-### `label`
-
-```bash
-scripts/script.sh label <file>
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/nutrition-label/`.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

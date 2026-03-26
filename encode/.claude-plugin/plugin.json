@@ -1,9 +1,0 @@
-{
-  "name": "encode",
-  "description": "Encode text to base64, URL-safe strings, and HTML entity formats. Use when encoding payloads, escaping URLs, converting HTML entities.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

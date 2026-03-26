@@ -1,56 +1,34 @@
 ---
 name: "clip-history"
-version: "3.0.0"
-description: "Clipboard history manager for saving and searching text snippets. Use when managing copied text."
+version: "4.0.2"
+description: "Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Clip History concepts, best practices, and implementation patterns."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [clip,history, reference]
+category: "devtools"
 ---
 
-# clip-history
+# Clip History
 
-Clipboard history manager for saving and searching text snippets. Use when managing copied text.
+Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Clip History concepts, best practices, and implementation patterns. No API keys or credentials required.
 
 ## Commands
 
-### `save`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-```bash
-scripts/script.sh save <text>
-```
+## Output Format
 
-### `list`
-
-```bash
-scripts/script.sh list <count>
-```
-
-### `search`
-
-```bash
-scripts/script.sh search <query>
-```
-
-### `get`
-
-```bash
-scripts/script.sh get <id>
-```
-
-### `clear`
-
-```bash
-scripts/script.sh clear
-```
-
-### `export`
-
-```bash
-scripts/script.sh export <file>
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/clip-history/`.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

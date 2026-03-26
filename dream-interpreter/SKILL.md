@@ -1,56 +1,34 @@
 ---
 name: "dream-interpreter"
-version: "3.0.0"
-description: "Interpret dream symbols and maintain a dream journal. Use when analyzing dreams."
+version: "4.0.2"
+description: "Reference tool for life — covers intro, guide, tips and more. Quick lookup for Dream Interpreter concepts, best practices, and implementation patterns."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [dream,interpreter, reference]
+category: "life"
 ---
 
-# dream-interpreter
+# Dream Interpreter
 
-Interpret dream symbols and maintain a dream journal. Use when analyzing dreams.
+Reference tool for life — covers intro, guide, tips and more. Quick lookup for Dream Interpreter concepts, best practices, and implementation patterns. No API keys or credentials required.
 
 ## Commands
 
-### `interpret`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `guide` | guide reference |
+| `tips` | tips reference |
+| `planning` | planning reference |
+| `resources` | resources reference |
+| `mistakes` | mistakes reference |
+| `examples` | examples reference |
+| `faq` | faq reference |
 
-```bash
-scripts/script.sh interpret <symbol>
-```
+## Output Format
 
-### `journal`
-
-```bash
-scripts/script.sh journal <text>
-```
-
-### `history`
-
-```bash
-scripts/script.sh history
-```
-
-### `search`
-
-```bash
-scripts/script.sh search <keyword>
-```
-
-### `categories`
-
-```bash
-scripts/script.sh categories
-```
-
-### `random`
-
-```bash
-scripts/script.sh random
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/dream-interpreter/`.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

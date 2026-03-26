@@ -1,9 +1,0 @@
-{
-  "name": "profit",
-  "description": "Calculate profit margins, breakeven points, and revenue forecasts using CLI tools. Use when analyzing business financials.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

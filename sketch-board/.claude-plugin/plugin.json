@@ -1,9 +1,0 @@
-{
-  "name": "sketch-board",
-  "description": "\u5f00\u6e90\u767d\u677f\u5de5\u5177\uff08SaaS\uff09\uff0c\u4e00\u4f53\u5316\u767d\u677f\uff0c\u5305\u542b\u601d\u7ef4\u5bfc\u56fe\u3001\u6d41\u7a0b\u56fe\u3001\u81ea\u7531\u753b\u7b49\u3002All in one open-source whiteboard tool with mind, flowchart, free sketch-board, typescript, collaboration, drawing.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

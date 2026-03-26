@@ -1,56 +1,34 @@
 ---
 name: "license-picker"
-version: "3.0.0"
-description: "Choose and generate open source license files for projects. Use when selecting project licenses."
+version: "6.0.0"
+description: "Open source license reference — SPDX identifiers, permissive vs copyleft comparison, license compatibility matrix, patent clauses, and compliance scanning tools"
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [license, open-source, spdx, gpl, mit]
+category: "devtools"
 ---
 
-# license-picker
+# License Picker
 
-Choose and generate open source license files for projects. Use when selecting project licenses.
+Open source license reference — SPDX identifiers, permissive vs copyleft comparison, license compatibility matrix, patent clauses, and compliance scanning tools. No API keys or credentials required — outputs reference documentation only.
 
 ## Commands
 
-### `list`
+| Command | Description |
+|---------|-------------|
+| `intro` | Permissive vs copyleft, license types |
+| `standards` | SPDX identifiers, OSI/FSF, compatibility |
+| `troubleshooting` | Conflicts, dual licensing, CLA issues |
+| `performance` | Scanning tools: FOSSA, Snyk, scancode |
+| `security` | Patents, indemnification, AGPL/SaaS risks |
+| `migration` | Proprietary to open source, relicensing |
+| `cheatsheet` | License comparison table, decision guide |
+| `faq` | Commercial use, GPL enforcement, choosing |
 
-```bash
-scripts/script.sh list
-```
+## Output Format
 
-### `info`
-
-```bash
-scripts/script.sh info <license>
-```
-
-### `create`
-
-```bash
-scripts/script.sh create <license author>
-```
-
-### `compare`
-
-```bash
-scripts/script.sh compare <l1 l2>
-```
-
-### `recommend`
-
-```bash
-scripts/script.sh recommend <use>
-```
-
-### `detect`
-
-```bash
-scripts/script.sh detect <file>
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/license-picker/`.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

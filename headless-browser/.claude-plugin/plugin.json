@@ -1,9 +1,0 @@
-{
-  "name": "headless-browser",
-  "description": "Automate browser tasks with scriptable headless browsing for tests and scraping. Use when scraping pages, running tests, or capturing screenshots.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

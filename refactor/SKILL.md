@@ -1,111 +1,34 @@
 ---
 name: "refactor"
-version: "1.0.0"
-description: "Analyze code quality and suggest refactoring improvements using static analysis. Use when cleaning up or improving codebases."
+version: "2.0.3"
+description: "Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Refactor concepts, best practices, and implementation patterns."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [refactor, general, cli, tool]
-category: "general"
+tags: [refactor, reference]
+category: "devtools"
 ---
 
-# refactor
+# Refactor
 
-Analyze code quality and suggest refactoring improvements using static analysis. Use when cleaning up or improving codebases.
+Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Refactor concepts, best practices, and implementation patterns. No API keys or credentials required.
 
 ## Commands
 
-### `status`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-```bash
-scripts/script.sh status
-```
+## Output Format
 
-Show current status
-
-### `add`
-
-```bash
-scripts/script.sh add
-```
-
-Add new entry
-
-### `list`
-
-```bash
-scripts/script.sh list
-```
-
-List all entries
-
-### `search`
-
-```bash
-scripts/script.sh search
-```
-
-Search entries
-
-### `remove`
-
-```bash
-scripts/script.sh remove
-```
-
-Remove entry by number
-
-### `export`
-
-```bash
-scripts/script.sh export
-```
-
-Export data to file
-
-### `stats`
-
-```bash
-scripts/script.sh stats
-```
-
-Show statistics
-
-### `config`
-
-```bash
-scripts/script.sh config
-```
-
-View or set config
-
-### `help`
-
-```bash
-scripts/script.sh help
-```
-
-### `version`
-
-```bash
-scripts/script.sh version
-```
-
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `REFACTOR_DIR` | No | Data directory (default: ~/.refactor/) |
-
-## Data Storage
-
-All data stored in `~/.refactor/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

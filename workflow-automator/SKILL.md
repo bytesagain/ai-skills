@@ -1,62 +1,34 @@
 ---
 name: "workflow-automator"
-version: "3.0.0"
-description: "Create and execute multi-step workflows with logging and scheduling. Use when automating repetitive tasks."
+version: "4.0.1"
+description: "Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Workflow Automator concepts, best practices, and implementation p..."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [workflow,automator, reference]
+category: "devtools"
 ---
 
-# workflow-automator
+# Workflow Automator
 
-Create and execute multi-step workflows with logging and scheduling. Use when automating repetitive tasks.
+Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Workflow Automator concepts, best practices, and implementation p... No API keys or credentials required.
 
 ## Commands
 
-### `create`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-```bash
-scripts/script.sh create <name steps>
-```
+## Output Format
 
-### `run`
-
-```bash
-scripts/script.sh run <name>
-```
-
-### `list`
-
-```bash
-scripts/script.sh list
-```
-
-### `show`
-
-```bash
-scripts/script.sh show <name>
-```
-
-### `log`
-
-```bash
-scripts/script.sh log <name>
-```
-
-### `status`
-
-```bash
-scripts/script.sh status <name>
-```
-
-### `template`
-
-```bash
-scripts/script.sh template <type>
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/workflow-automator/`.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

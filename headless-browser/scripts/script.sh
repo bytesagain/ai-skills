@@ -1,314 +1,255 @@
 #!/usr/bin/env bash
-# Headless Browser — content tool
+# headless-browser — Headless Browser reference tool. Use when working with headless browser in devtools contexts.
 # Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-DATA_DIR="${HOME}/.local/share/headless-browser"
-mkdir -p "$DATA_DIR"
+VERSION="2.0.0"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-_version() { echo "headless-browser v2.0.0"; }
+show_help() {
+    cat << 'HELPEOF'
+headless-browser v$VERSION — Headless Browser Reference Tool
 
-_help() {
-    echo "Headless Browser v2.0.0 — content toolkit"
-    echo ""
-    echo "Usage: headless-browser <command> [args]"
-    echo ""
-    echo "Commands:"
-    echo "  draft              Draft"
-    echo "  edit               Edit"
-    echo "  optimize           Optimize"
-    echo "  schedule           Schedule"
-    echo "  hashtags           Hashtags"
-    echo "  hooks              Hooks"
-    echo "  cta                Cta"
-    echo "  rewrite            Rewrite"
-    echo "  translate          Translate"
-    echo "  tone               Tone"
-    echo "  headline           Headline"
-    echo "  outline            Outline"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  search <term>      Search entries"
-    echo "  recent             Recent activity"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
+Usage: headless-browser <command>
+
+Commands:
+  intro           Overview and core concepts
+  quickstart      Getting started guide
+  patterns        Common patterns and best practices
+  debugging       Debugging and troubleshooting
+  performance     Performance optimization tips
+  security        Security considerations
+  migration       Migration and upgrade guide
+  cheatsheet      Quick reference cheat sheet
+  help              Show this help
+  version           Show version
+
+Powered by BytesAgain | bytesagain.com
+HELPEOF
 }
 
-_stats() {
-    echo "=== Headless Browser Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
+cmd_intro() {
+    cat << 'EOF'
+# Headless Browser — Overview
+
+## What is Headless Browser?
+Headless Browser (headless-browser) is a specialized tool/concept in the devtools domain.
+It provides essential capabilities for professionals working with headless browser.
+
+## Key Concepts
+- Core headless browser principles and fundamentals
+- How headless browser fits into the broader devtools ecosystem  
+- Essential terminology every practitioner should know
+
+## Why Headless Browser Matters
+Understanding headless browser is critical for:
+- Improving efficiency in devtools workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic headless browser concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
+EOF
 }
 
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "\n]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do echo "$name,$ts,$val" >> "$out"; done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Headless Browser Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
-    esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
+cmd_quickstart() {
+    cat << 'EOF'
+# Headless Browser — Quick Start Guide
+
+## Prerequisites
+- Basic understanding of devtools concepts
+- Required tools and access credentials
+- System meeting minimum requirements
+
+## Installation
+1. Download or clone the headless browser package
+2. Install dependencies
+3. Configure initial settings
+4. Verify installation
+
+## First Steps
+1. Run the hello-world example
+2. Review the default configuration
+3. Try a simple real-world task
+4. Explore available commands and options
+
+## Next Steps
+- Read the full documentation
+- Join the community forum
+- Try advanced features
+- Set up automated workflows
+EOF
 }
 
-_status() {
-    echo "=== Headless Browser Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Last: $(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo never)"
-    echo "  Status: OK"
+cmd_patterns() {
+    cat << 'EOF'
+# Headless Browser — Common Patterns & Best Practices
+
+## Design Patterns
+1. **Standard Pattern**: The most common approach for headless browser
+2. **Scalable Pattern**: For high-volume or distributed scenarios
+3. **Resilient Pattern**: For fault-tolerant implementations
+
+## Best Practices
+- Follow the principle of least privilege
+- Use version control for all configurations
+- Implement comprehensive logging
+- Test changes in staging before production
+- Document all custom configurations
+
+## Anti-Patterns to Avoid
+- Hardcoding credentials or configuration
+- Skipping validation and error handling
+- Ignoring monitoring and alerting
+- Making changes without documentation
+- Over-engineering simple solutions
+EOF
 }
 
-_search() {
-    local term="${1:?Usage: headless-browser search <term>}"
-    echo "Searching for: $term"
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local m=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$m" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$m" | sed 's/^/    /'
-        fi
-    done
+cmd_debugging() {
+    cat << 'EOF'
+# Headless Browser — Debugging Guide
+
+## Common Errors
+1. **Connection refused**: Check service status and network
+2. **Permission denied**: Verify credentials and access rights
+3. **Timeout**: Check network, increase limits, optimize queries
+4. **Invalid input**: Validate data format and encoding
+
+## Debugging Tools
+- Built-in logging and diagnostics
+- Network analysis tools (tcpdump, wireshark)
+- System monitoring (top, htop, iostat)
+- Application-specific debug modes
+
+## Debug Workflow
+1. Reproduce the issue consistently
+2. Check logs for error messages
+3. Isolate the failing component
+4. Test with minimal configuration
+5. Apply fix and verify
+EOF
 }
 
-_recent() {
-    echo "=== Recent Activity ==="
-    tail -20 "$DATA_DIR/history.log" 2>/dev/null | sed 's/^/  /' || echo "  No activity yet."
+cmd_performance() {
+    cat << 'EOF'
+# Headless Browser — Performance Optimization
+
+## Key Metrics
+- Response time / latency
+- Throughput / operations per second
+- Resource utilization (CPU, memory, I/O)
+- Error rate and retry frequency
+
+## Optimization Strategies
+1. **Caching**: Reduce redundant operations
+2. **Batching**: Group small operations
+3. **Indexing**: Speed up data lookups
+4. **Compression**: Reduce data transfer size
+5. **Parallel Processing**: Utilize multiple cores
+
+## Monitoring
+- Set up baseline performance metrics
+- Configure alerts for anomalies
+- Track trends over time
+- Regular capacity planning reviews
+EOF
 }
 
-case "${1:-help}" in
-    draft)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent draft entries:"
-            tail -20 "$DATA_DIR/draft.log" 2>/dev/null || echo "  No entries yet. Use: headless-browser draft <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/draft.log"
-            local total=$(wc -l < "$DATA_DIR/draft.log")
-            echo "  [Headless Browser] draft: $input"
-            echo "  Saved. Total draft entries: $total"
-            _log "draft" "$input"
-        fi
-        ;;
-    edit)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent edit entries:"
-            tail -20 "$DATA_DIR/edit.log" 2>/dev/null || echo "  No entries yet. Use: headless-browser edit <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/edit.log"
-            local total=$(wc -l < "$DATA_DIR/edit.log")
-            echo "  [Headless Browser] edit: $input"
-            echo "  Saved. Total edit entries: $total"
-            _log "edit" "$input"
-        fi
-        ;;
-    optimize)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent optimize entries:"
-            tail -20 "$DATA_DIR/optimize.log" 2>/dev/null || echo "  No entries yet. Use: headless-browser optimize <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/optimize.log"
-            local total=$(wc -l < "$DATA_DIR/optimize.log")
-            echo "  [Headless Browser] optimize: $input"
-            echo "  Saved. Total optimize entries: $total"
-            _log "optimize" "$input"
-        fi
-        ;;
-    schedule)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent schedule entries:"
-            tail -20 "$DATA_DIR/schedule.log" 2>/dev/null || echo "  No entries yet. Use: headless-browser schedule <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/schedule.log"
-            local total=$(wc -l < "$DATA_DIR/schedule.log")
-            echo "  [Headless Browser] schedule: $input"
-            echo "  Saved. Total schedule entries: $total"
-            _log "schedule" "$input"
-        fi
-        ;;
-    hashtags)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent hashtags entries:"
-            tail -20 "$DATA_DIR/hashtags.log" 2>/dev/null || echo "  No entries yet. Use: headless-browser hashtags <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/hashtags.log"
-            local total=$(wc -l < "$DATA_DIR/hashtags.log")
-            echo "  [Headless Browser] hashtags: $input"
-            echo "  Saved. Total hashtags entries: $total"
-            _log "hashtags" "$input"
-        fi
-        ;;
-    hooks)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent hooks entries:"
-            tail -20 "$DATA_DIR/hooks.log" 2>/dev/null || echo "  No entries yet. Use: headless-browser hooks <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/hooks.log"
-            local total=$(wc -l < "$DATA_DIR/hooks.log")
-            echo "  [Headless Browser] hooks: $input"
-            echo "  Saved. Total hooks entries: $total"
-            _log "hooks" "$input"
-        fi
-        ;;
-    cta)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent cta entries:"
-            tail -20 "$DATA_DIR/cta.log" 2>/dev/null || echo "  No entries yet. Use: headless-browser cta <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/cta.log"
-            local total=$(wc -l < "$DATA_DIR/cta.log")
-            echo "  [Headless Browser] cta: $input"
-            echo "  Saved. Total cta entries: $total"
-            _log "cta" "$input"
-        fi
-        ;;
-    rewrite)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent rewrite entries:"
-            tail -20 "$DATA_DIR/rewrite.log" 2>/dev/null || echo "  No entries yet. Use: headless-browser rewrite <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/rewrite.log"
-            local total=$(wc -l < "$DATA_DIR/rewrite.log")
-            echo "  [Headless Browser] rewrite: $input"
-            echo "  Saved. Total rewrite entries: $total"
-            _log "rewrite" "$input"
-        fi
-        ;;
-    translate)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent translate entries:"
-            tail -20 "$DATA_DIR/translate.log" 2>/dev/null || echo "  No entries yet. Use: headless-browser translate <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/translate.log"
-            local total=$(wc -l < "$DATA_DIR/translate.log")
-            echo "  [Headless Browser] translate: $input"
-            echo "  Saved. Total translate entries: $total"
-            _log "translate" "$input"
-        fi
-        ;;
-    tone)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent tone entries:"
-            tail -20 "$DATA_DIR/tone.log" 2>/dev/null || echo "  No entries yet. Use: headless-browser tone <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/tone.log"
-            local total=$(wc -l < "$DATA_DIR/tone.log")
-            echo "  [Headless Browser] tone: $input"
-            echo "  Saved. Total tone entries: $total"
-            _log "tone" "$input"
-        fi
-        ;;
-    headline)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent headline entries:"
-            tail -20 "$DATA_DIR/headline.log" 2>/dev/null || echo "  No entries yet. Use: headless-browser headline <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/headline.log"
-            local total=$(wc -l < "$DATA_DIR/headline.log")
-            echo "  [Headless Browser] headline: $input"
-            echo "  Saved. Total headline entries: $total"
-            _log "headline" "$input"
-        fi
-        ;;
-    outline)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent outline entries:"
-            tail -20 "$DATA_DIR/outline.log" 2>/dev/null || echo "  No entries yet. Use: headless-browser outline <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/outline.log"
-            local total=$(wc -l < "$DATA_DIR/outline.log")
-            echo "  [Headless Browser] outline: $input"
-            echo "  Saved. Total outline entries: $total"
-            _log "outline" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown: $1 — run 'headless-browser help'"
-        exit 1
-        ;;
+cmd_security() {
+    cat << 'EOF'
+# Headless Browser — Security Considerations
+
+## Authentication & Authorization
+- Use strong, unique credentials
+- Implement role-based access control
+- Enable multi-factor authentication where possible
+- Regularly review and rotate credentials
+
+## Data Protection
+- Encrypt data at rest and in transit
+- Implement proper backup procedures
+- Follow data retention policies
+- Sanitize inputs to prevent injection
+
+## Network Security
+- Use firewalls and network segmentation
+- Monitor for suspicious activity
+- Keep all software patched and updated
+- Disable unnecessary services and ports
+EOF
+}
+
+cmd_migration() {
+    cat << 'EOF'
+# Headless Browser — Migration & Upgrade Guide
+
+## Pre-Migration Checklist
+- [ ] Current system fully documented
+- [ ] Complete backup taken and verified
+- [ ] Target environment prepared
+- [ ] Rollback plan documented
+- [ ] Stakeholders notified
+
+## Migration Steps
+1. Prepare target environment
+2. Export data from source
+3. Transform data if needed
+4. Import to target
+5. Verify data integrity
+6. Update configurations
+7. Test all functionality
+8. Switch traffic / go live
+
+## Post-Migration
+- Monitor for errors and performance
+- Verify all integrations working
+- Update documentation
+- Decommission old system after confirmation
+EOF
+}
+
+cmd_cheatsheet() {
+    cat << 'EOF'
+# Headless Browser — Quick Reference
+
+## Essential Commands
+| Command | Description |
+|---------|-------------|
+| help | Show available commands |
+| version | Display version info |
+| intro | Overview and fundamentals |
+| troubleshooting | Common problems and fixes |
+
+## Common Workflows
+1. **Setup**: install → configure → verify → test
+2. **Daily**: check → monitor → report → review
+3. **Issue**: diagnose → isolate → fix → verify → document
+
+## Key Shortcuts
+- Use tab completion for commands
+- Check logs first when troubleshooting
+- Always backup before making changes
+- Document everything you change
+EOF
+}
+
+CMD="${1:-help}"
+shift 2>/dev/null || true
+
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    quickstart) cmd_quickstart "$@" ;;
+    patterns) cmd_patterns "$@" ;;
+    debugging) cmd_debugging "$@" ;;
+    performance) cmd_performance "$@" ;;
+    security) cmd_security "$@" ;;
+    migration) cmd_migration "$@" ;;
+    cheatsheet) cmd_cheatsheet "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "headless-browser v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: headless-browser help"; exit 1 ;;
 esac

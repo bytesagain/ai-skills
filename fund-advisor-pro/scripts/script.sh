@@ -1,101 +1,255 @@
 #!/usr/bin/env bash
-# fund-advisor-pro - Financial tracking and analysis tool
+# fund-advisor-pro — Fund Advisor Pro reference tool. Use when working with fund advisor pro in devtools contexts.
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${FUND_ADVISOR_PRO_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/fund-advisor-pro}"
-DB="$DATA_DIR/data.log"
-mkdir -p "$DATA_DIR"
+
+VERSION="3.0.0"
 
 show_help() {
-    cat << EOF
-fund-advisor-pro v$VERSION
+    cat << 'HELPEOF'
+fund-advisor-pro v$VERSION — Fund Advisor Pro Reference Tool
 
-Financial tracking and analysis tool
-
-Usage: fund-advisor-pro <command> [args]
+Usage: fund-advisor-pro <command>
 
 Commands:
-  track                Record a transaction
-  balance              Show current balance
-  summary              Financial summary
-  export               Export to CSV
-  budget               Budget overview
-  history              Transaction history
-  alert                Set price/budget alert
-  compare              Compare periods
-  forecast             Simple forecast
-  categories           Spending categories
-  help                 Show this help
-  version              Show version
+  intro           Overview and core concepts
+  quickstart      Getting started guide
+  patterns        Common patterns and best practices
+  debugging       Debugging and troubleshooting
+  performance     Performance optimization tips
+  security        Security considerations
+  migration       Migration and upgrade guide
+  cheatsheet      Quick reference cheat sheet
+  help              Show this help
+  version           Show version
 
-Data: \$DATA_DIR
+Powered by BytesAgain | bytesagain.com
+HELPEOF
+}
+
+cmd_intro() {
+    cat << 'EOF'
+# Fund Advisor Pro — Overview
+
+## What is Fund Advisor Pro?
+Fund Advisor Pro (fund-advisor-pro) is a specialized tool/concept in the devtools domain.
+It provides essential capabilities for professionals working with fund advisor pro.
+
+## Key Concepts
+- Core fund advisor pro principles and fundamentals
+- How fund advisor pro fits into the broader devtools ecosystem  
+- Essential terminology every practitioner should know
+
+## Why Fund Advisor Pro Matters
+Understanding fund advisor pro is critical for:
+- Improving efficiency in devtools workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic fund advisor pro concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
 EOF
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+cmd_quickstart() {
+    cat << 'EOF'
+# Fund Advisor Pro — Quick Start Guide
 
-cmd_track() {
-    echo "  Transaction: $1 Amount: ${2:-0}"
-    _log "track" "${1:-}"
+## Prerequisites
+- Basic understanding of devtools concepts
+- Required tools and access credentials
+- System meeting minimum requirements
+
+## Installation
+1. Download or clone the fund advisor pro package
+2. Install dependencies
+3. Configure initial settings
+4. Verify installation
+
+## First Steps
+1. Run the hello-world example
+2. Review the default configuration
+3. Try a simple real-world task
+4. Explore available commands and options
+
+## Next Steps
+- Read the full documentation
+- Join the community forum
+- Try advanced features
+- Set up automated workflows
+EOF
 }
 
-cmd_balance() {
-    echo "  Balance: check $DATA_DIR/ledger"
-    _log "balance" "${1:-}"
+cmd_patterns() {
+    cat << 'EOF'
+# Fund Advisor Pro — Common Patterns & Best Practices
+
+## Design Patterns
+1. **Standard Pattern**: The most common approach for fund advisor pro
+2. **Scalable Pattern**: For high-volume or distributed scenarios
+3. **Resilient Pattern**: For fault-tolerant implementations
+
+## Best Practices
+- Follow the principle of least privilege
+- Use version control for all configurations
+- Implement comprehensive logging
+- Test changes in staging before production
+- Document all custom configurations
+
+## Anti-Patterns to Avoid
+- Hardcoding credentials or configuration
+- Skipping validation and error handling
+- Ignoring monitoring and alerting
+- Making changes without documentation
+- Over-engineering simple solutions
+EOF
 }
 
-cmd_summary() {
-    echo "  Period: $(date +%Y-%m) | Income: $0 | Expenses: $0"
-    _log "summary" "${1:-}"
+cmd_debugging() {
+    cat << 'EOF'
+# Fund Advisor Pro — Debugging Guide
+
+## Common Errors
+1. **Connection refused**: Check service status and network
+2. **Permission denied**: Verify credentials and access rights
+3. **Timeout**: Check network, increase limits, optimize queries
+4. **Invalid input**: Validate data format and encoding
+
+## Debugging Tools
+- Built-in logging and diagnostics
+- Network analysis tools (tcpdump, wireshark)
+- System monitoring (top, htop, iostat)
+- Application-specific debug modes
+
+## Debug Workflow
+1. Reproduce the issue consistently
+2. Check logs for error messages
+3. Isolate the failing component
+4. Test with minimal configuration
+5. Apply fix and verify
+EOF
 }
 
-cmd_export() {
-    echo "date,description,amount" && cat "$DB" 2>/dev/null
-    _log "export" "${1:-}"
+cmd_performance() {
+    cat << 'EOF'
+# Fund Advisor Pro — Performance Optimization
+
+## Key Metrics
+- Response time / latency
+- Throughput / operations per second
+- Resource utilization (CPU, memory, I/O)
+- Error rate and retry frequency
+
+## Optimization Strategies
+1. **Caching**: Reduce redundant operations
+2. **Batching**: Group small operations
+3. **Indexing**: Speed up data lookups
+4. **Compression**: Reduce data transfer size
+5. **Parallel Processing**: Utilize multiple cores
+
+## Monitoring
+- Set up baseline performance metrics
+- Configure alerts for anomalies
+- Track trends over time
+- Regular capacity planning reviews
+EOF
 }
 
-cmd_budget() {
-    echo "  Category | Budget | Spent | Remaining"
-    _log "budget" "${1:-}"
+cmd_security() {
+    cat << 'EOF'
+# Fund Advisor Pro — Security Considerations
+
+## Authentication & Authorization
+- Use strong, unique credentials
+- Implement role-based access control
+- Enable multi-factor authentication where possible
+- Regularly review and rotate credentials
+
+## Data Protection
+- Encrypt data at rest and in transit
+- Implement proper backup procedures
+- Follow data retention policies
+- Sanitize inputs to prevent injection
+
+## Network Security
+- Use firewalls and network segmentation
+- Monitor for suspicious activity
+- Keep all software patched and updated
+- Disable unnecessary services and ports
+EOF
 }
 
-cmd_history() {
-    [ -f "$DB" ] && tail -20 "$DB" || echo "No history"
-    _log "history" "${1:-}"
+cmd_migration() {
+    cat << 'EOF'
+# Fund Advisor Pro — Migration & Upgrade Guide
+
+## Pre-Migration Checklist
+- [ ] Current system fully documented
+- [ ] Complete backup taken and verified
+- [ ] Target environment prepared
+- [ ] Rollback plan documented
+- [ ] Stakeholders notified
+
+## Migration Steps
+1. Prepare target environment
+2. Export data from source
+3. Transform data if needed
+4. Import to target
+5. Verify data integrity
+6. Update configurations
+7. Test all functionality
+8. Switch traffic / go live
+
+## Post-Migration
+- Monitor for errors and performance
+- Verify all integrations working
+- Update documentation
+- Decommission old system after confirmation
+EOF
 }
 
-cmd_alert() {
-    echo "  Alert set for: $1 at $2"
-    _log "alert" "${1:-}"
+cmd_cheatsheet() {
+    cat << 'EOF'
+# Fund Advisor Pro — Quick Reference
+
+## Essential Commands
+| Command | Description |
+|---------|-------------|
+| help | Show available commands |
+| version | Display version info |
+| intro | Overview and fundamentals |
+| troubleshooting | Common problems and fixes |
+
+## Common Workflows
+1. **Setup**: install → configure → verify → test
+2. **Daily**: check → monitor → report → review
+3. **Issue**: diagnose → isolate → fix → verify → document
+
+## Key Shortcuts
+- Use tab completion for commands
+- Check logs first when troubleshooting
+- Always backup before making changes
+- Document everything you change
+EOF
 }
 
-cmd_compare() {
-    echo "  Comparing current vs previous period"
-    _log "compare" "${1:-}"
-}
+CMD="${1:-help}"
+shift 2>/dev/null || true
 
-cmd_forecast() {
-    echo "  Based on trends: [projection]"
-    _log "forecast" "${1:-}"
-}
-
-cmd_categories() {
-    echo "  Food | Transport | Housing | Entertainment | Savings"
-    _log "categories" "${1:-}"
-}
-
-case "${1:-help}" in
-    track) shift; cmd_track "$@" ;;
-    balance) shift; cmd_balance "$@" ;;
-    summary) shift; cmd_summary "$@" ;;
-    export) shift; cmd_export "$@" ;;
-    budget) shift; cmd_budget "$@" ;;
-    history) shift; cmd_history "$@" ;;
-    alert) shift; cmd_alert "$@" ;;
-    compare) shift; cmd_compare "$@" ;;
-    forecast) shift; cmd_forecast "$@" ;;
-    categories) shift; cmd_categories "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "fund-advisor-pro v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    quickstart) cmd_quickstart "$@" ;;
+    patterns) cmd_patterns "$@" ;;
+    debugging) cmd_debugging "$@" ;;
+    performance) cmd_performance "$@" ;;
+    security) cmd_security "$@" ;;
+    migration) cmd_migration "$@" ;;
+    cheatsheet) cmd_cheatsheet "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "fund-advisor-pro v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: fund-advisor-pro help"; exit 1 ;;
 esac

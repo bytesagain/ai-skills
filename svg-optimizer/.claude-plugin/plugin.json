@@ -1,9 +1,0 @@
-{
-  "name": "svg-optimizer",
-  "description": "Optimize SVG files by removing metadata and minifying paths. Use when previewing output, generating assets, converting formats, cleaning vectors.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

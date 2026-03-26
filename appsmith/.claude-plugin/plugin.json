@@ -1,9 +1,0 @@
-{
-  "name": "appsmith",
-  "description": "Platform to build admin panels, internal tools, and dashboards. Integrates with 25+ databases and an appsmith, typescript, admin-dashboard, admin-panels.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "genai-toolbox",
-  "description": "Connect AI agents to databases via MCP with schema-aware query support. Use when querying DBs from agents, configuring connections, or benchmarking.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

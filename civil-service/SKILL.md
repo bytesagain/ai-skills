@@ -1,56 +1,34 @@
 ---
 name: "civil-service"
-version: "3.0.0"
-description: "Civil service exam study helper with quizzes and topic review (公务员考试). Use when preparing for exams."
+version: "5.0.0"
+description: "Public administration reference — civil service systems, government standards, e-government maturity, FISMA compliance, and FOI process"
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [government, public-admin, civil-service, policy]
+category: "education"
 ---
 
-# civil-service
+# Civil Service
 
-Civil service exam study helper with quizzes and topic review (公务员考试). Use when preparing for exams.
+Public administration reference — civil service systems, government standards, e-government maturity, FISMA compliance, and FOI process. No API keys or credentials required — outputs reference documentation only.
 
 ## Commands
 
-### `topics`
+| Command | Description |
+|---------|-------------|
+| `intro` | Civil service systems worldwide |
+| `standards` | Weberian bureaucracy, NPM, good governance |
+| `troubleshooting` | Red tape reduction, interagency coordination |
+| `performance` | KPIs, e-government maturity, digital metrics |
+| `security` | Data protection, FISMA, classified information |
+| `migration` | Paper to digital, legacy IT modernization |
+| `cheatsheet` | Frameworks, acronyms, FOI process, budget cycle |
+| `faq` | Career paths, pay scales, procurement, digital |
 
-```bash
-scripts/script.sh topics
-```
+## Output Format
 
-### `quiz`
-
-```bash
-scripts/script.sh quiz <category>
-```
-
-### `tips`
-
-```bash
-scripts/script.sh tips <topic>
-```
-
-### `timer`
-
-```bash
-scripts/script.sh timer <minutes>
-```
-
-### `score`
-
-```bash
-scripts/script.sh score <correct total>
-```
-
-### `history`
-
-```bash
-scripts/script.sh history
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/civil-service/`.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

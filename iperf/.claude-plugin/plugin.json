@@ -1,9 +1,0 @@
-{
-  "name": "iperf",
-  "description": "Measure TCP/UDP/SCTP bandwidth between hosts with detailed throughput data. Use when benchmarking speed, testing links, or diagnosing network bottlenecks.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

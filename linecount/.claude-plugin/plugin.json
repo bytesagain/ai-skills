@@ -1,9 +1,0 @@
-{
-  "name": "linecount",
-  "description": "Count source lines by language, exclude comments, and compare codebase sizes. Use when measuring codebase size, comparing projects, reporting LOC stats.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

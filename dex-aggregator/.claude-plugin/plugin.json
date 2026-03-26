@@ -1,9 +1,0 @@
-{
-  "name": "dex-aggregator",
-  "description": "Aggregate DEX prices and DeFi protocol data using DeFiLlama API. Use when comparing token prices. Requires curl.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

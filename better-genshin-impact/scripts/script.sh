@@ -1,101 +1,255 @@
 #!/usr/bin/env bash
-# better-genshin-impact - Gaming helper and tracker
+# better-genshin-impact — Better Genshin Impact reference tool. Use when working with better genshin impact in devtools contexts.
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${BETTER_GENSHIN_IMPACT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/better-genshin-impact}"
-DB="$DATA_DIR/data.log"
-mkdir -p "$DATA_DIR"
+
+VERSION="3.0.2"
 
 show_help() {
-    cat << EOF
-better-genshin-impact v$VERSION
+    cat << 'HELPEOF'
+better-genshin-impact v$VERSION — Better Genshin Impact Reference Tool
 
-Gaming helper and tracker
-
-Usage: better-genshin-impact <command> [args]
+Usage: better-genshin-impact <command>
 
 Commands:
-  tip                  Game tip
-  guide                Quick guide
-  build                Character/deck build
-  timer                Session timer
-  log                  Game log
-  stats                Gaming stats
-  random               Random pick
-  score                Score tracker
-  compare              Compare options
-  wishlist             Wishlist
-  help                 Show this help
-  version              Show version
+  intro           Overview and core concepts
+  quickstart      Getting started guide
+  patterns        Common patterns and best practices
+  debugging       Debugging and troubleshooting
+  performance     Performance optimization tips
+  security        Security considerations
+  migration       Migration and upgrade guide
+  cheatsheet      Quick reference cheat sheet
+  help              Show this help
+  version           Show version
 
-Data: \$DATA_DIR
+Powered by BytesAgain | bytesagain.com
+HELPEOF
+}
+
+cmd_intro() {
+    cat << 'EOF'
+# Better Genshin Impact — Overview
+
+## What is Better Genshin Impact?
+Better Genshin Impact (better-genshin-impact) is a specialized tool/concept in the devtools domain.
+It provides essential capabilities for professionals working with better genshin impact.
+
+## Key Concepts
+- Core better genshin impact principles and fundamentals
+- How better genshin impact fits into the broader devtools ecosystem  
+- Essential terminology every practitioner should know
+
+## Why Better Genshin Impact Matters
+Understanding better genshin impact is critical for:
+- Improving efficiency in devtools workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic better genshin impact concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
 EOF
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+cmd_quickstart() {
+    cat << 'EOF'
+# Better Genshin Impact — Quick Start Guide
 
-cmd_tip() {
-    echo "  Tip for $1: [strategy advice]"
-    _log "tip" "${1:-}"
+## Prerequisites
+- Basic understanding of devtools concepts
+- Required tools and access credentials
+- System meeting minimum requirements
+
+## Installation
+1. Download or clone the better genshin impact package
+2. Install dependencies
+3. Configure initial settings
+4. Verify installation
+
+## First Steps
+1. Run the hello-world example
+2. Review the default configuration
+3. Try a simple real-world task
+4. Explore available commands and options
+
+## Next Steps
+- Read the full documentation
+- Join the community forum
+- Try advanced features
+- Set up automated workflows
+EOF
 }
 
-cmd_guide() {
-    echo "  Beginner guide for: $1"
-    _log "guide" "${1:-}"
+cmd_patterns() {
+    cat << 'EOF'
+# Better Genshin Impact — Common Patterns & Best Practices
+
+## Design Patterns
+1. **Standard Pattern**: The most common approach for better genshin impact
+2. **Scalable Pattern**: For high-volume or distributed scenarios
+3. **Resilient Pattern**: For fault-tolerant implementations
+
+## Best Practices
+- Follow the principle of least privilege
+- Use version control for all configurations
+- Implement comprehensive logging
+- Test changes in staging before production
+- Document all custom configurations
+
+## Anti-Patterns to Avoid
+- Hardcoding credentials or configuration
+- Skipping validation and error handling
+- Ignoring monitoring and alerting
+- Making changes without documentation
+- Over-engineering simple solutions
+EOF
 }
 
-cmd_build() {
-    echo "  Build: $1 | Focus: ${2:-balanced}"
-    _log "build" "${1:-}"
+cmd_debugging() {
+    cat << 'EOF'
+# Better Genshin Impact — Debugging Guide
+
+## Common Errors
+1. **Connection refused**: Check service status and network
+2. **Permission denied**: Verify credentials and access rights
+3. **Timeout**: Check network, increase limits, optimize queries
+4. **Invalid input**: Validate data format and encoding
+
+## Debugging Tools
+- Built-in logging and diagnostics
+- Network analysis tools (tcpdump, wireshark)
+- System monitoring (top, htop, iostat)
+- Application-specific debug modes
+
+## Debug Workflow
+1. Reproduce the issue consistently
+2. Check logs for error messages
+3. Isolate the failing component
+4. Test with minimal configuration
+5. Apply fix and verify
+EOF
 }
 
-cmd_timer() {
-    echo "  Session started: $(date +%H:%M) | Remember to take breaks!"
-    _log "timer" "${1:-}"
+cmd_performance() {
+    cat << 'EOF'
+# Better Genshin Impact — Performance Optimization
+
+## Key Metrics
+- Response time / latency
+- Throughput / operations per second
+- Resource utilization (CPU, memory, I/O)
+- Error rate and retry frequency
+
+## Optimization Strategies
+1. **Caching**: Reduce redundant operations
+2. **Batching**: Group small operations
+3. **Indexing**: Speed up data lookups
+4. **Compression**: Reduce data transfer size
+5. **Parallel Processing**: Utilize multiple cores
+
+## Monitoring
+- Set up baseline performance metrics
+- Configure alerts for anomalies
+- Track trends over time
+- Regular capacity planning reviews
+EOF
 }
 
-cmd_log() {
-    echo "$(date) $*" >> "$DB"; echo "  Logged: $*"
-    _log "log" "${1:-}"
+cmd_security() {
+    cat << 'EOF'
+# Better Genshin Impact — Security Considerations
+
+## Authentication & Authorization
+- Use strong, unique credentials
+- Implement role-based access control
+- Enable multi-factor authentication where possible
+- Regularly review and rotate credentials
+
+## Data Protection
+- Encrypt data at rest and in transit
+- Implement proper backup procedures
+- Follow data retention policies
+- Sanitize inputs to prevent injection
+
+## Network Security
+- Use firewalls and network segmentation
+- Monitor for suspicious activity
+- Keep all software patched and updated
+- Disable unnecessary services and ports
+EOF
 }
 
-cmd_stats() {
-    echo "  Sessions: $(wc -l < "$DB" 2>/dev/null || echo 0)"
-    _log "stats" "${1:-}"
+cmd_migration() {
+    cat << 'EOF'
+# Better Genshin Impact — Migration & Upgrade Guide
+
+## Pre-Migration Checklist
+- [ ] Current system fully documented
+- [ ] Complete backup taken and verified
+- [ ] Target environment prepared
+- [ ] Rollback plan documented
+- [ ] Stakeholders notified
+
+## Migration Steps
+1. Prepare target environment
+2. Export data from source
+3. Transform data if needed
+4. Import to target
+5. Verify data integrity
+6. Update configurations
+7. Test all functionality
+8. Switch traffic / go live
+
+## Post-Migration
+- Monitor for errors and performance
+- Verify all integrations working
+- Update documentation
+- Decommission old system after confirmation
+EOF
 }
 
-cmd_random() {
-    echo "  Random number: $((RANDOM % ${1:-100} + 1))"
-    _log "random" "${1:-}"
+cmd_cheatsheet() {
+    cat << 'EOF'
+# Better Genshin Impact — Quick Reference
+
+## Essential Commands
+| Command | Description |
+|---------|-------------|
+| help | Show available commands |
+| version | Display version info |
+| intro | Overview and fundamentals |
+| troubleshooting | Common problems and fixes |
+
+## Common Workflows
+1. **Setup**: install → configure → verify → test
+2. **Daily**: check → monitor → report → review
+3. **Issue**: diagnose → isolate → fix → verify → document
+
+## Key Shortcuts
+- Use tab completion for commands
+- Check logs first when troubleshooting
+- Always backup before making changes
+- Document everything you change
+EOF
 }
 
-cmd_score() {
-    echo "  Score: $1 | High: ${2:-0}"
-    _log "score" "${1:-}"
-}
+CMD="${1:-help}"
+shift 2>/dev/null || true
 
-cmd_compare() {
-    echo "  Option A vs Option B: analyze pros/cons"
-    _log "compare" "${1:-}"
-}
-
-cmd_wishlist() {
-    echo "$1" >> "$DATA_DIR/wishlist.txt"; echo "  Added to wishlist: $1"
-    _log "wishlist" "${1:-}"
-}
-
-case "${1:-help}" in
-    tip) shift; cmd_tip "$@" ;;
-    guide) shift; cmd_guide "$@" ;;
-    build) shift; cmd_build "$@" ;;
-    timer) shift; cmd_timer "$@" ;;
-    log) shift; cmd_log "$@" ;;
-    stats) shift; cmd_stats "$@" ;;
-    random) shift; cmd_random "$@" ;;
-    score) shift; cmd_score "$@" ;;
-    compare) shift; cmd_compare "$@" ;;
-    wishlist) shift; cmd_wishlist "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "better-genshin-impact v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    quickstart) cmd_quickstart "$@" ;;
+    patterns) cmd_patterns "$@" ;;
+    debugging) cmd_debugging "$@" ;;
+    performance) cmd_performance "$@" ;;
+    security) cmd_security "$@" ;;
+    migration) cmd_migration "$@" ;;
+    cheatsheet) cmd_cheatsheet "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "better-genshin-impact v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: better-genshin-impact help"; exit 1 ;;
 esac

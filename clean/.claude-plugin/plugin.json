@@ -1,9 +1,0 @@
-{
-  "name": "clean",
-  "description": "Scan and clean up files including duplicates, temp files, and caches using system tools. Use when you need to find and remove junk files,",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

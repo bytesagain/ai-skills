@@ -1,56 +1,34 @@
 ---
 name: "acmesh"
-version: "3.0.0"
-description: "Manage ACME/SSL certificates with issuance, renewal, and revocation. Use when provisioning certs or checking SSL status."
+version: "4.0.1"
+description: "Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Acmesh concepts, best practices, and implementation patterns."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [acmesh, reference]
+category: "devtools"
 ---
 
-# acmesh
+# Acmesh
 
-Manage ACME/SSL certificates with issuance, renewal, and revocation. Use when provisioning certs or checking SSL status.
+Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Acmesh concepts, best practices, and implementation patterns. No API keys or credentials required.
 
 ## Commands
 
-### `issue`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-```bash
-scripts/script.sh issue <domain>
-```
+## Output Format
 
-### `list`
-
-```bash
-scripts/script.sh list
-```
-
-### `info`
-
-```bash
-scripts/script.sh info <domain>
-```
-
-### `renew`
-
-```bash
-scripts/script.sh renew <domain>
-```
-
-### `revoke`
-
-```bash
-scripts/script.sh revoke <domain>
-```
-
-### `check`
-
-```bash
-scripts/script.sh check <domain>
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/acmesh/`.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

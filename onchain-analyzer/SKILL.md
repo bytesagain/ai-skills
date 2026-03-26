@@ -1,56 +1,34 @@
 ---
 name: "onchain-analyzer"
-version: "3.0.0"
-description: "Analyze blockchain data with address lookups and transaction inspection. Use when investigating on-chain activity. Requires curl."
+version: "4.0.1"
+description: "Reference tool for devtools — covers intro, formulas, regulations and more. Quick lookup for Onchain Analyzer concepts, best practices, and implementation pa..."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [onchain,analyzer, reference]
+category: "devtools"
 ---
 
-# onchain-analyzer
+# Onchain Analyzer
 
-Analyze blockchain data with address lookups and transaction inspection. Use when investigating on-chain activity. Requires curl.
+Reference tool for devtools — covers intro, formulas, regulations and more. Quick lookup for Onchain Analyzer concepts, best practices, and implementation pa... No API keys or credentials required.
 
 ## Commands
 
-### `balance`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `formulas` | formulas reference |
+| `regulations` | regulations reference |
+| `risks` | risks reference |
+| `instruments` | instruments reference |
+| `strategies` | strategies reference |
+| `glossary` | glossary reference |
+| `checklist` | checklist reference |
 
-```bash
-scripts/script.sh balance <addr>
-```
+## Output Format
 
-### `tx`
-
-```bash
-scripts/script.sh tx <hash>
-```
-
-### `address`
-
-```bash
-scripts/script.sh address <addr>
-```
-
-### `gas`
-
-```bash
-scripts/script.sh gas
-```
-
-### `block`
-
-```bash
-scripts/script.sh block <number>
-```
-
-### `token`
-
-```bash
-scripts/script.sh token <addr>
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/onchain-analyzer/`.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

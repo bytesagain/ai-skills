@@ -1,9 +1,0 @@
-{
-  "name": "db-explorer",
-  "description": "Browse database tables and run SQL queries across multiple engines. Use when exploring schemas, running queries, comparing databases.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

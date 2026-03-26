@@ -1,9 +1,0 @@
-{
-  "name": "smart-lights",
-  "description": "Control Philips Hue lights with colors, effects, and schedules. Use when setting scenes, running effects, checking bulbs, analyzing energy, generating presets.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

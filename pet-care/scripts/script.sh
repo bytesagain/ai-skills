@@ -1,155 +1,255 @@
 #!/usr/bin/env bash
+# pet-care — Pet Care reference tool. Use when working with pet care in devtools contexts.
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-VERSION="3.0.0"
-SCRIPT_NAME="pet-care"
-DATA_DIR="$HOME/.local/share/pet-care"
-mkdir -p "$DATA_DIR"
+VERSION="4.0.0"
 
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+show_help() {
+    cat << 'HELPEOF'
+pet-care v$VERSION — Pet Care Reference Tool
 
-_info()  { echo "[INFO]  $*"; }
-_error() { echo "[ERROR] $*" >&2; }
-die()    { _error "$@"; exit 1; }
+Usage: pet-care <command>
 
-cmd_guide() {
-    local pet="${2:-}"
-    [ -z "$pet" ] && die "Usage: $SCRIPT_NAME guide <pet>"
-    case $2 in dog) echo 'Dogs: daily walks, balanced diet, annual vet checkup';; cat) echo 'Cats: indoor enrichment, wet+dry food, litter maintenance';; fish) echo 'Fish: water temp/pH testing, regular water changes';; *) echo 'General: fresh water, proper diet, regular vet visits';; esac
+Commands:
+  intro           Overview and core concepts
+  quickstart      Getting started guide
+  patterns        Common patterns and best practices
+  debugging       Debugging and troubleshooting
+  performance     Performance optimization tips
+  security        Security considerations
+  migration       Migration and upgrade guide
+  cheatsheet      Quick reference cheat sheet
+  help              Show this help
+  version           Show version
+
+Powered by BytesAgain | bytesagain.com
+HELPEOF
 }
 
-cmd_feed() {
-    local pet="${2:-}"
-    local weight="${3:-}"
-    [ -z "$pet" ] && die "Usage: $SCRIPT_NAME feed <pet weight>"
-    echo 'Feeding guide for $2 ($3 kg): ~${3}0 calories/day'
+cmd_intro() {
+    cat << 'EOF'
+# Pet Care — Overview
+
+## What is Pet Care?
+Pet Care (pet-care) is a specialized tool/concept in the devtools domain.
+It provides essential capabilities for professionals working with pet care.
+
+## Key Concepts
+- Core pet care principles and fundamentals
+- How pet care fits into the broader devtools ecosystem  
+- Essential terminology every practitioner should know
+
+## Why Pet Care Matters
+Understanding pet care is critical for:
+- Improving efficiency in devtools workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic pet care concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
+EOF
 }
 
-cmd_vaccine() {
-    local pet="${2:-}"
-    [ -z "$pet" ] && die "Usage: $SCRIPT_NAME vaccine <pet>"
-    case $2 in dog) echo 'Core: Rabies, DHPP, Bordetella';; cat) echo 'Core: Rabies, FVRCP, FeLV';; *) echo 'Consult your vet for $2 vaccines';; esac
+cmd_quickstart() {
+    cat << 'EOF'
+# Pet Care — Quick Start Guide
+
+## Prerequisites
+- Basic understanding of devtools concepts
+- Required tools and access credentials
+- System meeting minimum requirements
+
+## Installation
+1. Download or clone the pet care package
+2. Install dependencies
+3. Configure initial settings
+4. Verify installation
+
+## First Steps
+1. Run the hello-world example
+2. Review the default configuration
+3. Try a simple real-world task
+4. Explore available commands and options
+
+## Next Steps
+- Read the full documentation
+- Join the community forum
+- Try advanced features
+- Set up automated workflows
+EOF
 }
 
-cmd_emergency() {
-    local symptom="${2:-}"
-    [ -z "$symptom" ] && die "Usage: $SCRIPT_NAME emergency <symptom>"
-    echo 'Emergency: if $2, contact vet immediately'
+cmd_patterns() {
+    cat << 'EOF'
+# Pet Care — Common Patterns & Best Practices
+
+## Design Patterns
+1. **Standard Pattern**: The most common approach for pet care
+2. **Scalable Pattern**: For high-volume or distributed scenarios
+3. **Resilient Pattern**: For fault-tolerant implementations
+
+## Best Practices
+- Follow the principle of least privilege
+- Use version control for all configurations
+- Implement comprehensive logging
+- Test changes in staging before production
+- Document all custom configurations
+
+## Anti-Patterns to Avoid
+- Hardcoding credentials or configuration
+- Skipping validation and error handling
+- Ignoring monitoring and alerting
+- Making changes without documentation
+- Over-engineering simple solutions
+EOF
 }
 
-cmd_log() {
-    local pet="${2:-}"
-    local note="${3:-}"
-    [ -z "$pet" ] && die "Usage: $SCRIPT_NAME log <pet note>"
-    echo '{"pet":"'$2'","note":"'$3'","date":"'$(date +%Y-%m-%d)'"}' >> $DATA_DIR/pet_log.jsonl && echo Logged
+cmd_debugging() {
+    cat << 'EOF'
+# Pet Care — Debugging Guide
+
+## Common Errors
+1. **Connection refused**: Check service status and network
+2. **Permission denied**: Verify credentials and access rights
+3. **Timeout**: Check network, increase limits, optimize queries
+4. **Invalid input**: Validate data format and encoding
+
+## Debugging Tools
+- Built-in logging and diagnostics
+- Network analysis tools (tcpdump, wireshark)
+- System monitoring (top, htop, iostat)
+- Application-specific debug modes
+
+## Debug Workflow
+1. Reproduce the issue consistently
+2. Check logs for error messages
+3. Isolate the failing component
+4. Test with minimal configuration
+5. Apply fix and verify
+EOF
 }
 
-cmd_checklist() {
-    local pet="${2:-}"
-    [ -z "$pet" ] && die "Usage: $SCRIPT_NAME checklist <pet>"
-    echo 'Daily: food, water, exercise, medication if needed'
+cmd_performance() {
+    cat << 'EOF'
+# Pet Care — Performance Optimization
+
+## Key Metrics
+- Response time / latency
+- Throughput / operations per second
+- Resource utilization (CPU, memory, I/O)
+- Error rate and retry frequency
+
+## Optimization Strategies
+1. **Caching**: Reduce redundant operations
+2. **Batching**: Group small operations
+3. **Indexing**: Speed up data lookups
+4. **Compression**: Reduce data transfer size
+5. **Parallel Processing**: Utilize multiple cores
+
+## Monitoring
+- Set up baseline performance metrics
+- Configure alerts for anomalies
+- Track trends over time
+- Regular capacity planning reviews
+EOF
 }
 
-cmd_help() {
-    echo "$SCRIPT_NAME v$VERSION"
-    echo ""
-    echo "Commands:"
-    printf "  %-25s\n" "guide <pet>"
-    printf "  %-25s\n" "feed <pet weight>"
-    printf "  %-25s\n" "vaccine <pet>"
-    printf "  %-25s\n" "emergency <symptom>"
-    printf "  %-25s\n" "log <pet note>"
-    printf "  %-25s\n" "checklist <pet>"
-    printf "  %%-25s\n" "help"
-    echo ""
-    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
+cmd_security() {
+    cat << 'EOF'
+# Pet Care — Security Considerations
+
+## Authentication & Authorization
+- Use strong, unique credentials
+- Implement role-based access control
+- Enable multi-factor authentication where possible
+- Regularly review and rotate credentials
+
+## Data Protection
+- Encrypt data at rest and in transit
+- Implement proper backup procedures
+- Follow data retention policies
+- Sanitize inputs to prevent injection
+
+## Network Security
+- Use firewalls and network segmentation
+- Monitor for suspicious activity
+- Keep all software patched and updated
+- Disable unnecessary services and ports
+EOF
 }
 
-cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+cmd_migration() {
+    cat << 'EOF'
+# Pet Care — Migration & Upgrade Guide
 
-main() {
-    local cmd="${1:-help}"
-    case "$cmd" in
-        guide) shift; cmd_guide "$@" ;;
-        feed) shift; cmd_feed "$@" ;;
-        vaccine) shift; cmd_vaccine "$@" ;;
-        emergency) shift; cmd_emergency "$@" ;;
-        log) shift; cmd_log "$@" ;;
-        checklist) shift; cmd_checklist "$@" ;;
-        help) cmd_help ;;
-        version) cmd_version ;;
-        *) die "Unknown: $cmd" ;;
-    esac
+## Pre-Migration Checklist
+- [ ] Current system fully documented
+- [ ] Complete backup taken and verified
+- [ ] Target environment prepared
+- [ ] Rollback plan documented
+- [ ] Stakeholders notified
+
+## Migration Steps
+1. Prepare target environment
+2. Export data from source
+3. Transform data if needed
+4. Import to target
+5. Verify data integrity
+6. Update configurations
+7. Test all functionality
+8. Switch traffic / go live
+
+## Post-Migration
+- Monitor for errors and performance
+- Verify all integrations working
+- Update documentation
+- Decommission old system after confirmation
+EOF
 }
 
-main "$@"
+cmd_cheatsheet() {
+    cat << 'EOF'
+# Pet Care — Quick Reference
+
+## Essential Commands
+| Command | Description |
+|---------|-------------|
+| help | Show available commands |
+| version | Display version info |
+| intro | Overview and fundamentals |
+| troubleshooting | Common problems and fixes |
+
+## Common Workflows
+1. **Setup**: install → configure → verify → test
+2. **Daily**: check → monitor → report → review
+3. **Issue**: diagnose → isolate → fix → verify → document
+
+## Key Shortcuts
+- Use tab completion for commands
+- Check logs first when troubleshooting
+- Always backup before making changes
+- Document everything you change
+EOF
+}
+
+CMD="${1:-help}"
+shift 2>/dev/null || true
+
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    quickstart) cmd_quickstart "$@" ;;
+    patterns) cmd_patterns "$@" ;;
+    debugging) cmd_debugging "$@" ;;
+    performance) cmd_performance "$@" ;;
+    security) cmd_security "$@" ;;
+    migration) cmd_migration "$@" ;;
+    cheatsheet) cmd_cheatsheet "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "pet-care v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: pet-care help"; exit 1 ;;
+esac

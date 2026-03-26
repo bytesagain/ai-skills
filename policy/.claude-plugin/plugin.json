@@ -1,9 +1,0 @@
-{
-  "name": "policy",
-  "description": "Audit and enforce security policy baselines. Use when generating policy docs, checking compliance strength, rotating access controls, auditing configs.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

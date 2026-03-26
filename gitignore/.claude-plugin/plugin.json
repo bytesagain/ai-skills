@@ -1,9 +1,0 @@
-{
-  "name": "gitignore",
-  "description": "Generate .gitignore files from templates for any language or framework fast. Use when starting repos, adding ignores, or checking ignored patterns.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,155 +1,229 @@
 #!/usr/bin/env bash
+# dream-interpreter — Dream Interpreter reference tool. Use when working with dream interpreter in life contexts.
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-VERSION="3.0.0"
-SCRIPT_NAME="dream-interpreter"
-DATA_DIR="$HOME/.local/share/dream-interpreter"
-mkdir -p "$DATA_DIR"
+VERSION="4.0.2"
 
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+show_help() {
+    cat << 'HELPEOF'
+dream-interpreter v$VERSION — Dream Interpreter Reference Tool
 
-_info()  { echo "[INFO]  $*"; }
-_error() { echo "[ERROR] $*" >&2; }
-die()    { _error "$@"; exit 1; }
+Usage: dream-interpreter <command>
 
-cmd_interpret() {
-    local symbol="${2:-}"
-    [ -z "$symbol" ] && die "Usage: $SCRIPT_NAME interpret <symbol>"
-    case $2 in water) echo 'Water: emotions, subconscious';; flying) echo 'Flying: freedom, ambition';; falling) echo 'Falling: anxiety, loss of control';; teeth) echo 'Teeth: self-image, communication';; snake) echo 'Snake: transformation, fear';; *) echo 'Symbol $2: search for personal meaning';; esac
+Commands:
+  intro           Overview and basics
+  guide           Step-by-step guide
+  tips            Pro tips and tricks
+  planning        Planning and preparation
+  resources       Recommended resources
+  mistakes        Common mistakes to avoid
+  examples        Real-world examples
+  faq             Frequently asked questions
+  help              Show this help
+  version           Show version
+
+Powered by BytesAgain | bytesagain.com
+HELPEOF
 }
 
-cmd_journal() {
-    local text="${2:-}"
-    [ -z "$text" ] && die "Usage: $SCRIPT_NAME journal <text>"
-    echo '{"date":"'$(date +%Y-%m-%d)'","dream":"'$2'"}' >> $DATA_DIR/journal.jsonl && echo 'Logged dream'
+cmd_intro() {
+    cat << 'EOF'
+# Dream Interpreter — Overview
+
+## What is Dream Interpreter?
+Dream Interpreter (dream-interpreter) is a specialized tool/concept in the life domain.
+It provides essential capabilities for professionals working with dream interpreter.
+
+## Key Concepts
+- Core dream interpreter principles and fundamentals
+- How dream interpreter fits into the broader life ecosystem  
+- Essential terminology every practitioner should know
+
+## Why Dream Interpreter Matters
+Understanding dream interpreter is critical for:
+- Improving efficiency in life workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic dream interpreter concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
+EOF
 }
 
-cmd_history() {
-    cat $DATA_DIR/journal.jsonl 2>/dev/null | tail -10
+cmd_guide() {
+    cat << 'EOF'
+# Dream Interpreter — Step-by-Step Guide
+
+## Overview
+This guide walks you through the essential dream interpreter workflows.
+
+## Step 1: Preparation
+- Gather required materials and information
+- Review prerequisites and requirements
+- Set up your workspace
+
+## Step 2: Execution
+- Follow the standard procedure
+- Monitor progress at each stage
+- Document any deviations
+
+## Step 3: Verification
+- Check results against expected outcomes
+- Run validation tests
+- Get peer review if applicable
+
+## Step 4: Documentation
+- Record what was done and the results
+- Note any lessons learned
+- Update procedures if needed
+EOF
 }
 
-cmd_search() {
-    local keyword="${2:-}"
-    [ -z "$keyword" ] && die "Usage: $SCRIPT_NAME search <keyword>"
-    grep -i $2 $DATA_DIR/journal.jsonl 2>/dev/null
+cmd_tips() {
+    cat << 'EOF'
+# Dream Interpreter — Pro Tips & Tricks
+
+## Efficiency Tips
+1. Automate repetitive tasks
+2. Use templates for common operations
+3. Set up keyboard shortcuts
+4. Batch similar operations together
+5. Keep a personal cheat sheet
+
+## Expert Tricks
+- Learn the less-known features
+- Build custom workflows
+- Connect with the community for insights
+- Study how experts approach problems
+- Practice regularly to build muscle memory
+EOF
 }
 
-cmd_categories() {
-    echo 'Common categories: water, flying, falling, teeth, snake, chase, death, animals, house, road'
+cmd_planning() {
+    cat << 'EOF'
+# Dream Interpreter — Planning & Preparation
+
+## Planning Framework
+1. **Define Goals**: What do you want to achieve?
+2. **Assess Current State**: Where are you now?
+3. **Identify Gaps**: What needs to change?
+4. **Create Plan**: Steps, timeline, resources
+5. **Execute & Monitor**: Track progress
+
+## Resource Planning
+- Budget allocation
+- Team and skills needed
+- Tools and infrastructure
+- Timeline and milestones
+EOF
 }
 
-cmd_random() {
-    shuf -n1 -e water flying falling teeth snake chase death animals house road | xargs -I{} bash $0 interpret {}
+cmd_resources() {
+    cat << 'EOF'
+# Dream Interpreter — Recommended Resources
+
+## Learning Resources
+- Official documentation and guides
+- Online courses and tutorials
+- Community forums and Q&A sites
+- Books and publications
+
+## Tools
+- Essential software and utilities
+- Online calculators and generators
+- Testing and validation tools
+- Monitoring and analytics platforms
+EOF
 }
 
-cmd_help() {
-    echo "$SCRIPT_NAME v$VERSION"
-    echo ""
-    echo "Commands:"
-    printf "  %-25s\n" "interpret <symbol>"
-    printf "  %-25s\n" "journal <text>"
-    printf "  %-25s\n" "history"
-    printf "  %-25s\n" "search <keyword>"
-    printf "  %-25s\n" "categories"
-    printf "  %-25s\n" "random"
-    printf "  %%-25s\n" "help"
-    echo ""
-    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
+cmd_mistakes() {
+    cat << 'EOF'
+# Dream Interpreter — Common Mistakes to Avoid
+
+## Top Mistakes
+1. **Skipping planning**: Jumping in without understanding requirements
+2. **Ignoring documentation**: Not recording decisions and changes
+3. **Over-complicating**: Adding unnecessary complexity
+4. **Skipping tests**: Deploying without verification
+5. **Working in isolation**: Not seeking feedback or review
+
+## How to Avoid Them
+- Use checklists for routine operations
+- Always test before deploying
+- Get peer review on important changes
+- Keep documentation current
+- Learn from past incidents
+EOF
 }
 
-cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+cmd_examples() {
+    cat << 'EOF'
+# Dream Interpreter — Real-World Examples
 
-main() {
-    local cmd="${1:-help}"
-    case "$cmd" in
-        interpret) shift; cmd_interpret "$@" ;;
-        journal) shift; cmd_journal "$@" ;;
-        history) shift; cmd_history "$@" ;;
-        search) shift; cmd_search "$@" ;;
-        categories) shift; cmd_categories "$@" ;;
-        random) shift; cmd_random "$@" ;;
-        help) cmd_help ;;
-        version) cmd_version ;;
-        *) die "Unknown: $cmd" ;;
-    esac
+## Example 1: Basic Setup
+A typical dream interpreter setup for a small team:
+- Standard configuration with defaults
+- Basic monitoring enabled
+- Manual backup schedule
+
+## Example 2: Production Deployment
+An enterprise dream interpreter deployment:
+- High-availability configuration
+- Automated monitoring and alerting
+- Continuous backup with point-in-time recovery
+
+## Example 3: Troubleshooting Scenario
+When things go wrong:
+- Symptom identification
+- Root cause analysis
+- Fix implementation and verification
+EOF
 }
 
-main "$@"
+cmd_faq() {
+    cat << 'EOF'
+# Dream Interpreter — Frequently Asked Questions
+
+## General
+**Q: What is Dream Interpreter?**
+A: Dream Interpreter is a reference tool for dream interpreter in the life domain.
+
+**Q: Who should use this?**
+A: Anyone working with dream interpreter who needs quick reference material.
+
+**Q: How do I get started?**
+A: Run the intro command for an overview, then explore other commands.
+
+## Technical
+**Q: What are the system requirements?**
+A: Bash 4.0+ on any Unix-like system (Linux, macOS).
+
+**Q: Can I customize the output?**
+A: The tool provides reference content. Customize by editing the script.
+
+**Q: How do I report issues?**
+A: Visit github.com/bytesagain/ai-skills or email hello@bytesagain.com
+EOF
+}
+
+CMD="${1:-help}"
+shift 2>/dev/null || true
+
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    guide) cmd_guide "$@" ;;
+    tips) cmd_tips "$@" ;;
+    planning) cmd_planning "$@" ;;
+    resources) cmd_resources "$@" ;;
+    mistakes) cmd_mistakes "$@" ;;
+    examples) cmd_examples "$@" ;;
+    faq) cmd_faq "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "dream-interpreter v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: dream-interpreter help"; exit 1 ;;
+esac

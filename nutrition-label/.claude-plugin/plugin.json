@@ -1,9 +1,0 @@
-{
-  "name": "nutrition-label",
-  "description": "Generate nutrition labels and track daily intake. Use when analyzing food nutrition.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

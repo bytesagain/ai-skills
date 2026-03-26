@@ -1,9 +1,0 @@
-{
-  "name": "video-fetcher",
-  "description": "\ud83d\udc7e Fast and simple video download library and CLI tool written in Go video-fetcher, go, bilibili, crawler, download, downloader.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

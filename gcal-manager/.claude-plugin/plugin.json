@@ -1,9 +1,0 @@
-{
-  "name": "gcal-manager",
-  "description": "Manage Google Calendar events, check availability, and view daily agendas. Use when listing events, creating entries, or checking free time slots.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,56 +1,34 @@
 ---
 name: "trademark-helper"
-version: "3.0.0"
-description: "Check trademark availability and Nice classification codes. Use when registering brands."
+version: "4.0.1"
+description: "Reference tool for business — covers intro, quickstart, patterns and more. Quick lookup for Trademark Helper concepts, best practices, and implementation pat..."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [trademark,helper, reference]
+category: "business"
 ---
 
-# trademark-helper
+# Trademark Helper
 
-Check trademark availability and Nice classification codes. Use when registering brands.
+Reference tool for business — covers intro, quickstart, patterns and more. Quick lookup for Trademark Helper concepts, best practices, and implementation pat... No API keys or credentials required.
 
 ## Commands
 
-### `classes`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-```bash
-scripts/script.sh classes
-```
+## Output Format
 
-### `check`
-
-```bash
-scripts/script.sh check <name>
-```
-
-### `search`
-
-```bash
-scripts/script.sh search <term>
-```
-
-### `suggest`
-
-```bash
-scripts/script.sh suggest <keyword>
-```
-
-### `compare`
-
-```bash
-scripts/script.sh compare <n1 n2>
-```
-
-### `report`
-
-```bash
-scripts/script.sh report <name>
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/trademark-helper/`.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

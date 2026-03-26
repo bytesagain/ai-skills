@@ -1,9 +1,0 @@
-{
-  "name": "observability",
-  "description": "SigNoz is an open-source observability platform native to OpenTelemetry with logs, traces and metric observability, typescript, apm, application-monitoring.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

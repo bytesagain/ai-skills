@@ -1,9 +1,0 @@
-{
-  "name": "lunardate",
-  "description": "Look up Chinese lunar dates, zodiac signs, festivals, and daily auspiciousness. Use when converting dates, checking festivals, looking up zodiac years.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,74 +1,52 @@
 ---
-version: "2.0.0"
-name: shopify-toolkit
-description: "Manage Shopify products, orders, inventory, and collections via API. Use when syncing catalogs, monitoring orders, automating stock, notifying events."
-author: BytesAgain
-homepage: https://bytesagain.com
-source: https://github.com/bytesagain/ai-skills
+name: "shopify-toolkit"
+version: "7.0.0"
+description: "Shopify development reference — Liquid templates, Admin/Storefront API, theme architecture, OAuth, checkout extensibility, and CLI commands."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [shopify, ecommerce, liquid, storefront-api, theme-development]
+category: "devtools"
 ---
 
 # Shopify Toolkit
 
-A full-featured Shopify store management toolkit for listing and managing products, orders, customers, inventory, collections, and shop settings — all from the command line using the Shopify Admin REST API. Provides complete e-commerce store management capabilities for automation and reporting.
+Shopify development reference covering Liquid templates, Admin and Storefront APIs, theme architecture (OS 2.0), app development with OAuth, checkout extensibility, and performance optimization. No API keys or credentials required — outputs reference documentation only.
 
-## Description
+## When to Use
 
-Shopify Toolkit gives you programmatic control over your Shopify store. List and search products, view and manage orders, update inventory levels, manage customer records, handle collections, and retrieve shop analytics. Supports pagination for large datasets, formatted output for reporting, and all standard CRUD operations. Ideal for inventory automation, order management, bulk product updates, customer analytics, and e-commerce operations.
-
-## Requirements
-
-- `SHOPIFY_STORE` — Your Shopify store name (the `xxx` in `xxx.myshopify.com`)
-- `SHOPIFY_ACCESS_TOKEN` — Admin API access token
-- Create a custom app in your Shopify Admin → Settings → Apps and sales channels → Develop apps
+- Building or customizing a Shopify theme with Liquid templates
+- Working with Shopify Admin or Storefront GraphQL APIs
+- Setting up OAuth flow for a Shopify app
+- Optimizing storefront Core Web Vitals (LCP, CLS, INP)
+- Migrating from Theme 1.0 to OS 2.0 or Checkout Extensibility
+- Looking up Liquid filters, tags, or CLI commands
 
 ## Commands
 
-- `count-orders` — Execute count-orders
-- `count-products` — Execute count-products
-- `create-product` — Error: --title required
-- `get-order` — {}'.format(o.get('order_number','')))
-- `get-product` — Error: --product-id required
-- `list-customers` — Execute list-customers
-- `list-orders` — {} — \${:.2f}'.format(status, fulfillment, o.get('order_numb
-- `list-products` — Execute list-products
-- `shop-info` — Execute shop-info
-- `xxx` — -gt 0 ]; do
-## Environment Variables
-
-| Variable | Required | Description |
 | Command | Description |
 |---------|-------------|
-| `shop-info` | Shop Info |
-| `list-products` | List Products |
-| `get-product` | Get Product |
-| `create-product` | Create Product |
-| `list-orders` | List Orders |
-| `get-order` | Get Order |
-| `list-customers` | List Customers |
-| `count-products` | Count Products |
-| `count-orders` | Count Orders |
+| `intro` | Platform architecture — Liquid, APIs, Functions, Hydrogen, CLI |
+| `standards` | Theme file structure, section schema, OAuth scopes, metafields |
+| `troubleshooting` | Liquid errors, API rate limits (40 req/s), webhook failures, checkout issues |
+| `performance` | Liquid optimization, image srcset, JS/CSS auditing, Core Web Vitals |
+| `security` | HMAC webhook validation, session tokens, OAuth flow, CSP |
+| `migration` | Theme 1.0→2.0, checkout.liquid→Checkout Extensibility, platform migration |
+| `cheatsheet` | Shopify CLI commands, GraphQL queries, Liquid filters/tags, webhook events |
+| `faq` | Payments, multi-currency, Hydrogen vs Online Store, app count, Plus pricing |
 
-## Examples
+## Usage
 
 ```bash
-# List products
-SHOPIFY_STORE=mystore SHOPIFY_ACCESS_TOKEN=shpat_xxx shopify-toolkit products 20
-
-# Search products
-SHOPIFY_STORE=mystore SHOPIFY_ACCESS_TOKEN=shpat_xxx shopify-toolkit product search "t-shirt"
-
-# List recent orders
-SHOPIFY_STORE=mystore SHOPIFY_ACCESS_TOKEN=shpat_xxx shopify-toolkit orders 10 open
-
-# Get order details
-SHOPIFY_STORE=mystore SHOPIFY_ACCESS_TOKEN=shpat_xxx shopify-toolkit order get 12345
-
-# Update inventory
-SHOPIFY_STORE=mystore SHOPIFY_ACCESS_TOKEN=shpat_xxx shopify-toolkit inventory set 111 222 50
-
-# Store summary
-SHOPIFY_STORE=mystore SHOPIFY_ACCESS_TOKEN=shpat_xxx shopify-toolkit summary
+scripts/script.sh intro
+scripts/script.sh cheatsheet
+scripts/script.sh troubleshooting
 ```
+
+## Output Format
+
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
+
 ---
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

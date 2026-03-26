@@ -1,9 +1,0 @@
-{
-  "name": "md-convert",
-  "description": "Convert PDF, DOCX, HTML, and PPTX files to clean Markdown via Markitdown. Use when converting PDFs to MD, extracting DOCX text, migrating to Markdown.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

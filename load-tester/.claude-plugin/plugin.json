@@ -1,9 +1,0 @@
-{
-  "name": "load-tester",
-  "description": "Run HTTP load tests to benchmark throughput, latency, and error rates under stress. Use when stress-testing APIs, benchmarking performance, simulating load.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

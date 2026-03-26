@@ -1,9 +1,0 @@
-{
-  "name": "terraform-helper",
-  "description": "Generate production-ready Terraform HCL for cloud providers. Use when validating configs, generating modules, formatting HCL, linting plans.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

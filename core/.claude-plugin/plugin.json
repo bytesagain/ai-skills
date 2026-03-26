@@ -1,9 +1,0 @@
-{
-  "name": "core",
-  "description": "AdonisJS is a TypeScript-first web framework for building web apps and API servers. It comes with su core, typescript, core, framework, mvc-framework.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

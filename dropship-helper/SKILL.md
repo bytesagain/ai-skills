@@ -1,56 +1,34 @@
 ---
 name: "dropship-helper"
-version: "3.0.0"
-description: "Calculate dropshipping margins, ROI, and breakeven points. Use when evaluating product profitability."
+version: "4.0.2"
+description: "Reference tool for business — covers intro, formulas, regulations and more. Quick lookup for Dropship Helper concepts, best practices, and implementation pat..."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [dropship,helper, reference]
+category: "business"
 ---
 
-# dropship-helper
+# Dropship Helper
 
-Calculate dropshipping margins, ROI, and breakeven points. Use when evaluating product profitability.
+Reference tool for business — covers intro, formulas, regulations and more. Quick lookup for Dropship Helper concepts, best practices, and implementation pat... No API keys or credentials required.
 
 ## Commands
 
-### `margin`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `formulas` | formulas reference |
+| `regulations` | regulations reference |
+| `risks` | risks reference |
+| `instruments` | instruments reference |
+| `strategies` | strategies reference |
+| `glossary` | glossary reference |
+| `checklist` | checklist reference |
 
-```bash
-scripts/script.sh margin <cost price>
-```
+## Output Format
 
-### `roi`
-
-```bash
-scripts/script.sh roi <investment revenue>
-```
-
-### `pricing`
-
-```bash
-scripts/script.sh pricing <cost margin_pct>
-```
-
-### `breakeven`
-
-```bash
-scripts/script.sh breakeven <fixed variable price>
-```
-
-### `compare`
-
-```bash
-scripts/script.sh compare <c1 p1 c2 p2>
-```
-
-### `report`
-
-```bash
-scripts/script.sh report
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/dropship-helper/`.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

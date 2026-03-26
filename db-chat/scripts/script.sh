@@ -1,314 +1,255 @@
 #!/usr/bin/env bash
-# Db Chat — social tool
+# db-chat — Db Chat reference tool. Use when working with db chat in devtools contexts.
 # Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-DATA_DIR="${HOME}/.local/share/db-chat"
-mkdir -p "$DATA_DIR"
+VERSION="2.0.4"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-_version() { echo "db-chat v2.0.0"; }
+show_help() {
+    cat << 'HELPEOF'
+db-chat v$VERSION — Db Chat Reference Tool
 
-_help() {
-    echo "Db Chat v2.0.0 — social toolkit"
-    echo ""
-    echo "Usage: db-chat <command> [args]"
-    echo ""
-    echo "Commands:"
-    echo "  connect            Connect"
-    echo "  sync               Sync"
-    echo "  monitor            Monitor"
-    echo "  automate           Automate"
-    echo "  notify             Notify"
-    echo "  report             Report"
-    echo "  schedule           Schedule"
-    echo "  template           Template"
-    echo "  webhook            Webhook"
-    echo "  status             Status"
-    echo "  analytics          Analytics"
-    echo "  export             Export"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  search <term>      Search entries"
-    echo "  recent             Recent activity"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
+Usage: db-chat <command>
+
+Commands:
+  intro           Overview and core concepts
+  quickstart      Getting started guide
+  patterns        Common patterns and best practices
+  debugging       Debugging and troubleshooting
+  performance     Performance optimization tips
+  security        Security considerations
+  migration       Migration and upgrade guide
+  cheatsheet      Quick reference cheat sheet
+  help              Show this help
+  version           Show version
+
+Powered by BytesAgain | bytesagain.com
+HELPEOF
 }
 
-_stats() {
-    echo "=== Db Chat Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
+cmd_intro() {
+    cat << 'EOF'
+# Db Chat — Overview
+
+## What is Db Chat?
+Db Chat (db-chat) is a specialized tool/concept in the devtools domain.
+It provides essential capabilities for professionals working with db chat.
+
+## Key Concepts
+- Core db chat principles and fundamentals
+- How db chat fits into the broader devtools ecosystem  
+- Essential terminology every practitioner should know
+
+## Why Db Chat Matters
+Understanding db chat is critical for:
+- Improving efficiency in devtools workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic db chat concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
+EOF
 }
 
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "\n]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do echo "$name,$ts,$val" >> "$out"; done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Db Chat Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
-    esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
+cmd_quickstart() {
+    cat << 'EOF'
+# Db Chat — Quick Start Guide
+
+## Prerequisites
+- Basic understanding of devtools concepts
+- Required tools and access credentials
+- System meeting minimum requirements
+
+## Installation
+1. Download or clone the db chat package
+2. Install dependencies
+3. Configure initial settings
+4. Verify installation
+
+## First Steps
+1. Run the hello-world example
+2. Review the default configuration
+3. Try a simple real-world task
+4. Explore available commands and options
+
+## Next Steps
+- Read the full documentation
+- Join the community forum
+- Try advanced features
+- Set up automated workflows
+EOF
 }
 
-_status() {
-    echo "=== Db Chat Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Last: $(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo never)"
-    echo "  Status: OK"
+cmd_patterns() {
+    cat << 'EOF'
+# Db Chat — Common Patterns & Best Practices
+
+## Design Patterns
+1. **Standard Pattern**: The most common approach for db chat
+2. **Scalable Pattern**: For high-volume or distributed scenarios
+3. **Resilient Pattern**: For fault-tolerant implementations
+
+## Best Practices
+- Follow the principle of least privilege
+- Use version control for all configurations
+- Implement comprehensive logging
+- Test changes in staging before production
+- Document all custom configurations
+
+## Anti-Patterns to Avoid
+- Hardcoding credentials or configuration
+- Skipping validation and error handling
+- Ignoring monitoring and alerting
+- Making changes without documentation
+- Over-engineering simple solutions
+EOF
 }
 
-_search() {
-    local term="${1:?Usage: db-chat search <term>}"
-    echo "Searching for: $term"
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local m=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$m" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$m" | sed 's/^/    /'
-        fi
-    done
+cmd_debugging() {
+    cat << 'EOF'
+# Db Chat — Debugging Guide
+
+## Common Errors
+1. **Connection refused**: Check service status and network
+2. **Permission denied**: Verify credentials and access rights
+3. **Timeout**: Check network, increase limits, optimize queries
+4. **Invalid input**: Validate data format and encoding
+
+## Debugging Tools
+- Built-in logging and diagnostics
+- Network analysis tools (tcpdump, wireshark)
+- System monitoring (top, htop, iostat)
+- Application-specific debug modes
+
+## Debug Workflow
+1. Reproduce the issue consistently
+2. Check logs for error messages
+3. Isolate the failing component
+4. Test with minimal configuration
+5. Apply fix and verify
+EOF
 }
 
-_recent() {
-    echo "=== Recent Activity ==="
-    tail -20 "$DATA_DIR/history.log" 2>/dev/null | sed 's/^/  /' || echo "  No activity yet."
+cmd_performance() {
+    cat << 'EOF'
+# Db Chat — Performance Optimization
+
+## Key Metrics
+- Response time / latency
+- Throughput / operations per second
+- Resource utilization (CPU, memory, I/O)
+- Error rate and retry frequency
+
+## Optimization Strategies
+1. **Caching**: Reduce redundant operations
+2. **Batching**: Group small operations
+3. **Indexing**: Speed up data lookups
+4. **Compression**: Reduce data transfer size
+5. **Parallel Processing**: Utilize multiple cores
+
+## Monitoring
+- Set up baseline performance metrics
+- Configure alerts for anomalies
+- Track trends over time
+- Regular capacity planning reviews
+EOF
 }
 
-case "${1:-help}" in
-    connect)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent connect entries:"
-            tail -20 "$DATA_DIR/connect.log" 2>/dev/null || echo "  No entries yet. Use: db-chat connect <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/connect.log"
-            local total=$(wc -l < "$DATA_DIR/connect.log")
-            echo "  [Db Chat] connect: $input"
-            echo "  Saved. Total connect entries: $total"
-            _log "connect" "$input"
-        fi
-        ;;
-    sync)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent sync entries:"
-            tail -20 "$DATA_DIR/sync.log" 2>/dev/null || echo "  No entries yet. Use: db-chat sync <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/sync.log"
-            local total=$(wc -l < "$DATA_DIR/sync.log")
-            echo "  [Db Chat] sync: $input"
-            echo "  Saved. Total sync entries: $total"
-            _log "sync" "$input"
-        fi
-        ;;
-    monitor)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent monitor entries:"
-            tail -20 "$DATA_DIR/monitor.log" 2>/dev/null || echo "  No entries yet. Use: db-chat monitor <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/monitor.log"
-            local total=$(wc -l < "$DATA_DIR/monitor.log")
-            echo "  [Db Chat] monitor: $input"
-            echo "  Saved. Total monitor entries: $total"
-            _log "monitor" "$input"
-        fi
-        ;;
-    automate)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent automate entries:"
-            tail -20 "$DATA_DIR/automate.log" 2>/dev/null || echo "  No entries yet. Use: db-chat automate <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/automate.log"
-            local total=$(wc -l < "$DATA_DIR/automate.log")
-            echo "  [Db Chat] automate: $input"
-            echo "  Saved. Total automate entries: $total"
-            _log "automate" "$input"
-        fi
-        ;;
-    notify)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent notify entries:"
-            tail -20 "$DATA_DIR/notify.log" 2>/dev/null || echo "  No entries yet. Use: db-chat notify <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/notify.log"
-            local total=$(wc -l < "$DATA_DIR/notify.log")
-            echo "  [Db Chat] notify: $input"
-            echo "  Saved. Total notify entries: $total"
-            _log "notify" "$input"
-        fi
-        ;;
-    report)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent report entries:"
-            tail -20 "$DATA_DIR/report.log" 2>/dev/null || echo "  No entries yet. Use: db-chat report <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/report.log"
-            local total=$(wc -l < "$DATA_DIR/report.log")
-            echo "  [Db Chat] report: $input"
-            echo "  Saved. Total report entries: $total"
-            _log "report" "$input"
-        fi
-        ;;
-    schedule)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent schedule entries:"
-            tail -20 "$DATA_DIR/schedule.log" 2>/dev/null || echo "  No entries yet. Use: db-chat schedule <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/schedule.log"
-            local total=$(wc -l < "$DATA_DIR/schedule.log")
-            echo "  [Db Chat] schedule: $input"
-            echo "  Saved. Total schedule entries: $total"
-            _log "schedule" "$input"
-        fi
-        ;;
-    template)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent template entries:"
-            tail -20 "$DATA_DIR/template.log" 2>/dev/null || echo "  No entries yet. Use: db-chat template <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/template.log"
-            local total=$(wc -l < "$DATA_DIR/template.log")
-            echo "  [Db Chat] template: $input"
-            echo "  Saved. Total template entries: $total"
-            _log "template" "$input"
-        fi
-        ;;
-    webhook)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent webhook entries:"
-            tail -20 "$DATA_DIR/webhook.log" 2>/dev/null || echo "  No entries yet. Use: db-chat webhook <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/webhook.log"
-            local total=$(wc -l < "$DATA_DIR/webhook.log")
-            echo "  [Db Chat] webhook: $input"
-            echo "  Saved. Total webhook entries: $total"
-            _log "webhook" "$input"
-        fi
-        ;;
-    status)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent status entries:"
-            tail -20 "$DATA_DIR/status.log" 2>/dev/null || echo "  No entries yet. Use: db-chat status <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/status.log"
-            local total=$(wc -l < "$DATA_DIR/status.log")
-            echo "  [Db Chat] status: $input"
-            echo "  Saved. Total status entries: $total"
-            _log "status" "$input"
-        fi
-        ;;
-    analytics)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent analytics entries:"
-            tail -20 "$DATA_DIR/analytics.log" 2>/dev/null || echo "  No entries yet. Use: db-chat analytics <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/analytics.log"
-            local total=$(wc -l < "$DATA_DIR/analytics.log")
-            echo "  [Db Chat] analytics: $input"
-            echo "  Saved. Total analytics entries: $total"
-            _log "analytics" "$input"
-        fi
-        ;;
-    export)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent export entries:"
-            tail -20 "$DATA_DIR/export.log" 2>/dev/null || echo "  No entries yet. Use: db-chat export <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/export.log"
-            local total=$(wc -l < "$DATA_DIR/export.log")
-            echo "  [Db Chat] export: $input"
-            echo "  Saved. Total export entries: $total"
-            _log "export" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown: $1 — run 'db-chat help'"
-        exit 1
-        ;;
+cmd_security() {
+    cat << 'EOF'
+# Db Chat — Security Considerations
+
+## Authentication & Authorization
+- Use strong, unique credentials
+- Implement role-based access control
+- Enable multi-factor authentication where possible
+- Regularly review and rotate credentials
+
+## Data Protection
+- Encrypt data at rest and in transit
+- Implement proper backup procedures
+- Follow data retention policies
+- Sanitize inputs to prevent injection
+
+## Network Security
+- Use firewalls and network segmentation
+- Monitor for suspicious activity
+- Keep all software patched and updated
+- Disable unnecessary services and ports
+EOF
+}
+
+cmd_migration() {
+    cat << 'EOF'
+# Db Chat — Migration & Upgrade Guide
+
+## Pre-Migration Checklist
+- [ ] Current system fully documented
+- [ ] Complete backup taken and verified
+- [ ] Target environment prepared
+- [ ] Rollback plan documented
+- [ ] Stakeholders notified
+
+## Migration Steps
+1. Prepare target environment
+2. Export data from source
+3. Transform data if needed
+4. Import to target
+5. Verify data integrity
+6. Update configurations
+7. Test all functionality
+8. Switch traffic / go live
+
+## Post-Migration
+- Monitor for errors and performance
+- Verify all integrations working
+- Update documentation
+- Decommission old system after confirmation
+EOF
+}
+
+cmd_cheatsheet() {
+    cat << 'EOF'
+# Db Chat — Quick Reference
+
+## Essential Commands
+| Command | Description |
+|---------|-------------|
+| help | Show available commands |
+| version | Display version info |
+| intro | Overview and fundamentals |
+| troubleshooting | Common problems and fixes |
+
+## Common Workflows
+1. **Setup**: install → configure → verify → test
+2. **Daily**: check → monitor → report → review
+3. **Issue**: diagnose → isolate → fix → verify → document
+
+## Key Shortcuts
+- Use tab completion for commands
+- Check logs first when troubleshooting
+- Always backup before making changes
+- Document everything you change
+EOF
+}
+
+CMD="${1:-help}"
+shift 2>/dev/null || true
+
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    quickstart) cmd_quickstart "$@" ;;
+    patterns) cmd_patterns "$@" ;;
+    debugging) cmd_debugging "$@" ;;
+    performance) cmd_performance "$@" ;;
+    security) cmd_security "$@" ;;
+    migration) cmd_migration "$@" ;;
+    cheatsheet) cmd_cheatsheet "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "db-chat v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: db-chat help"; exit 1 ;;
 esac

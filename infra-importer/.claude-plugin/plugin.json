@@ -1,9 +1,0 @@
-{
-  "name": "infra-importer",
-  "description": "CLI tool to generate terraform files from existing infrastructure (reverse Terraform). Infrastructur infra-importer, go, aws, cloud, gcp, golang.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

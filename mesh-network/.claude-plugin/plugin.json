@@ -1,9 +1,0 @@
-{
-  "name": "mesh-network",
-  "description": "Configure encrypted overlay mesh networks focused on performance and simplicity. Use when setting up VPN meshes, connecting nodes, managing tunnels.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

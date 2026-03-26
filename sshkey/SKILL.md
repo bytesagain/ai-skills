@@ -1,95 +1,34 @@
 ---
-name: SSHKey
-description: "Generate, list, copy, and test SSH keys without complex flags. Use when scanning keys, monitoring expiry, reporting fingerprints, alerting weak algorithms."
-version: "3.0.1"
+name: "sshkey"
+version: "2.0.1"
+description: "Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Sshkey concepts, best practices, and implementation patterns."
 author: "BytesAgain"
-homepage: https://bytesagain.com
-source: https://github.com/bytesagain/ai-skills
-tags: ["ssh","key","security","authentication","crypto","server","admin","devops"]
-categories: ["Security", "System Tools", "Developer Tools"]
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [sshkey, reference]
+category: "devtools"
 ---
 
-# sshkey
+# Sshkey
 
-SSH key manager.
+Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Sshkey concepts, best practices, and implementation patterns. No API keys or credentials required.
 
 ## Commands
 
-### `generate`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-Generate new SSH key (ed25519/rsa/ecdsa)
+## Output Format
 
-```bash
-scripts/script.sh generate [type] [bits]
-```
-
-### `list`
-
-List all SSH keys
-
-```bash
-scripts/script.sh list
-```
-
-### `fingerprint`
-
-Show key fingerprint (MD5 + SHA256)
-
-```bash
-scripts/script.sh fingerprint <keyfile>
-```
-
-### `info`
-
-Detailed key information
-
-```bash
-scripts/script.sh info <keyfile>
-```
-
-### `copy`
-
-Copy public key to remote host
-
-```bash
-scripts/script.sh copy <user@host> [keyfile]
-```
-
-### `test`
-
-Test SSH connection
-
-```bash
-scripts/script.sh test <user@host>
-```
-
-### `authorized-list`
-
-List authorized keys
-
-```bash
-scripts/script.sh authorized-list
-```
-
-### `authorized-add`
-
-Add key to authorized_keys
-
-```bash
-scripts/script.sh authorized-add <pubkey>
-```
-
-### `audit`
-
-Security audit of SSH keys and permissions
-
-```bash
-scripts/script.sh audit
-```
-
-## Requirements
-
-- ssh-keygen
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

@@ -1,72 +1,44 @@
 ---
-version: "2.0.0"
-name: stripe-manager
-description: "Manage Stripe payments, customers, and subscriptions from terminal. Use when tracking payments, checking balances, summarizing revenue, exporting data."
-author: BytesAgain
-homepage: https://bytesagain.com
-source: https://github.com/bytesagain/ai-skills
+name: "stripe-manager"
+version: "5.0.0"
+description: "Stripe payment platform reference — PaymentIntents, webhooks, PCI compliance, 3DS/SCA, Radar fraud rules, and CLI commands."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [stripe, payments, fintech, webhooks, pci-dss]
+category: "finance"
 ---
 
 # Stripe Manager
 
-A complete Stripe payment management toolkit for listing customers, charges, and subscriptions, creating payment links, checking account balances, managing products and prices, handling refunds, and retrieving payment analytics — all from the command line using the Stripe REST API.
+Stripe payment platform reference covering PaymentIntents API, webhook signature verification, PCI DSS compliance levels, SCA/3D Secure, Radar fraud prevention, and Stripe CLI. No API keys required — outputs reference documentation only.
 
-## Description
+## When to Use
 
-Stripe Manager provides full access to your Stripe account for payment operations. List and search customers, view charge history, manage subscriptions, create and configure products and prices, generate payment links, process refunds, check your account balance, and retrieve financial summaries. Supports both live and test mode keys. Ideal for payment operations, financial reporting, subscription management, and e-commerce automation.
-
-## Requirements
-
-- `get-balance` — Get Balance
-- `list-customers` — List Customers
-- `create-customer` — Create Customer
-- `get-customer` — Get Customer
-- `list-charges` — List Charges
-- `list-subscriptions` — List Subscriptions
-- `list-products` — List Products
-- `list-invoices` — List Invoices
-- `list-events` — List Events
-- Get your API keys from [configured-endpoint]
+- Integrating Stripe PaymentIntents or SetupIntents
+- Debugging webhook signature verification failures
+- Understanding PCI DSS compliance levels (SAQ-A through SAQ-D)
+- Looking up card decline codes or error categories
+- Migrating from legacy Charges API to PaymentIntents
+- Setting up Stripe Connect for marketplace payments
 
 ## Commands
 
-See commands above.
+| Command | Description |
+|---------|-------------|
+| `intro` | Stripe architecture — PaymentIntents, Customers, Products, payment flow |
+| `standards` | PCI DSS levels, SCA/3DS2, idempotency keys, webhook best practices |
+| `troubleshooting` | Card decline codes, webhook failures, payout delays, subscription issues |
+| `performance` | Rate limits (100 r+w/s), batch operations, auto-pagination, caching |
+| `security` | API key rotation, restricted keys, Radar rules, webhook signatures |
+| `migration` | Charges→PaymentIntents, test→live checklist, single→Connect platform |
+| `cheatsheet` | CLI commands, API endpoints, test card numbers, webhook event types |
+| `faq` | Pricing, payout timing, disputes, international, testing |
 
-## Environment Variables
+## Output Format
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `STRIPE_API_KEY` | Yes | Stripe secret key (`sk_live_` or `sk_test_`) |
-| `STRIPE_OUTPUT_FORMAT` | No | Output format: `table`, `json`, `markdown` |
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
-## Examples
-
-```bash
-# List customers
-STRIPE_API_KEY=sk_test_xxx stripe-manager customers 20
-
-# Create a customer
-STRIPE_API_KEY=sk_test_xxx stripe-manager customer create "alice@example.com" "Alice Smith"
-
-# Check balance
-STRIPE_API_KEY=sk_test_xxx stripe-manager balance
-
-# List charges
-STRIPE_API_KEY=sk_test_xxx stripe-manager charges 10
-
-# Refund a charge
-STRIPE_API_KEY=sk_test_xxx stripe-manager refund ch_1234 5000
-
-# Create a product and price
-STRIPE_API_KEY=sk_test_xxx stripe-manager product create "Pro Plan" "Professional subscription"
-STRIPE_API_KEY=sk_test_xxx stripe-manager price create prod_xxx 2999 usd month
-
-# Create a payment link
-STRIPE_API_KEY=sk_test_xxx stripe-manager paylink price_xxx 1
-
-# Revenue summary
-STRIPE_API_KEY=sk_test_xxx stripe-manager summary 30
-```
 ---
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

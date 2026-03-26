@@ -1,62 +1,34 @@
 ---
 name: "whois-checker"
-version: "3.0.0"
-description: "Look up domain WHOIS information with expiry and registrar details. Use when researching domains."
+version: "4.0.1"
+description: "Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Whois Checker concepts, best practices, and implementation patterns."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [whois,checker, reference]
+category: "devtools"
 ---
 
-# whois-checker
+# Whois Checker
 
-Look up domain WHOIS information with expiry and registrar details. Use when researching domains.
+Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Whois Checker concepts, best practices, and implementation patterns. No API keys or credentials required.
 
 ## Commands
 
-### `lookup`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-```bash
-scripts/script.sh lookup <domain>
-```
+## Output Format
 
-### `expiry`
-
-```bash
-scripts/script.sh expiry <domain>
-```
-
-### `registrar`
-
-```bash
-scripts/script.sh registrar <domain>
-```
-
-### `batch`
-
-```bash
-scripts/script.sh batch <file>
-```
-
-### `dns`
-
-```bash
-scripts/script.sh dns <domain>
-```
-
-### `compare`
-
-```bash
-scripts/script.sh compare <d1 d2>
-```
-
-### `available`
-
-```bash
-scripts/script.sh available <domain>
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/whois-checker/`.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

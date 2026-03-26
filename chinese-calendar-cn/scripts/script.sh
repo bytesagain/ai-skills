@@ -1,155 +1,229 @@
 #!/usr/bin/env bash
+# chinese-calendar-cn — Chinese Calendar Cn reference tool. Use when working with chinese calendar cn in life contexts.
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-VERSION="3.0.0"
-SCRIPT_NAME="chinese-calendar-cn"
-DATA_DIR="$HOME/.local/share/chinese-calendar-cn"
-mkdir -p "$DATA_DIR"
+VERSION="5.0.1"
 
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+show_help() {
+    cat << 'HELPEOF'
+chinese-calendar-cn v$VERSION — Chinese Calendar Cn Reference Tool
 
-_info()  { echo "[INFO]  $*"; }
-_error() { echo "[ERROR] $*" >&2; }
-die()    { _error "$@"; exit 1; }
+Usage: chinese-calendar-cn <command>
 
-cmd_today() {
-    echo "$(date +%Y-%m-%d) $(date +%A)"; local y=$(date +%Y); local z=$((($y - 4) % 12)); local animals='鼠 牛 虎 兔 龙 蛇 马 羊 猴 鸡 狗 猪'; echo "生肖: $(echo $animals | cut -d' ' -f$((z+1)))"
+Commands:
+  intro           Overview and basics
+  guide           Step-by-step guide
+  tips            Pro tips and tricks
+  planning        Planning and preparation
+  resources       Recommended resources
+  mistakes        Common mistakes to avoid
+  examples        Real-world examples
+  faq             Frequently asked questions
+  help              Show this help
+  version           Show version
+
+Powered by BytesAgain | bytesagain.com
+HELPEOF
 }
 
-cmd_zodiac() {
-    local year="${2:-}"
-    [ -z "$year" ] && die "Usage: $SCRIPT_NAME zodiac <year>"
-    local z=$(((${2:-$(date +%Y)} - 4) % 12)); local animals='鼠 牛 虎 兔 龙 蛇 马 羊 猴 鸡 狗 猪'; echo $(echo $animals | cut -d' ' -f$((z+1)))
+cmd_intro() {
+    cat << 'EOF'
+# Chinese Calendar Cn — Overview
+
+## What is Chinese Calendar Cn?
+Chinese Calendar Cn (chinese-calendar-cn) is a specialized tool/concept in the life domain.
+It provides essential capabilities for professionals working with chinese calendar cn.
+
+## Key Concepts
+- Core chinese calendar cn principles and fundamentals
+- How chinese calendar cn fits into the broader life ecosystem  
+- Essential terminology every practitioner should know
+
+## Why Chinese Calendar Cn Matters
+Understanding chinese calendar cn is critical for:
+- Improving efficiency in life workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic chinese calendar cn concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
+EOF
 }
 
-cmd_festival() {
-    local year="${2:-}"
-    [ -z "$year" ] && die "Usage: $SCRIPT_NAME festival <year>"
-    echo '${2:-2026}年主要节日:'; echo '春节 元宵节 清明节 端午节 中秋节 重阳节'
+cmd_guide() {
+    cat << 'EOF'
+# Chinese Calendar Cn — Step-by-Step Guide
+
+## Overview
+This guide walks you through the essential chinese calendar cn workflows.
+
+## Step 1: Preparation
+- Gather required materials and information
+- Review prerequisites and requirements
+- Set up your workspace
+
+## Step 2: Execution
+- Follow the standard procedure
+- Monitor progress at each stage
+- Document any deviations
+
+## Step 3: Verification
+- Check results against expected outcomes
+- Run validation tests
+- Get peer review if applicable
+
+## Step 4: Documentation
+- Record what was done and the results
+- Note any lessons learned
+- Update procedures if needed
+EOF
 }
 
-cmd_solar_term() {
-    local month="${2:-}"
-    [ -z "$month" ] && die "Usage: $SCRIPT_NAME solar-term <month>"
-    echo '${2:-1}月节气: 小寒 大寒'
+cmd_tips() {
+    cat << 'EOF'
+# Chinese Calendar Cn — Pro Tips & Tricks
+
+## Efficiency Tips
+1. Automate repetitive tasks
+2. Use templates for common operations
+3. Set up keyboard shortcuts
+4. Batch similar operations together
+5. Keep a personal cheat sheet
+
+## Expert Tricks
+- Learn the less-known features
+- Build custom workflows
+- Connect with the community for insights
+- Study how experts approach problems
+- Practice regularly to build muscle memory
+EOF
 }
 
-cmd_convert() {
-    local date="${2:-}"
-    [ -z "$date" ] && die "Usage: $SCRIPT_NAME convert <date>"
-    echo '阳历 $2 对应农历日期（需要查表）'
+cmd_planning() {
+    cat << 'EOF'
+# Chinese Calendar Cn — Planning & Preparation
+
+## Planning Framework
+1. **Define Goals**: What do you want to achieve?
+2. **Assess Current State**: Where are you now?
+3. **Identify Gaps**: What needs to change?
+4. **Create Plan**: Steps, timeline, resources
+5. **Execute & Monitor**: Track progress
+
+## Resource Planning
+- Budget allocation
+- Team and skills needed
+- Tools and infrastructure
+- Timeline and milestones
+EOF
 }
 
-cmd_list() {
-    echo '十二生肖: 鼠 牛 虎 兔 龙 蛇 马 羊 猴 鸡 狗 猪'
+cmd_resources() {
+    cat << 'EOF'
+# Chinese Calendar Cn — Recommended Resources
+
+## Learning Resources
+- Official documentation and guides
+- Online courses and tutorials
+- Community forums and Q&A sites
+- Books and publications
+
+## Tools
+- Essential software and utilities
+- Online calculators and generators
+- Testing and validation tools
+- Monitoring and analytics platforms
+EOF
 }
 
-cmd_help() {
-    echo "$SCRIPT_NAME v$VERSION"
-    echo ""
-    echo "Commands:"
-    printf "  %-25s\n" "today"
-    printf "  %-25s\n" "zodiac <year>"
-    printf "  %-25s\n" "festival <year>"
-    printf "  %-25s\n" "solar-term <month>"
-    printf "  %-25s\n" "convert <date>"
-    printf "  %-25s\n" "list"
-    printf "  %%-25s\n" "help"
-    echo ""
-    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
+cmd_mistakes() {
+    cat << 'EOF'
+# Chinese Calendar Cn — Common Mistakes to Avoid
+
+## Top Mistakes
+1. **Skipping planning**: Jumping in without understanding requirements
+2. **Ignoring documentation**: Not recording decisions and changes
+3. **Over-complicating**: Adding unnecessary complexity
+4. **Skipping tests**: Deploying without verification
+5. **Working in isolation**: Not seeking feedback or review
+
+## How to Avoid Them
+- Use checklists for routine operations
+- Always test before deploying
+- Get peer review on important changes
+- Keep documentation current
+- Learn from past incidents
+EOF
 }
 
-cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+cmd_examples() {
+    cat << 'EOF'
+# Chinese Calendar Cn — Real-World Examples
 
-main() {
-    local cmd="${1:-help}"
-    case "$cmd" in
-        today) shift; cmd_today "$@" ;;
-        zodiac) shift; cmd_zodiac "$@" ;;
-        festival) shift; cmd_festival "$@" ;;
-        solar-term) shift; cmd_solar_term "$@" ;;
-        convert) shift; cmd_convert "$@" ;;
-        list) shift; cmd_list "$@" ;;
-        help) cmd_help ;;
-        version) cmd_version ;;
-        *) die "Unknown: $cmd" ;;
-    esac
+## Example 1: Basic Setup
+A typical chinese calendar cn setup for a small team:
+- Standard configuration with defaults
+- Basic monitoring enabled
+- Manual backup schedule
+
+## Example 2: Production Deployment
+An enterprise chinese calendar cn deployment:
+- High-availability configuration
+- Automated monitoring and alerting
+- Continuous backup with point-in-time recovery
+
+## Example 3: Troubleshooting Scenario
+When things go wrong:
+- Symptom identification
+- Root cause analysis
+- Fix implementation and verification
+EOF
 }
 
-main "$@"
+cmd_faq() {
+    cat << 'EOF'
+# Chinese Calendar Cn — Frequently Asked Questions
+
+## General
+**Q: What is Chinese Calendar Cn?**
+A: Chinese Calendar Cn is a reference tool for chinese calendar cn in the life domain.
+
+**Q: Who should use this?**
+A: Anyone working with chinese calendar cn who needs quick reference material.
+
+**Q: How do I get started?**
+A: Run the intro command for an overview, then explore other commands.
+
+## Technical
+**Q: What are the system requirements?**
+A: Bash 4.0+ on any Unix-like system (Linux, macOS).
+
+**Q: Can I customize the output?**
+A: The tool provides reference content. Customize by editing the script.
+
+**Q: How do I report issues?**
+A: Visit github.com/bytesagain/ai-skills or email hello@bytesagain.com
+EOF
+}
+
+CMD="${1:-help}"
+shift 2>/dev/null || true
+
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    guide) cmd_guide "$@" ;;
+    tips) cmd_tips "$@" ;;
+    planning) cmd_planning "$@" ;;
+    resources) cmd_resources "$@" ;;
+    mistakes) cmd_mistakes "$@" ;;
+    examples) cmd_examples "$@" ;;
+    faq) cmd_faq "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "chinese-calendar-cn v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: chinese-calendar-cn help"; exit 1 ;;
+esac

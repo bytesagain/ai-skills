@@ -1,9 +1,0 @@
-{
-  "name": "pet-care",
-  "description": "Pet care guide with feeding, vaccination, and health logging. Use when caring for pets.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

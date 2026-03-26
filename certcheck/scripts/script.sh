@@ -1,155 +1,255 @@
 #!/usr/bin/env bash
+# certcheck — Certcheck reference tool. Use when working with certcheck in security contexts.
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-VERSION="3.0.0"
-SCRIPT_NAME="certcheck"
-DATA_DIR="$HOME/.local/share/certcheck"
-mkdir -p "$DATA_DIR"
+VERSION="4.0.2"
 
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+show_help() {
+    cat << 'HELPEOF'
+certcheck v$VERSION — Certcheck Reference Tool
 
-_info()  { echo "[INFO]  $*"; }
-_error() { echo "[ERROR] $*" >&2; }
-die()    { _error "$@"; exit 1; }
+Usage: certcheck <command>
 
-cmd_check() {
-    local domain="${2:-}"
-    [ -z "$domain" ] && die "Usage: $SCRIPT_NAME check <domain>"
-    echo | openssl s_client -connect $2:443 -servername $2 2>/dev/null | openssl x509 -noout -subject -issuer -dates
+Commands:
+  intro           Overview and core concepts
+  quickstart      Getting started guide
+  patterns        Common patterns and best practices
+  debugging       Debugging and troubleshooting
+  performance     Performance optimization tips
+  security        Security considerations
+  migration       Migration and upgrade guide
+  cheatsheet      Quick reference cheat sheet
+  help              Show this help
+  version           Show version
+
+Powered by BytesAgain | bytesagain.com
+HELPEOF
 }
 
-cmd_expiry() {
-    local domain="${2:-}"
-    [ -z "$domain" ] && die "Usage: $SCRIPT_NAME expiry <domain>"
-    echo | openssl s_client -connect $2:443 -servername $2 2>/dev/null | openssl x509 -noout -enddate
+cmd_intro() {
+    cat << 'EOF'
+# Certcheck — Overview
+
+## What is Certcheck?
+Certcheck (certcheck) is a specialized tool/concept in the security domain.
+It provides essential capabilities for professionals working with certcheck.
+
+## Key Concepts
+- Core certcheck principles and fundamentals
+- How certcheck fits into the broader security ecosystem  
+- Essential terminology every practitioner should know
+
+## Why Certcheck Matters
+Understanding certcheck is critical for:
+- Improving efficiency in security workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic certcheck concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
+EOF
 }
 
-cmd_chain() {
-    local domain="${2:-}"
-    [ -z "$domain" ] && die "Usage: $SCRIPT_NAME chain <domain>"
-    echo | openssl s_client -connect $2:443 -showcerts 2>/dev/null | grep -E 's:|i:'
+cmd_quickstart() {
+    cat << 'EOF'
+# Certcheck — Quick Start Guide
+
+## Prerequisites
+- Basic understanding of security concepts
+- Required tools and access credentials
+- System meeting minimum requirements
+
+## Installation
+1. Download or clone the certcheck package
+2. Install dependencies
+3. Configure initial settings
+4. Verify installation
+
+## First Steps
+1. Run the hello-world example
+2. Review the default configuration
+3. Try a simple real-world task
+4. Explore available commands and options
+
+## Next Steps
+- Read the full documentation
+- Join the community forum
+- Try advanced features
+- Set up automated workflows
+EOF
 }
 
-cmd_compare() {
-    local d1="${2:-}"
-    local d2="${3:-}"
-    [ -z "$d1" ] && die "Usage: $SCRIPT_NAME compare <d1 d2>"
-    echo '=== $2 ==='; cmd_expiry $2; echo '=== $3 ==='; cmd_expiry $3
+cmd_patterns() {
+    cat << 'EOF'
+# Certcheck — Common Patterns & Best Practices
+
+## Design Patterns
+1. **Standard Pattern**: The most common approach for certcheck
+2. **Scalable Pattern**: For high-volume or distributed scenarios
+3. **Resilient Pattern**: For fault-tolerant implementations
+
+## Best Practices
+- Follow the principle of least privilege
+- Use version control for all configurations
+- Implement comprehensive logging
+- Test changes in staging before production
+- Document all custom configurations
+
+## Anti-Patterns to Avoid
+- Hardcoding credentials or configuration
+- Skipping validation and error handling
+- Ignoring monitoring and alerting
+- Making changes without documentation
+- Over-engineering simple solutions
+EOF
 }
 
-cmd_batch() {
-    local file="${2:-}"
-    [ -z "$file" ] && die "Usage: $SCRIPT_NAME batch <file>"
-    while IFS= read -r d; do echo "$d: $(cmd_expiry $d 2>/dev/null | cut -d= -f2)"; done < $2
+cmd_debugging() {
+    cat << 'EOF'
+# Certcheck — Debugging Guide
+
+## Common Errors
+1. **Connection refused**: Check service status and network
+2. **Permission denied**: Verify credentials and access rights
+3. **Timeout**: Check network, increase limits, optimize queries
+4. **Invalid input**: Validate data format and encoding
+
+## Debugging Tools
+- Built-in logging and diagnostics
+- Network analysis tools (tcpdump, wireshark)
+- System monitoring (top, htop, iostat)
+- Application-specific debug modes
+
+## Debug Workflow
+1. Reproduce the issue consistently
+2. Check logs for error messages
+3. Isolate the failing component
+4. Test with minimal configuration
+5. Apply fix and verify
+EOF
 }
 
-cmd_report() {
-    local domain="${2:-}"
-    [ -z "$domain" ] && die "Usage: $SCRIPT_NAME report <domain>"
-    echo '=== SSL Report: $2 ==='; cmd_check $2
+cmd_performance() {
+    cat << 'EOF'
+# Certcheck — Performance Optimization
+
+## Key Metrics
+- Response time / latency
+- Throughput / operations per second
+- Resource utilization (CPU, memory, I/O)
+- Error rate and retry frequency
+
+## Optimization Strategies
+1. **Caching**: Reduce redundant operations
+2. **Batching**: Group small operations
+3. **Indexing**: Speed up data lookups
+4. **Compression**: Reduce data transfer size
+5. **Parallel Processing**: Utilize multiple cores
+
+## Monitoring
+- Set up baseline performance metrics
+- Configure alerts for anomalies
+- Track trends over time
+- Regular capacity planning reviews
+EOF
 }
 
-cmd_help() {
-    echo "$SCRIPT_NAME v$VERSION"
-    echo ""
-    echo "Commands:"
-    printf "  %-25s\n" "check <domain>"
-    printf "  %-25s\n" "expiry <domain>"
-    printf "  %-25s\n" "chain <domain>"
-    printf "  %-25s\n" "compare <d1 d2>"
-    printf "  %-25s\n" "batch <file>"
-    printf "  %-25s\n" "report <domain>"
-    printf "  %%-25s\n" "help"
-    echo ""
-    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
+cmd_security() {
+    cat << 'EOF'
+# Certcheck — Security Considerations
+
+## Authentication & Authorization
+- Use strong, unique credentials
+- Implement role-based access control
+- Enable multi-factor authentication where possible
+- Regularly review and rotate credentials
+
+## Data Protection
+- Encrypt data at rest and in transit
+- Implement proper backup procedures
+- Follow data retention policies
+- Sanitize inputs to prevent injection
+
+## Network Security
+- Use firewalls and network segmentation
+- Monitor for suspicious activity
+- Keep all software patched and updated
+- Disable unnecessary services and ports
+EOF
 }
 
-cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+cmd_migration() {
+    cat << 'EOF'
+# Certcheck — Migration & Upgrade Guide
 
-main() {
-    local cmd="${1:-help}"
-    case "$cmd" in
-        check) shift; cmd_check "$@" ;;
-        expiry) shift; cmd_expiry "$@" ;;
-        chain) shift; cmd_chain "$@" ;;
-        compare) shift; cmd_compare "$@" ;;
-        batch) shift; cmd_batch "$@" ;;
-        report) shift; cmd_report "$@" ;;
-        help) cmd_help ;;
-        version) cmd_version ;;
-        *) die "Unknown: $cmd" ;;
-    esac
+## Pre-Migration Checklist
+- [ ] Current system fully documented
+- [ ] Complete backup taken and verified
+- [ ] Target environment prepared
+- [ ] Rollback plan documented
+- [ ] Stakeholders notified
+
+## Migration Steps
+1. Prepare target environment
+2. Export data from source
+3. Transform data if needed
+4. Import to target
+5. Verify data integrity
+6. Update configurations
+7. Test all functionality
+8. Switch traffic / go live
+
+## Post-Migration
+- Monitor for errors and performance
+- Verify all integrations working
+- Update documentation
+- Decommission old system after confirmation
+EOF
 }
 
-main "$@"
+cmd_cheatsheet() {
+    cat << 'EOF'
+# Certcheck — Quick Reference
+
+## Essential Commands
+| Command | Description |
+|---------|-------------|
+| help | Show available commands |
+| version | Display version info |
+| intro | Overview and fundamentals |
+| troubleshooting | Common problems and fixes |
+
+## Common Workflows
+1. **Setup**: install → configure → verify → test
+2. **Daily**: check → monitor → report → review
+3. **Issue**: diagnose → isolate → fix → verify → document
+
+## Key Shortcuts
+- Use tab completion for commands
+- Check logs first when troubleshooting
+- Always backup before making changes
+- Document everything you change
+EOF
+}
+
+CMD="${1:-help}"
+shift 2>/dev/null || true
+
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    quickstart) cmd_quickstart "$@" ;;
+    patterns) cmd_patterns "$@" ;;
+    debugging) cmd_debugging "$@" ;;
+    performance) cmd_performance "$@" ;;
+    security) cmd_security "$@" ;;
+    migration) cmd_migration "$@" ;;
+    cheatsheet) cmd_cheatsheet "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "certcheck v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: certcheck help"; exit 1 ;;
+esac

@@ -1,9 +1,0 @@
-{
-  "name": "cms",
-  "description": "Manage web content with page creation, media library, and templates. Use when building site pages, organizing media assets, or versioning content.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

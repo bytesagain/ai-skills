@@ -1,9 +1,0 @@
-{
-  "name": "discord-toolkit",
-  "description": "Manage Discord bots with messaging, channels, embeds, and role tools. Use when sending messages, managing channels, creating embeds.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

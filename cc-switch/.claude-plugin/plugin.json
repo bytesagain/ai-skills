@@ -1,9 +1,0 @@
-{
-  "name": "cc-switch",
-  "description": "A cross-platform desktop All-in-One assistant tool for Claude Code, Codex, OpenCode, openclaw & Gemi cc switch, rust, ai-tools, claude-code, codex.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

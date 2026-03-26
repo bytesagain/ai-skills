@@ -1,9 +1,0 @@
-{
-  "name": "devops-scripts",
-  "description": "1000+ DevOps Bash Scripts - AWS, GCP, Kubernetes, Docker, CI/CD, APIs, SQL, PostgreSQL, MySQL, Hive, devops bash tools, shell, api, aws, bash, ci.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

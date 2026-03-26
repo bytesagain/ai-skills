@@ -1,56 +1,34 @@
 ---
 name: "liquidity-monitor"
-version: "3.0.0"
-description: "Monitor DeFi liquidity pools and TVL using DeFiLlama API. Use when tracking DeFi yields. Requires curl."
+version: "4.0.0"
+description: "DeFi liquidity analysis reference — AMM mechanics, Uniswap V2/V3 math, Curve StableSwap, impermanent loss calculation, and MEV protection strategies"
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [defi, liquidity, amm, uniswap, impermanent-loss]
+category: "blockchain"
 ---
 
-# liquidity-monitor
+# Liquidity Monitor
 
-Monitor DeFi liquidity pools and TVL using DeFiLlama API. Use when tracking DeFi yields. Requires curl.
+DeFi liquidity analysis reference — AMM mechanics, Uniswap V2/V3 math, Curve StableSwap, impermanent loss calculation, and MEV protection strategies. No API keys or credentials required — outputs reference documentation only.
 
 ## Commands
 
-### `tvl`
+| Command | Description |
+|---------|-------------|
+| `intro` | AMM mechanics, pool types, concentrated liquidity |
+| `standards` | Uniswap V2/V3 math, Curve, Balancer formulas |
+| `troubleshooting` | Impermanent loss, failed swaps, MEV protection |
+| `performance` | Pool selection, routing, gas optimization |
+| `security` | Rug pull detection, honeypots, flash loans |
+| `migration` | V2 to V3, cross-chain bridging, multi-chain LP |
+| `cheatsheet` | DEX APIs, analytics tools, IL calculator, TVL |
+| `faq` | Profitability, V2 vs V3, MEV, minimum amounts |
 
-```bash
-scripts/script.sh tvl <protocol>
-```
+## Output Format
 
-### `top`
-
-```bash
-scripts/script.sh top <count>
-```
-
-### `pool`
-
-```bash
-scripts/script.sh pool <pair>
-```
-
-### `alerts`
-
-```bash
-scripts/script.sh alerts
-```
-
-### `history`
-
-```bash
-scripts/script.sh history <pool>
-```
-
-### `yield`
-
-```bash
-scripts/script.sh yield <pool>
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/liquidity-monitor/`.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

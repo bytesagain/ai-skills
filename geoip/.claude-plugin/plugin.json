@@ -1,9 +1,0 @@
-{
-  "name": "geoip",
-  "description": "Look up geographic location of IP addresses using ip-api.com. Use when tracing IPs. Requires curl.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "profile",
-  "description": "Analyze code and system performance profiles using profiling tools. Use when identifying bottlenecks, hotspots, or memory issues in applications.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

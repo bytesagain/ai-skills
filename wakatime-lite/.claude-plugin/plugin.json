@@ -1,9 +1,0 @@
-{
-  "name": "wakatime-lite",
-  "description": "Track coding time and review productivity stats. Use when logging dev hours, analyzing time per project, setting focus goals, or reviewing summaries.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

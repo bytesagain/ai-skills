@@ -1,111 +1,34 @@
 ---
 name: "manager"
-version: "1.0.0"
-description: "Manage tasks and projects with priorities and status tracking. Use when organizing work."
+version: "2.0.4"
+description: "Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Manager concepts, best practices, and implementation patterns."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [manager, general, cli, tool]
-category: "general"
+tags: [manager, reference]
+category: "devtools"
 ---
 
-# manager
+# Manager
 
-Manage tasks and projects with priorities and status tracking. Use when organizing work.
+Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Manager concepts, best practices, and implementation patterns. No API keys or credentials required.
 
 ## Commands
 
-### `status`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-```bash
-scripts/script.sh status
-```
+## Output Format
 
-Show current status
-
-### `add`
-
-```bash
-scripts/script.sh add
-```
-
-Add new entry
-
-### `list`
-
-```bash
-scripts/script.sh list
-```
-
-List all entries
-
-### `search`
-
-```bash
-scripts/script.sh search
-```
-
-Search entries
-
-### `remove`
-
-```bash
-scripts/script.sh remove
-```
-
-Remove entry by number
-
-### `export`
-
-```bash
-scripts/script.sh export
-```
-
-Export data to file
-
-### `stats`
-
-```bash
-scripts/script.sh stats
-```
-
-Show statistics
-
-### `config`
-
-```bash
-scripts/script.sh config
-```
-
-View or set config
-
-### `help`
-
-```bash
-scripts/script.sh help
-```
-
-### `version`
-
-```bash
-scripts/script.sh version
-```
-
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `MANAGER_DIR` | No | Data directory (default: ~/.manager/) |
-
-## Data Storage
-
-All data stored in `~/.manager/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

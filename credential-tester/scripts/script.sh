@@ -1,155 +1,255 @@
 #!/usr/bin/env bash
+# credential-tester — Credential Tester reference tool. Use when working with credential tester in security contexts.
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-VERSION="3.0.0"
-SCRIPT_NAME="credential-tester"
-DATA_DIR="$HOME/.local/share/credential-tester"
-mkdir -p "$DATA_DIR"
+VERSION="4.0.2"
 
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+show_help() {
+    cat << 'HELPEOF'
+credential-tester v$VERSION — Credential Tester Reference Tool
 
-_info()  { echo "[INFO]  $*"; }
-_error() { echo "[ERROR] $*" >&2; }
-die()    { _error "$@"; exit 1; }
+Usage: credential-tester <command>
 
-cmd_http() {
-    local url="${2:-}"
-    local user="${3:-}"
-    local pass="${4:-}"
-    [ -z "$url" ] && die "Usage: $SCRIPT_NAME http <url user pass>"
-    curl -su $3:$4 -o /dev/null -w '%{http_code}' $2 2>/dev/null
+Commands:
+  intro           Overview and core concepts
+  quickstart      Getting started guide
+  patterns        Common patterns and best practices
+  debugging       Debugging and troubleshooting
+  performance     Performance optimization tips
+  security        Security considerations
+  migration       Migration and upgrade guide
+  cheatsheet      Quick reference cheat sheet
+  help              Show this help
+  version           Show version
+
+Powered by BytesAgain | bytesagain.com
+HELPEOF
 }
 
-cmd_ssh() {
-    local host="${2:-}"
-    local user="${3:-}"
-    [ -z "$host" ] && die "Usage: $SCRIPT_NAME ssh <host user>"
-    ssh -o ConnectTimeout=5 -o BatchMode=yes $3@$2 exit 2>/dev/null && echo 'OK' || echo 'FAIL'
+cmd_intro() {
+    cat << 'EOF'
+# Credential Tester — Overview
+
+## What is Credential Tester?
+Credential Tester (credential-tester) is a specialized tool/concept in the security domain.
+It provides essential capabilities for professionals working with credential tester.
+
+## Key Concepts
+- Core credential tester principles and fundamentals
+- How credential tester fits into the broader security ecosystem  
+- Essential terminology every practitioner should know
+
+## Why Credential Tester Matters
+Understanding credential tester is critical for:
+- Improving efficiency in security workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic credential tester concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
+EOF
 }
 
-cmd_check_env() {
-    echo 'Checking env vars...'; for v in API_KEY TOKEN SECRET; do [ -n "$(eval echo \${$v:-})" ] && echo "$v: set" || echo "$v: not set"; done
+cmd_quickstart() {
+    cat << 'EOF'
+# Credential Tester — Quick Start Guide
+
+## Prerequisites
+- Basic understanding of security concepts
+- Required tools and access credentials
+- System meeting minimum requirements
+
+## Installation
+1. Download or clone the credential tester package
+2. Install dependencies
+3. Configure initial settings
+4. Verify installation
+
+## First Steps
+1. Run the hello-world example
+2. Review the default configuration
+3. Try a simple real-world task
+4. Explore available commands and options
+
+## Next Steps
+- Read the full documentation
+- Join the community forum
+- Try advanced features
+- Set up automated workflows
+EOF
 }
 
-cmd_report() {
-    echo '=== Credential Test Report ===' && date
+cmd_patterns() {
+    cat << 'EOF'
+# Credential Tester — Common Patterns & Best Practices
+
+## Design Patterns
+1. **Standard Pattern**: The most common approach for credential tester
+2. **Scalable Pattern**: For high-volume or distributed scenarios
+3. **Resilient Pattern**: For fault-tolerant implementations
+
+## Best Practices
+- Follow the principle of least privilege
+- Use version control for all configurations
+- Implement comprehensive logging
+- Test changes in staging before production
+- Document all custom configurations
+
+## Anti-Patterns to Avoid
+- Hardcoding credentials or configuration
+- Skipping validation and error handling
+- Ignoring monitoring and alerting
+- Making changes without documentation
+- Over-engineering simple solutions
+EOF
 }
 
-cmd_ports() {
-    local host="${2:-}"
-    [ -z "$host" ] && die "Usage: $SCRIPT_NAME ports <host>"
-    for p in 22 80 443; do (echo >/dev/tcp/$2/$p) 2>/dev/null && echo 'OPEN $2:$p' || echo 'CLOSED $2:$p'; done
+cmd_debugging() {
+    cat << 'EOF'
+# Credential Tester — Debugging Guide
+
+## Common Errors
+1. **Connection refused**: Check service status and network
+2. **Permission denied**: Verify credentials and access rights
+3. **Timeout**: Check network, increase limits, optimize queries
+4. **Invalid input**: Validate data format and encoding
+
+## Debugging Tools
+- Built-in logging and diagnostics
+- Network analysis tools (tcpdump, wireshark)
+- System monitoring (top, htop, iostat)
+- Application-specific debug modes
+
+## Debug Workflow
+1. Reproduce the issue consistently
+2. Check logs for error messages
+3. Isolate the failing component
+4. Test with minimal configuration
+5. Apply fix and verify
+EOF
 }
 
-cmd_validate() {
-    local token="${2:-}"
-    [ -z "$token" ] && die "Usage: $SCRIPT_NAME validate <token>"
-    [ ${#2} -ge 20 ] && echo 'Token length OK' || echo 'Token too short'
+cmd_performance() {
+    cat << 'EOF'
+# Credential Tester — Performance Optimization
+
+## Key Metrics
+- Response time / latency
+- Throughput / operations per second
+- Resource utilization (CPU, memory, I/O)
+- Error rate and retry frequency
+
+## Optimization Strategies
+1. **Caching**: Reduce redundant operations
+2. **Batching**: Group small operations
+3. **Indexing**: Speed up data lookups
+4. **Compression**: Reduce data transfer size
+5. **Parallel Processing**: Utilize multiple cores
+
+## Monitoring
+- Set up baseline performance metrics
+- Configure alerts for anomalies
+- Track trends over time
+- Regular capacity planning reviews
+EOF
 }
 
-cmd_help() {
-    echo "$SCRIPT_NAME v$VERSION"
-    echo ""
-    echo "Commands:"
-    printf "  %-25s\n" "http <url user pass>"
-    printf "  %-25s\n" "ssh <host user>"
-    printf "  %-25s\n" "check-env"
-    printf "  %-25s\n" "report"
-    printf "  %-25s\n" "ports <host>"
-    printf "  %-25s\n" "validate <token>"
-    printf "  %%-25s\n" "help"
-    echo ""
-    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
+cmd_security() {
+    cat << 'EOF'
+# Credential Tester — Security Considerations
+
+## Authentication & Authorization
+- Use strong, unique credentials
+- Implement role-based access control
+- Enable multi-factor authentication where possible
+- Regularly review and rotate credentials
+
+## Data Protection
+- Encrypt data at rest and in transit
+- Implement proper backup procedures
+- Follow data retention policies
+- Sanitize inputs to prevent injection
+
+## Network Security
+- Use firewalls and network segmentation
+- Monitor for suspicious activity
+- Keep all software patched and updated
+- Disable unnecessary services and ports
+EOF
 }
 
-cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+cmd_migration() {
+    cat << 'EOF'
+# Credential Tester — Migration & Upgrade Guide
 
-main() {
-    local cmd="${1:-help}"
-    case "$cmd" in
-        http) shift; cmd_http "$@" ;;
-        ssh) shift; cmd_ssh "$@" ;;
-        check-env) shift; cmd_check_env "$@" ;;
-        report) shift; cmd_report "$@" ;;
-        ports) shift; cmd_ports "$@" ;;
-        validate) shift; cmd_validate "$@" ;;
-        help) cmd_help ;;
-        version) cmd_version ;;
-        *) die "Unknown: $cmd" ;;
-    esac
+## Pre-Migration Checklist
+- [ ] Current system fully documented
+- [ ] Complete backup taken and verified
+- [ ] Target environment prepared
+- [ ] Rollback plan documented
+- [ ] Stakeholders notified
+
+## Migration Steps
+1. Prepare target environment
+2. Export data from source
+3. Transform data if needed
+4. Import to target
+5. Verify data integrity
+6. Update configurations
+7. Test all functionality
+8. Switch traffic / go live
+
+## Post-Migration
+- Monitor for errors and performance
+- Verify all integrations working
+- Update documentation
+- Decommission old system after confirmation
+EOF
 }
 
-main "$@"
+cmd_cheatsheet() {
+    cat << 'EOF'
+# Credential Tester — Quick Reference
+
+## Essential Commands
+| Command | Description |
+|---------|-------------|
+| help | Show available commands |
+| version | Display version info |
+| intro | Overview and fundamentals |
+| troubleshooting | Common problems and fixes |
+
+## Common Workflows
+1. **Setup**: install → configure → verify → test
+2. **Daily**: check → monitor → report → review
+3. **Issue**: diagnose → isolate → fix → verify → document
+
+## Key Shortcuts
+- Use tab completion for commands
+- Check logs first when troubleshooting
+- Always backup before making changes
+- Document everything you change
+EOF
+}
+
+CMD="${1:-help}"
+shift 2>/dev/null || true
+
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    quickstart) cmd_quickstart "$@" ;;
+    patterns) cmd_patterns "$@" ;;
+    debugging) cmd_debugging "$@" ;;
+    performance) cmd_performance "$@" ;;
+    security) cmd_security "$@" ;;
+    migration) cmd_migration "$@" ;;
+    cheatsheet) cmd_cheatsheet "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "credential-tester v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: credential-tester help"; exit 1 ;;
+esac

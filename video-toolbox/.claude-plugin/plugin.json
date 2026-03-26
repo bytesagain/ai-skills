@@ -1,9 +1,0 @@
-{
-  "name": "video-toolbox",
-  "description": "Process video files with ffmpeg for conversion, trimming, and compression. Use when editing videos. Requires ffmpeg.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

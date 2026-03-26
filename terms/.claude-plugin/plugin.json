@@ -1,9 +1,0 @@
-{
-  "name": "terms",
-  "description": "Store, rotate, and audit API keys and tokens securely. Use when generating keys, checking strength, rotating tokens, auditing credentials.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

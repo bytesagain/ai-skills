@@ -1,9 +1,0 @@
-{
-  "name": "sitemapper",
-  "description": "Generate and analyze XML sitemaps for SEO audits. Use when creating sitemaps, planning site structure, validating format, searching indexed pages.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

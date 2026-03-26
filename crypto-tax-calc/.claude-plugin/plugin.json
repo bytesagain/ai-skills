@@ -1,9 +1,0 @@
-{
-  "name": "crypto-tax-calc",
-  "description": "Calculate crypto taxes by importing trades and generating tax reports. Use when importing trades, calculating gains, generating tax reports.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

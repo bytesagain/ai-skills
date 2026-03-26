@@ -1,9 +1,0 @@
-{
-  "name": "hashtag",
-  "description": "Research trending hashtags, score relevance, and generate optimized tag sets. Use when finding trends, scoring tags, or analyzing competitor hashtags.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

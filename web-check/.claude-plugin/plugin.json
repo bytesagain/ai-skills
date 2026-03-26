@@ -1,9 +1,0 @@
-{
-  "name": "web-check",
-  "description": "Analyze websites with OSINT: DNS, SSL, headers, and tech detection. Use when auditing domains, inspecting headers, fingerprinting stacks, or reviewing DNS.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

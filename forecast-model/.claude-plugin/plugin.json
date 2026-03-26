@@ -1,9 +1,0 @@
-{
-  "name": "forecast-model",
-  "description": "Tool for producing high quality forecasts for time series data that has multiple seasonality with li forecast-model, python, forecasting, python.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

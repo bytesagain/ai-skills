@@ -1,9 +1,0 @@
-{
-  "name": "disk",
-  "description": "Monitor disk usage, find space hogs, and get cleanup suggestions. Use when checking space, finding large files, monitoring partitions.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

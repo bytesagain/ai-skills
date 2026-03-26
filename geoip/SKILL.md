@@ -1,56 +1,34 @@
 ---
 name: "geoip"
-version: "3.0.0"
-description: "Look up geographic location of IP addresses using ip-api.com. Use when tracing IPs. Requires curl."
+version: "4.0.0"
+description: "geoip"
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [geoip, reference]
+category: "devtools"
 ---
 
-# geoip
+# Geoip
 
-Look up geographic location of IP addresses using ip-api.com. Use when tracing IPs. Requires curl.
+geoip. No API keys or credentials required — outputs reference documentation only.
 
 ## Commands
 
-### `lookup`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-```bash
-scripts/script.sh lookup <ip>
-```
+## Output Format
 
-### `self`
-
-```bash
-scripts/script.sh self
-```
-
-### `batch`
-
-```bash
-scripts/script.sh batch <file>
-```
-
-### `whois`
-
-```bash
-scripts/script.sh whois <ip>
-```
-
-### `dns`
-
-```bash
-scripts/script.sh dns <domain>
-```
-
-### `trace`
-
-```bash
-scripts/script.sh trace <ip>
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/geoip/`.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

@@ -1,56 +1,34 @@
 ---
 name: "credential-tester"
-version: "3.0.0"
-description: "Test authentication credentials against HTTP, SSH, and FTP services. Use when validating access credentials."
+version: "4.0.2"
+description: "Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Credential Tester concepts, best practices, and implementation pa..."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [credential,tester, reference]
+category: "devtools"
 ---
 
-# credential-tester
+# Credential Tester
 
-Test authentication credentials against HTTP, SSH, and FTP services. Use when validating access credentials.
+Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Credential Tester concepts, best practices, and implementation pa... No API keys or credentials required.
 
 ## Commands
 
-### `http`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-```bash
-scripts/script.sh http <url user pass>
-```
+## Output Format
 
-### `ssh`
-
-```bash
-scripts/script.sh ssh <host user>
-```
-
-### `check-env`
-
-```bash
-scripts/script.sh check-env
-```
-
-### `report`
-
-```bash
-scripts/script.sh report
-```
-
-### `ports`
-
-```bash
-scripts/script.sh ports <host>
-```
-
-### `validate`
-
-```bash
-scripts/script.sh validate <token>
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/credential-tester/`.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

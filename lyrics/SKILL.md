@@ -1,56 +1,34 @@
 ---
 name: "lyrics"
-version: "3.0.0"
-description: "Save and search song lyrics in a personal collection. Use when managing lyrics."
+version: "2.0.4"
+description: "Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Lyrics concepts, best practices, and implementation patterns."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [lyrics, reference]
+category: "devtools"
 ---
 
-# lyrics
+# Lyrics
 
-Save and search song lyrics in a personal collection. Use when managing lyrics.
+Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Lyrics concepts, best practices, and implementation patterns. No API keys or credentials required.
 
 ## Commands
 
-### `save`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-```bash
-scripts/script.sh save <artist title>
-```
+## Output Format
 
-### `list`
-
-```bash
-scripts/script.sh list
-```
-
-### `search`
-
-```bash
-scripts/script.sh search <query>
-```
-
-### `random`
-
-```bash
-scripts/script.sh random
-```
-
-### `export`
-
-```bash
-scripts/script.sh export <file>
-```
-
-### `stats`
-
-```bash
-scripts/script.sh stats
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/lyrics/`.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

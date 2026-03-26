@@ -1,9 +1,0 @@
-{
-  "name": "mychef",
-  "description": "Manage recipes, plan daily meals, and organize ingredients with a kitchen helper. Use when looking up recipes, planning cooking, organizing shopping lists.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

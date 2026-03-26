@@ -1,9 +1,0 @@
-{
-  "name": "db-chat",
-  "description": "AI-driven database tool and SQL client, The hottest GUI client, supporting MySQL, Oracle, PostgreSQL db-chat, java, ai, bi, chatgpt, clickhouse.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

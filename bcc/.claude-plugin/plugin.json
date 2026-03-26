@@ -1,9 +1,0 @@
-{
-  "name": "bcc",
-  "description": "Trace Linux kernel events with BPF for I/O, networking, and CPU analysis. Use when profiling syscalls, diagnosing latency, or monitoring I/O.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

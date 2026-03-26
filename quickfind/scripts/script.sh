@@ -1,314 +1,255 @@
 #!/usr/bin/env bash
-# Quickfind — productivity tool
+# quickfind — Quickfind reference tool. Use when working with quickfind in devtools contexts.
 # Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-DATA_DIR="${HOME}/.local/share/quickfind"
-mkdir -p "$DATA_DIR"
+VERSION="2.0.1"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-_version() { echo "quickfind v2.0.0"; }
+show_help() {
+    cat << 'HELPEOF'
+quickfind v$VERSION — Quickfind Reference Tool
 
-_help() {
-    echo "Quickfind v2.0.0 — productivity toolkit"
-    echo ""
-    echo "Usage: quickfind <command> [args]"
-    echo ""
-    echo "Commands:"
-    echo "  add                Add"
-    echo "  plan               Plan"
-    echo "  track              Track"
-    echo "  review             Review"
-    echo "  streak             Streak"
-    echo "  remind             Remind"
-    echo "  prioritize         Prioritize"
-    echo "  archive            Archive"
-    echo "  tag                Tag"
-    echo "  timeline           Timeline"
-    echo "  report             Report"
-    echo "  weekly-review      Weekly Review"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  search <term>      Search entries"
-    echo "  recent             Recent activity"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
+Usage: quickfind <command>
+
+Commands:
+  intro           Overview and core concepts
+  quickstart      Getting started guide
+  patterns        Common patterns and best practices
+  debugging       Debugging and troubleshooting
+  performance     Performance optimization tips
+  security        Security considerations
+  migration       Migration and upgrade guide
+  cheatsheet      Quick reference cheat sheet
+  help              Show this help
+  version           Show version
+
+Powered by BytesAgain | bytesagain.com
+HELPEOF
 }
 
-_stats() {
-    echo "=== Quickfind Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
+cmd_intro() {
+    cat << 'EOF'
+# Quickfind — Overview
+
+## What is Quickfind?
+Quickfind (quickfind) is a specialized tool/concept in the devtools domain.
+It provides essential capabilities for professionals working with quickfind.
+
+## Key Concepts
+- Core quickfind principles and fundamentals
+- How quickfind fits into the broader devtools ecosystem  
+- Essential terminology every practitioner should know
+
+## Why Quickfind Matters
+Understanding quickfind is critical for:
+- Improving efficiency in devtools workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic quickfind concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
+EOF
 }
 
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "\n]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do echo "$name,$ts,$val" >> "$out"; done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Quickfind Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
-    esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
+cmd_quickstart() {
+    cat << 'EOF'
+# Quickfind — Quick Start Guide
+
+## Prerequisites
+- Basic understanding of devtools concepts
+- Required tools and access credentials
+- System meeting minimum requirements
+
+## Installation
+1. Download or clone the quickfind package
+2. Install dependencies
+3. Configure initial settings
+4. Verify installation
+
+## First Steps
+1. Run the hello-world example
+2. Review the default configuration
+3. Try a simple real-world task
+4. Explore available commands and options
+
+## Next Steps
+- Read the full documentation
+- Join the community forum
+- Try advanced features
+- Set up automated workflows
+EOF
 }
 
-_status() {
-    echo "=== Quickfind Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Last: $(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo never)"
-    echo "  Status: OK"
+cmd_patterns() {
+    cat << 'EOF'
+# Quickfind — Common Patterns & Best Practices
+
+## Design Patterns
+1. **Standard Pattern**: The most common approach for quickfind
+2. **Scalable Pattern**: For high-volume or distributed scenarios
+3. **Resilient Pattern**: For fault-tolerant implementations
+
+## Best Practices
+- Follow the principle of least privilege
+- Use version control for all configurations
+- Implement comprehensive logging
+- Test changes in staging before production
+- Document all custom configurations
+
+## Anti-Patterns to Avoid
+- Hardcoding credentials or configuration
+- Skipping validation and error handling
+- Ignoring monitoring and alerting
+- Making changes without documentation
+- Over-engineering simple solutions
+EOF
 }
 
-_search() {
-    local term="${1:?Usage: quickfind search <term>}"
-    echo "Searching for: $term"
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local m=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$m" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$m" | sed 's/^/    /'
-        fi
-    done
+cmd_debugging() {
+    cat << 'EOF'
+# Quickfind — Debugging Guide
+
+## Common Errors
+1. **Connection refused**: Check service status and network
+2. **Permission denied**: Verify credentials and access rights
+3. **Timeout**: Check network, increase limits, optimize queries
+4. **Invalid input**: Validate data format and encoding
+
+## Debugging Tools
+- Built-in logging and diagnostics
+- Network analysis tools (tcpdump, wireshark)
+- System monitoring (top, htop, iostat)
+- Application-specific debug modes
+
+## Debug Workflow
+1. Reproduce the issue consistently
+2. Check logs for error messages
+3. Isolate the failing component
+4. Test with minimal configuration
+5. Apply fix and verify
+EOF
 }
 
-_recent() {
-    echo "=== Recent Activity ==="
-    tail -20 "$DATA_DIR/history.log" 2>/dev/null | sed 's/^/  /' || echo "  No activity yet."
+cmd_performance() {
+    cat << 'EOF'
+# Quickfind — Performance Optimization
+
+## Key Metrics
+- Response time / latency
+- Throughput / operations per second
+- Resource utilization (CPU, memory, I/O)
+- Error rate and retry frequency
+
+## Optimization Strategies
+1. **Caching**: Reduce redundant operations
+2. **Batching**: Group small operations
+3. **Indexing**: Speed up data lookups
+4. **Compression**: Reduce data transfer size
+5. **Parallel Processing**: Utilize multiple cores
+
+## Monitoring
+- Set up baseline performance metrics
+- Configure alerts for anomalies
+- Track trends over time
+- Regular capacity planning reviews
+EOF
 }
 
-case "${1:-help}" in
-    add)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent add entries:"
-            tail -20 "$DATA_DIR/add.log" 2>/dev/null || echo "  No entries yet. Use: quickfind add <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/add.log"
-            local total=$(wc -l < "$DATA_DIR/add.log")
-            echo "  [Quickfind] add: $input"
-            echo "  Saved. Total add entries: $total"
-            _log "add" "$input"
-        fi
-        ;;
-    plan)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent plan entries:"
-            tail -20 "$DATA_DIR/plan.log" 2>/dev/null || echo "  No entries yet. Use: quickfind plan <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/plan.log"
-            local total=$(wc -l < "$DATA_DIR/plan.log")
-            echo "  [Quickfind] plan: $input"
-            echo "  Saved. Total plan entries: $total"
-            _log "plan" "$input"
-        fi
-        ;;
-    track)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent track entries:"
-            tail -20 "$DATA_DIR/track.log" 2>/dev/null || echo "  No entries yet. Use: quickfind track <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/track.log"
-            local total=$(wc -l < "$DATA_DIR/track.log")
-            echo "  [Quickfind] track: $input"
-            echo "  Saved. Total track entries: $total"
-            _log "track" "$input"
-        fi
-        ;;
-    review)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent review entries:"
-            tail -20 "$DATA_DIR/review.log" 2>/dev/null || echo "  No entries yet. Use: quickfind review <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/review.log"
-            local total=$(wc -l < "$DATA_DIR/review.log")
-            echo "  [Quickfind] review: $input"
-            echo "  Saved. Total review entries: $total"
-            _log "review" "$input"
-        fi
-        ;;
-    streak)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent streak entries:"
-            tail -20 "$DATA_DIR/streak.log" 2>/dev/null || echo "  No entries yet. Use: quickfind streak <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/streak.log"
-            local total=$(wc -l < "$DATA_DIR/streak.log")
-            echo "  [Quickfind] streak: $input"
-            echo "  Saved. Total streak entries: $total"
-            _log "streak" "$input"
-        fi
-        ;;
-    remind)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent remind entries:"
-            tail -20 "$DATA_DIR/remind.log" 2>/dev/null || echo "  No entries yet. Use: quickfind remind <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/remind.log"
-            local total=$(wc -l < "$DATA_DIR/remind.log")
-            echo "  [Quickfind] remind: $input"
-            echo "  Saved. Total remind entries: $total"
-            _log "remind" "$input"
-        fi
-        ;;
-    prioritize)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent prioritize entries:"
-            tail -20 "$DATA_DIR/prioritize.log" 2>/dev/null || echo "  No entries yet. Use: quickfind prioritize <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/prioritize.log"
-            local total=$(wc -l < "$DATA_DIR/prioritize.log")
-            echo "  [Quickfind] prioritize: $input"
-            echo "  Saved. Total prioritize entries: $total"
-            _log "prioritize" "$input"
-        fi
-        ;;
-    archive)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent archive entries:"
-            tail -20 "$DATA_DIR/archive.log" 2>/dev/null || echo "  No entries yet. Use: quickfind archive <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/archive.log"
-            local total=$(wc -l < "$DATA_DIR/archive.log")
-            echo "  [Quickfind] archive: $input"
-            echo "  Saved. Total archive entries: $total"
-            _log "archive" "$input"
-        fi
-        ;;
-    tag)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent tag entries:"
-            tail -20 "$DATA_DIR/tag.log" 2>/dev/null || echo "  No entries yet. Use: quickfind tag <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/tag.log"
-            local total=$(wc -l < "$DATA_DIR/tag.log")
-            echo "  [Quickfind] tag: $input"
-            echo "  Saved. Total tag entries: $total"
-            _log "tag" "$input"
-        fi
-        ;;
-    timeline)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent timeline entries:"
-            tail -20 "$DATA_DIR/timeline.log" 2>/dev/null || echo "  No entries yet. Use: quickfind timeline <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/timeline.log"
-            local total=$(wc -l < "$DATA_DIR/timeline.log")
-            echo "  [Quickfind] timeline: $input"
-            echo "  Saved. Total timeline entries: $total"
-            _log "timeline" "$input"
-        fi
-        ;;
-    report)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent report entries:"
-            tail -20 "$DATA_DIR/report.log" 2>/dev/null || echo "  No entries yet. Use: quickfind report <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/report.log"
-            local total=$(wc -l < "$DATA_DIR/report.log")
-            echo "  [Quickfind] report: $input"
-            echo "  Saved. Total report entries: $total"
-            _log "report" "$input"
-        fi
-        ;;
-    weekly-review)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent weekly-review entries:"
-            tail -20 "$DATA_DIR/weekly-review.log" 2>/dev/null || echo "  No entries yet. Use: quickfind weekly-review <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/weekly-review.log"
-            local total=$(wc -l < "$DATA_DIR/weekly-review.log")
-            echo "  [Quickfind] weekly-review: $input"
-            echo "  Saved. Total weekly-review entries: $total"
-            _log "weekly-review" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown: $1 — run 'quickfind help'"
-        exit 1
-        ;;
+cmd_security() {
+    cat << 'EOF'
+# Quickfind — Security Considerations
+
+## Authentication & Authorization
+- Use strong, unique credentials
+- Implement role-based access control
+- Enable multi-factor authentication where possible
+- Regularly review and rotate credentials
+
+## Data Protection
+- Encrypt data at rest and in transit
+- Implement proper backup procedures
+- Follow data retention policies
+- Sanitize inputs to prevent injection
+
+## Network Security
+- Use firewalls and network segmentation
+- Monitor for suspicious activity
+- Keep all software patched and updated
+- Disable unnecessary services and ports
+EOF
+}
+
+cmd_migration() {
+    cat << 'EOF'
+# Quickfind — Migration & Upgrade Guide
+
+## Pre-Migration Checklist
+- [ ] Current system fully documented
+- [ ] Complete backup taken and verified
+- [ ] Target environment prepared
+- [ ] Rollback plan documented
+- [ ] Stakeholders notified
+
+## Migration Steps
+1. Prepare target environment
+2. Export data from source
+3. Transform data if needed
+4. Import to target
+5. Verify data integrity
+6. Update configurations
+7. Test all functionality
+8. Switch traffic / go live
+
+## Post-Migration
+- Monitor for errors and performance
+- Verify all integrations working
+- Update documentation
+- Decommission old system after confirmation
+EOF
+}
+
+cmd_cheatsheet() {
+    cat << 'EOF'
+# Quickfind — Quick Reference
+
+## Essential Commands
+| Command | Description |
+|---------|-------------|
+| help | Show available commands |
+| version | Display version info |
+| intro | Overview and fundamentals |
+| troubleshooting | Common problems and fixes |
+
+## Common Workflows
+1. **Setup**: install → configure → verify → test
+2. **Daily**: check → monitor → report → review
+3. **Issue**: diagnose → isolate → fix → verify → document
+
+## Key Shortcuts
+- Use tab completion for commands
+- Check logs first when troubleshooting
+- Always backup before making changes
+- Document everything you change
+EOF
+}
+
+CMD="${1:-help}"
+shift 2>/dev/null || true
+
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    quickstart) cmd_quickstart "$@" ;;
+    patterns) cmd_patterns "$@" ;;
+    debugging) cmd_debugging "$@" ;;
+    performance) cmd_performance "$@" ;;
+    security) cmd_security "$@" ;;
+    migration) cmd_migration "$@" ;;
+    cheatsheet) cmd_cheatsheet "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "quickfind v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: quickfind help"; exit 1 ;;
 esac

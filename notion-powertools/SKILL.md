@@ -1,68 +1,35 @@
 ---
-version: "2.0.0"
-name: notion-powertools
-description: "Manage Notion pages, databases, and blocks via API from the command line. Use when creating pages, querying databases, syncing Notion content via CLI."
-author: BytesAgain
-homepage: https://bytesagain.com
-source: https://github.com/bytesagain/ai-skills
+name: "notion-powertools"
+version: "3.0.1"
+description: "Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Notion Powertools concepts, best practices, and implementation pa..."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [notion,powertools, reference]
+category: "devtools"
 ---
 
 # Notion Powertools
 
-A complete Notion API toolkit for managing pages, databases, blocks, and content directly from the command line. Create and update pages, query databases with filters, manage block content, search across your workspace, and export structured data — all using the official Notion API with your own integration token.
-
-## Description
-
-Notion Powertools provides full programmatic access to your Notion workspace. Whether you need to automate content creation, query databases for reporting, manage page properties, or bulk-update blocks, this skill handles it all through a clean CLI interface. Supports formatted output in table, JSON, or markdown formats.
-
-## Requirements
-
-- `search` — Search workspace (--query)
-- `list-databases` — List all databases
-- `query-database` — Query a database (--database-id)
-- `create-page` — Create a page (--database-id --title --content)
-- `get-page` — Get page details (--page-id)
-- `update-page` — Update a page (--page-id --title)
-- `list-blocks` — List page blocks (--page-id)
-- `append-block` — Append content to page (--page-id --content)
-- Create an integration at [configured-endpoint]
-- Share target pages/databases with your integration
+Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Notion Powertools concepts, best practices, and implementation pa... No API keys or credentials required.
 
 ## Commands
 
-See commands above.
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-## Environment Variables
+## Output Format
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `NOTION_API_KEY` | Yes | Notion integration token |
-| `NOTION_OUTPUT_FORMAT` | No | Output format: `table` (default), `json`, `markdown` |
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
-## Examples
-
-```bash
-# Search for pages
-NOTION_API_KEY=ntn_xxx notion-powertools search "Meeting Notes"
-
-# Query a database with filter
-NOTION_API_KEY=ntn_xxx notion-powertools db query abc123 '{"property":"Status","select":{"equals":"In Progress"}}'
-
-# Create a new page
-NOTION_API_KEY=ntn_xxx notion-powertools page create parent123 "New Task" '{"Status":{"select":{"name":"Todo"}}}'
-
-# Append content to a page
-NOTION_API_KEY=ntn_xxx notion-powertools block append page123 "Hello world" paragraph
-
-# List workspace users
-NOTION_API_KEY=ntn_xxx notion-powertools user list
-```
-
-## Output Formats
-
-- **table** — Human-readable formatted table (default)
-- **json** — Raw JSON response from API
-- **markdown** — Markdown-formatted output for docs/notes
 ---
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

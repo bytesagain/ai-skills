@@ -1,9 +1,0 @@
-{
-  "name": "financial-machine-learning",
-  "description": "Explore curated financial ML tools for trading, risk models, and predictions. Use when building models, benchmarking accuracy, or researching quant tools.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

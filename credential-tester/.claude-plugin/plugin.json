@@ -1,9 +1,0 @@
-{
-  "name": "credential-tester",
-  "description": "Test authentication credentials against HTTP, SSH, and FTP services. Use when validating access credentials.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

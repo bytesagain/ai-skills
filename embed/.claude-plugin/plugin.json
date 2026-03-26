@@ -1,9 +1,0 @@
-{
-  "name": "embed",
-  "description": "Generate and search text embedding vectors using TF-IDF and cosine similarity. Use when you need semantic search or text similarity analysis.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

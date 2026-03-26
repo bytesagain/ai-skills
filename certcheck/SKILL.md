@@ -1,56 +1,34 @@
 ---
 name: "certcheck"
-version: "3.0.0"
-description: "Check SSL certificates on remote domains for expiry and chain validity. Use when auditing SSL health."
+version: "4.0.2"
+description: "Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Certcheck concepts, best practices, and implementation patterns."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [certcheck, reference]
+category: "devtools"
 ---
 
-# certcheck
+# Certcheck
 
-Check SSL certificates on remote domains for expiry and chain validity. Use when auditing SSL health.
+Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Certcheck concepts, best practices, and implementation patterns. No API keys or credentials required.
 
 ## Commands
 
-### `check`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-```bash
-scripts/script.sh check <domain>
-```
+## Output Format
 
-### `expiry`
-
-```bash
-scripts/script.sh expiry <domain>
-```
-
-### `chain`
-
-```bash
-scripts/script.sh chain <domain>
-```
-
-### `compare`
-
-```bash
-scripts/script.sh compare <d1 d2>
-```
-
-### `batch`
-
-```bash
-scripts/script.sh batch <file>
-```
-
-### `report`
-
-```bash
-scripts/script.sh report <domain>
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/certcheck/`.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

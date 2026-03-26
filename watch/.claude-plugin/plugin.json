@@ -1,9 +1,0 @@
-{
-  "name": "watch",
-  "description": "Monitor file and directory changes using CLI watchers. Use when you need to watch for file modifications, track change history, filter events,",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

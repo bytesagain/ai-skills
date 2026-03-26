@@ -1,314 +1,255 @@
 #!/usr/bin/env bash
-# Shell Ai — ai tool
+# shell-ai — Shell Ai reference tool. Use when working with shell ai in devtools contexts.
 # Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-DATA_DIR="${HOME}/.local/share/shell-ai"
-mkdir -p "$DATA_DIR"
+VERSION="2.0.1"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-_version() { echo "shell-ai v2.0.0"; }
+show_help() {
+    cat << 'HELPEOF'
+shell-ai v$VERSION — Shell Ai Reference Tool
 
-_help() {
-    echo "Shell Ai v2.0.0 — ai toolkit"
-    echo ""
-    echo "Usage: shell-ai <command> [args]"
-    echo ""
-    echo "Commands:"
-    echo "  configure          Configure"
-    echo "  benchmark          Benchmark"
-    echo "  compare            Compare"
-    echo "  prompt             Prompt"
-    echo "  evaluate           Evaluate"
-    echo "  fine-tune          Fine Tune"
-    echo "  analyze            Analyze"
-    echo "  cost               Cost"
-    echo "  usage              Usage"
-    echo "  optimize           Optimize"
-    echo "  test               Test"
-    echo "  report             Report"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  search <term>      Search entries"
-    echo "  recent             Recent activity"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
+Usage: shell-ai <command>
+
+Commands:
+  intro           Overview and core concepts
+  quickstart      Getting started guide
+  patterns        Common patterns and best practices
+  debugging       Debugging and troubleshooting
+  performance     Performance optimization tips
+  security        Security considerations
+  migration       Migration and upgrade guide
+  cheatsheet      Quick reference cheat sheet
+  help              Show this help
+  version           Show version
+
+Powered by BytesAgain | bytesagain.com
+HELPEOF
 }
 
-_stats() {
-    echo "=== Shell Ai Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
+cmd_intro() {
+    cat << 'EOF'
+# Shell Ai — Overview
+
+## What is Shell Ai?
+Shell Ai (shell-ai) is a specialized tool/concept in the devtools domain.
+It provides essential capabilities for professionals working with shell ai.
+
+## Key Concepts
+- Core shell ai principles and fundamentals
+- How shell ai fits into the broader devtools ecosystem  
+- Essential terminology every practitioner should know
+
+## Why Shell Ai Matters
+Understanding shell ai is critical for:
+- Improving efficiency in devtools workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic shell ai concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
+EOF
 }
 
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "\n]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do echo "$name,$ts,$val" >> "$out"; done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Shell Ai Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
-    esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
+cmd_quickstart() {
+    cat << 'EOF'
+# Shell Ai — Quick Start Guide
+
+## Prerequisites
+- Basic understanding of devtools concepts
+- Required tools and access credentials
+- System meeting minimum requirements
+
+## Installation
+1. Download or clone the shell ai package
+2. Install dependencies
+3. Configure initial settings
+4. Verify installation
+
+## First Steps
+1. Run the hello-world example
+2. Review the default configuration
+3. Try a simple real-world task
+4. Explore available commands and options
+
+## Next Steps
+- Read the full documentation
+- Join the community forum
+- Try advanced features
+- Set up automated workflows
+EOF
 }
 
-_status() {
-    echo "=== Shell Ai Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Last: $(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo never)"
-    echo "  Status: OK"
+cmd_patterns() {
+    cat << 'EOF'
+# Shell Ai — Common Patterns & Best Practices
+
+## Design Patterns
+1. **Standard Pattern**: The most common approach for shell ai
+2. **Scalable Pattern**: For high-volume or distributed scenarios
+3. **Resilient Pattern**: For fault-tolerant implementations
+
+## Best Practices
+- Follow the principle of least privilege
+- Use version control for all configurations
+- Implement comprehensive logging
+- Test changes in staging before production
+- Document all custom configurations
+
+## Anti-Patterns to Avoid
+- Hardcoding credentials or configuration
+- Skipping validation and error handling
+- Ignoring monitoring and alerting
+- Making changes without documentation
+- Over-engineering simple solutions
+EOF
 }
 
-_search() {
-    local term="${1:?Usage: shell-ai search <term>}"
-    echo "Searching for: $term"
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local m=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$m" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$m" | sed 's/^/    /'
-        fi
-    done
+cmd_debugging() {
+    cat << 'EOF'
+# Shell Ai — Debugging Guide
+
+## Common Errors
+1. **Connection refused**: Check service status and network
+2. **Permission denied**: Verify credentials and access rights
+3. **Timeout**: Check network, increase limits, optimize queries
+4. **Invalid input**: Validate data format and encoding
+
+## Debugging Tools
+- Built-in logging and diagnostics
+- Network analysis tools (tcpdump, wireshark)
+- System monitoring (top, htop, iostat)
+- Application-specific debug modes
+
+## Debug Workflow
+1. Reproduce the issue consistently
+2. Check logs for error messages
+3. Isolate the failing component
+4. Test with minimal configuration
+5. Apply fix and verify
+EOF
 }
 
-_recent() {
-    echo "=== Recent Activity ==="
-    tail -20 "$DATA_DIR/history.log" 2>/dev/null | sed 's/^/  /' || echo "  No activity yet."
+cmd_performance() {
+    cat << 'EOF'
+# Shell Ai — Performance Optimization
+
+## Key Metrics
+- Response time / latency
+- Throughput / operations per second
+- Resource utilization (CPU, memory, I/O)
+- Error rate and retry frequency
+
+## Optimization Strategies
+1. **Caching**: Reduce redundant operations
+2. **Batching**: Group small operations
+3. **Indexing**: Speed up data lookups
+4. **Compression**: Reduce data transfer size
+5. **Parallel Processing**: Utilize multiple cores
+
+## Monitoring
+- Set up baseline performance metrics
+- Configure alerts for anomalies
+- Track trends over time
+- Regular capacity planning reviews
+EOF
 }
 
-case "${1:-help}" in
-    configure)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent configure entries:"
-            tail -20 "$DATA_DIR/configure.log" 2>/dev/null || echo "  No entries yet. Use: shell-ai configure <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/configure.log"
-            local total=$(wc -l < "$DATA_DIR/configure.log")
-            echo "  [Shell Ai] configure: $input"
-            echo "  Saved. Total configure entries: $total"
-            _log "configure" "$input"
-        fi
-        ;;
-    benchmark)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent benchmark entries:"
-            tail -20 "$DATA_DIR/benchmark.log" 2>/dev/null || echo "  No entries yet. Use: shell-ai benchmark <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/benchmark.log"
-            local total=$(wc -l < "$DATA_DIR/benchmark.log")
-            echo "  [Shell Ai] benchmark: $input"
-            echo "  Saved. Total benchmark entries: $total"
-            _log "benchmark" "$input"
-        fi
-        ;;
-    compare)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent compare entries:"
-            tail -20 "$DATA_DIR/compare.log" 2>/dev/null || echo "  No entries yet. Use: shell-ai compare <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/compare.log"
-            local total=$(wc -l < "$DATA_DIR/compare.log")
-            echo "  [Shell Ai] compare: $input"
-            echo "  Saved. Total compare entries: $total"
-            _log "compare" "$input"
-        fi
-        ;;
-    prompt)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent prompt entries:"
-            tail -20 "$DATA_DIR/prompt.log" 2>/dev/null || echo "  No entries yet. Use: shell-ai prompt <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/prompt.log"
-            local total=$(wc -l < "$DATA_DIR/prompt.log")
-            echo "  [Shell Ai] prompt: $input"
-            echo "  Saved. Total prompt entries: $total"
-            _log "prompt" "$input"
-        fi
-        ;;
-    evaluate)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent evaluate entries:"
-            tail -20 "$DATA_DIR/evaluate.log" 2>/dev/null || echo "  No entries yet. Use: shell-ai evaluate <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/evaluate.log"
-            local total=$(wc -l < "$DATA_DIR/evaluate.log")
-            echo "  [Shell Ai] evaluate: $input"
-            echo "  Saved. Total evaluate entries: $total"
-            _log "evaluate" "$input"
-        fi
-        ;;
-    fine-tune)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent fine-tune entries:"
-            tail -20 "$DATA_DIR/fine-tune.log" 2>/dev/null || echo "  No entries yet. Use: shell-ai fine-tune <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/fine-tune.log"
-            local total=$(wc -l < "$DATA_DIR/fine-tune.log")
-            echo "  [Shell Ai] fine-tune: $input"
-            echo "  Saved. Total fine-tune entries: $total"
-            _log "fine-tune" "$input"
-        fi
-        ;;
-    analyze)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent analyze entries:"
-            tail -20 "$DATA_DIR/analyze.log" 2>/dev/null || echo "  No entries yet. Use: shell-ai analyze <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/analyze.log"
-            local total=$(wc -l < "$DATA_DIR/analyze.log")
-            echo "  [Shell Ai] analyze: $input"
-            echo "  Saved. Total analyze entries: $total"
-            _log "analyze" "$input"
-        fi
-        ;;
-    cost)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent cost entries:"
-            tail -20 "$DATA_DIR/cost.log" 2>/dev/null || echo "  No entries yet. Use: shell-ai cost <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/cost.log"
-            local total=$(wc -l < "$DATA_DIR/cost.log")
-            echo "  [Shell Ai] cost: $input"
-            echo "  Saved. Total cost entries: $total"
-            _log "cost" "$input"
-        fi
-        ;;
-    usage)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent usage entries:"
-            tail -20 "$DATA_DIR/usage.log" 2>/dev/null || echo "  No entries yet. Use: shell-ai usage <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/usage.log"
-            local total=$(wc -l < "$DATA_DIR/usage.log")
-            echo "  [Shell Ai] usage: $input"
-            echo "  Saved. Total usage entries: $total"
-            _log "usage" "$input"
-        fi
-        ;;
-    optimize)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent optimize entries:"
-            tail -20 "$DATA_DIR/optimize.log" 2>/dev/null || echo "  No entries yet. Use: shell-ai optimize <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/optimize.log"
-            local total=$(wc -l < "$DATA_DIR/optimize.log")
-            echo "  [Shell Ai] optimize: $input"
-            echo "  Saved. Total optimize entries: $total"
-            _log "optimize" "$input"
-        fi
-        ;;
-    test)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent test entries:"
-            tail -20 "$DATA_DIR/test.log" 2>/dev/null || echo "  No entries yet. Use: shell-ai test <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/test.log"
-            local total=$(wc -l < "$DATA_DIR/test.log")
-            echo "  [Shell Ai] test: $input"
-            echo "  Saved. Total test entries: $total"
-            _log "test" "$input"
-        fi
-        ;;
-    report)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent report entries:"
-            tail -20 "$DATA_DIR/report.log" 2>/dev/null || echo "  No entries yet. Use: shell-ai report <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/report.log"
-            local total=$(wc -l < "$DATA_DIR/report.log")
-            echo "  [Shell Ai] report: $input"
-            echo "  Saved. Total report entries: $total"
-            _log "report" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown: $1 — run 'shell-ai help'"
-        exit 1
-        ;;
+cmd_security() {
+    cat << 'EOF'
+# Shell Ai — Security Considerations
+
+## Authentication & Authorization
+- Use strong, unique credentials
+- Implement role-based access control
+- Enable multi-factor authentication where possible
+- Regularly review and rotate credentials
+
+## Data Protection
+- Encrypt data at rest and in transit
+- Implement proper backup procedures
+- Follow data retention policies
+- Sanitize inputs to prevent injection
+
+## Network Security
+- Use firewalls and network segmentation
+- Monitor for suspicious activity
+- Keep all software patched and updated
+- Disable unnecessary services and ports
+EOF
+}
+
+cmd_migration() {
+    cat << 'EOF'
+# Shell Ai — Migration & Upgrade Guide
+
+## Pre-Migration Checklist
+- [ ] Current system fully documented
+- [ ] Complete backup taken and verified
+- [ ] Target environment prepared
+- [ ] Rollback plan documented
+- [ ] Stakeholders notified
+
+## Migration Steps
+1. Prepare target environment
+2. Export data from source
+3. Transform data if needed
+4. Import to target
+5. Verify data integrity
+6. Update configurations
+7. Test all functionality
+8. Switch traffic / go live
+
+## Post-Migration
+- Monitor for errors and performance
+- Verify all integrations working
+- Update documentation
+- Decommission old system after confirmation
+EOF
+}
+
+cmd_cheatsheet() {
+    cat << 'EOF'
+# Shell Ai — Quick Reference
+
+## Essential Commands
+| Command | Description |
+|---------|-------------|
+| help | Show available commands |
+| version | Display version info |
+| intro | Overview and fundamentals |
+| troubleshooting | Common problems and fixes |
+
+## Common Workflows
+1. **Setup**: install → configure → verify → test
+2. **Daily**: check → monitor → report → review
+3. **Issue**: diagnose → isolate → fix → verify → document
+
+## Key Shortcuts
+- Use tab completion for commands
+- Check logs first when troubleshooting
+- Always backup before making changes
+- Document everything you change
+EOF
+}
+
+CMD="${1:-help}"
+shift 2>/dev/null || true
+
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    quickstart) cmd_quickstart "$@" ;;
+    patterns) cmd_patterns "$@" ;;
+    debugging) cmd_debugging "$@" ;;
+    performance) cmd_performance "$@" ;;
+    security) cmd_security "$@" ;;
+    migration) cmd_migration "$@" ;;
+    cheatsheet) cmd_cheatsheet "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "shell-ai v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: shell-ai help"; exit 1 ;;
 esac

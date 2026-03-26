@@ -1,9 +1,0 @@
-{
-  "name": "devops-journey",
-  "description": "This repository started out as a learning in public project for myself and has now become a structur devops-journey, shell, ansible, backup, containers.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,346 +1,255 @@
 #!/usr/bin/env bash
-# Network Speed — sysops tool
+# network-speed — Network Speed reference tool. Use when working with network speed in devtools contexts.
 # Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-DATA_DIR="${HOME}/.local/share/network-speed"
-mkdir -p "$DATA_DIR"
+VERSION="2.0.0"
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
-_version() { echo "network-speed v2.0.0"; }
+show_help() {
+    cat << 'HELPEOF'
+network-speed v$VERSION — Network Speed Reference Tool
 
-_help() {
-    echo "Network Speed v2.0.0 — sysops toolkit"
-    echo ""
-    echo "Usage: network-speed <command> [args]"
-    echo ""
-    echo "Commands:"
-    echo "  scan               Scan"
-    echo "  monitor            Monitor"
-    echo "  report             Report"
-    echo "  alert              Alert"
-    echo "  top                Top"
-    echo "  usage              Usage"
-    echo "  check              Check"
-    echo "  fix                Fix"
-    echo "  cleanup            Cleanup"
-    echo "  backup             Backup"
-    echo "  restore            Restore"
-    echo "  log                Log"
-    echo "  benchmark          Benchmark"
-    echo "  compare            Compare"
-    echo "  stats              Summary statistics"
-    echo "  export <fmt>       Export (json|csv|txt)"
-    echo "  search <term>      Search entries"
-    echo "  recent             Recent activity"
-    echo "  status             Health check"
-    echo "  help               Show this help"
-    echo "  version            Show version"
-    echo ""
-    echo "Data: $DATA_DIR"
+Usage: network-speed <command>
+
+Commands:
+  intro           Overview and core concepts
+  quickstart      Getting started guide
+  patterns        Common patterns and best practices
+  debugging       Debugging and troubleshooting
+  performance     Performance optimization tips
+  security        Security considerations
+  migration       Migration and upgrade guide
+  cheatsheet      Quick reference cheat sheet
+  help              Show this help
+  version           Show version
+
+Powered by BytesAgain | bytesagain.com
+HELPEOF
 }
 
-_stats() {
-    echo "=== Network Speed Stats ==="
-    local total=0
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local name=$(basename "$f" .log)
-        local c=$(wc -l < "$f")
-        total=$((total + c))
-        echo "  $name: $c entries"
-    done
-    echo "  ---"
-    echo "  Total: $total entries"
-    echo "  Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
+cmd_intro() {
+    cat << 'EOF'
+# Network Speed — Overview
+
+## What is Network Speed?
+Network Speed (network-speed) is a specialized tool/concept in the devtools domain.
+It provides essential capabilities for professionals working with network speed.
+
+## Key Concepts
+- Core network speed principles and fundamentals
+- How network speed fits into the broader devtools ecosystem  
+- Essential terminology every practitioner should know
+
+## Why Network Speed Matters
+Understanding network speed is critical for:
+- Improving efficiency in devtools workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic network speed concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
+EOF
 }
 
-_export() {
-    local fmt="${1:-json}"
-    local out="$DATA_DIR/export.$fmt"
-    case "$fmt" in
-        json)
-            echo "[" > "$out"
-            local first=1
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do
-                    [ $first -eq 1 ] && first=0 || echo "," >> "$out"
-                    printf '  {"type":"%s","time":"%s","value":"%s"}' "$name" "$ts" "$val" >> "$out"
-                done < "$f"
-            done
-            echo "\n]" >> "$out"
-            ;;
-        csv)
-            echo "type,time,value" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                local name=$(basename "$f" .log)
-                while IFS='|' read -r ts val; do echo "$name,$ts,$val" >> "$out"; done < "$f"
-            done
-            ;;
-        txt)
-            echo "=== Network Speed Export ===" > "$out"
-            for f in "$DATA_DIR"/*.log; do
-                [ -f "$f" ] || continue
-                echo "--- $(basename "$f" .log) ---" >> "$out"
-                cat "$f" >> "$out"
-            done
-            ;;
-        *) echo "Formats: json, csv, txt"; return 1 ;;
-    esac
-    echo "Exported to $out ($(wc -c < "$out") bytes)"
+cmd_quickstart() {
+    cat << 'EOF'
+# Network Speed — Quick Start Guide
+
+## Prerequisites
+- Basic understanding of devtools concepts
+- Required tools and access credentials
+- System meeting minimum requirements
+
+## Installation
+1. Download or clone the network speed package
+2. Install dependencies
+3. Configure initial settings
+4. Verify installation
+
+## First Steps
+1. Run the hello-world example
+2. Review the default configuration
+3. Try a simple real-world task
+4. Explore available commands and options
+
+## Next Steps
+- Read the full documentation
+- Join the community forum
+- Try advanced features
+- Set up automated workflows
+EOF
 }
 
-_status() {
-    echo "=== Network Speed Status ==="
-    echo "  Version: v2.0.0"
-    echo "  Data dir: $DATA_DIR"
-    echo "  Entries: $(cat "$DATA_DIR"/*.log 2>/dev/null | wc -l) total"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    echo "  Last: $(tail -1 "$DATA_DIR/history.log" 2>/dev/null || echo never)"
-    echo "  Status: OK"
+cmd_patterns() {
+    cat << 'EOF'
+# Network Speed — Common Patterns & Best Practices
+
+## Design Patterns
+1. **Standard Pattern**: The most common approach for network speed
+2. **Scalable Pattern**: For high-volume or distributed scenarios
+3. **Resilient Pattern**: For fault-tolerant implementations
+
+## Best Practices
+- Follow the principle of least privilege
+- Use version control for all configurations
+- Implement comprehensive logging
+- Test changes in staging before production
+- Document all custom configurations
+
+## Anti-Patterns to Avoid
+- Hardcoding credentials or configuration
+- Skipping validation and error handling
+- Ignoring monitoring and alerting
+- Making changes without documentation
+- Over-engineering simple solutions
+EOF
 }
 
-_search() {
-    local term="${1:?Usage: network-speed search <term>}"
-    echo "Searching for: $term"
-    for f in "$DATA_DIR"/*.log; do
-        [ -f "$f" ] || continue
-        local m=$(grep -i "$term" "$f" 2>/dev/null || true)
-        if [ -n "$m" ]; then
-            echo "  --- $(basename "$f" .log) ---"
-            echo "$m" | sed 's/^/    /'
-        fi
-    done
+cmd_debugging() {
+    cat << 'EOF'
+# Network Speed — Debugging Guide
+
+## Common Errors
+1. **Connection refused**: Check service status and network
+2. **Permission denied**: Verify credentials and access rights
+3. **Timeout**: Check network, increase limits, optimize queries
+4. **Invalid input**: Validate data format and encoding
+
+## Debugging Tools
+- Built-in logging and diagnostics
+- Network analysis tools (tcpdump, wireshark)
+- System monitoring (top, htop, iostat)
+- Application-specific debug modes
+
+## Debug Workflow
+1. Reproduce the issue consistently
+2. Check logs for error messages
+3. Isolate the failing component
+4. Test with minimal configuration
+5. Apply fix and verify
+EOF
 }
 
-_recent() {
-    echo "=== Recent Activity ==="
-    tail -20 "$DATA_DIR/history.log" 2>/dev/null | sed 's/^/  /' || echo "  No activity yet."
+cmd_performance() {
+    cat << 'EOF'
+# Network Speed — Performance Optimization
+
+## Key Metrics
+- Response time / latency
+- Throughput / operations per second
+- Resource utilization (CPU, memory, I/O)
+- Error rate and retry frequency
+
+## Optimization Strategies
+1. **Caching**: Reduce redundant operations
+2. **Batching**: Group small operations
+3. **Indexing**: Speed up data lookups
+4. **Compression**: Reduce data transfer size
+5. **Parallel Processing**: Utilize multiple cores
+
+## Monitoring
+- Set up baseline performance metrics
+- Configure alerts for anomalies
+- Track trends over time
+- Regular capacity planning reviews
+EOF
 }
 
-case "${1:-help}" in
-    scan)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent scan entries:"
-            tail -20 "$DATA_DIR/scan.log" 2>/dev/null || echo "  No entries yet. Use: network-speed scan <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/scan.log"
-            local total=$(wc -l < "$DATA_DIR/scan.log")
-            echo "  [Network Speed] scan: $input"
-            echo "  Saved. Total scan entries: $total"
-            _log "scan" "$input"
-        fi
-        ;;
-    monitor)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent monitor entries:"
-            tail -20 "$DATA_DIR/monitor.log" 2>/dev/null || echo "  No entries yet. Use: network-speed monitor <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/monitor.log"
-            local total=$(wc -l < "$DATA_DIR/monitor.log")
-            echo "  [Network Speed] monitor: $input"
-            echo "  Saved. Total monitor entries: $total"
-            _log "monitor" "$input"
-        fi
-        ;;
-    report)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent report entries:"
-            tail -20 "$DATA_DIR/report.log" 2>/dev/null || echo "  No entries yet. Use: network-speed report <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/report.log"
-            local total=$(wc -l < "$DATA_DIR/report.log")
-            echo "  [Network Speed] report: $input"
-            echo "  Saved. Total report entries: $total"
-            _log "report" "$input"
-        fi
-        ;;
-    alert)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent alert entries:"
-            tail -20 "$DATA_DIR/alert.log" 2>/dev/null || echo "  No entries yet. Use: network-speed alert <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/alert.log"
-            local total=$(wc -l < "$DATA_DIR/alert.log")
-            echo "  [Network Speed] alert: $input"
-            echo "  Saved. Total alert entries: $total"
-            _log "alert" "$input"
-        fi
-        ;;
-    top)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent top entries:"
-            tail -20 "$DATA_DIR/top.log" 2>/dev/null || echo "  No entries yet. Use: network-speed top <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/top.log"
-            local total=$(wc -l < "$DATA_DIR/top.log")
-            echo "  [Network Speed] top: $input"
-            echo "  Saved. Total top entries: $total"
-            _log "top" "$input"
-        fi
-        ;;
-    usage)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent usage entries:"
-            tail -20 "$DATA_DIR/usage.log" 2>/dev/null || echo "  No entries yet. Use: network-speed usage <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/usage.log"
-            local total=$(wc -l < "$DATA_DIR/usage.log")
-            echo "  [Network Speed] usage: $input"
-            echo "  Saved. Total usage entries: $total"
-            _log "usage" "$input"
-        fi
-        ;;
-    check)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent check entries:"
-            tail -20 "$DATA_DIR/check.log" 2>/dev/null || echo "  No entries yet. Use: network-speed check <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/check.log"
-            local total=$(wc -l < "$DATA_DIR/check.log")
-            echo "  [Network Speed] check: $input"
-            echo "  Saved. Total check entries: $total"
-            _log "check" "$input"
-        fi
-        ;;
-    fix)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent fix entries:"
-            tail -20 "$DATA_DIR/fix.log" 2>/dev/null || echo "  No entries yet. Use: network-speed fix <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/fix.log"
-            local total=$(wc -l < "$DATA_DIR/fix.log")
-            echo "  [Network Speed] fix: $input"
-            echo "  Saved. Total fix entries: $total"
-            _log "fix" "$input"
-        fi
-        ;;
-    cleanup)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent cleanup entries:"
-            tail -20 "$DATA_DIR/cleanup.log" 2>/dev/null || echo "  No entries yet. Use: network-speed cleanup <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/cleanup.log"
-            local total=$(wc -l < "$DATA_DIR/cleanup.log")
-            echo "  [Network Speed] cleanup: $input"
-            echo "  Saved. Total cleanup entries: $total"
-            _log "cleanup" "$input"
-        fi
-        ;;
-    backup)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent backup entries:"
-            tail -20 "$DATA_DIR/backup.log" 2>/dev/null || echo "  No entries yet. Use: network-speed backup <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/backup.log"
-            local total=$(wc -l < "$DATA_DIR/backup.log")
-            echo "  [Network Speed] backup: $input"
-            echo "  Saved. Total backup entries: $total"
-            _log "backup" "$input"
-        fi
-        ;;
-    restore)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent restore entries:"
-            tail -20 "$DATA_DIR/restore.log" 2>/dev/null || echo "  No entries yet. Use: network-speed restore <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/restore.log"
-            local total=$(wc -l < "$DATA_DIR/restore.log")
-            echo "  [Network Speed] restore: $input"
-            echo "  Saved. Total restore entries: $total"
-            _log "restore" "$input"
-        fi
-        ;;
-    log)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent log entries:"
-            tail -20 "$DATA_DIR/log.log" 2>/dev/null || echo "  No entries yet. Use: network-speed log <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/log.log"
-            local total=$(wc -l < "$DATA_DIR/log.log")
-            echo "  [Network Speed] log: $input"
-            echo "  Saved. Total log entries: $total"
-            _log "log" "$input"
-        fi
-        ;;
-    benchmark)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent benchmark entries:"
-            tail -20 "$DATA_DIR/benchmark.log" 2>/dev/null || echo "  No entries yet. Use: network-speed benchmark <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/benchmark.log"
-            local total=$(wc -l < "$DATA_DIR/benchmark.log")
-            echo "  [Network Speed] benchmark: $input"
-            echo "  Saved. Total benchmark entries: $total"
-            _log "benchmark" "$input"
-        fi
-        ;;
-    compare)
-        shift
-        if [ $# -eq 0 ]; then
-            echo "Recent compare entries:"
-            tail -20 "$DATA_DIR/compare.log" 2>/dev/null || echo "  No entries yet. Use: network-speed compare <input>"
-        else
-            local input="$*"
-            local ts=$(date '+%Y-%m-%d %H:%M')
-            echo "$ts|$input" >> "$DATA_DIR/compare.log"
-            local total=$(wc -l < "$DATA_DIR/compare.log")
-            echo "  [Network Speed] compare: $input"
-            echo "  Saved. Total compare entries: $total"
-            _log "compare" "$input"
-        fi
-        ;;
-    stats) _stats ;;
-    export) shift; _export "$@" ;;
-    search) shift; _search "$@" ;;
-    recent) _recent ;;
-    status) _status ;;
-    help|--help|-h) _help ;;
-    version|--version|-v) _version ;;
-    *)
-        echo "Unknown: $1 — run 'network-speed help'"
-        exit 1
-        ;;
+cmd_security() {
+    cat << 'EOF'
+# Network Speed — Security Considerations
+
+## Authentication & Authorization
+- Use strong, unique credentials
+- Implement role-based access control
+- Enable multi-factor authentication where possible
+- Regularly review and rotate credentials
+
+## Data Protection
+- Encrypt data at rest and in transit
+- Implement proper backup procedures
+- Follow data retention policies
+- Sanitize inputs to prevent injection
+
+## Network Security
+- Use firewalls and network segmentation
+- Monitor for suspicious activity
+- Keep all software patched and updated
+- Disable unnecessary services and ports
+EOF
+}
+
+cmd_migration() {
+    cat << 'EOF'
+# Network Speed — Migration & Upgrade Guide
+
+## Pre-Migration Checklist
+- [ ] Current system fully documented
+- [ ] Complete backup taken and verified
+- [ ] Target environment prepared
+- [ ] Rollback plan documented
+- [ ] Stakeholders notified
+
+## Migration Steps
+1. Prepare target environment
+2. Export data from source
+3. Transform data if needed
+4. Import to target
+5. Verify data integrity
+6. Update configurations
+7. Test all functionality
+8. Switch traffic / go live
+
+## Post-Migration
+- Monitor for errors and performance
+- Verify all integrations working
+- Update documentation
+- Decommission old system after confirmation
+EOF
+}
+
+cmd_cheatsheet() {
+    cat << 'EOF'
+# Network Speed — Quick Reference
+
+## Essential Commands
+| Command | Description |
+|---------|-------------|
+| help | Show available commands |
+| version | Display version info |
+| intro | Overview and fundamentals |
+| troubleshooting | Common problems and fixes |
+
+## Common Workflows
+1. **Setup**: install → configure → verify → test
+2. **Daily**: check → monitor → report → review
+3. **Issue**: diagnose → isolate → fix → verify → document
+
+## Key Shortcuts
+- Use tab completion for commands
+- Check logs first when troubleshooting
+- Always backup before making changes
+- Document everything you change
+EOF
+}
+
+CMD="${1:-help}"
+shift 2>/dev/null || true
+
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    quickstart) cmd_quickstart "$@" ;;
+    patterns) cmd_patterns "$@" ;;
+    debugging) cmd_debugging "$@" ;;
+    performance) cmd_performance "$@" ;;
+    security) cmd_security "$@" ;;
+    migration) cmd_migration "$@" ;;
+    cheatsheet) cmd_cheatsheet "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "network-speed v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: network-speed help"; exit 1 ;;
 esac

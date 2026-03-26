@@ -1,56 +1,34 @@
 ---
 name: "cronhelp"
-version: "3.0.0"
-description: "Manage crontab entries with add, remove, and listing. Use when editing cron jobs."
+version: "4.0.2"
+description: "Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Cronhelp concepts, best practices, and implementation patterns."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [cronhelp, reference]
+category: "devtools"
 ---
 
-# cronhelp
+# Cronhelp
 
-Manage crontab entries with add, remove, and listing. Use when editing cron jobs.
+Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Cronhelp concepts, best practices, and implementation patterns. No API keys or credentials required.
 
 ## Commands
 
-### `list`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-```bash
-scripts/script.sh list
-```
+## Output Format
 
-### `add`
-
-```bash
-scripts/script.sh add <schedule command>
-```
-
-### `remove`
-
-```bash
-scripts/script.sh remove <number>
-```
-
-### `log`
-
-```bash
-scripts/script.sh log <lines>
-```
-
-### `test`
-
-```bash
-scripts/script.sh test <command>
-```
-
-### `backup`
-
-```bash
-scripts/script.sh backup
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/cronhelp/`.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

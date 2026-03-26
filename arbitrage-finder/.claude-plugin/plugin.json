@@ -1,9 +1,0 @@
-{
-  "name": "arbitrage-finder",
-  "description": "Scan cross-exchange price gaps and score arbitrage profitability. Use when comparing crypto prices, tracking spreads, or evaluating trades.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

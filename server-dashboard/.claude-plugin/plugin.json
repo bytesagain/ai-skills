@@ -1,9 +1,0 @@
-{
-  "name": "server-dashboard",
-  "description": "Build and deploy software across server fleets with pipelines. Use when orchestrating deploys, monitoring services, aggregating metrics.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

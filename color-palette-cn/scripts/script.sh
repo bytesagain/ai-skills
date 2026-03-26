@@ -1,104 +1,338 @@
 #!/usr/bin/env bash
-# color-palette-cn - Chinese content creation tool
+# color-palette-cn — 中国传统色彩参考
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${COLOR_PALETTE_CN_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/color-palette-cn}"
-DB="$DATA_DIR/data.log"
-mkdir -p "$DATA_DIR"
+VERSION="4.0.0"
 
-show_help() {
-    cat << EOF
-color-palette-cn v$VERSION
+cmd_intro() { cat << 'EOF'
+# 中国传统色彩体系 — 概述
 
-Chinese content creation tool
+## 历史渊源
+中国传统色彩体系源于先秦五色观：青、赤、黄、白、黑
+对应五行：木（青）、火（赤）、土（黄）、金（白）、水（黑）
+对应方位：东（青）、南（赤）、中（黄）、西（白）、北（黑）
 
-Usage: color-palette-cn <command> [args]
+## 色彩分类体系
+  正色（五色）：青、赤、黄、白、黑 — 地位尊贵
+  间色（杂色）：绿、紫、碧、缥、骝 — 五色混合而成
+  中国传统色名多来自：矿物（朱砂、石青）、植物（藤黄、靛蓝）、
+  动物（胭脂虫）、器物（景泰蓝）、自然（月白、天青）
 
-Commands:
-  write                写作生成
-  title                标题生成
-  outline              大纲生成
-  polish               文案润色
-  hashtag              话题标签
-  platform             平台适配
-  hot                  热点追踪
-  template             模板库
-  translate            中英互译
-  proofread            校对检查
-  help                 Show this help
-  version              Show version
+## 经典色系
+  红色系：朱砂、胭脂、绛紫、妃红、海棠红、石榴红、银红、粉红
+  黄色系：藤黄、雌黄、明黄、姜黄、鹅黄、缃色、秋香色
+  蓝色系：石青、靛蓝、天青、月白、群青、宝蓝、藏青
+  绿色系：石绿、松花绿、翡翠、碧色、豆绿、艾绿、秋绿
+  紫色系：绛紫、紫棠、丁香色、藕荷、雪青
+  灰/白系：月白、牙白、玉白、銀灰、铅白
+  黑色系：墨色、漆黑、玄色、黛色、鸦青
 
-Data: \$DATA_DIR
+## 文化意义
+  红：喜庆、吉祥、权力（帝王朱批用朱砂）
+  黄：帝王专用（明黄色为皇帝龙袍色）
+  青/蓝：官员品级（一品仙鹤补子多配蓝底）
+  白：丧葬、纯洁（白事用白色）
+  黑：严肃、正义（包拯黑脸代表公正）
+  紫：尊贵（紫禁城、紫气东来）
 EOF
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+cmd_standards() { cat << 'EOF'
+# 传统色 — 色值标准对照
 
-cmd_write() {
-    echo "  主题: $1
-      字数: ${2:-500}字"
-    _log "write" "${1:-}"
+## 红色系
+  朱砂      #FF461F    RGB(255,70,31)     矿物颜料，国画重要色
+  胭脂      #C93756    RGB(201,55,86)     虫胶提取，唇妆腮红
+  绛紫      #8C4356    RGB(140,67,86)     深红偏紫
+  妃红      #ED5736    RGB(237,87,54)     杨贵妃之红
+  海棠红    #DB5A6B    RGB(219,90,107)    花色，偏粉
+  银红      #F05654    RGB(240,86,84)     金属光泽红
+  石榴红    #F20C00    RGB(242,12,0)      鲜艳浓烈
+
+## 黄色系
+  藤黄      #FFB61E    RGB(255,182,30)    植物提取，国画常用
+  雌黄      #FFC64B    RGB(255,198,75)    矿物色，校勘用（"信口雌黄"）
+  明黄      #F2CE2B    RGB(242,206,43)    帝王专用色
+  鹅黄      #FFF143    RGB(255,241,67)    淡雅嫩黄
+
+## 蓝色系
+  石青      #1685A9    RGB(22,133,169)    矿物颜料，壁画常用
+  靛蓝      #065279    RGB(6,82,121)      植物（蓝草）提取
+  天青      #68B0AB    RGB(104,176,171)   雨过天晴色
+  月白      #D6ECF0    RGB(214,236,240)   淡蓝近白
+  群青      #4C8DAE    RGB(76,141,174)    青金石研磨
+
+## 绿色系
+  石绿      #16A951    RGB(22,169,81)     铜矿石色
+  松花绿    #057748    RGB(5,119,72)      松花色偏深
+  翡翠      #3DE1AD    RGB(61,225,173)    宝石绿
+  豆绿      #9ED900    RGB(158,217,0)     嫩豆色
+
+## 紫/灰系
+  丁香色    #CCA4E3    RGB(204,164,227)   淡紫花色
+  藕荷      #E4C6D0    RGB(228,198,208)   粉紫色
+  銀灰      #918072    RGB(145,128,114)   器物色
+EOF
 }
 
-cmd_title() {
-    echo "  1. ${1}全攻略
-      2. 关于${1}你不知道的事
-      3. ${1}避坑指南"
-    _log "title" "${1:-}"
+cmd_troubleshooting() { cat << 'EOF'
+# 传统色 — 常见问题与偏差
+
+## 屏幕显示偏差
+  问题：同一色值在不同屏幕显示不同
+  原因：
+    - sRGB vs AdobeRGB vs Display P3 色域差异
+    - 显示器色温设置不同（6500K标准 vs 偏暖/偏冷）
+    - 亮度和对比度影响色彩感知
+  解决：
+    - 使用已校色的显示器（Spyder/i1Display校色仪）
+    - 统一使用sRGB色彩空间
+    - 在设计文件中标注色彩模式和ICC配置
+
+## 印刷色差
+  问题：屏幕色与印刷色不一致
+  原因：
+    - RGB（加色法）→ CMYK（减色法）转换损失
+    - 纸张材质影响（铜版纸 vs 胶版纸 vs 宣纸）
+    - 油墨覆盖率差异
+  解决：
+    - 使用Pantone色号（如朱砂≈Pantone 485C）
+    - 要求打印机提供色样（打样确认）
+    - 中国传统色建议用专色印刷（金墨、银墨、荧光墨）
+
+## 传统颜料与数字色的对应困难
+  问题：天然矿物/植物颜料的色彩无法精确数字化
+  原因：
+    - 天然颜料有颗粒感和微妙色差
+    - 同一矿物不同产地颜色有差异（朱砂：辰州红 vs 贵州红）
+    - 历史文献描述主观（"翠色如新竹"）
+  建议：
+    - 参考故宫博物院数字色卡标准
+    - 中国色研所(CNCS)色彩标准
+    - 取色范围，不是单一精确值
+
+## 配色冲突
+  传统禁忌：红配绿（"红配绿赛狗屁"），但宫廷配色例外
+  解决：控制明度差，红绿可以搭配但需要调节饱和度
+  古建筑配色规律：主色≤3种，辅以黑/白/金分隔
+EOF
 }
 
-cmd_outline() {
-    echo "  1. 引言 | 2. 背景 | 3. 要点 | 4. 总结 | 5. 互动"
-    _log "outline" "${1:-}"
+cmd_performance() { cat << 'EOF'
+# 传统色 — 配色技巧与效率
+
+## 经典配色方案
+
+### 故宫配色（宫廷风）
+  主色：明黄 #F2CE2B + 朱红 #FF461F + 宝蓝 #4B5CC4
+  辅色：金色 #B5A642 + 墨黑 #392F41
+  适用：高端品牌、文创产品、传统节日设计
+  比例：60%主色 + 30%辅色 + 10%点缀
+
+### 青花瓷配色（淡雅风）
+  主色：月白 #D6ECF0 + 群青 #4C8DAE
+  辅色：玉白 #F0F0ED + 墨色 #50616D
+  适用：瓷器设计、茶文化、文人画风
+  比例：70%白底 + 20%青花蓝 + 10%墨线
+
+### 敦煌壁画配色（古朴风）
+  主色：土红 #AE6642 + 石绿 #16A951 + 赭石 #955539
+  辅色：藤黄 #FFB61E + 铅白 #F0ECD6
+  适用：丝绸之路文化、博物馆设计、古风游戏
+  色彩经过千年氧化后的色相更受欢迎
+
+### 水墨画配色（极简风）
+  主色：浓墨 #3B3B3B + 淡墨 #808080
+  辅色：宣纸白 #F8F4ED + 朱砂红 #FF461F（印章点缀）
+  适用：新中式设计、高端简约
+
+## 快速配色原则
+  同色系渐变：取一个传统色，变化明度生成3-5级色阶
+  互补撞色：红+绿、蓝+黄（需控制饱和度和面积比）
+  邻近和谐：青+绿、红+紫（色环相邻30-60度）
+  传统金法则：大面积素色 + 小面积亮色点缀
+EOF
 }
 
-cmd_polish() {
-    echo "  润色建议: 简洁 | 有力 | 口语化 | 加emoji"
-    _log "polish" "${1:-}"
+cmd_security() { cat << 'EOF'
+# 传统色 — 品牌色彩保护
+
+## 品牌色注册保护
+  颜色商标：可注册为商标（如Tiffany蓝 Pantone 1837C）
+  中国商标法：颜色组合可注册，单色较难
+  注册建议：
+    - 提供精确色值（Pantone、CMYK、RGB）
+    - 提供色彩在产品上的使用位置说明
+    - 证明色彩已获得"第二含义"（长期使用+公众认知）
+    - 故宫文创已注册"故宫红"等专属色彩
+
+## 色彩版权与使用权
+  自然色彩不可版权，但特定色彩组合方案可保护
+  故宫博物院授权色卡：需授权才能以"故宫色"名义商用
+  敦煌研究院数字色卡：学术用途免费，商用需申请
+  中国色研所CNCS标准色卡：购买正版色卡使用
+
+## 设计文件色彩管理
+  源文件保护：
+    - PSD/AI文件保留色彩图层命名（用传统色名标注）
+    - 导出时嵌入ICC色彩配置文件
+    - 品牌手册明确标注所有色值和使用规范
+  防伪：特殊印刷工艺（烫金、UV、专色）增加仿制难度
+
+## 数字资产保护
+  网页CSS变量统一管理：--color-zhusa: #FF461F;
+  SVG文件中的色彩值可被爬取 → 用CSS引用而非内联
+  品牌VI文件加密分发，不公开源文件
+EOF
 }
 
-cmd_hashtag() {
-    echo "  #$1 #${1}分享 #干货 #推荐 #日常"
-    _log "hashtag" "${1:-}"
+cmd_migration() { cat << 'EOF'
+# 传统色名 → 现代色值转换对照
+
+## 常用转换表
+
+### 红色系 传统名 → 现代对应
+  大红      → #FF0000    CSS: red
+  朱红      → #FF4C00    接近 CSS: orangered
+  胭脂      → #C93756    接近 Pantone 1935C
+  品红      → #F00056    接近 CSS: crimson
+  桃红      → #F47983    接近 CSS: palevioletred
+  粉红      → #FFB3A7    接近 CSS: lightcoral
+
+### 黄色系
+  明黄      → #F2CE2B    接近 Pantone 116C
+  姜黄      → #FFC773    接近 CSS: goldenrod
+  鹅黄      → #FFF143    接近 CSS: yellow (偏浅)
+  赭石      → #955539    接近 Pantone 7526C
+
+### 蓝色系
+  天蓝      → #87CEEB    CSS: skyblue
+  宝蓝      → #4B5CC4    接近 Pantone 2728C
+  藏蓝      → #2E317C    接近 Pantone 2756C
+  靛青      → #177CB0    接近 Pantone 7461C
+
+### 绿色系
+  松花绿    → #057748    接近 Pantone 348C
+  豆绿      → #9ED900    接近 Pantone 375C
+  翠绿      → #20894D    接近 Pantone 7731C
+  墨绿      → #0C8918    接近 Pantone 7482C
+
+## 从Pantone色卡匹配传统色
+  方法：取传统色RGB值 → 在Pantone Color Finder搜索最近色
+  注意：Pantone匹配非精确，±5%色差内可接受
+  工具：Adobe Color CC → 从图片取色 → 匹配Pantone
+
+## 从传统绘画取色
+  工具：故宫名画数字版 → 取色器采样 → 取多点平均值
+  注意：高清扫描件优于拍照件（灯光影响大）
+  数据："千里江山图"主色：石青#1685A9 + 石绿#16A951
+EOF
 }
 
-cmd_platform() {
-    echo "  知乎: 长文深度 | 小红书: 图文种草 | 公众号: 专业输出"
-    _log "platform" "${1:-}"
+cmd_cheatsheet() { cat << 'EOF'
+# 中国传统色 — 速查手册
+
+## 红色系 30色速查
+  大红    #FF0000    朱砂    #FF461F    妃红    #ED5736
+  银红    #F05654    胭脂    #C93756    海棠红  #DB5A6B
+  石榴红  #F20C00    樱桃红  #C93756    枣红    #6E311B
+  绛红    #8C4356    茜红    #CB3A56    珊瑚红  #F08080
+  酡红    #DC3023    玫瑰红  #F04A68    桃红    #F47983
+  粉红    #FFB3A7    品红    #F00056    洋红    #FF0097
+
+## 黄色系 15色速查
+  明黄    #F2CE2B    藤黄    #FFB61E    雌黄    #FFC64B
+  鹅黄    #FFF143    姜黄    #FFC773    鸭黄    #FAFF72
+  缃色    #F0C239    杏黄    #F28F24    土黄    #D4A017
+  秋香色  #D9B611    琥珀    #CA6924    赭石    #955539
+
+## 蓝色系 15色速查
+  天青    #68B0AB    石青    #1685A9    靛蓝    #065279
+  月白    #D6ECF0    群青    #4C8DAE    宝蓝    #4B5CC4
+  藏蓝    #2E317C    花青    #003371    碧蓝    #3EEDE7
+  蔚蓝    #70F3FF    湖蓝    #30ACEC    钴蓝    #0047AB
+
+## 绿色系 12色速查
+  石绿    #16A951    松花绿  #057748    翡翠    #3DE1AD
+  豆绿    #9ED900    艾绿    #A4E2C6    秋绿    #60D8A4
+  墨绿    #0C8918    橄榄绿  #5E6B27    竹青    #789262
+  碧色    #2ADD9C    茶绿    #B0D5B8    草绿    #40DE5A
+
+## 紫色系 8色速查
+  紫棠    #56004F    丁香    #CCA4E3    藕荷    #E4C6D0
+  雪青    #B0A4E3    绛紫    #8C4356    葡萄紫  #4C1F3D
+  青莲    #801DAE    酱紫    #815476
+
+## 中性色 8色速查
+  月白    #D6ECF0    牙白    #EEDEB0    玉白    #F0F0ED
+  铅白    #F0ECD6    銀灰    #918072    墨色    #50616D
+  玄色    #622A1D    漆黑    #161616
+EOF
 }
 
-cmd_hot() {
-    echo "  查看微博热搜/知乎热榜/抖音热点"
-    _log "hot" "${1:-}"
+cmd_faq() { cat << 'EOF'
+# 中国传统色 — 常见问题
+
+Q: "中国传统色"有官方标准吗？
+A: 有几个参考标准：
+   1. 中国科学院色研所(CNCS)色彩标准
+   2. 故宫博物院数字色卡（基于文物实测）
+   3.《中国传统色:故宫里的色彩美学》郭浩著，收录384种
+   4. 国家标准GB/T 15608《中国颜色体系》
+   但没有统一的"官方传统色色值表"，各来源略有差异。
+
+Q: 传统色名和实际颜色为什么有出入？
+A: 三个原因：
+   1. 历史演变：同一色名在不同朝代指不同颜色（如"缥"）
+   2. 文学性：很多色名来自诗词（"天青色等烟雨"），描述的是意境
+   3. 材料差异：天然颜料每批色差较大，没有"标准色"
+
+Q: 设计中用传统色有什么注意事项？
+A: 传统色饱和度普遍低于现代设计色（因为矿物/植物颜料特性）。
+   直接用高饱和度现代色冒充传统色会显得"假中式"。
+   建议：降低饱和度5-15%，增加灰度，更接近真实矿物色感。
+   配色不超过3种主色+2种辅色。
+
+Q: 如何在CSS/代码中使用传统色？
+A: 推荐用CSS自定义属性集中管理：
+   :root {
+     --zhusa: #FF461F;
+     --shiching: #1685A9;
+     --tenghuang: #FFB61E;
+     --daixe: #50616D;
+   }
+   然后用 color: var(--zhusa); 引用。
+   也有开源库如 chinese-colors.js 提供完整色值表。
+
+Q: 印刷品和屏幕色差怎么最小化？
+A: 专色印刷（Pantone色号）是最准确的方式。
+   CMYK四色印刷会有损失，尤其是高饱和度的红和蓝。
+   打样确认→正式印刷，控制色差ΔE<3。
+   高端项目用Pantone + 烫金/UV等特殊工艺。
+EOF
 }
 
-cmd_template() {
-    echo "  测评 | 教程 | 种草 | 避坑 | 合集 | 对比"
-    _log "template" "${1:-}"
-}
-
-cmd_translate() {
-    echo "  翻译: $*"
-    _log "translate" "${1:-}"
-}
-
-cmd_proofread() {
-    echo "  检查: 错别字 | 标点 | 逻辑 | 敏感词"
-    _log "proofread" "${1:-}"
+cmd_help() {
+    echo "color-palette-cn v$VERSION — 中国传统色彩参考"
+    echo ""
+    echo "Usage: color-palette-cn <command>"
+    echo ""
+    echo "Commands:"
+    echo "  intro           传统色彩体系概述"
+    echo "  standards       RGB/CMYK/Pantone色值对照"
+    echo "  troubleshooting 屏幕偏差、印刷色差、配色问题"
+    echo "  performance     经典配色方案与技巧"
+    echo "  security        品牌色彩保护"
+    echo "  migration       传统色名→现代色值转换"
+    echo "  cheatsheet      100+传统色速查表"
+    echo "  faq             常见问题"
+    echo "  help            显示帮助"
 }
 
 case "${1:-help}" in
-    write) shift; cmd_write "$@" ;;
-    title) shift; cmd_title "$@" ;;
-    outline) shift; cmd_outline "$@" ;;
-    polish) shift; cmd_polish "$@" ;;
-    hashtag) shift; cmd_hashtag "$@" ;;
-    platform) shift; cmd_platform "$@" ;;
-    hot) shift; cmd_hot "$@" ;;
-    template) shift; cmd_template "$@" ;;
-    translate) shift; cmd_translate "$@" ;;
-    proofread) shift; cmd_proofread "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "color-palette-cn v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
+    intro) cmd_intro ;; standards) cmd_standards ;;
+    troubleshooting) cmd_troubleshooting ;; performance) cmd_performance ;;
+    security) cmd_security ;; migration) cmd_migration ;;
+    cheatsheet) cmd_cheatsheet ;; faq) cmd_faq ;;
+    help|--help|-h) cmd_help ;;
+    *) echo "Unknown: $1"; echo "Run: color-palette-cn help" ;;
 esac

@@ -1,56 +1,34 @@
 ---
 name: "linkbox"
-version: "3.0.0"
-description: "Save, organize, and check bookmarks with tagging and link validation. Use when managing bookmarks. Requires curl for checking."
+version: "2.0.1"
+description: "Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Linkbox concepts, best practices, and implementation patterns."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [linkbox, reference]
+category: "devtools"
 ---
 
-# linkbox
+# Linkbox
 
-Save, organize, and check bookmarks with tagging and link validation. Use when managing bookmarks. Requires curl for checking.
+Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Linkbox concepts, best practices, and implementation patterns. No API keys or credentials required.
 
 ## Commands
 
-### `add`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-```bash
-scripts/script.sh add <url tag>
-```
+## Output Format
 
-### `list`
-
-```bash
-scripts/script.sh list <tag>
-```
-
-### `search`
-
-```bash
-scripts/script.sh search <query>
-```
-
-### `check`
-
-```bash
-scripts/script.sh check
-```
-
-### `delete`
-
-```bash
-scripts/script.sh delete <id>
-```
-
-### `export`
-
-```bash
-scripts/script.sh export <file>
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/linkbox/`.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

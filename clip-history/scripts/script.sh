@@ -1,155 +1,255 @@
 #!/usr/bin/env bash
+# clip-history — Clip History reference tool. Use when working with clip history in devtools contexts.
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-VERSION="3.0.0"
-SCRIPT_NAME="clip-history"
-DATA_DIR="$HOME/.local/share/clip-history"
-mkdir -p "$DATA_DIR"
+VERSION="4.0.2"
 
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+show_help() {
+    cat << 'HELPEOF'
+clip-history v$VERSION — Clip History Reference Tool
 
-_info()  { echo "[INFO]  $*"; }
-_error() { echo "[ERROR] $*" >&2; }
-die()    { _error "$@"; exit 1; }
+Usage: clip-history <command>
 
-cmd_save() {
-    local text="${2:-}"
-    [ -z "$text" ] && die "Usage: $SCRIPT_NAME save <text>"
-    echo '{"ts":"'$(date +%s)'","text":"'$2'"}' >> $DATA_DIR/clips.jsonl && echo Saved
+Commands:
+  intro           Overview and core concepts
+  quickstart      Getting started guide
+  patterns        Common patterns and best practices
+  debugging       Debugging and troubleshooting
+  performance     Performance optimization tips
+  security        Security considerations
+  migration       Migration and upgrade guide
+  cheatsheet      Quick reference cheat sheet
+  help              Show this help
+  version           Show version
+
+Powered by BytesAgain | bytesagain.com
+HELPEOF
 }
 
-cmd_list() {
-    local count="${2:-}"
-    [ -z "$count" ] && die "Usage: $SCRIPT_NAME list <count>"
-    tail -${2:-10} $DATA_DIR/clips.jsonl 2>/dev/null
+cmd_intro() {
+    cat << 'EOF'
+# Clip History — Overview
+
+## What is Clip History?
+Clip History (clip-history) is a specialized tool/concept in the devtools domain.
+It provides essential capabilities for professionals working with clip history.
+
+## Key Concepts
+- Core clip history principles and fundamentals
+- How clip history fits into the broader devtools ecosystem  
+- Essential terminology every practitioner should know
+
+## Why Clip History Matters
+Understanding clip history is critical for:
+- Improving efficiency in devtools workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic clip history concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
+EOF
 }
 
-cmd_search() {
-    local query="${2:-}"
-    [ -z "$query" ] && die "Usage: $SCRIPT_NAME search <query>"
-    grep -i $2 $DATA_DIR/clips.jsonl 2>/dev/null || echo 'No matches'
+cmd_quickstart() {
+    cat << 'EOF'
+# Clip History — Quick Start Guide
+
+## Prerequisites
+- Basic understanding of devtools concepts
+- Required tools and access credentials
+- System meeting minimum requirements
+
+## Installation
+1. Download or clone the clip history package
+2. Install dependencies
+3. Configure initial settings
+4. Verify installation
+
+## First Steps
+1. Run the hello-world example
+2. Review the default configuration
+3. Try a simple real-world task
+4. Explore available commands and options
+
+## Next Steps
+- Read the full documentation
+- Join the community forum
+- Try advanced features
+- Set up automated workflows
+EOF
 }
 
-cmd_get() {
-    local id="${2:-}"
-    [ -z "$id" ] && die "Usage: $SCRIPT_NAME get <id>"
-    sed -n ${2}p $DATA_DIR/clips.jsonl 2>/dev/null
+cmd_patterns() {
+    cat << 'EOF'
+# Clip History — Common Patterns & Best Practices
+
+## Design Patterns
+1. **Standard Pattern**: The most common approach for clip history
+2. **Scalable Pattern**: For high-volume or distributed scenarios
+3. **Resilient Pattern**: For fault-tolerant implementations
+
+## Best Practices
+- Follow the principle of least privilege
+- Use version control for all configurations
+- Implement comprehensive logging
+- Test changes in staging before production
+- Document all custom configurations
+
+## Anti-Patterns to Avoid
+- Hardcoding credentials or configuration
+- Skipping validation and error handling
+- Ignoring monitoring and alerting
+- Making changes without documentation
+- Over-engineering simple solutions
+EOF
 }
 
-cmd_clear() {
-    : > $DATA_DIR/clips.jsonl && echo Cleared
+cmd_debugging() {
+    cat << 'EOF'
+# Clip History — Debugging Guide
+
+## Common Errors
+1. **Connection refused**: Check service status and network
+2. **Permission denied**: Verify credentials and access rights
+3. **Timeout**: Check network, increase limits, optimize queries
+4. **Invalid input**: Validate data format and encoding
+
+## Debugging Tools
+- Built-in logging and diagnostics
+- Network analysis tools (tcpdump, wireshark)
+- System monitoring (top, htop, iostat)
+- Application-specific debug modes
+
+## Debug Workflow
+1. Reproduce the issue consistently
+2. Check logs for error messages
+3. Isolate the failing component
+4. Test with minimal configuration
+5. Apply fix and verify
+EOF
 }
 
-cmd_export() {
-    local file="${2:-}"
-    [ -z "$file" ] && die "Usage: $SCRIPT_NAME export <file>"
-    cp $DATA_DIR/clips.jsonl $2 && echo 'Exported to $2'
+cmd_performance() {
+    cat << 'EOF'
+# Clip History — Performance Optimization
+
+## Key Metrics
+- Response time / latency
+- Throughput / operations per second
+- Resource utilization (CPU, memory, I/O)
+- Error rate and retry frequency
+
+## Optimization Strategies
+1. **Caching**: Reduce redundant operations
+2. **Batching**: Group small operations
+3. **Indexing**: Speed up data lookups
+4. **Compression**: Reduce data transfer size
+5. **Parallel Processing**: Utilize multiple cores
+
+## Monitoring
+- Set up baseline performance metrics
+- Configure alerts for anomalies
+- Track trends over time
+- Regular capacity planning reviews
+EOF
 }
 
-cmd_help() {
-    echo "$SCRIPT_NAME v$VERSION"
-    echo ""
-    echo "Commands:"
-    printf "  %-25s\n" "save <text>"
-    printf "  %-25s\n" "list <count>"
-    printf "  %-25s\n" "search <query>"
-    printf "  %-25s\n" "get <id>"
-    printf "  %-25s\n" "clear"
-    printf "  %-25s\n" "export <file>"
-    printf "  %%-25s\n" "help"
-    echo ""
-    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
+cmd_security() {
+    cat << 'EOF'
+# Clip History — Security Considerations
+
+## Authentication & Authorization
+- Use strong, unique credentials
+- Implement role-based access control
+- Enable multi-factor authentication where possible
+- Regularly review and rotate credentials
+
+## Data Protection
+- Encrypt data at rest and in transit
+- Implement proper backup procedures
+- Follow data retention policies
+- Sanitize inputs to prevent injection
+
+## Network Security
+- Use firewalls and network segmentation
+- Monitor for suspicious activity
+- Keep all software patched and updated
+- Disable unnecessary services and ports
+EOF
 }
 
-cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+cmd_migration() {
+    cat << 'EOF'
+# Clip History — Migration & Upgrade Guide
 
-main() {
-    local cmd="${1:-help}"
-    case "$cmd" in
-        save) shift; cmd_save "$@" ;;
-        list) shift; cmd_list "$@" ;;
-        search) shift; cmd_search "$@" ;;
-        get) shift; cmd_get "$@" ;;
-        clear) shift; cmd_clear "$@" ;;
-        export) shift; cmd_export "$@" ;;
-        help) cmd_help ;;
-        version) cmd_version ;;
-        *) die "Unknown: $cmd" ;;
-    esac
+## Pre-Migration Checklist
+- [ ] Current system fully documented
+- [ ] Complete backup taken and verified
+- [ ] Target environment prepared
+- [ ] Rollback plan documented
+- [ ] Stakeholders notified
+
+## Migration Steps
+1. Prepare target environment
+2. Export data from source
+3. Transform data if needed
+4. Import to target
+5. Verify data integrity
+6. Update configurations
+7. Test all functionality
+8. Switch traffic / go live
+
+## Post-Migration
+- Monitor for errors and performance
+- Verify all integrations working
+- Update documentation
+- Decommission old system after confirmation
+EOF
 }
 
-main "$@"
+cmd_cheatsheet() {
+    cat << 'EOF'
+# Clip History — Quick Reference
+
+## Essential Commands
+| Command | Description |
+|---------|-------------|
+| help | Show available commands |
+| version | Display version info |
+| intro | Overview and fundamentals |
+| troubleshooting | Common problems and fixes |
+
+## Common Workflows
+1. **Setup**: install → configure → verify → test
+2. **Daily**: check → monitor → report → review
+3. **Issue**: diagnose → isolate → fix → verify → document
+
+## Key Shortcuts
+- Use tab completion for commands
+- Check logs first when troubleshooting
+- Always backup before making changes
+- Document everything you change
+EOF
+}
+
+CMD="${1:-help}"
+shift 2>/dev/null || true
+
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    quickstart) cmd_quickstart "$@" ;;
+    patterns) cmd_patterns "$@" ;;
+    debugging) cmd_debugging "$@" ;;
+    performance) cmd_performance "$@" ;;
+    security) cmd_security "$@" ;;
+    migration) cmd_migration "$@" ;;
+    cheatsheet) cmd_cheatsheet "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "clip-history v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: clip-history help"; exit 1 ;;
+esac

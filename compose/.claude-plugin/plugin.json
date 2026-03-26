@@ -1,9 +1,0 @@
-{
-  "name": "compose",
-  "description": "Create music compositions with chords, melodies, and audio analysis. Use when writing progressions, arranging parts, analyzing audio tracks.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

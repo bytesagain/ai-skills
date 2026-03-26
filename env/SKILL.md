@@ -1,111 +1,34 @@
 ---
 name: "env"
-version: "1.0.0"
-description: "Manage environment variables with profiles, validation, and templating using bash. Use when you need to organize, switch, or audit env configs."
+version: "2.0.2"
+description: "env reference tool"
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [env, general, cli, tool]
-category: "general"
+tags: [env, reference]
+category: "devtools"
 ---
 
-# env
+# Env
 
-Manage environment variables with profiles, validation, and templating using bash. Use when you need to organize, switch, or audit env configs.
+env reference tool. No API keys or credentials required — outputs reference documentation only.
 
 ## Commands
 
-### `status`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-```bash
-scripts/script.sh status
-```
+## Output Format
 
-Show current status
-
-### `add`
-
-```bash
-scripts/script.sh add
-```
-
-Add new entry
-
-### `list`
-
-```bash
-scripts/script.sh list
-```
-
-List all entries
-
-### `search`
-
-```bash
-scripts/script.sh search
-```
-
-Search entries
-
-### `remove`
-
-```bash
-scripts/script.sh remove
-```
-
-Remove entry by number
-
-### `export`
-
-```bash
-scripts/script.sh export
-```
-
-Export data to file
-
-### `stats`
-
-```bash
-scripts/script.sh stats
-```
-
-Show statistics
-
-### `config`
-
-```bash
-scripts/script.sh config
-```
-
-View or set config
-
-### `help`
-
-```bash
-scripts/script.sh help
-```
-
-### `version`
-
-```bash
-scripts/script.sh version
-```
-
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `ENV_DIR` | No | Data directory (default: ~/.env/) |
-
-## Data Storage
-
-All data stored in `~/.env/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

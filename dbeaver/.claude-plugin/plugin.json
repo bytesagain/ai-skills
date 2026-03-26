@@ -1,9 +1,0 @@
-{
-  "name": "dbeaver",
-  "description": "Connect to databases with a universal SQL client for major engines. Use when querying databases, browsing schemas, exporting results.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

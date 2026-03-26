@@ -1,56 +1,34 @@
 ---
 name: "pet-care"
-version: "3.0.0"
-description: "Pet care guide with feeding, vaccination, and health logging. Use when caring for pets."
+version: "4.0.1"
+description: "Reference tool for life — covers intro, quickstart, patterns and more. Quick lookup for Pet Care concepts, best practices, and implementation patterns."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [pet,care, reference]
+category: "life"
 ---
 
-# pet-care
+# Pet Care
 
-Pet care guide with feeding, vaccination, and health logging. Use when caring for pets.
+Reference tool for life — covers intro, quickstart, patterns and more. Quick lookup for Pet Care concepts, best practices, and implementation patterns. No API keys or credentials required.
 
 ## Commands
 
-### `guide`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-```bash
-scripts/script.sh guide <pet>
-```
+## Output Format
 
-### `feed`
-
-```bash
-scripts/script.sh feed <pet weight>
-```
-
-### `vaccine`
-
-```bash
-scripts/script.sh vaccine <pet>
-```
-
-### `emergency`
-
-```bash
-scripts/script.sh emergency <symptom>
-```
-
-### `log`
-
-```bash
-scripts/script.sh log <pet note>
-```
-
-### `checklist`
-
-```bash
-scripts/script.sh checklist <pet>
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/pet-care/`.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

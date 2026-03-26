@@ -1,9 +1,0 @@
-{
-  "name": "dupfinder",
-  "description": "Scan directories for duplicate files by hash to reclaim disk space. Use when finding duplicates, reclaiming space, comparing checksums.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

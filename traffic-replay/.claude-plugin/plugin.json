@@ -1,9 +1,0 @@
-{
-  "name": "traffic-replay",
-  "description": "GoReplay is an open-source tool for capturing and replaying live HTTP traffic into a test environmen traffic-replay, go, devops, go, qa, testing.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

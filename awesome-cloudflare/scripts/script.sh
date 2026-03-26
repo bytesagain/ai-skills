@@ -1,102 +1,255 @@
 #!/usr/bin/env bash
-# awesome-cloudflare - System operations and monitoring tool
+# awesome-cloudflare — Awesome Cloudflare reference tool. Use when working with awesome cloudflare in sysops contexts.
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${AWESOME_CLOUDFLARE_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/awesome-cloudflare}"
-DB="$DATA_DIR/data.log"
-mkdir -p "$DATA_DIR"
+
+VERSION="3.0.2"
 
 show_help() {
-    cat << EOF
-awesome-cloudflare v$VERSION
+    cat << 'HELPEOF'
+awesome-cloudflare v$VERSION — Awesome Cloudflare Reference Tool
 
-System operations and monitoring tool
-
-Usage: awesome-cloudflare <command> [args]
+Usage: awesome-cloudflare <command>
 
 Commands:
-  status               System status
-  check                Health check
-  monitor              Start monitoring
-  logs                 View logs
-  config               Show config
-  restart              Restart guide
-  backup               Backup helper
-  alert                Set alert
-  optimize             Optimization tips
-  info                 System info
-  help                 Show this help
-  version              Show version
+  intro           Overview and core concepts
+  quickstart      Getting started guide
+  patterns        Common patterns and best practices
+  debugging       Debugging and troubleshooting
+  performance     Performance optimization tips
+  security        Security considerations
+  migration       Migration and upgrade guide
+  cheatsheet      Quick reference cheat sheet
+  help              Show this help
+  version           Show version
 
-Data: \$DATA_DIR
+Powered by BytesAgain | bytesagain.com
+HELPEOF
+}
+
+cmd_intro() {
+    cat << 'EOF'
+# Awesome Cloudflare — Overview
+
+## What is Awesome Cloudflare?
+Awesome Cloudflare (awesome-cloudflare) is a specialized tool/concept in the sysops domain.
+It provides essential capabilities for professionals working with awesome cloudflare.
+
+## Key Concepts
+- Core awesome cloudflare principles and fundamentals
+- How awesome cloudflare fits into the broader sysops ecosystem  
+- Essential terminology every practitioner should know
+
+## Why Awesome Cloudflare Matters
+Understanding awesome cloudflare is critical for:
+- Improving efficiency in sysops workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic awesome cloudflare concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
 EOF
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+cmd_quickstart() {
+    cat << 'EOF'
+# Awesome Cloudflare — Quick Start Guide
 
-cmd_status() {
-    echo "  $(uptime 2>/dev/null || echo "uptime: unknown")"
-    _log "status" "${1:-}"
+## Prerequisites
+- Basic understanding of sysops concepts
+- Required tools and access credentials
+- System meeting minimum requirements
+
+## Installation
+1. Download or clone the awesome cloudflare package
+2. Install dependencies
+3. Configure initial settings
+4. Verify installation
+
+## First Steps
+1. Run the hello-world example
+2. Review the default configuration
+3. Try a simple real-world task
+4. Explore available commands and options
+
+## Next Steps
+- Read the full documentation
+- Join the community forum
+- Try advanced features
+- Set up automated workflows
+EOF
 }
 
-cmd_check() {
-    echo "  CPU: $(grep -c processor /proc/cpuinfo 2>/dev/null || echo "?") cores
-      Mem: $(free -h 2>/dev/null | awk "/Mem/{print \$3"/"\$2}" || echo "?")"
-    _log "check" "${1:-}"
+cmd_patterns() {
+    cat << 'EOF'
+# Awesome Cloudflare — Common Patterns & Best Practices
+
+## Design Patterns
+1. **Standard Pattern**: The most common approach for awesome cloudflare
+2. **Scalable Pattern**: For high-volume or distributed scenarios
+3. **Resilient Pattern**: For fault-tolerant implementations
+
+## Best Practices
+- Follow the principle of least privilege
+- Use version control for all configurations
+- Implement comprehensive logging
+- Test changes in staging before production
+- Document all custom configurations
+
+## Anti-Patterns to Avoid
+- Hardcoding credentials or configuration
+- Skipping validation and error handling
+- Ignoring monitoring and alerting
+- Making changes without documentation
+- Over-engineering simple solutions
+EOF
 }
 
-cmd_monitor() {
-    echo "  Monitoring: $1"
-    _log "monitor" "${1:-}"
+cmd_debugging() {
+    cat << 'EOF'
+# Awesome Cloudflare — Debugging Guide
+
+## Common Errors
+1. **Connection refused**: Check service status and network
+2. **Permission denied**: Verify credentials and access rights
+3. **Timeout**: Check network, increase limits, optimize queries
+4. **Invalid input**: Validate data format and encoding
+
+## Debugging Tools
+- Built-in logging and diagnostics
+- Network analysis tools (tcpdump, wireshark)
+- System monitoring (top, htop, iostat)
+- Application-specific debug modes
+
+## Debug Workflow
+1. Reproduce the issue consistently
+2. Check logs for error messages
+3. Isolate the failing component
+4. Test with minimal configuration
+5. Apply fix and verify
+EOF
 }
 
-cmd_logs() {
-    echo "  Recent: $(tail -5 /var/log/syslog 2>/dev/null || echo "no access")"
-    _log "logs" "${1:-}"
+cmd_performance() {
+    cat << 'EOF'
+# Awesome Cloudflare — Performance Optimization
+
+## Key Metrics
+- Response time / latency
+- Throughput / operations per second
+- Resource utilization (CPU, memory, I/O)
+- Error rate and retry frequency
+
+## Optimization Strategies
+1. **Caching**: Reduce redundant operations
+2. **Batching**: Group small operations
+3. **Indexing**: Speed up data lookups
+4. **Compression**: Reduce data transfer size
+5. **Parallel Processing**: Utilize multiple cores
+
+## Monitoring
+- Set up baseline performance metrics
+- Configure alerts for anomalies
+- Track trends over time
+- Regular capacity planning reviews
+EOF
 }
 
-cmd_config() {
-    echo "  Config dir: $DATA_DIR"
-    _log "config" "${1:-}"
+cmd_security() {
+    cat << 'EOF'
+# Awesome Cloudflare — Security Considerations
+
+## Authentication & Authorization
+- Use strong, unique credentials
+- Implement role-based access control
+- Enable multi-factor authentication where possible
+- Regularly review and rotate credentials
+
+## Data Protection
+- Encrypt data at rest and in transit
+- Implement proper backup procedures
+- Follow data retention policies
+- Sanitize inputs to prevent injection
+
+## Network Security
+- Use firewalls and network segmentation
+- Monitor for suspicious activity
+- Keep all software patched and updated
+- Disable unnecessary services and ports
+EOF
 }
 
-cmd_restart() {
-    echo "  systemctl restart $1"
-    _log "restart" "${1:-}"
+cmd_migration() {
+    cat << 'EOF'
+# Awesome Cloudflare — Migration & Upgrade Guide
+
+## Pre-Migration Checklist
+- [ ] Current system fully documented
+- [ ] Complete backup taken and verified
+- [ ] Target environment prepared
+- [ ] Rollback plan documented
+- [ ] Stakeholders notified
+
+## Migration Steps
+1. Prepare target environment
+2. Export data from source
+3. Transform data if needed
+4. Import to target
+5. Verify data integrity
+6. Update configurations
+7. Test all functionality
+8. Switch traffic / go live
+
+## Post-Migration
+- Monitor for errors and performance
+- Verify all integrations working
+- Update documentation
+- Decommission old system after confirmation
+EOF
 }
 
-cmd_backup() {
-    echo "  Backup: tar czf backup-$(date +%Y%m%d).tar.gz $1"
-    _log "backup" "${1:-}"
+cmd_cheatsheet() {
+    cat << 'EOF'
+# Awesome Cloudflare — Quick Reference
+
+## Essential Commands
+| Command | Description |
+|---------|-------------|
+| help | Show available commands |
+| version | Display version info |
+| intro | Overview and fundamentals |
+| troubleshooting | Common problems and fixes |
+
+## Common Workflows
+1. **Setup**: install → configure → verify → test
+2. **Daily**: check → monitor → report → review
+3. **Issue**: diagnose → isolate → fix → verify → document
+
+## Key Shortcuts
+- Use tab completion for commands
+- Check logs first when troubleshooting
+- Always backup before making changes
+- Document everything you change
+EOF
 }
 
-cmd_alert() {
-    echo "  Alert: $1 threshold $2"
-    _log "alert" "${1:-}"
-}
+CMD="${1:-help}"
+shift 2>/dev/null || true
 
-cmd_optimize() {
-    echo "  1. Clear cache | 2. Compress logs | 3. Kill zombies"
-    _log "optimize" "${1:-}"
-}
-
-cmd_info() {
-    uname -a 2>/dev/null; echo "  Disk: $(df -h / 2>/dev/null | tail -1)"
-    _log "info" "${1:-}"
-}
-
-case "${1:-help}" in
-    status) shift; cmd_status "$@" ;;
-    check) shift; cmd_check "$@" ;;
-    monitor) shift; cmd_monitor "$@" ;;
-    logs) shift; cmd_logs "$@" ;;
-    config) shift; cmd_config "$@" ;;
-    restart) shift; cmd_restart "$@" ;;
-    backup) shift; cmd_backup "$@" ;;
-    alert) shift; cmd_alert "$@" ;;
-    optimize) shift; cmd_optimize "$@" ;;
-    info) shift; cmd_info "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "awesome-cloudflare v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    quickstart) cmd_quickstart "$@" ;;
+    patterns) cmd_patterns "$@" ;;
+    debugging) cmd_debugging "$@" ;;
+    performance) cmd_performance "$@" ;;
+    security) cmd_security "$@" ;;
+    migration) cmd_migration "$@" ;;
+    cheatsheet) cmd_cheatsheet "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "awesome-cloudflare v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: awesome-cloudflare help"; exit 1 ;;
 esac

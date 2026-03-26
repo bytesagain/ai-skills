@@ -1,9 +1,0 @@
-{
-  "name": "image-labeler",
-  "description": "LabelImg is now part of the Label Studio community. The popular image annotation tool created by Tzu image-labeler, python, annotations, deep-learning.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

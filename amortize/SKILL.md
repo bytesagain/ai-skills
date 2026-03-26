@@ -1,107 +1,35 @@
 ---
 name: "amortize"
-version: "1.0.0"
-description: "Calculate amortize financial metrics and business data. Use when tracking expenses, analyzing investments, or generating financial reports."
+version: "2.0.2"
+description: "Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Amortize concepts, best practices, and implementation patterns."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [amortize, finance, cli, tool]
-category: "finance"
+tags: [amortize, reference]
+category: "devtools"
 ---
 
-# amortize
+# Amortize
 
-Calculate amortize financial metrics and business data. Use when tracking expenses, analyzing investments, or generating financial reports.
+Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Amortize concepts, best practices, and implementation patterns. No API keys or credentials required.
 
 ## Commands
 
-### `calculate`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-```bash
-scripts/script.sh calculate
-```
+## Output Format
 
-### `add`
-
-```bash
-scripts/script.sh add
-```
-
-### `list`
-
-```bash
-scripts/script.sh list
-```
-
-### `report`
-
-```bash
-scripts/script.sh report
-```
-
-### `export`
-
-```bash
-scripts/script.sh export
-```
-
-### `import`
-
-```bash
-scripts/script.sh import
-```
-
-### `config`
-
-```bash
-scripts/script.sh config
-```
-
-### `compare`
-
-```bash
-scripts/script.sh compare
-```
-
-### `forecast`
-
-```bash
-scripts/script.sh forecast
-```
-
-### `stats`
-
-```bash
-scripts/script.sh stats
-```
-
-### `help`
-
-```bash
-scripts/script.sh help
-```
-
-### `version`
-
-```bash
-scripts/script.sh version
-```
-
-## Configuration
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `AMORTIZE_DIR` | No | Data directory (default: ~/.amortize/) |
-| `AMORTIZE_FORMAT` | No | Output format: json, csv, txt (default: json) |
-
-## Data Storage
-
-All data saved on your machine in `~/.amortize/` as JSONL files. Runs entirely on your machine.
-
-## Output
-
-Returns structured output to stdout. Exit code 0 on success, 1 on error.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 
-Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

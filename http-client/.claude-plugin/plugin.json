@@ -1,9 +1,0 @@
-{
-  "name": "http-client",
-  "description": "A command line tool and library for transferring data with URL syntax, supporting DICT, FILE, FTP, F http-client, c, c, client, http-client, ftp.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

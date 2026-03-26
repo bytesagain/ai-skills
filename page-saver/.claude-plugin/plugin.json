@@ -1,9 +1,0 @@
-{
-  "name": "page-saver",
-  "description": "\u2b1b\ufe0f CLI tool and library for saving complete web pages as a single HTML file page-saver, rust, come-and-take-it, e-hoarding, its-mine.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

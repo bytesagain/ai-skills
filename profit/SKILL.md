@@ -1,111 +1,34 @@
 ---
 name: "profit"
-version: "1.0.0"
-description: "Calculate profit margins, breakeven points, and revenue forecasts using CLI tools. Use when analyzing business financials."
+version: "2.0.1"
+description: "Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Profit concepts, best practices, and implementation patterns."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [profit, general, cli, tool]
-category: "general"
+tags: [profit, reference]
+category: "devtools"
 ---
 
-# profit
+# Profit
 
-Calculate profit margins, breakeven points, and revenue forecasts using CLI tools. Use when analyzing business financials.
+Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Profit concepts, best practices, and implementation patterns. No API keys or credentials required.
 
 ## Commands
 
-### `status`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-```bash
-scripts/script.sh status
-```
+## Output Format
 
-Show current status
-
-### `add`
-
-```bash
-scripts/script.sh add
-```
-
-Add new entry
-
-### `list`
-
-```bash
-scripts/script.sh list
-```
-
-List all entries
-
-### `search`
-
-```bash
-scripts/script.sh search
-```
-
-Search entries
-
-### `remove`
-
-```bash
-scripts/script.sh remove
-```
-
-Remove entry by number
-
-### `export`
-
-```bash
-scripts/script.sh export
-```
-
-Export data to file
-
-### `stats`
-
-```bash
-scripts/script.sh stats
-```
-
-Show statistics
-
-### `config`
-
-```bash
-scripts/script.sh config
-```
-
-View or set config
-
-### `help`
-
-```bash
-scripts/script.sh help
-```
-
-### `version`
-
-```bash
-scripts/script.sh version
-```
-
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `PROFIT_DIR` | No | Data directory (default: ~/.profit/) |
-
-## Data Storage
-
-All data stored in `~/.profit/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

@@ -1,261 +1,255 @@
 #!/usr/bin/env bash
-# sshkey — SSH key manager
+# sshkey — Sshkey reference tool. Use when working with sshkey in security contexts.
 # Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
-VERSION="3.0.1"
 
-BOLD='\033[1m'; GREEN='\033[0;32m'; RED='\033[0;31m'; RESET='\033[0m'
-die() { echo -e "${RED}Error: $1${RESET}" >&2; exit 1; }
-info() { echo -e "${GREEN}✓${RESET} $1"; }
-
-cmd_generate() {
-    local type="${1:-ed25519}"
-    local bits="${2:-}"
-    local comment="${3:-$(whoami)@$(hostname)}"
-    
-    local keyfile="$HOME/.ssh/id_${type}"
-    [ -f "$keyfile" ] && die "Key already exists: $keyfile (delete first or use a different type)"
-    
-    mkdir -p "$HOME/.ssh"
-    chmod 700 "$HOME/.ssh"
-    
-    local args=(-t "$type" -C "$comment" -f "$keyfile" -N "")
-    if [ -n "$bits" ] && [ "$type" != "ed25519" ]; then
-        args+=(-b "$bits")
-    fi
-    
-    ssh-keygen "${args[@]}"
-    echo ""
-    info "Generated $type key: $keyfile"
-    echo "  Public key: ${keyfile}.pub"
-    echo ""
-    echo "  Public key contents:"
-    cat "${keyfile}.pub"
-}
-
-cmd_list() {
-    local ssh_dir="$HOME/.ssh"
-    [ ! -d "$ssh_dir" ] && { echo "  No SSH directory found."; return 0; }
-    
-    echo -e "${BOLD}SSH Keys${RESET}"
-    echo ""
-    
-    local found=0
-    for pub in "$ssh_dir"/*.pub; do
-        [ ! -f "$pub" ] && continue
-        found=$((found + 1))
-        local priv="${pub%.pub}"
-        local fp
-        fp=$(ssh-keygen -lf "$pub" 2>/dev/null | awk '{print $2}')
-        local type
-        type=$(ssh-keygen -lf "$pub" 2>/dev/null | awk '{print $NF}' | tr -d '()')
-        local bits
-        bits=$(ssh-keygen -lf "$pub" 2>/dev/null | awk '{print $1}')
-        local comment
-        comment=$(awk '{print $3}' "$pub" 2>/dev/null)
-        
-        echo "  ${found}. $(basename "$priv")"
-        echo "     Type: $type ($bits bits)"
-        echo "     Fingerprint: $fp"
-        echo "     Comment: $comment"
-        [ -f "$priv" ] && echo "     Private key: ✓" || echo "     Private key: ✗ (pub only)"
-        echo ""
-    done
-    
-    [ "$found" -eq 0 ] && echo "  No keys found in $ssh_dir"
-}
-
-cmd_fingerprint() {
-    local keyfile="${1:?Usage: sshkey fingerprint <keyfile>}"
-    [ ! -f "$keyfile" ] && die "Not found: $keyfile"
-    
-    echo -e "${BOLD}Key Fingerprint${RESET}"
-    echo ""
-    echo "  MD5:    $(ssh-keygen -lf "$keyfile" -E md5 2>/dev/null | awk '{print $2}')"
-    echo "  SHA256: $(ssh-keygen -lf "$keyfile" -E sha256 2>/dev/null | awk '{print $2}')"
-    echo "  Type:   $(ssh-keygen -lf "$keyfile" 2>/dev/null | awk '{print $NF}')"
-    echo "  Bits:   $(ssh-keygen -lf "$keyfile" 2>/dev/null | awk '{print $1}')"
-}
-
-cmd_copy() {
-    local host="${1:?Usage: sshkey copy <user@host> [keyfile]}"
-    local keyfile="${2:-$HOME/.ssh/id_ed25519.pub}"
-    [ ! -f "$keyfile" ] && keyfile="$HOME/.ssh/id_rsa.pub"
-    [ ! -f "$keyfile" ] && die "No public key found. Generate one first: sshkey generate"
-    
-    if command -v ssh-copy-id >/dev/null 2>&1; then
-        ssh-copy-id -i "$keyfile" "$host"
-    else
-        echo "  Copying public key to $host..."
-        cat "$keyfile" | ssh "$host" "mkdir -p ~/.ssh && chmod 700 ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
-    fi
-    info "Key copied to $host"
-}
-
-cmd_test() {
-    local host="${1:?Usage: sshkey test <user@host>}"
-    echo "  Testing SSH connection to $host..."
-    if ssh -o ConnectTimeout=5 -o BatchMode=yes "$host" "echo 'SSH connection OK'" 2>/dev/null; then
-        info "Connection successful"
-    else
-        echo -e "  ${RED}Connection failed${RESET}"
-        echo "  Possible issues:"
-        echo "    - Key not installed on remote host (use: sshkey copy $host)"
-        echo "    - Wrong username"
-        echo "    - Host not reachable"
-        return 1
-    fi
-}
-
-cmd_info() {
-    local keyfile="${1:?Usage: sshkey info <keyfile>}"
-    [ ! -f "$keyfile" ] && die "Not found: $keyfile"
-    
-    echo -e "${BOLD}Key Info${RESET}"
-    echo ""
-    ssh-keygen -lf "$keyfile" 2>/dev/null | while IFS= read -r line; do
-        echo "  $line"
-    done
-    echo ""
-    echo "  File: $keyfile"
-    echo "  Size: $(du -h "$keyfile" | cut -f1)"
-    echo "  Modified: $(stat -c '%y' "$keyfile" | cut -d. -f1)"
-    echo "  Permissions: $(stat -c '%a' "$keyfile")"
-    
-    local perms
-    perms=$(stat -c '%a' "$keyfile")
-    if [ "$perms" = "600" ] || [ "$perms" = "644" ]; then
-        echo "  Security: ✓ Permissions OK"
-    else
-        echo -e "  Security: ${RED}✗ Should be 600 (private) or 644 (public)${RESET}"
-    fi
-}
-
-cmd_authorized_list() {
-    local auth="$HOME/.ssh/authorized_keys"
-    [ ! -f "$auth" ] && { echo "  No authorized_keys file."; return 0; }
-    
-    echo -e "${BOLD}Authorized Keys${RESET}"
-    echo ""
-    local count=0
-    while IFS= read -r line; do
-        [ -z "$line" ] && continue
-        [[ "$line" =~ ^# ]] && continue
-        count=$((count + 1))
-        local type comment
-        type=$(echo "$line" | awk '{print $1}')
-        comment=$(echo "$line" | awk '{print $3}')
-        local fp
-        fp=$(echo "$line" | ssh-keygen -lf /dev/stdin 2>/dev/null | awk '{print $2}' || echo "?")
-        echo "  ${count}. $type ${comment:-unknown} ($fp)"
-    done < "$auth"
-    echo ""
-    echo "  Total: $count keys"
-}
-
-cmd_authorized_add() {
-    local pubkey="${1:?Usage: sshkey authorized-add <pubkey-file-or-string>}"
-    local auth="$HOME/.ssh/authorized_keys"
-    mkdir -p "$HOME/.ssh"
-    
-    if [ -f "$pubkey" ]; then
-        cat "$pubkey" >> "$auth"
-    else
-        echo "$pubkey" >> "$auth"
-    fi
-    chmod 600 "$auth"
-    info "Key added to authorized_keys"
-}
-
-cmd_audit() {
-    echo -e "${BOLD}SSH Key Security Audit${RESET}"
-    echo ""
-    local issues=0
-    
-    # Check .ssh permissions
-    local ssh_perms
-    ssh_perms=$(stat -c '%a' "$HOME/.ssh" 2>/dev/null || echo "missing")
-    if [ "$ssh_perms" = "700" ]; then
-        echo "  ✓ .ssh directory permissions: $ssh_perms"
-    else
-        echo -e "  ${RED}✗ .ssh permissions: $ssh_perms (should be 700)${RESET}"
-        issues=$((issues + 1))
-    fi
-    
-    # Check private key permissions
-    for key in "$HOME/.ssh"/id_*; do
-        [ ! -f "$key" ] && continue
-        [[ "$key" == *.pub ]] && continue
-        local kperms
-        kperms=$(stat -c '%a' "$key")
-        if [ "$kperms" = "600" ]; then
-            echo "  ✓ $(basename "$key"): $kperms"
-        else
-            echo -e "  ${RED}✗ $(basename "$key"): $kperms (should be 600)${RESET}"
-            issues=$((issues + 1))
-        fi
-        
-        # Check key type
-        local ktype
-        ktype=$(ssh-keygen -lf "$key" 2>/dev/null | awk '{print $NF}' | tr -d '()')
-        local kbits
-        kbits=$(ssh-keygen -lf "$key" 2>/dev/null | awk '{print $1}')
-        if [ "$ktype" = "RSA" ] && [ "$kbits" -lt 2048 ] 2>/dev/null; then
-            echo -e "  ${RED}✗ $(basename "$key"): RSA $kbits bits (minimum 2048 recommended)${RESET}"
-            issues=$((issues + 1))
-        fi
-    done
-    
-    echo ""
-    if [ "$issues" -eq 0 ]; then
-        info "No issues found"
-    else
-        echo "  $issues issue(s) found"
-    fi
-}
+VERSION="2.0.0"
 
 show_help() {
-    cat << EOF
-sshkey v$VERSION — SSH key manager
+    cat << 'HELPEOF'
+sshkey v$VERSION — Sshkey Reference Tool
 
-Usage: sshkey <command> [args]
+Usage: sshkey <command>
 
-Key Management:
-  generate [type] [bits]         Generate new SSH key (ed25519/rsa/ecdsa)
-  list                           List all SSH keys
-  fingerprint <keyfile>          Show key fingerprint (MD5 + SHA256)
-  info <keyfile>                 Detailed key information
+Commands:
+  intro           Overview and core concepts
+  quickstart      Getting started guide
+  patterns        Common patterns and best practices
+  debugging       Debugging and troubleshooting
+  performance     Performance optimization tips
+  security        Security considerations
+  migration       Migration and upgrade guide
+  cheatsheet      Quick reference cheat sheet
+  help              Show this help
+  version           Show version
 
-Remote:
-  copy <user@host> [keyfile]     Copy public key to remote host
-  test <user@host>               Test SSH connection
+Powered by BytesAgain | bytesagain.com
+HELPEOF
+}
 
-Authorized Keys:
-  authorized-list                List authorized keys
-  authorized-add <pubkey>        Add key to authorized_keys
+cmd_intro() {
+    cat << 'EOF'
+# Sshkey — Overview
 
-Security:
-  audit                          Security audit of SSH keys and permissions
+## What is Sshkey?
+Sshkey (sshkey) is a specialized tool/concept in the security domain.
+It provides essential capabilities for professionals working with sshkey.
 
-  help                           Show this help
-  version                        Show version
+## Key Concepts
+- Core sshkey principles and fundamentals
+- How sshkey fits into the broader security ecosystem  
+- Essential terminology every practitioner should know
 
-Requires: ssh-keygen, ssh
+## Why Sshkey Matters
+Understanding sshkey is critical for:
+- Improving efficiency in security workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic sshkey concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
 EOF
 }
 
-[ $# -eq 0 ] && { show_help; exit 0; }
-case "$1" in
-    generate|gen) shift; cmd_generate "${1:-ed25519}" "${2:-}" "${3:-}" ;;
-    list|ls)      cmd_list ;;
-    fingerprint)  shift; cmd_fingerprint "$@" ;;
-    copy)         shift; cmd_copy "$@" ;;
-    test)         shift; cmd_test "$@" ;;
-    info)         shift; cmd_info "$@" ;;
-    authorized-list|auth-list)  cmd_authorized_list ;;
-    authorized-add|auth-add)    shift; cmd_authorized_add "$@" ;;
-    audit)        cmd_audit ;;
-    help|-h)      show_help ;;
-    version|-v)   echo "sshkey v$VERSION"; echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com" ;;
-    *)            echo "Unknown: $1"; show_help; exit 1 ;;
+cmd_quickstart() {
+    cat << 'EOF'
+# Sshkey — Quick Start Guide
+
+## Prerequisites
+- Basic understanding of security concepts
+- Required tools and access credentials
+- System meeting minimum requirements
+
+## Installation
+1. Download or clone the sshkey package
+2. Install dependencies
+3. Configure initial settings
+4. Verify installation
+
+## First Steps
+1. Run the hello-world example
+2. Review the default configuration
+3. Try a simple real-world task
+4. Explore available commands and options
+
+## Next Steps
+- Read the full documentation
+- Join the community forum
+- Try advanced features
+- Set up automated workflows
+EOF
+}
+
+cmd_patterns() {
+    cat << 'EOF'
+# Sshkey — Common Patterns & Best Practices
+
+## Design Patterns
+1. **Standard Pattern**: The most common approach for sshkey
+2. **Scalable Pattern**: For high-volume or distributed scenarios
+3. **Resilient Pattern**: For fault-tolerant implementations
+
+## Best Practices
+- Follow the principle of least privilege
+- Use version control for all configurations
+- Implement comprehensive logging
+- Test changes in staging before production
+- Document all custom configurations
+
+## Anti-Patterns to Avoid
+- Hardcoding credentials or configuration
+- Skipping validation and error handling
+- Ignoring monitoring and alerting
+- Making changes without documentation
+- Over-engineering simple solutions
+EOF
+}
+
+cmd_debugging() {
+    cat << 'EOF'
+# Sshkey — Debugging Guide
+
+## Common Errors
+1. **Connection refused**: Check service status and network
+2. **Permission denied**: Verify credentials and access rights
+3. **Timeout**: Check network, increase limits, optimize queries
+4. **Invalid input**: Validate data format and encoding
+
+## Debugging Tools
+- Built-in logging and diagnostics
+- Network analysis tools (tcpdump, wireshark)
+- System monitoring (top, htop, iostat)
+- Application-specific debug modes
+
+## Debug Workflow
+1. Reproduce the issue consistently
+2. Check logs for error messages
+3. Isolate the failing component
+4. Test with minimal configuration
+5. Apply fix and verify
+EOF
+}
+
+cmd_performance() {
+    cat << 'EOF'
+# Sshkey — Performance Optimization
+
+## Key Metrics
+- Response time / latency
+- Throughput / operations per second
+- Resource utilization (CPU, memory, I/O)
+- Error rate and retry frequency
+
+## Optimization Strategies
+1. **Caching**: Reduce redundant operations
+2. **Batching**: Group small operations
+3. **Indexing**: Speed up data lookups
+4. **Compression**: Reduce data transfer size
+5. **Parallel Processing**: Utilize multiple cores
+
+## Monitoring
+- Set up baseline performance metrics
+- Configure alerts for anomalies
+- Track trends over time
+- Regular capacity planning reviews
+EOF
+}
+
+cmd_security() {
+    cat << 'EOF'
+# Sshkey — Security Considerations
+
+## Authentication & Authorization
+- Use strong, unique credentials
+- Implement role-based access control
+- Enable multi-factor authentication where possible
+- Regularly review and rotate credentials
+
+## Data Protection
+- Encrypt data at rest and in transit
+- Implement proper backup procedures
+- Follow data retention policies
+- Sanitize inputs to prevent injection
+
+## Network Security
+- Use firewalls and network segmentation
+- Monitor for suspicious activity
+- Keep all software patched and updated
+- Disable unnecessary services and ports
+EOF
+}
+
+cmd_migration() {
+    cat << 'EOF'
+# Sshkey — Migration & Upgrade Guide
+
+## Pre-Migration Checklist
+- [ ] Current system fully documented
+- [ ] Complete backup taken and verified
+- [ ] Target environment prepared
+- [ ] Rollback plan documented
+- [ ] Stakeholders notified
+
+## Migration Steps
+1. Prepare target environment
+2. Export data from source
+3. Transform data if needed
+4. Import to target
+5. Verify data integrity
+6. Update configurations
+7. Test all functionality
+8. Switch traffic / go live
+
+## Post-Migration
+- Monitor for errors and performance
+- Verify all integrations working
+- Update documentation
+- Decommission old system after confirmation
+EOF
+}
+
+cmd_cheatsheet() {
+    cat << 'EOF'
+# Sshkey — Quick Reference
+
+## Essential Commands
+| Command | Description |
+|---------|-------------|
+| help | Show available commands |
+| version | Display version info |
+| intro | Overview and fundamentals |
+| troubleshooting | Common problems and fixes |
+
+## Common Workflows
+1. **Setup**: install → configure → verify → test
+2. **Daily**: check → monitor → report → review
+3. **Issue**: diagnose → isolate → fix → verify → document
+
+## Key Shortcuts
+- Use tab completion for commands
+- Check logs first when troubleshooting
+- Always backup before making changes
+- Document everything you change
+EOF
+}
+
+CMD="${1:-help}"
+shift 2>/dev/null || true
+
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    quickstart) cmd_quickstart "$@" ;;
+    patterns) cmd_patterns "$@" ;;
+    debugging) cmd_debugging "$@" ;;
+    performance) cmd_performance "$@" ;;
+    security) cmd_security "$@" ;;
+    migration) cmd_migration "$@" ;;
+    cheatsheet) cmd_cheatsheet "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "sshkey v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: sshkey help"; exit 1 ;;
 esac

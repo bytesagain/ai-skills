@@ -1,9 +1,0 @@
-{
-  "name": "license-picker",
-  "description": "Choose and generate open source license files for projects. Use when selecting project licenses.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

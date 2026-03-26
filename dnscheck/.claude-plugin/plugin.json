@@ -1,9 +1,0 @@
-{
-  "name": "dnscheck",
-  "description": "Query DNS records and diagnose domain resolution and email configs. Use when checking propagation, debugging resolution, verifying SPF records.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

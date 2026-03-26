@@ -1,9 +1,0 @@
-{
-  "name": "dropship-helper",
-  "description": "Calculate dropshipping margins, ROI, and breakeven points. Use when evaluating product profitability.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,45 +1,35 @@
 ---
-version: "1.0.0"
-name: File Converter Pro
-description: "💾 Self-hosted online file converter. Supports 1000+ formats ⚙️ file converter pro, typescript, bun, conversion, convert, converter."
+name: "file-converter-pro"
+version: "2.0.4"
+description: "Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for File Converter PRO concepts, best practices, and implementation p..."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [file,converter,pro, reference]
+category: "devtools"
 ---
 
 # File Converter Pro
 
-💾 Self-hosted online file converter. Supports 1000+ formats ⚙️ ## Commands
+Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for File Converter PRO concepts, best practices, and implementation p... No API keys or credentials required.
 
-- `help` - Help
-- `run` - Run
-- `info` - Info
-- `status` - Status
+## Commands
 
-## Features
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-- Core functionality from C4illin/ConvertX
+## Output Format
 
-## Usage
-
-Run any command: `file-converter-pro <command> [args]`
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
-> **Disclaimer**: This skill is an independent, original implementation. It is not affiliated with, endorsed by, or derived from the referenced open-source project. No code was copied. The reference is for context only.
----
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
 
-
-## Examples
-
-```bash
-file-converter-pro help
-file-converter-pro run
-```
-
-## When to Use
-
-- when you need quick file converter pro from the command line
-- to automate file tasks in your workflow
-
-## Output
-
-Returns formatted output to stdout. Redirect to a file with `file-converter-pro run > output.txt`.
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

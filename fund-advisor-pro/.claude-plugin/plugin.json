@@ -1,9 +1,0 @@
-{
-  "name": "fund-advisor-pro",
-  "description": "Calculate DCA with annualized rates and plan rebalancing strategies easily. Use when modeling growth, comparing allocations, or simulating drawdown scenarios.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

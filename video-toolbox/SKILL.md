@@ -1,56 +1,34 @@
 ---
 name: "video-toolbox"
-version: "3.0.0"
-description: "Process video files with ffmpeg for conversion, trimming, and compression. Use when editing videos. Requires ffmpeg."
+version: "4.0.1"
+description: "Reference tool for devtools — covers intro, guide, tips and more. Quick lookup for Video Toolbox concepts, best practices, and implementation patterns."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [video,toolbox, reference]
+category: "devtools"
 ---
 
-# video-toolbox
+# Video Toolbox
 
-Process video files with ffmpeg for conversion, trimming, and compression. Use when editing videos. Requires ffmpeg.
+Reference tool for devtools — covers intro, guide, tips and more. Quick lookup for Video Toolbox concepts, best practices, and implementation patterns. No API keys or credentials required.
 
 ## Commands
 
-### `info`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `guide` | guide reference |
+| `tips` | tips reference |
+| `planning` | planning reference |
+| `resources` | resources reference |
+| `mistakes` | mistakes reference |
+| `examples` | examples reference |
+| `faq` | faq reference |
 
-```bash
-scripts/script.sh info <file>
-```
+## Output Format
 
-### `convert`
-
-```bash
-scripts/script.sh convert <in out>
-```
-
-### `trim`
-
-```bash
-scripts/script.sh trim <file start end out>
-```
-
-### `thumbnail`
-
-```bash
-scripts/script.sh thumbnail <file timestamp>
-```
-
-### `compress`
-
-```bash
-scripts/script.sh compress <file out>
-```
-
-### `merge`
-
-```bash
-scripts/script.sh merge <f1 f2 out>
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/video-toolbox/`.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

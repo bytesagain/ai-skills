@@ -1,9 +1,0 @@
-{
-  "name": "subtitle-translator",
-  "description": "Video translation and dubbing tool powered by LLMs. The video translator offers 100 language transla subtitle-translator, go, dubbing, localization, tts.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

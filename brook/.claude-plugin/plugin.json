@@ -1,9 +1,0 @@
-{
-  "name": "brook",
-  "description": "Configure cross-platform proxy and VPN tunnels with programmable rules. Use when setting up SOCKS proxies, bypassing firewalls, or routing traffic.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

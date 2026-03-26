@@ -1,9 +1,0 @@
-{
-  "name": "fitness-plan",
-  "description": "Generate workout plans for muscle gain, fat loss, or shaping with diet tips. Use when creating schedules, planning cycles, or designing routines.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

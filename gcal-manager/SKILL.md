@@ -1,67 +1,35 @@
 ---
-version: "2.0.0"
-name: gcal-manager
-description: "Manage Google Calendar events, check availability, and view daily agendas. Use when listing events, creating entries, or checking free time slots."
-author: BytesAgain
-homepage: https://bytesagain.com
-source: https://github.com/bytesagain/ai-skills
+name: "gcal-manager"
+version: "3.0.1"
+description: "Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Gcal Manager concepts, best practices, and implementation patterns."
+author: "BytesAgain"
+homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [gcal,manager, reference]
+category: "devtools"
 ---
 
-# Google Calendar Manager
+# Gcal Manager
 
-A full-featured Google Calendar management toolkit for listing events, creating/updating/deleting events, checking availability, viewing daily agendas, and managing multiple calendars — all from the command line using the Google Calendar API with OAuth2 authentication.
-
-## Description
-
-Google Calendar Manager lets you interact with your Google Calendar programmatically. View your upcoming events, create new ones with attendees, check free/busy times, get a formatted daily agenda, and manage calendar settings. Supports multiple calendars, time zone handling, recurring events, and rich output formatting. Perfect for scheduling automation, meeting management, and calendar-based workflows.
-
-## Requirements
-
-- `list-calendars` — List all calendars
-- `today` — Show today's events
-- `list-events` — List upcoming events (--days for range)
-- `create-event` — Create event (--title --start --end)
-- `get-event` — Get event details (--event-id)
-- `update-event` — Update event (--event-id --title)
-- `delete-event` — Delete event (--event-id)
-- `free-busy` — Check availability (--start --end)
-- Enable the Google Calendar API in your Google Cloud Console
-- Create OAuth2 credentials and obtain an access token with `calendar` scope
+Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Gcal Manager concepts, best practices, and implementation patterns. No API keys or credentials required.
 
 ## Commands
 
-See commands above.
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-## Environment Variables
+## Output Format
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `GCAL_ACCESS_TOKEN` | Yes | Google OAuth2 access token |
-| `GCAL_CALENDAR_ID` | No | Calendar ID (default: `primary`) |
-| `GCAL_TIMEZONE` | No | Timezone (default: system timezone) |
-| `GCAL_OUTPUT_FORMAT` | No | Output format: `table`, `json`, `markdown` |
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
-## Examples
-
-```bash
-# List next 7 days of events
-GCAL_ACCESS_TOKEN=ya29.xxx gcal-manager list
-
-# Show today's agenda
-GCAL_ACCESS_TOKEN=ya29.xxx gcal-manager today
-
-# Create an event
-GCAL_ACCESS_TOKEN=ya29.xxx gcal-manager create "Team Standup" "2024-01-15T09:00:00" "2024-01-15T09:30:00" '{"attendees":["alice@co.com"]}'
-
-# Check availability
-GCAL_ACCESS_TOKEN=ya29.xxx gcal-manager freebusy "2024-01-15T08:00:00" "2024-01-15T18:00:00"
-
-# Quick-add with natural language
-GCAL_ACCESS_TOKEN=ya29.xxx gcal-manager quick "Lunch with Bob tomorrow at noon"
-
-# Search events
-GCAL_ACCESS_TOKEN=ya29.xxx gcal-manager search "standup" 30
-```
 ---
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
+
+*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*

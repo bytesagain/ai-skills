@@ -1,56 +1,34 @@
 ---
 name: "policy-reader"
-version: "3.0.0"
-description: "Analyze privacy policies and terms of service documents. Use when reviewing legal documents."
+version: "4.0.1"
+description: "Reference tool for business — covers intro, quickstart, patterns and more. Quick lookup for Policy Reader concepts, best practices, and implementation patterns."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [policy,reader, reference]
+category: "business"
 ---
 
-# policy-reader
+# Policy Reader
 
-Analyze privacy policies and terms of service documents. Use when reviewing legal documents.
+Reference tool for business — covers intro, quickstart, patterns and more. Quick lookup for Policy Reader concepts, best practices, and implementation patterns. No API keys or credentials required.
 
 ## Commands
 
-### `scan`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-```bash
-scripts/script.sh scan <file>
-```
+## Output Format
 
-### `summary`
-
-```bash
-scripts/script.sh summary <file>
-```
-
-### `check`
-
-```bash
-scripts/script.sh check <file keyword>
-```
-
-### `score`
-
-```bash
-scripts/script.sh score <file>
-```
-
-### `compare`
-
-```bash
-scripts/script.sh compare <f1 f2>
-```
-
-### `extract`
-
-```bash
-scripts/script.sh extract <file section>
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/policy-reader/`.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

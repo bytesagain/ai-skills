@@ -1,155 +1,233 @@
 #!/usr/bin/env bash
+# dropship-helper — Dropship Helper reference tool. Use when working with dropship helper in finance contexts.
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-VERSION="3.0.0"
-SCRIPT_NAME="dropship-helper"
-DATA_DIR="$HOME/.local/share/dropship-helper"
-mkdir -p "$DATA_DIR"
+VERSION="4.0.2"
 
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+show_help() {
+    cat << 'HELPEOF'
+dropship-helper v$VERSION — Dropship Helper Reference Tool
 
-_info()  { echo "[INFO]  $*"; }
-_error() { echo "[ERROR] $*" >&2; }
-die()    { _error "$@"; exit 1; }
+Usage: dropship-helper <command>
 
-cmd_margin() {
-    local cost="${2:-}"
-    local price="${3:-}"
-    [ -z "$cost" ] && die "Usage: $SCRIPT_NAME margin <cost price>"
-    awk "BEGIN{m=($3-$2)/$3*100; printf \"Margin: %.1f%%\n\", m}"
+Commands:
+  intro           Overview and fundamentals
+  formulas        Key formulas and calculations
+  regulations     Regulatory framework and compliance
+  risks           Risk factors and mitigation
+  instruments     Instruments and tools overview
+  strategies      Common strategies and approaches
+  glossary        Key terms and definitions
+  checklist       Due diligence checklist
+  help              Show this help
+  version           Show version
+
+Powered by BytesAgain | bytesagain.com
+HELPEOF
 }
 
-cmd_roi() {
-    local investment="${2:-}"
-    local revenue="${3:-}"
-    [ -z "$investment" ] && die "Usage: $SCRIPT_NAME roi <investment revenue>"
-    awk "BEGIN{r=($3-$2)/$2*100; printf \"ROI: %.1f%%\n\", r}"
+cmd_intro() {
+    cat << 'EOF'
+# Dropship Helper — Overview
+
+## What is Dropship Helper?
+Dropship Helper (dropship-helper) is a specialized tool/concept in the finance domain.
+It provides essential capabilities for professionals working with dropship helper.
+
+## Key Concepts
+- Core dropship helper principles and fundamentals
+- How dropship helper fits into the broader finance ecosystem  
+- Essential terminology every practitioner should know
+
+## Why Dropship Helper Matters
+Understanding dropship helper is critical for:
+- Improving efficiency in finance workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic dropship helper concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
+EOF
 }
 
-cmd_pricing() {
-    local cost="${2:-}"
-    local margin_pct="${3:-}"
-    [ -z "$cost" ] && die "Usage: $SCRIPT_NAME pricing <cost margin_pct>"
-    awk "BEGIN{p=$2/(1-$3/100); printf \"Sell at: \$%.2f\n\", p}"
+cmd_formulas() {
+    cat << 'EOF'
+# Dropship Helper — Key Formulas & Calculations
+
+## Core Formulas
+- **Basic ratio**: Value = Input / Reference × 100
+- **Growth rate**: (Current - Previous) / Previous × 100%
+- **Weighted average**: Sum(Value × Weight) / Sum(Weight)
+
+## Common Calculations
+1. Risk-adjusted return
+2. Break-even analysis
+3. Compound growth
+4. Present/future value
+5. Standard deviation
+
+## Quick Reference
+| Metric | Formula | Use Case |
+|--------|---------|----------|
+| ROI | (Gain - Cost) / Cost | Investment evaluation |
+| CAGR | (End/Start)^(1/n) - 1 | Growth measurement |
+| Sharpe | (Return - RiskFree) / StdDev | Risk-adjusted performance |
+EOF
 }
 
-cmd_breakeven() {
-    local fixed="${2:-}"
-    local variable="${3:-}"
-    local price="${4:-}"
-    [ -z "$fixed" ] && die "Usage: $SCRIPT_NAME breakeven <fixed variable price>"
-    awk "BEGIN{b=$2/($4-$3); printf \"Breakeven: %.0f units\n\", b}"
+cmd_regulations() {
+    cat << 'EOF'
+# Dropship Helper — Regulatory Framework
+
+## Key Regulations
+- Primary governing laws and statutes
+- Industry-specific compliance requirements
+- International standards and agreements
+
+## Compliance Requirements
+- Registration and licensing
+- Reporting obligations
+- Record-keeping requirements
+- Audit and inspection readiness
+
+## Enforcement
+- Regulatory bodies and their jurisdiction
+- Penalty structures for non-compliance
+- Appeal and dispute resolution processes
+EOF
 }
 
-cmd_compare() {
-    local c1="${2:-}"
-    local p1="${3:-}"
-    local c2="${4:-}"
-    local p2="${5:-}"
-    [ -z "$c1" ] && die "Usage: $SCRIPT_NAME compare <c1 p1 c2 p2>"
-    echo 'Product 1:'; cmd_margin $2 $3; echo 'Product 2:'; cmd_margin $4 $5
+cmd_risks() {
+    cat << 'EOF'
+# Dropship Helper — Risk Analysis
+
+## Risk Categories
+1. **Market Risk**: Price volatility and liquidity
+2. **Operational Risk**: System failures and human error
+3. **Regulatory Risk**: Changing laws and compliance
+4. **Credit Risk**: Counterparty default
+
+## Risk Mitigation
+- Diversification strategies
+- Hedging instruments
+- Insurance and guarantees
+- Contingency planning
+
+## Risk Assessment Framework
+| Risk | Probability | Impact | Mitigation |
+|------|-------------|--------|------------|
+| High | Likely | Severe | Immediate action |
+| Medium | Possible | Moderate | Monitor closely |
+| Low | Unlikely | Minor | Accept or transfer |
+EOF
 }
 
-cmd_report() {
-    echo '=== Dropship Calculator ==='; echo 'Use margin/roi/pricing/breakeven commands'
+cmd_instruments() {
+    cat << 'EOF'
+# Dropship Helper — Instruments & Tools Overview
+
+## Primary Instruments
+- Core tools used in dropship helper operations
+- Measurement and monitoring equipment
+- Software platforms and applications
+
+## Selection Guide
+1. Define requirements and constraints
+2. Evaluate available options
+3. Consider total cost of ownership
+4. Assess vendor support and community
+5. Test before committing
+EOF
 }
 
-cmd_help() {
-    echo "$SCRIPT_NAME v$VERSION"
-    echo ""
-    echo "Commands:"
-    printf "  %-25s\n" "margin <cost price>"
-    printf "  %-25s\n" "roi <investment revenue>"
-    printf "  %-25s\n" "pricing <cost margin_pct>"
-    printf "  %-25s\n" "breakeven <fixed variable price>"
-    printf "  %-25s\n" "compare <c1 p1 c2 p2>"
-    printf "  %-25s\n" "report"
-    printf "  %%-25s\n" "help"
-    echo ""
-    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
+cmd_strategies() {
+    cat << 'EOF'
+# Dropship Helper — Common Strategies
+
+## Fundamental Strategies
+1. **Conservative**: Low risk, steady returns
+2. **Balanced**: Moderate risk, diversified approach
+3. **Aggressive**: Higher risk, growth-focused
+
+## Implementation Steps
+1. Define objectives and constraints
+2. Select appropriate strategy
+3. Execute with discipline
+4. Monitor and adjust
+5. Review periodically
+EOF
 }
 
-cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+cmd_glossary() {
+    cat << 'EOF'
+# Dropship Helper — Key Terms & Definitions
 
-main() {
-    local cmd="${1:-help}"
-    case "$cmd" in
-        margin) shift; cmd_margin "$@" ;;
-        roi) shift; cmd_roi "$@" ;;
-        pricing) shift; cmd_pricing "$@" ;;
-        breakeven) shift; cmd_breakeven "$@" ;;
-        compare) shift; cmd_compare "$@" ;;
-        report) shift; cmd_report "$@" ;;
-        help) cmd_help ;;
-        version) cmd_version ;;
-        *) die "Unknown: $cmd" ;;
-    esac
+## Core Terminology
+- **Dropship Helper**: The primary subject of this reference
+- **finance**: The broader domain category
+- **Baseline**: A reference point for comparison
+- **Benchmark**: A standard for measuring performance
+- **Compliance**: Adherence to rules and standards
+- **Configuration**: System settings and parameters
+- **Diagnostics**: Tools and procedures for identifying issues
+- **Integration**: Connecting multiple systems together
+- **Protocol**: A set of rules governing communication
+- **Specification**: Detailed requirements document
+EOF
 }
 
-main "$@"
+cmd_checklist() {
+    cat << 'EOF'
+# Dropship Helper — Inspection Checklist
+
+## Pre-Operation Checklist
+- [ ] Visual inspection completed
+- [ ] All connections secure
+- [ ] Safety systems functional
+- [ ] Operating parameters within range
+- [ ] Documentation current
+
+## Daily Checks
+- [ ] System startup normal
+- [ ] No error indicators or alarms
+- [ ] Performance within expected range
+- [ ] Environmental conditions acceptable
+- [ ] Log entries reviewed
+
+## Periodic Inspection
+- [ ] Comprehensive system test
+- [ ] Calibration verification
+- [ ] Wear component inspection
+- [ ] Firmware/software version check
+- [ ] Backup systems tested
+
+## Shutdown Checklist
+- [ ] Proper shutdown sequence followed
+- [ ] All data saved and backed up
+- [ ] System secured
+- [ ] Maintenance items logged
+- [ ] Next startup requirements noted
+EOF
+}
+
+CMD="${1:-help}"
+shift 2>/dev/null || true
+
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    formulas) cmd_formulas "$@" ;;
+    regulations) cmd_regulations "$@" ;;
+    risks) cmd_risks "$@" ;;
+    instruments) cmd_instruments "$@" ;;
+    strategies) cmd_strategies "$@" ;;
+    glossary) cmd_glossary "$@" ;;
+    checklist) cmd_checklist "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "dropship-helper v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: dropship-helper help"; exit 1 ;;
+esac

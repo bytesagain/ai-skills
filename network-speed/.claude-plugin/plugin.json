@@ -1,9 +1,0 @@
-{
-  "name": "network-speed",
-  "description": "Measure TCP, UDP, and SCTP bandwidth between hosts with throughput benchmarks. Use when testing speed, benchmarking links, comparing protocol performance.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

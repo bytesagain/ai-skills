@@ -1,9 +1,0 @@
-{
-  "name": "calculus",
-  "description": "Compute derivatives, integrals, limits, and series step by step. Use when solving calculus problems, plotting functions, or verifying integrals.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

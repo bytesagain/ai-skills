@@ -1,9 +1,0 @@
-{
-  "name": "filewatch",
-  "description": "Monitor files for changes and trigger actions on modification events. Use when watching config changes, triggering rebuilds, or tracking file versions.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

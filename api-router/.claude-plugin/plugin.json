@@ -1,9 +1,0 @@
-{
-  "name": "api-router",
-  "description": "Gorilla: Training and Evaluating LLMs for Function Calls (Tool Calls) api-router, python, api, api-documentation, chatgpt, claude-api.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

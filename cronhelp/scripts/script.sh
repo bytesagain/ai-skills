@@ -1,155 +1,255 @@
 #!/usr/bin/env bash
+# cronhelp — Cronhelp reference tool. Use when working with cronhelp in sysops contexts.
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-VERSION="3.0.0"
-SCRIPT_NAME="cronhelp"
-DATA_DIR="$HOME/.local/share/cronhelp"
-mkdir -p "$DATA_DIR"
+VERSION="4.0.2"
 
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+show_help() {
+    cat << 'HELPEOF'
+cronhelp v$VERSION — Cronhelp Reference Tool
 
-_info()  { echo "[INFO]  $*"; }
-_error() { echo "[ERROR] $*" >&2; }
-die()    { _error "$@"; exit 1; }
+Usage: cronhelp <command>
 
-cmd_list() {
-    crontab -l 2>/dev/null || echo 'No crontab'
+Commands:
+  intro           Overview and core concepts
+  quickstart      Getting started guide
+  patterns        Common patterns and best practices
+  debugging       Debugging and troubleshooting
+  performance     Performance optimization tips
+  security        Security considerations
+  migration       Migration and upgrade guide
+  cheatsheet      Quick reference cheat sheet
+  help              Show this help
+  version           Show version
+
+Powered by BytesAgain | bytesagain.com
+HELPEOF
 }
 
-cmd_add() {
-    local schedule="${2:-}"
-    local command="${3:-}"
-    [ -z "$schedule" ] && die "Usage: $SCRIPT_NAME add <schedule command>"
-    (crontab -l 2>/dev/null; echo "$2 $3") | crontab - && echo Added
+cmd_intro() {
+    cat << 'EOF'
+# Cronhelp — Overview
+
+## What is Cronhelp?
+Cronhelp (cronhelp) is a specialized tool/concept in the sysops domain.
+It provides essential capabilities for professionals working with cronhelp.
+
+## Key Concepts
+- Core cronhelp principles and fundamentals
+- How cronhelp fits into the broader sysops ecosystem  
+- Essential terminology every practitioner should know
+
+## Why Cronhelp Matters
+Understanding cronhelp is critical for:
+- Improving efficiency in sysops workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic cronhelp concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
+EOF
 }
 
-cmd_remove() {
-    local number="${2:-}"
-    [ -z "$number" ] && die "Usage: $SCRIPT_NAME remove <number>"
-    crontab -l 2>/dev/null | sed ${2}d | crontab - && echo 'Removed line $2'
+cmd_quickstart() {
+    cat << 'EOF'
+# Cronhelp — Quick Start Guide
+
+## Prerequisites
+- Basic understanding of sysops concepts
+- Required tools and access credentials
+- System meeting minimum requirements
+
+## Installation
+1. Download or clone the cronhelp package
+2. Install dependencies
+3. Configure initial settings
+4. Verify installation
+
+## First Steps
+1. Run the hello-world example
+2. Review the default configuration
+3. Try a simple real-world task
+4. Explore available commands and options
+
+## Next Steps
+- Read the full documentation
+- Join the community forum
+- Try advanced features
+- Set up automated workflows
+EOF
 }
 
-cmd_log() {
-    local lines="${2:-}"
-    [ -z "$lines" ] && die "Usage: $SCRIPT_NAME log <lines>"
-    tail -${2:-20} /var/log/syslog 2>/dev/null | grep -i cron || echo 'No cron logs found'
+cmd_patterns() {
+    cat << 'EOF'
+# Cronhelp — Common Patterns & Best Practices
+
+## Design Patterns
+1. **Standard Pattern**: The most common approach for cronhelp
+2. **Scalable Pattern**: For high-volume or distributed scenarios
+3. **Resilient Pattern**: For fault-tolerant implementations
+
+## Best Practices
+- Follow the principle of least privilege
+- Use version control for all configurations
+- Implement comprehensive logging
+- Test changes in staging before production
+- Document all custom configurations
+
+## Anti-Patterns to Avoid
+- Hardcoding credentials or configuration
+- Skipping validation and error handling
+- Ignoring monitoring and alerting
+- Making changes without documentation
+- Over-engineering simple solutions
+EOF
 }
 
-cmd_test() {
-    local command="${2:-}"
-    [ -z "$command" ] && die "Usage: $SCRIPT_NAME test <command>"
-    echo 'Testing: $2'; eval $2
+cmd_debugging() {
+    cat << 'EOF'
+# Cronhelp — Debugging Guide
+
+## Common Errors
+1. **Connection refused**: Check service status and network
+2. **Permission denied**: Verify credentials and access rights
+3. **Timeout**: Check network, increase limits, optimize queries
+4. **Invalid input**: Validate data format and encoding
+
+## Debugging Tools
+- Built-in logging and diagnostics
+- Network analysis tools (tcpdump, wireshark)
+- System monitoring (top, htop, iostat)
+- Application-specific debug modes
+
+## Debug Workflow
+1. Reproduce the issue consistently
+2. Check logs for error messages
+3. Isolate the failing component
+4. Test with minimal configuration
+5. Apply fix and verify
+EOF
 }
 
-cmd_backup() {
-    crontab -l > $DATA_DIR/crontab_backup_$(date +%Y%m%d).txt 2>/dev/null && echo Backed up
+cmd_performance() {
+    cat << 'EOF'
+# Cronhelp — Performance Optimization
+
+## Key Metrics
+- Response time / latency
+- Throughput / operations per second
+- Resource utilization (CPU, memory, I/O)
+- Error rate and retry frequency
+
+## Optimization Strategies
+1. **Caching**: Reduce redundant operations
+2. **Batching**: Group small operations
+3. **Indexing**: Speed up data lookups
+4. **Compression**: Reduce data transfer size
+5. **Parallel Processing**: Utilize multiple cores
+
+## Monitoring
+- Set up baseline performance metrics
+- Configure alerts for anomalies
+- Track trends over time
+- Regular capacity planning reviews
+EOF
 }
 
-cmd_help() {
-    echo "$SCRIPT_NAME v$VERSION"
-    echo ""
-    echo "Commands:"
-    printf "  %-25s\n" "list"
-    printf "  %-25s\n" "add <schedule command>"
-    printf "  %-25s\n" "remove <number>"
-    printf "  %-25s\n" "log <lines>"
-    printf "  %-25s\n" "test <command>"
-    printf "  %-25s\n" "backup"
-    printf "  %%-25s\n" "help"
-    echo ""
-    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
+cmd_security() {
+    cat << 'EOF'
+# Cronhelp — Security Considerations
+
+## Authentication & Authorization
+- Use strong, unique credentials
+- Implement role-based access control
+- Enable multi-factor authentication where possible
+- Regularly review and rotate credentials
+
+## Data Protection
+- Encrypt data at rest and in transit
+- Implement proper backup procedures
+- Follow data retention policies
+- Sanitize inputs to prevent injection
+
+## Network Security
+- Use firewalls and network segmentation
+- Monitor for suspicious activity
+- Keep all software patched and updated
+- Disable unnecessary services and ports
+EOF
 }
 
-cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+cmd_migration() {
+    cat << 'EOF'
+# Cronhelp — Migration & Upgrade Guide
 
-main() {
-    local cmd="${1:-help}"
-    case "$cmd" in
-        list) shift; cmd_list "$@" ;;
-        add) shift; cmd_add "$@" ;;
-        remove) shift; cmd_remove "$@" ;;
-        log) shift; cmd_log "$@" ;;
-        test) shift; cmd_test "$@" ;;
-        backup) shift; cmd_backup "$@" ;;
-        help) cmd_help ;;
-        version) cmd_version ;;
-        *) die "Unknown: $cmd" ;;
-    esac
+## Pre-Migration Checklist
+- [ ] Current system fully documented
+- [ ] Complete backup taken and verified
+- [ ] Target environment prepared
+- [ ] Rollback plan documented
+- [ ] Stakeholders notified
+
+## Migration Steps
+1. Prepare target environment
+2. Export data from source
+3. Transform data if needed
+4. Import to target
+5. Verify data integrity
+6. Update configurations
+7. Test all functionality
+8. Switch traffic / go live
+
+## Post-Migration
+- Monitor for errors and performance
+- Verify all integrations working
+- Update documentation
+- Decommission old system after confirmation
+EOF
 }
 
-main "$@"
+cmd_cheatsheet() {
+    cat << 'EOF'
+# Cronhelp — Quick Reference
+
+## Essential Commands
+| Command | Description |
+|---------|-------------|
+| help | Show available commands |
+| version | Display version info |
+| intro | Overview and fundamentals |
+| troubleshooting | Common problems and fixes |
+
+## Common Workflows
+1. **Setup**: install → configure → verify → test
+2. **Daily**: check → monitor → report → review
+3. **Issue**: diagnose → isolate → fix → verify → document
+
+## Key Shortcuts
+- Use tab completion for commands
+- Check logs first when troubleshooting
+- Always backup before making changes
+- Document everything you change
+EOF
+}
+
+CMD="${1:-help}"
+shift 2>/dev/null || true
+
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    quickstart) cmd_quickstart "$@" ;;
+    patterns) cmd_patterns "$@" ;;
+    debugging) cmd_debugging "$@" ;;
+    performance) cmd_performance "$@" ;;
+    security) cmd_security "$@" ;;
+    migration) cmd_migration "$@" ;;
+    cheatsheet) cmd_cheatsheet "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "cronhelp v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: cronhelp help"; exit 1 ;;
+esac

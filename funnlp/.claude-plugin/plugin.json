@@ -1,9 +1,0 @@
-{
-  "name": "funnlp",
-  "description": "Detect sensitive words, extract phone/ID numbers, and run Chinese NLP tasks. Use when filtering content, extracting entities, or detecting text language.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,119 +1,34 @@
 ---
 name: "builder"
-version: "1.0.0"
-description: "builder tool for creating outputs"
+version: "5.0.0"
+description: "Software build systems reference — Make, CMake, Bazel, Gradle, incremental builds, remote caching, and dependency management"
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [builder, general, cli, tool]
-category: "general"
+tags: [build-systems, make, cmake, bazel, gradle]
+category: "devtools"
 ---
 
-# builder
+# Builder
 
-builder tool for creating outputs
+Software build systems reference — Make, CMake, Bazel, Gradle, incremental builds, remote caching, and dependency management. No API keys or credentials required — outputs reference documentation only.
 
 ## Commands
 
-### `status`
+| Command | Description |
+|---------|-------------|
+| `intro` | Build systems overview and core concepts |
+| `quickstart` | Getting started with build tools |
+| `patterns` | Common build patterns and best practices |
+| `debugging` | Build troubleshooting and debugging |
+| `performance` | Build performance optimization |
+| `security` | Supply chain security and dependency scanning |
+| `migration` | Migrating between build systems |
+| `cheatsheet` | Quick reference for Make, CMake, Bazel, Gradle |
 
-```bash
-scripts/script.sh status
-```
+## Output Format
 
-Show current status
-
-### `add`
-
-```bash
-scripts/script.sh add
-```
-
-Add new entry
-
-### `list`
-
-```bash
-scripts/script.sh list
-```
-
-List all entries
-
-### `search`
-
-```bash
-scripts/script.sh search
-```
-
-Search entries
-
-### `generate`
-
-```bash
-scripts/script.sh generate
-```
-
-Generate output
-
-### `remove`
-
-```bash
-scripts/script.sh remove
-```
-
-Remove entry by number
-
-### `export`
-
-```bash
-scripts/script.sh export
-```
-
-Export data to file
-
-### `stats`
-
-```bash
-scripts/script.sh stats
-```
-
-Show statistics
-
-### `config`
-
-```bash
-scripts/script.sh config
-```
-
-View or set config
-
-### `help`
-
-```bash
-scripts/script.sh help
-```
-
-### `version`
-
-```bash
-scripts/script.sh version
-```
-
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `BUILDER_DIR` | No | Data directory (default: ~/.builder/) |
-
-## Data Storage
-
-All data stored in `~/.builder/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

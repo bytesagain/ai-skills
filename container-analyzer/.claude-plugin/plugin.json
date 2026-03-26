@@ -1,9 +1,0 @@
-{
-  "name": "container-analyzer",
-  "description": "Inspect Docker image layers and find size optimization opportunities. Use when auditing image sizes, comparing layers, benchmarking builds.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "env",
-  "description": "Manage environment variables with profiles, validation, and templating using bash. Use when you need to organize, switch, or audit env configs.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

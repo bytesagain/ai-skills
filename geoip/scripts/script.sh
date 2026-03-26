@@ -1,155 +1,255 @@
 #!/usr/bin/env bash
+# geoip — Geoip reference tool. Use when working with geoip in devtools contexts.
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-VERSION="3.0.0"
-SCRIPT_NAME="geoip"
-DATA_DIR="$HOME/.local/share/geoip"
-mkdir -p "$DATA_DIR"
+VERSION="4.0.0"
 
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+show_help() {
+    cat << 'HELPEOF'
+geoip v$VERSION — Geoip Reference Tool
 
-_info()  { echo "[INFO]  $*"; }
-_error() { echo "[ERROR] $*" >&2; }
-die()    { _error "$@"; exit 1; }
+Usage: geoip <command>
 
-cmd_lookup() {
-    local ip="${2:-}"
-    [ -z "$ip" ] && die "Usage: $SCRIPT_NAME lookup <ip>"
-    curl -s 'http://ip-api.com/json/$2' 2>/dev/null | python3 -c 'import json,sys;d=json.load(sys.stdin);print(d.get("country",""),d.get("city",""),d.get("isp",""))' 2>/dev/null
+Commands:
+  intro           Overview and core concepts
+  quickstart      Getting started guide
+  patterns        Common patterns and best practices
+  debugging       Debugging and troubleshooting
+  performance     Performance optimization tips
+  security        Security considerations
+  migration       Migration and upgrade guide
+  cheatsheet      Quick reference cheat sheet
+  help              Show this help
+  version           Show version
+
+Powered by BytesAgain | bytesagain.com
+HELPEOF
 }
 
-cmd_self() {
-    curl -s 'http://ip-api.com/json/' 2>/dev/null
+cmd_intro() {
+    cat << 'EOF'
+# Geoip — Overview
+
+## What is Geoip?
+Geoip (geoip) is a specialized tool/concept in the devtools domain.
+It provides essential capabilities for professionals working with geoip.
+
+## Key Concepts
+- Core geoip principles and fundamentals
+- How geoip fits into the broader devtools ecosystem  
+- Essential terminology every practitioner should know
+
+## Why Geoip Matters
+Understanding geoip is critical for:
+- Improving efficiency in devtools workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic geoip concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
+EOF
 }
 
-cmd_batch() {
-    local file="${2:-}"
-    [ -z "$file" ] && die "Usage: $SCRIPT_NAME batch <file>"
-    while IFS= read -r ip; do echo -n "$ip: "; curl -s "http://ip-api.com/json/$ip" 2>/dev/null | python3 -c 'import json,sys;d=json.load(sys.stdin);print(d.get("country",""),d.get("city",""))' 2>/dev/null; sleep 1; done < $2
+cmd_quickstart() {
+    cat << 'EOF'
+# Geoip — Quick Start Guide
+
+## Prerequisites
+- Basic understanding of devtools concepts
+- Required tools and access credentials
+- System meeting minimum requirements
+
+## Installation
+1. Download or clone the geoip package
+2. Install dependencies
+3. Configure initial settings
+4. Verify installation
+
+## First Steps
+1. Run the hello-world example
+2. Review the default configuration
+3. Try a simple real-world task
+4. Explore available commands and options
+
+## Next Steps
+- Read the full documentation
+- Join the community forum
+- Try advanced features
+- Set up automated workflows
+EOF
 }
 
-cmd_whois() {
-    local ip="${2:-}"
-    [ -z "$ip" ] && die "Usage: $SCRIPT_NAME whois <ip>"
-    whois $2 2>/dev/null | head -20 || echo 'whois not available'
+cmd_patterns() {
+    cat << 'EOF'
+# Geoip — Common Patterns & Best Practices
+
+## Design Patterns
+1. **Standard Pattern**: The most common approach for geoip
+2. **Scalable Pattern**: For high-volume or distributed scenarios
+3. **Resilient Pattern**: For fault-tolerant implementations
+
+## Best Practices
+- Follow the principle of least privilege
+- Use version control for all configurations
+- Implement comprehensive logging
+- Test changes in staging before production
+- Document all custom configurations
+
+## Anti-Patterns to Avoid
+- Hardcoding credentials or configuration
+- Skipping validation and error handling
+- Ignoring monitoring and alerting
+- Making changes without documentation
+- Over-engineering simple solutions
+EOF
 }
 
-cmd_dns() {
-    local domain="${2:-}"
-    [ -z "$domain" ] && die "Usage: $SCRIPT_NAME dns <domain>"
-    dig +short A $2 2>/dev/null
+cmd_debugging() {
+    cat << 'EOF'
+# Geoip — Debugging Guide
+
+## Common Errors
+1. **Connection refused**: Check service status and network
+2. **Permission denied**: Verify credentials and access rights
+3. **Timeout**: Check network, increase limits, optimize queries
+4. **Invalid input**: Validate data format and encoding
+
+## Debugging Tools
+- Built-in logging and diagnostics
+- Network analysis tools (tcpdump, wireshark)
+- System monitoring (top, htop, iostat)
+- Application-specific debug modes
+
+## Debug Workflow
+1. Reproduce the issue consistently
+2. Check logs for error messages
+3. Isolate the failing component
+4. Test with minimal configuration
+5. Apply fix and verify
+EOF
 }
 
-cmd_trace() {
-    local ip="${2:-}"
-    [ -z "$ip" ] && die "Usage: $SCRIPT_NAME trace <ip>"
-    traceroute -m 10 $2 2>/dev/null || echo 'traceroute not available'
+cmd_performance() {
+    cat << 'EOF'
+# Geoip — Performance Optimization
+
+## Key Metrics
+- Response time / latency
+- Throughput / operations per second
+- Resource utilization (CPU, memory, I/O)
+- Error rate and retry frequency
+
+## Optimization Strategies
+1. **Caching**: Reduce redundant operations
+2. **Batching**: Group small operations
+3. **Indexing**: Speed up data lookups
+4. **Compression**: Reduce data transfer size
+5. **Parallel Processing**: Utilize multiple cores
+
+## Monitoring
+- Set up baseline performance metrics
+- Configure alerts for anomalies
+- Track trends over time
+- Regular capacity planning reviews
+EOF
 }
 
-cmd_help() {
-    echo "$SCRIPT_NAME v$VERSION"
-    echo ""
-    echo "Commands:"
-    printf "  %-25s\n" "lookup <ip>"
-    printf "  %-25s\n" "self"
-    printf "  %-25s\n" "batch <file>"
-    printf "  %-25s\n" "whois <ip>"
-    printf "  %-25s\n" "dns <domain>"
-    printf "  %-25s\n" "trace <ip>"
-    printf "  %%-25s\n" "help"
-    echo ""
-    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
+cmd_security() {
+    cat << 'EOF'
+# Geoip — Security Considerations
+
+## Authentication & Authorization
+- Use strong, unique credentials
+- Implement role-based access control
+- Enable multi-factor authentication where possible
+- Regularly review and rotate credentials
+
+## Data Protection
+- Encrypt data at rest and in transit
+- Implement proper backup procedures
+- Follow data retention policies
+- Sanitize inputs to prevent injection
+
+## Network Security
+- Use firewalls and network segmentation
+- Monitor for suspicious activity
+- Keep all software patched and updated
+- Disable unnecessary services and ports
+EOF
 }
 
-cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+cmd_migration() {
+    cat << 'EOF'
+# Geoip — Migration & Upgrade Guide
 
-main() {
-    local cmd="${1:-help}"
-    case "$cmd" in
-        lookup) shift; cmd_lookup "$@" ;;
-        self) shift; cmd_self "$@" ;;
-        batch) shift; cmd_batch "$@" ;;
-        whois) shift; cmd_whois "$@" ;;
-        dns) shift; cmd_dns "$@" ;;
-        trace) shift; cmd_trace "$@" ;;
-        help) cmd_help ;;
-        version) cmd_version ;;
-        *) die "Unknown: $cmd" ;;
-    esac
+## Pre-Migration Checklist
+- [ ] Current system fully documented
+- [ ] Complete backup taken and verified
+- [ ] Target environment prepared
+- [ ] Rollback plan documented
+- [ ] Stakeholders notified
+
+## Migration Steps
+1. Prepare target environment
+2. Export data from source
+3. Transform data if needed
+4. Import to target
+5. Verify data integrity
+6. Update configurations
+7. Test all functionality
+8. Switch traffic / go live
+
+## Post-Migration
+- Monitor for errors and performance
+- Verify all integrations working
+- Update documentation
+- Decommission old system after confirmation
+EOF
 }
 
-main "$@"
+cmd_cheatsheet() {
+    cat << 'EOF'
+# Geoip — Quick Reference
+
+## Essential Commands
+| Command | Description |
+|---------|-------------|
+| help | Show available commands |
+| version | Display version info |
+| intro | Overview and fundamentals |
+| troubleshooting | Common problems and fixes |
+
+## Common Workflows
+1. **Setup**: install → configure → verify → test
+2. **Daily**: check → monitor → report → review
+3. **Issue**: diagnose → isolate → fix → verify → document
+
+## Key Shortcuts
+- Use tab completion for commands
+- Check logs first when troubleshooting
+- Always backup before making changes
+- Document everything you change
+EOF
+}
+
+CMD="${1:-help}"
+shift 2>/dev/null || true
+
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    quickstart) cmd_quickstart "$@" ;;
+    patterns) cmd_patterns "$@" ;;
+    debugging) cmd_debugging "$@" ;;
+    performance) cmd_performance "$@" ;;
+    security) cmd_security "$@" ;;
+    migration) cmd_migration "$@" ;;
+    cheatsheet) cmd_cheatsheet "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "geoip v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: geoip help"; exit 1 ;;
+esac

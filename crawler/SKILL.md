@@ -1,111 +1,34 @@
 ---
 name: "crawler"
-version: "1.0.0"
-description: "Crawl websites, extract links, and scrape content with rate limiting. Use when scraping pages, extracting links, generating sitemaps."
+version: "3.0.0"
+description: "Web crawling and scraping reference — robots.txt protocol, Scrapy framework, anti-bot detection, headless browsers, and legal considerations"
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
 source: "https://github.com/bytesagain/ai-skills"
-tags: [crawler, general, cli, tool]
-category: "general"
+tags: [web-scraping, scrapy, crawler, robots-txt, selenium]
+category: "devtools"
 ---
 
-# crawler
+# Crawler
 
-Crawl websites, extract links, and scrape content with rate limiting. Use when scraping pages, extracting links, generating sitemaps.
+Web crawling and scraping reference — robots.txt protocol, Scrapy framework, anti-bot detection, headless browsers, and legal considerations. No API keys or credentials required — outputs reference documentation only.
 
 ## Commands
 
-### `status`
+| Command | Description |
+|---------|-------------|
+| `intro` | Crawling vs scraping, robots.txt, sitemap |
+| `standards` | HTTP caching, structured data, meta tags |
+| `troubleshooting` | Anti-bot detection, JS rendering, encoding |
+| `performance` | Concurrency, dedup, incremental, distributed |
+| `security` | Legal landscape, ethical guidelines, proxies |
+| `migration` | BeautifulSoup to Scrapy, requests to Playwright |
+| `cheatsheet` | Scrapy commands, CSS/XPath, curl, user-agents |
+| `faq` | Legality, JS pages, blocking, storage |
 
-```bash
-scripts/script.sh status
-```
+## Output Format
 
-Show current status
-
-### `add`
-
-```bash
-scripts/script.sh add
-```
-
-Add new entry
-
-### `list`
-
-```bash
-scripts/script.sh list
-```
-
-List all entries
-
-### `search`
-
-```bash
-scripts/script.sh search
-```
-
-Search entries
-
-### `remove`
-
-```bash
-scripts/script.sh remove
-```
-
-Remove entry by number
-
-### `export`
-
-```bash
-scripts/script.sh export
-```
-
-Export data to file
-
-### `stats`
-
-```bash
-scripts/script.sh stats
-```
-
-Show statistics
-
-### `config`
-
-```bash
-scripts/script.sh config
-```
-
-View or set config
-
-### `help`
-
-```bash
-scripts/script.sh help
-```
-
-### `version`
-
-```bash
-scripts/script.sh version
-```
-
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `CRAWLER_DIR` | No | Data directory (default: ~/.crawler/) |
-
-## Data Storage
-
-All data stored in `~/.crawler/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

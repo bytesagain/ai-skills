@@ -1,56 +1,34 @@
 ---
 name: "dex-aggregator"
-version: "3.0.0"
-description: "Aggregate DEX prices and DeFi protocol data using DeFiLlama API. Use when comparing token prices. Requires curl."
+version: "4.0.0"
+description: "DEX aggregation reference — routing algorithms, 1inch Fusion mode, CowSwap batch auctions, sandwich attack protection, and swap API endpoints"
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [dex, swap, 1inch, uniswap, defi]
+category: "blockchain"
 ---
 
-# dex-aggregator
+# Dex Aggregator
 
-Aggregate DEX prices and DeFi protocol data using DeFiLlama API. Use when comparing token prices. Requires curl.
+DEX aggregation reference — routing algorithms, 1inch Fusion mode, CowSwap batch auctions, sandwich attack protection, and swap API endpoints. No API keys or credentials required — outputs reference documentation only.
 
 ## Commands
 
-### `tvl`
+| Command | Description |
+|---------|-------------|
+| `intro` | Aggregator mechanics, major platforms |
+| `standards` | 1inch Fusion, 0x RFQ, CowSwap batches |
+| `troubleshooting` | Reverted transactions, approvals, price impact |
+| `performance` | Split ratios, gas estimation, private pools |
+| `security` | Approvals, front-running, token risks |
+| `migration` | CEX to DEX, single-DEX to aggregator, cross-chain |
+| `cheatsheet` | API endpoints, chain IDs, router addresses |
+| `faq` | Fees, safety, savings, integration |
 
-```bash
-scripts/script.sh tvl <protocol>
-```
+## Output Format
 
-### `protocols`
-
-```bash
-scripts/script.sh protocols
-```
-
-### `trending`
-
-```bash
-scripts/script.sh trending
-```
-
-### `gas`
-
-```bash
-scripts/script.sh gas
-```
-
-### `watchlist`
-
-```bash
-scripts/script.sh watchlist
-```
-
-### `add-watch`
-
-```bash
-scripts/script.sh add-watch <token>
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/dex-aggregator/`.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

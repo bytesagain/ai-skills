@@ -1,101 +1,255 @@
 #!/usr/bin/env bash
-# roomba-control - Multi-purpose utility tool
+# roomba-control — Roomba Control reference tool. Use when working with roomba control in devtools contexts.
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
-VERSION="2.0.0"
-DATA_DIR="${ROOMBA_CONTROL_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/roomba-control}"
-DB="$DATA_DIR/data.log"
-mkdir -p "$DATA_DIR"
+
+VERSION="3.0.0"
 
 show_help() {
-    cat << EOF
-roomba-control v$VERSION
+    cat << 'HELPEOF'
+roomba-control v$VERSION — Roomba Control Reference Tool
 
-Multi-purpose utility tool
-
-Usage: roomba-control <command> [args]
+Usage: roomba-control <command>
 
 Commands:
-  run                  Execute main function
-  config               Configuration
-  status               Show status
-  init                 Initialize
-  list                 List items
-  add                  Add entry
-  remove               Remove entry
-  search               Search
-  export               Export data
-  info                 Show info
-  help                 Show this help
-  version              Show version
+  intro           Overview and core concepts
+  quickstart      Getting started guide
+  patterns        Common patterns and best practices
+  debugging       Debugging and troubleshooting
+  performance     Performance optimization tips
+  security        Security considerations
+  migration       Migration and upgrade guide
+  cheatsheet      Quick reference cheat sheet
+  help              Show this help
+  version           Show version
 
-Data: \$DATA_DIR
+Powered by BytesAgain | bytesagain.com
+HELPEOF
+}
+
+cmd_intro() {
+    cat << 'EOF'
+# Roomba Control — Overview
+
+## What is Roomba Control?
+Roomba Control (roomba-control) is a specialized tool/concept in the devtools domain.
+It provides essential capabilities for professionals working with roomba control.
+
+## Key Concepts
+- Core roomba control principles and fundamentals
+- How roomba control fits into the broader devtools ecosystem  
+- Essential terminology every practitioner should know
+
+## Why Roomba Control Matters
+Understanding roomba control is critical for:
+- Improving efficiency in devtools workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic roomba control concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
 EOF
 }
 
-_log() { echo "$(date '+%m-%d %H:%M') $1: $2" >> "$DATA_DIR/history.log"; }
+cmd_quickstart() {
+    cat << 'EOF'
+# Roomba Control — Quick Start Guide
 
-cmd_run() {
-    echo "  Running: $1"
-    _log "run" "${1:-}"
+## Prerequisites
+- Basic understanding of devtools concepts
+- Required tools and access credentials
+- System meeting minimum requirements
+
+## Installation
+1. Download or clone the roomba control package
+2. Install dependencies
+3. Configure initial settings
+4. Verify installation
+
+## First Steps
+1. Run the hello-world example
+2. Review the default configuration
+3. Try a simple real-world task
+4. Explore available commands and options
+
+## Next Steps
+- Read the full documentation
+- Join the community forum
+- Try advanced features
+- Set up automated workflows
+EOF
 }
 
-cmd_config() {
-    echo "  Config: $DATA_DIR/config.json"
-    _log "config" "${1:-}"
+cmd_patterns() {
+    cat << 'EOF'
+# Roomba Control — Common Patterns & Best Practices
+
+## Design Patterns
+1. **Standard Pattern**: The most common approach for roomba control
+2. **Scalable Pattern**: For high-volume or distributed scenarios
+3. **Resilient Pattern**: For fault-tolerant implementations
+
+## Best Practices
+- Follow the principle of least privilege
+- Use version control for all configurations
+- Implement comprehensive logging
+- Test changes in staging before production
+- Document all custom configurations
+
+## Anti-Patterns to Avoid
+- Hardcoding credentials or configuration
+- Skipping validation and error handling
+- Ignoring monitoring and alerting
+- Making changes without documentation
+- Over-engineering simple solutions
+EOF
 }
 
-cmd_status() {
-    echo "  Status: ready"
-    _log "status" "${1:-}"
+cmd_debugging() {
+    cat << 'EOF'
+# Roomba Control — Debugging Guide
+
+## Common Errors
+1. **Connection refused**: Check service status and network
+2. **Permission denied**: Verify credentials and access rights
+3. **Timeout**: Check network, increase limits, optimize queries
+4. **Invalid input**: Validate data format and encoding
+
+## Debugging Tools
+- Built-in logging and diagnostics
+- Network analysis tools (tcpdump, wireshark)
+- System monitoring (top, htop, iostat)
+- Application-specific debug modes
+
+## Debug Workflow
+1. Reproduce the issue consistently
+2. Check logs for error messages
+3. Isolate the failing component
+4. Test with minimal configuration
+5. Apply fix and verify
+EOF
 }
 
-cmd_init() {
-    echo "  Initialized in $DATA_DIR"
-    _log "init" "${1:-}"
+cmd_performance() {
+    cat << 'EOF'
+# Roomba Control — Performance Optimization
+
+## Key Metrics
+- Response time / latency
+- Throughput / operations per second
+- Resource utilization (CPU, memory, I/O)
+- Error rate and retry frequency
+
+## Optimization Strategies
+1. **Caching**: Reduce redundant operations
+2. **Batching**: Group small operations
+3. **Indexing**: Speed up data lookups
+4. **Compression**: Reduce data transfer size
+5. **Parallel Processing**: Utilize multiple cores
+
+## Monitoring
+- Set up baseline performance metrics
+- Configure alerts for anomalies
+- Track trends over time
+- Regular capacity planning reviews
+EOF
 }
 
-cmd_list() {
-    [ -f "$DB" ] && cat "$DB" || echo "  (empty)"
-    _log "list" "${1:-}"
+cmd_security() {
+    cat << 'EOF'
+# Roomba Control — Security Considerations
+
+## Authentication & Authorization
+- Use strong, unique credentials
+- Implement role-based access control
+- Enable multi-factor authentication where possible
+- Regularly review and rotate credentials
+
+## Data Protection
+- Encrypt data at rest and in transit
+- Implement proper backup procedures
+- Follow data retention policies
+- Sanitize inputs to prevent injection
+
+## Network Security
+- Use firewalls and network segmentation
+- Monitor for suspicious activity
+- Keep all software patched and updated
+- Disable unnecessary services and ports
+EOF
 }
 
-cmd_add() {
-    echo "$(date +%Y-%m-%d) $*" >> "$DB"; echo "  Added: $*"
-    _log "add" "${1:-}"
+cmd_migration() {
+    cat << 'EOF'
+# Roomba Control — Migration & Upgrade Guide
+
+## Pre-Migration Checklist
+- [ ] Current system fully documented
+- [ ] Complete backup taken and verified
+- [ ] Target environment prepared
+- [ ] Rollback plan documented
+- [ ] Stakeholders notified
+
+## Migration Steps
+1. Prepare target environment
+2. Export data from source
+3. Transform data if needed
+4. Import to target
+5. Verify data integrity
+6. Update configurations
+7. Test all functionality
+8. Switch traffic / go live
+
+## Post-Migration
+- Monitor for errors and performance
+- Verify all integrations working
+- Update documentation
+- Decommission old system after confirmation
+EOF
 }
 
-cmd_remove() {
-    echo "  Removed: $1"
-    _log "remove" "${1:-}"
+cmd_cheatsheet() {
+    cat << 'EOF'
+# Roomba Control — Quick Reference
+
+## Essential Commands
+| Command | Description |
+|---------|-------------|
+| help | Show available commands |
+| version | Display version info |
+| intro | Overview and fundamentals |
+| troubleshooting | Common problems and fixes |
+
+## Common Workflows
+1. **Setup**: install → configure → verify → test
+2. **Daily**: check → monitor → report → review
+3. **Issue**: diagnose → isolate → fix → verify → document
+
+## Key Shortcuts
+- Use tab completion for commands
+- Check logs first when troubleshooting
+- Always backup before making changes
+- Document everything you change
+EOF
 }
 
-cmd_search() {
-    grep -i "$1" "$DB" 2>/dev/null || echo "  Not found: $1"
-    _log "search" "${1:-}"
-}
+CMD="${1:-help}"
+shift 2>/dev/null || true
 
-cmd_export() {
-    [ -f "$DB" ] && cat "$DB" || echo "No data"
-    _log "export" "${1:-}"
-}
-
-cmd_info() {
-    echo "  Version: $VERSION | Data: $DATA_DIR"
-    _log "info" "${1:-}"
-}
-
-case "${1:-help}" in
-    run) shift; cmd_run "$@" ;;
-    config) shift; cmd_config "$@" ;;
-    status) shift; cmd_status "$@" ;;
-    init) shift; cmd_init "$@" ;;
-    list) shift; cmd_list "$@" ;;
-    add) shift; cmd_add "$@" ;;
-    remove) shift; cmd_remove "$@" ;;
-    search) shift; cmd_search "$@" ;;
-    export) shift; cmd_export "$@" ;;
-    info) shift; cmd_info "$@" ;;
-    help|-h) show_help ;;
-    version|-v) echo "roomba-control v$VERSION" ;;
-    *) echo "Unknown: $1"; show_help; exit 1 ;;
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    quickstart) cmd_quickstart "$@" ;;
+    patterns) cmd_patterns "$@" ;;
+    debugging) cmd_debugging "$@" ;;
+    performance) cmd_performance "$@" ;;
+    security) cmd_security "$@" ;;
+    migration) cmd_migration "$@" ;;
+    cheatsheet) cmd_cheatsheet "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "roomba-control v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: roomba-control help"; exit 1 ;;
 esac

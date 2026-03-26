@@ -1,312 +1,255 @@
-#!/bin/bash
-# Mood Ring - Emotional wellbeing tracker
-# Powered by BytesAgain | bytesagain.com
+#!/usr/bin/env bash
+# moodring — Moodring reference tool. Use when working with moodring in devtools contexts.
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+set -euo pipefail
 
-DATA_DIR="$HOME/.moodring"
-DATA_FILE="$DATA_DIR/moods.json"
-JOURNAL_FILE="$DATA_DIR/journal.json"
-mkdir -p "$DATA_DIR"
-[ ! -f "$DATA_FILE" ] && echo "[]" > "$DATA_FILE"
-[ ! -f "$JOURNAL_FILE" ] && echo "[]" > "$JOURNAL_FILE"
+VERSION="2.0.3"
 
-get_today() { date +%Y-%m-%d; }
-get_time() { date +%H:%M; }
-get_weekday() { date +%A; }
+show_help() {
+    cat << 'HELPEOF'
+moodring v$VERSION — Moodring Reference Tool
 
-cmd_log() {
-    local score=$1; shift
-    local note="$*"
-    if ! [[ "$score" =~ ^[1-5]$ ]]; then
-        echo "Error: Mood score must be 1-5 (1=terrible, 5=amazing)"
-        return 1
-    fi
-    local labels=("" "😞 Terrible" "😕 Bad" "😐 Okay" "😊 Good" "🤩 Amazing")
-    python3 << PYEOF
-import json, sys
-entry = {"date": "$(get_today)", "time": "$(get_time)", "weekday": "$(get_weekday)", "score": $score, "note": "$note"}
-try:
-    with open("$DATA_FILE") as f: data = json.load(f)
-except: data = []
-data.append(entry)
-with open("$DATA_FILE", "w") as f: json.dump(data, f, indent=2)
-PYEOF
-    echo "Logged: ${labels[$score]} ($score/5)"
-    [ -n "$note" ] && echo "Note: $note"
+Usage: moodring <command>
+
+Commands:
+  intro           Overview and core concepts
+  quickstart      Getting started guide
+  patterns        Common patterns and best practices
+  debugging       Debugging and troubleshooting
+  performance     Performance optimization tips
+  security        Security considerations
+  migration       Migration and upgrade guide
+  cheatsheet      Quick reference cheat sheet
+  help              Show this help
+  version           Show version
+
+Powered by BytesAgain | bytesagain.com
+HELPEOF
 }
 
-cmd_today() {
-    local today=$(get_today)
-    python3 << PYEOF
-import json
-try:
-    with open("$DATA_FILE") as f: data = json.load(f)
-except: data = []
-todays = [e for e in data if e.get("date") == "$today"]
-if not todays:
-    print("No moods logged today. Use: moodring log <1-5> [note]")
-else:
-    labels = {1:"😞",2:"😕",3:"😐",4:"😊",5:"🤩"}
-    print("Today's moods ({}):\n".format("$today"))
-    for e in todays:
-        icon = labels.get(e["score"],"?")
-        note = " - {}".format(e.get("note","")) if e.get("note") else ""
-        print("  {} {}/5 @ {}{}".format(icon, e["score"], e["time"], note))
-    avg = sum(e["score"] for e in todays) / len(todays)
-    print("\n  Average: {:.1f}/5".format(avg))
-PYEOF
+cmd_intro() {
+    cat << 'EOF'
+# Moodring — Overview
+
+## What is Moodring?
+Moodring (moodring) is a specialized tool/concept in the devtools domain.
+It provides essential capabilities for professionals working with moodring.
+
+## Key Concepts
+- Core moodring principles and fundamentals
+- How moodring fits into the broader devtools ecosystem  
+- Essential terminology every practitioner should know
+
+## Why Moodring Matters
+Understanding moodring is critical for:
+- Improving efficiency in devtools workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic moodring concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
+EOF
 }
 
-cmd_week() {
-    python3 << PYEOF
-import json, datetime
-try:
-    with open("$DATA_FILE") as f: data = json.load(f)
-except: data = []
-today = datetime.date.today()
-week_data = {}
-for i in range(7):
-    d = (today - datetime.timedelta(days=6-i)).strftime("%Y-%m-%d")
-    week_data[d] = []
-for e in data:
-    if e["date"] in week_data:
-        week_data[e["date"]].append(e["score"])
-print("Weekly Mood Chart:")
-print("-" * 40)
-bars = {1:"█",2:"██",3:"███",4:"████",5:"█████"}
-for d in sorted(week_data.keys()):
-    scores = week_data[d]
-    if scores:
-        avg = sum(scores)/len(scores)
-        bar = bars.get(round(avg),"?")
-        print("  {} | {} {:.1f}".format(d[-5:], bar, avg))
-    else:
-        print("  {} | (no data)".format(d[-5:]))
-all_scores = [s for ss in week_data.values() for s in ss]
-if all_scores:
-    print("-" * 40)
-    print("  Weekly avg: {:.1f}/5".format(sum(all_scores)/len(all_scores)))
-PYEOF
-}
+cmd_quickstart() {
+    cat << 'EOF'
+# Moodring — Quick Start Guide
 
-cmd_history() {
-    local days=${1:-14}
-    python3 << PYEOF
-import json, datetime
-try:
-    with open("$DATA_FILE") as f: data = json.load(f)
-except: data = []
-cutoff = (datetime.date.today() - datetime.timedelta(days=$days)).strftime("%Y-%m-%d")
-recent = [e for e in data if e["date"] >= cutoff]
-labels = {1:"😞",2:"😕",3:"😐",4:"😊",5:"🤩"}
-print("Mood History (last $days days):")
-print("-" * 50)
-for e in sorted(recent, key=lambda x: x["date"]+x["time"]):
-    icon = labels.get(e["score"],"?")
-    note = " - {}".format(e.get("note","")) if e.get("note") else ""
-    print("  {} {} {}/5 @ {}{}".format(e["date"], icon, e["score"], e["time"], note))
-print("-" * 50)
-print("Total entries: {}".format(len(recent)))
-PYEOF
-}
+## Prerequisites
+- Basic understanding of devtools concepts
+- Required tools and access credentials
+- System meeting minimum requirements
 
-cmd_stats() {
-    python3 << PYEOF
-import json
-try:
-    with open("$DATA_FILE") as f: data = json.load(f)
-except: data = []
-if not data:
-    print("No mood data yet.")
-else:
-    scores = [e["score"] for e in data]
-    dist = {i: scores.count(i) for i in range(1,6)}
-    labels = {1:"😞 Terrible",2:"😕 Bad",3:"😐 Okay",4:"😊 Good",5:"🤩 Amazing"}
-    print("Mood Statistics:")
-    print("-" * 40)
-    print("  Total entries: {}".format(len(scores)))
-    print("  Average: {:.1f}/5".format(sum(scores)/len(scores)))
-    print("  Best day: {}".format(max(scores)))
-    print("  Worst day: {}".format(min(scores)))
-    print("\n  Distribution:")
-    for i in range(5,0,-1):
-        pct = dist[i]/len(scores)*100
-        bar = "█" * int(pct/5)
-        print("    {} {:2d} ({:4.1f}%) {}".format(labels[i], dist[i], pct, bar))
-PYEOF
+## Installation
+1. Download or clone the moodring package
+2. Install dependencies
+3. Configure initial settings
+4. Verify installation
+
+## First Steps
+1. Run the hello-world example
+2. Review the default configuration
+3. Try a simple real-world task
+4. Explore available commands and options
+
+## Next Steps
+- Read the full documentation
+- Join the community forum
+- Try advanced features
+- Set up automated workflows
+EOF
 }
 
 cmd_patterns() {
-    python3 << PYEOF
-import json
-from collections import defaultdict
-try:
-    with open("$DATA_FILE") as f: data = json.load(f)
-except: data = []
-if len(data) < 3:
-    print("Need at least 3 entries to identify patterns.")
-else:
-    by_day = defaultdict(list)
-    by_hour = defaultdict(list)
-    for e in data:
-        by_day[e.get("weekday","?")].append(e["score"])
-        h = int(e["time"].split(":")[0])
-        period = "Morning" if h < 12 else "Afternoon" if h < 17 else "Evening"
-        by_hour[period].append(e["score"])
-    print("Mood Patterns:")
-    print("-" * 40)
-    print("  By day of week:")
-    for day in ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]:
-        if day in by_day:
-            avg = sum(by_day[day])/len(by_day[day])
-            print("    {}: {:.1f}/5 ({} entries)".format(day[:3], avg, len(by_day[day])))
-    print("\n  By time of day:")
-    for period in ["Morning","Afternoon","Evening"]:
-        if period in by_hour:
-            avg = sum(by_hour[period])/len(by_hour[period])
-            print("    {}: {:.1f}/5 ({} entries)".format(period, avg, len(by_hour[period])))
-PYEOF
+    cat << 'EOF'
+# Moodring — Common Patterns & Best Practices
+
+## Design Patterns
+1. **Standard Pattern**: The most common approach for moodring
+2. **Scalable Pattern**: For high-volume or distributed scenarios
+3. **Resilient Pattern**: For fault-tolerant implementations
+
+## Best Practices
+- Follow the principle of least privilege
+- Use version control for all configurations
+- Implement comprehensive logging
+- Test changes in staging before production
+- Document all custom configurations
+
+## Anti-Patterns to Avoid
+- Hardcoding credentials or configuration
+- Skipping validation and error handling
+- Ignoring monitoring and alerting
+- Making changes without documentation
+- Over-engineering simple solutions
+EOF
 }
 
-cmd_triggers() {
-    local mood_filter=${1:-""}
-    python3 << PYEOF
-import json
-from collections import Counter
-try:
-    with open("$DATA_FILE") as f: data = json.load(f)
-except: data = []
-filtered = [e for e in data if e.get("note")]
-if "$mood_filter":
-    try:
-        mf = int("$mood_filter")
-        filtered = [e for e in filtered if e["score"] == mf]
-    except: pass
-if not filtered:
-    print("No notes found. Log moods with notes: moodring log 4 feeling great after exercise")
-else:
-    words = []
-    for e in filtered:
-        words.extend(e["note"].lower().split())
-    common = Counter(words).most_common(10)
-    print("Common triggers/themes:")
-    for w, c in common:
-        if len(w) > 2:
-            print("  {} ({}x)".format(w, c))
-PYEOF
+cmd_debugging() {
+    cat << 'EOF'
+# Moodring — Debugging Guide
+
+## Common Errors
+1. **Connection refused**: Check service status and network
+2. **Permission denied**: Verify credentials and access rights
+3. **Timeout**: Check network, increase limits, optimize queries
+4. **Invalid input**: Validate data format and encoding
+
+## Debugging Tools
+- Built-in logging and diagnostics
+- Network analysis tools (tcpdump, wireshark)
+- System monitoring (top, htop, iostat)
+- Application-specific debug modes
+
+## Debug Workflow
+1. Reproduce the issue consistently
+2. Check logs for error messages
+3. Isolate the failing component
+4. Test with minimal configuration
+5. Apply fix and verify
+EOF
 }
 
-cmd_streak() {
-    python3 << PYEOF
-import json, datetime
-try:
-    with open("$DATA_FILE") as f: data = json.load(f)
-except: data = []
-by_date = {}
-for e in data:
-    d = e["date"]
-    if d not in by_date or e["score"] > by_date[d]:
-        by_date[d] = e["score"]
-dates = sorted(by_date.keys(), reverse=True)
-streak = 0
-for d in dates:
-    if by_date[d] >= 4:
-        streak += 1
-    else:
-        break
-if streak > 0:
-    print("🔥 Positive streak: {} day(s)!".format(streak))
-else:
-    print("No current positive streak. Log a mood of 4+ to start one!")
-PYEOF
+cmd_performance() {
+    cat << 'EOF'
+# Moodring — Performance Optimization
+
+## Key Metrics
+- Response time / latency
+- Throughput / operations per second
+- Resource utilization (CPU, memory, I/O)
+- Error rate and retry frequency
+
+## Optimization Strategies
+1. **Caching**: Reduce redundant operations
+2. **Batching**: Group small operations
+3. **Indexing**: Speed up data lookups
+4. **Compression**: Reduce data transfer size
+5. **Parallel Processing**: Utilize multiple cores
+
+## Monitoring
+- Set up baseline performance metrics
+- Configure alerts for anomalies
+- Track trends over time
+- Regular capacity planning reviews
+EOF
 }
 
-cmd_journal() {
-    local text="$*"
-    if [ -z "$text" ]; then
-        echo "Usage: moodring journal <your journal entry>"
-        return 1
-    fi
-    python3 << PYEOF
-import json
-entry = {"date": "$(get_today)", "time": "$(get_time)", "text": "$text"}
-try:
-    with open("$JOURNAL_FILE") as f: data = json.load(f)
-except: data = []
-data.append(entry)
-with open("$JOURNAL_FILE", "w") as f: json.dump(data, f, indent=2)
-print("Journal entry saved for $(get_today) $(get_time)")
-PYEOF
+cmd_security() {
+    cat << 'EOF'
+# Moodring — Security Considerations
+
+## Authentication & Authorization
+- Use strong, unique credentials
+- Implement role-based access control
+- Enable multi-factor authentication where possible
+- Regularly review and rotate credentials
+
+## Data Protection
+- Encrypt data at rest and in transit
+- Implement proper backup procedures
+- Follow data retention policies
+- Sanitize inputs to prevent injection
+
+## Network Security
+- Use firewalls and network segmentation
+- Monitor for suspicious activity
+- Keep all software patched and updated
+- Disable unnecessary services and ports
+EOF
 }
 
-cmd_insights() {
-    python3 << PYEOF
-import json, datetime
-try:
-    with open("$DATA_FILE") as f: data = json.load(f)
-except: data = []
-if len(data) < 5:
-    print("Need at least 5 entries for insights. Keep logging!")
-else:
-    scores = [e["score"] for e in data]
-    avg = sum(scores)/len(scores)
-    recent = scores[-7:] if len(scores) >= 7 else scores
-    recent_avg = sum(recent)/len(recent)
-    trend = "improving" if recent_avg > avg else "declining" if recent_avg < avg else "stable"
-    print("Mood Insights:")
-    print("-" * 40)
-    print("  Overall average: {:.1f}/5".format(avg))
-    print("  Recent trend: {} ({:.1f}/5)".format(trend, recent_avg))
-    if trend == "improving":
-        print("  💪 Great progress! Keep doing what works.")
-    elif trend == "declining":
-        print("  💙 Consider what might be affecting you.")
-    else:
-        print("  ✨ Consistent mood. Stability is valuable.")
-    high_days = sum(1 for s in scores if s >= 4)
-    pct = high_days/len(scores)*100
-    print("  Good days (4+): {:.0f}%".format(pct))
-PYEOF
+cmd_migration() {
+    cat << 'EOF'
+# Moodring — Migration & Upgrade Guide
+
+## Pre-Migration Checklist
+- [ ] Current system fully documented
+- [ ] Complete backup taken and verified
+- [ ] Target environment prepared
+- [ ] Rollback plan documented
+- [ ] Stakeholders notified
+
+## Migration Steps
+1. Prepare target environment
+2. Export data from source
+3. Transform data if needed
+4. Import to target
+5. Verify data integrity
+6. Update configurations
+7. Test all functionality
+8. Switch traffic / go live
+
+## Post-Migration
+- Monitor for errors and performance
+- Verify all integrations working
+- Update documentation
+- Decommission old system after confirmation
+EOF
 }
 
-cmd_info() {
-    echo "Mood Ring v1.0.0"
-    echo "Emotional wellbeing tracker"
-    echo "Powered by BytesAgain | bytesagain.com"
+cmd_cheatsheet() {
+    cat << 'EOF'
+# Moodring — Quick Reference
+
+## Essential Commands
+| Command | Description |
+|---------|-------------|
+| help | Show available commands |
+| version | Display version info |
+| intro | Overview and fundamentals |
+| troubleshooting | Common problems and fixes |
+
+## Common Workflows
+1. **Setup**: install → configure → verify → test
+2. **Daily**: check → monitor → report → review
+3. **Issue**: diagnose → isolate → fix → verify → document
+
+## Key Shortcuts
+- Use tab completion for commands
+- Check logs first when troubleshooting
+- Always backup before making changes
+- Document everything you change
+EOF
 }
 
-cmd_help() {
-    echo "Mood Ring - Emotional Wellbeing Tracker"
-    echo "Usage: moodring <command> [arguments]"
-    echo ""
-    echo "Commands:"
-    echo "  log <1-5> [note]  Log mood (1=terrible, 5=amazing)"
-    echo "  today             Today's moods"
-    echo "  week              Weekly mood chart"
-    echo "  history [n]       Mood history (default 14 days)"
-    echo "  stats             Mood statistics"
-    echo "  patterns          Identify mood patterns"
-    echo "  triggers [mood]   Common triggers by mood level"
-    echo "  streak            Positive mood streak"
-    echo "  journal <text>    Write mood journal entry"
-    echo "  insights          AI-style mood insights"
-    echo "  info              Version info"
-    echo "  help              Show this help"
-    echo ""
-    echo "Example: moodring log 4 feeling great after exercise"
-}
+CMD="${1:-help}"
+shift 2>/dev/null || true
 
-case "$1" in
-    log) shift; cmd_log "$@";;
-    today) cmd_today;;
-    week) cmd_week;;
-    history) shift; cmd_history "$@";;
-    stats) cmd_stats;;
-    patterns) cmd_patterns;;
-    triggers) shift; cmd_triggers "$@";;
-    streak) cmd_streak;;
-    journal) shift; cmd_journal "$@";;
-    insights) cmd_insights;;
-    info) cmd_info;;
-    help|"") cmd_help;;
-    *) echo "Unknown command: $1"; cmd_help; exit 1;;
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    quickstart) cmd_quickstart "$@" ;;
+    patterns) cmd_patterns "$@" ;;
+    debugging) cmd_debugging "$@" ;;
+    performance) cmd_performance "$@" ;;
+    security) cmd_security "$@" ;;
+    migration) cmd_migration "$@" ;;
+    cheatsheet) cmd_cheatsheet "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "moodring v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: moodring help"; exit 1 ;;
 esac

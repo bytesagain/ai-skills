@@ -1,155 +1,255 @@
 #!/usr/bin/env bash
+# acmesh — Acmesh reference tool. Use when working with acmesh in security contexts.
+# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-VERSION="3.0.0"
-SCRIPT_NAME="acmesh"
-DATA_DIR="$HOME/.local/share/acmesh"
-mkdir -p "$DATA_DIR"
+VERSION="4.0.0"
 
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+show_help() {
+    cat << 'HELPEOF'
+acmesh v$VERSION — Acmesh Reference Tool
 
-_info()  { echo "[INFO]  $*"; }
-_error() { echo "[ERROR] $*" >&2; }
-die()    { _error "$@"; exit 1; }
+Usage: acmesh <command>
 
-cmd_issue() {
-    local domain="${2:-}"
-    [ -z "$domain" ] && die "Usage: $SCRIPT_NAME issue <domain>"
-    openssl req -x509 -newkey rsa:2048 -keyout $DATA_DIR/$2.key -out $DATA_DIR/$2.crt -days 365 -nodes -subj "/CN=$2" 2>/dev/null && echo "Issued self-signed cert for $2"
+Commands:
+  intro           Overview and core concepts
+  quickstart      Getting started guide
+  patterns        Common patterns and best practices
+  debugging       Debugging and troubleshooting
+  performance     Performance optimization tips
+  security        Security considerations
+  migration       Migration and upgrade guide
+  cheatsheet      Quick reference cheat sheet
+  help              Show this help
+  version           Show version
+
+Powered by BytesAgain | bytesagain.com
+HELPEOF
 }
 
-cmd_list() {
-    ls $DATA_DIR/*.crt 2>/dev/null | xargs -I{} basename {} .crt || echo 'No certs'
+cmd_intro() {
+    cat << 'EOF'
+# Acmesh — Overview
+
+## What is Acmesh?
+Acmesh (acmesh) is a specialized tool/concept in the security domain.
+It provides essential capabilities for professionals working with acmesh.
+
+## Key Concepts
+- Core acmesh principles and fundamentals
+- How acmesh fits into the broader security ecosystem  
+- Essential terminology every practitioner should know
+
+## Why Acmesh Matters
+Understanding acmesh is critical for:
+- Improving efficiency in security workflows
+- Reducing errors and downtime
+- Meeting industry standards and compliance requirements
+- Enabling better decision-making with accurate data
+
+## Getting Started
+1. Understand the basic acmesh concepts
+2. Learn the standard tools and interfaces
+3. Practice with common scenarios
+4. Review safety and compliance requirements
+EOF
 }
 
-cmd_info() {
-    local domain="${2:-}"
-    [ -z "$domain" ] && die "Usage: $SCRIPT_NAME info <domain>"
-    openssl x509 -in $DATA_DIR/$2.crt -noout -subject -dates 2>/dev/null || echo 'Cert not found'
+cmd_quickstart() {
+    cat << 'EOF'
+# Acmesh — Quick Start Guide
+
+## Prerequisites
+- Basic understanding of security concepts
+- Required tools and access credentials
+- System meeting minimum requirements
+
+## Installation
+1. Download or clone the acmesh package
+2. Install dependencies
+3. Configure initial settings
+4. Verify installation
+
+## First Steps
+1. Run the hello-world example
+2. Review the default configuration
+3. Try a simple real-world task
+4. Explore available commands and options
+
+## Next Steps
+- Read the full documentation
+- Join the community forum
+- Try advanced features
+- Set up automated workflows
+EOF
 }
 
-cmd_renew() {
-    local domain="${2:-}"
-    [ -z "$domain" ] && die "Usage: $SCRIPT_NAME renew <domain>"
-    cmd_issue "$2" && echo 'Renewed'
+cmd_patterns() {
+    cat << 'EOF'
+# Acmesh — Common Patterns & Best Practices
+
+## Design Patterns
+1. **Standard Pattern**: The most common approach for acmesh
+2. **Scalable Pattern**: For high-volume or distributed scenarios
+3. **Resilient Pattern**: For fault-tolerant implementations
+
+## Best Practices
+- Follow the principle of least privilege
+- Use version control for all configurations
+- Implement comprehensive logging
+- Test changes in staging before production
+- Document all custom configurations
+
+## Anti-Patterns to Avoid
+- Hardcoding credentials or configuration
+- Skipping validation and error handling
+- Ignoring monitoring and alerting
+- Making changes without documentation
+- Over-engineering simple solutions
+EOF
 }
 
-cmd_revoke() {
-    local domain="${2:-}"
-    [ -z "$domain" ] && die "Usage: $SCRIPT_NAME revoke <domain>"
-    rm -f $DATA_DIR/$2.crt $DATA_DIR/$2.key && echo 'Revoked $2'
+cmd_debugging() {
+    cat << 'EOF'
+# Acmesh — Debugging Guide
+
+## Common Errors
+1. **Connection refused**: Check service status and network
+2. **Permission denied**: Verify credentials and access rights
+3. **Timeout**: Check network, increase limits, optimize queries
+4. **Invalid input**: Validate data format and encoding
+
+## Debugging Tools
+- Built-in logging and diagnostics
+- Network analysis tools (tcpdump, wireshark)
+- System monitoring (top, htop, iostat)
+- Application-specific debug modes
+
+## Debug Workflow
+1. Reproduce the issue consistently
+2. Check logs for error messages
+3. Isolate the failing component
+4. Test with minimal configuration
+5. Apply fix and verify
+EOF
 }
 
-cmd_check() {
-    local domain="${2:-}"
-    [ -z "$domain" ] && die "Usage: $SCRIPT_NAME check <domain>"
-    echo | openssl s_client -connect $2:443 2>/dev/null | openssl x509 -noout -dates 2>/dev/null || echo 'Cannot connect'
+cmd_performance() {
+    cat << 'EOF'
+# Acmesh — Performance Optimization
+
+## Key Metrics
+- Response time / latency
+- Throughput / operations per second
+- Resource utilization (CPU, memory, I/O)
+- Error rate and retry frequency
+
+## Optimization Strategies
+1. **Caching**: Reduce redundant operations
+2. **Batching**: Group small operations
+3. **Indexing**: Speed up data lookups
+4. **Compression**: Reduce data transfer size
+5. **Parallel Processing**: Utilize multiple cores
+
+## Monitoring
+- Set up baseline performance metrics
+- Configure alerts for anomalies
+- Track trends over time
+- Regular capacity planning reviews
+EOF
 }
 
-cmd_help() {
-    echo "$SCRIPT_NAME v$VERSION"
-    echo ""
-    echo "Commands:"
-    printf "  %-25s\n" "issue <domain>"
-    printf "  %-25s\n" "list"
-    printf "  %-25s\n" "info <domain>"
-    printf "  %-25s\n" "renew <domain>"
-    printf "  %-25s\n" "revoke <domain>"
-    printf "  %-25s\n" "check <domain>"
-    printf "  %%-25s\n" "help"
-    echo ""
-    echo "Powered by BytesAgain | bytesagain.com | hello@bytesagain.com"
+cmd_security() {
+    cat << 'EOF'
+# Acmesh — Security Considerations
+
+## Authentication & Authorization
+- Use strong, unique credentials
+- Implement role-based access control
+- Enable multi-factor authentication where possible
+- Regularly review and rotate credentials
+
+## Data Protection
+- Encrypt data at rest and in transit
+- Implement proper backup procedures
+- Follow data retention policies
+- Sanitize inputs to prevent injection
+
+## Network Security
+- Use firewalls and network segmentation
+- Monitor for suspicious activity
+- Keep all software patched and updated
+- Disable unnecessary services and ports
+EOF
 }
 
-cmd_version() { echo "$SCRIPT_NAME v$VERSION"; }
+cmd_migration() {
+    cat << 'EOF'
+# Acmesh — Migration & Upgrade Guide
 
-main() {
-    local cmd="${1:-help}"
-    case "$cmd" in
-        issue) shift; cmd_issue "$@" ;;
-        list) shift; cmd_list "$@" ;;
-        info) shift; cmd_info "$@" ;;
-        renew) shift; cmd_renew "$@" ;;
-        revoke) shift; cmd_revoke "$@" ;;
-        check) shift; cmd_check "$@" ;;
-        help) cmd_help ;;
-        version) cmd_version ;;
-        *) die "Unknown: $cmd" ;;
-    esac
+## Pre-Migration Checklist
+- [ ] Current system fully documented
+- [ ] Complete backup taken and verified
+- [ ] Target environment prepared
+- [ ] Rollback plan documented
+- [ ] Stakeholders notified
+
+## Migration Steps
+1. Prepare target environment
+2. Export data from source
+3. Transform data if needed
+4. Import to target
+5. Verify data integrity
+6. Update configurations
+7. Test all functionality
+8. Switch traffic / go live
+
+## Post-Migration
+- Monitor for errors and performance
+- Verify all integrations working
+- Update documentation
+- Decommission old system after confirmation
+EOF
 }
 
-main "$@"
+cmd_cheatsheet() {
+    cat << 'EOF'
+# Acmesh — Quick Reference
+
+## Essential Commands
+| Command | Description |
+|---------|-------------|
+| help | Show available commands |
+| version | Display version info |
+| intro | Overview and fundamentals |
+| troubleshooting | Common problems and fixes |
+
+## Common Workflows
+1. **Setup**: install → configure → verify → test
+2. **Daily**: check → monitor → report → review
+3. **Issue**: diagnose → isolate → fix → verify → document
+
+## Key Shortcuts
+- Use tab completion for commands
+- Check logs first when troubleshooting
+- Always backup before making changes
+- Document everything you change
+EOF
+}
+
+CMD="${1:-help}"
+shift 2>/dev/null || true
+
+case "$CMD" in
+    intro) cmd_intro "$@" ;;
+    quickstart) cmd_quickstart "$@" ;;
+    patterns) cmd_patterns "$@" ;;
+    debugging) cmd_debugging "$@" ;;
+    performance) cmd_performance "$@" ;;
+    security) cmd_security "$@" ;;
+    migration) cmd_migration "$@" ;;
+    cheatsheet) cmd_cheatsheet "$@" ;;
+    help|--help|-h) show_help ;;
+    version|--version|-v) echo "acmesh v$VERSION — Powered by BytesAgain" ;;
+    *) echo "Unknown: $CMD"; echo "Run: acmesh help"; exit 1 ;;
+esac

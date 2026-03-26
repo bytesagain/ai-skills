@@ -1,9 +1,0 @@
-{
-  "name": "zsh-themes",
-  "description": "\ud83d\ude43 A delightful community-driven (with 2,400+ contributors) framework for managing your zsh configu zsh-themes, shell, cli, cli-app, oh-my-zsh.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

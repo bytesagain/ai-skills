@@ -1,9 +1,0 @@
-{
-  "name": "linkbox",
-  "description": "Save, organize, and check bookmarks with tagging and link validation. Use when managing bookmarks. Requires curl for checking.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

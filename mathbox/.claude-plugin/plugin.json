@@ -1,9 +1,0 @@
-{
-  "name": "mathbox",
-  "description": "Solve math \u2014 statistics, primes, sequences, formulas \u2014 in the terminal. Use when computing stats, checking primes, evaluating formulas, exploring sequences.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

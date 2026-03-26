@@ -1,9 +1,0 @@
-{
-  "name": "secret-sealer",
-  "description": "A Kubernetes controller and tool for one-way encrypted Secrets sealed secrets, go, devops-workflow, encrypt-secrets, gitops, kubernetes.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

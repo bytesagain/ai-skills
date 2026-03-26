@@ -1,9 +1,0 @@
-{
-  "name": "onchain-analyzer",
-  "description": "Analyze blockchain data with address lookups and transaction inspection. Use when investigating on-chain activity. Requires curl.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

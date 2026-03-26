@@ -1,9 +1,0 @@
-{
-  "name": "convert",
-  "description": "Convert between file formats, units, currencies, encodings, and color codes using Python. Use when you need universal data transformation.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

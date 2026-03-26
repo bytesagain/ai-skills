@@ -1,56 +1,34 @@
 ---
 name: "crypto-whale-tracker"
-version: "3.0.0"
-description: "Track large crypto transactions and whale movements using CoinGecko API. Use when monitoring whale activity. Requires curl."
+version: "4.0.2"
+description: "Reference tool for blockchain and crypto — covers intro, quickstart, patterns and more. Quick lookup for Crypto Whale Tracker concepts, best practices, and i..."
 author: "BytesAgain"
 homepage: "https://bytesagain.com"
+source: "https://github.com/bytesagain/ai-skills"
+tags: [crypto,whale,tracker, reference]
+category: "blockchain"
 ---
 
-# crypto-whale-tracker
+# Crypto Whale Tracker
 
-Track large crypto transactions and whale movements using CoinGecko API. Use when monitoring whale activity. Requires curl.
+Reference tool for blockchain and crypto — covers intro, quickstart, patterns and more. Quick lookup for Crypto Whale Tracker concepts, best practices, and i... No API keys or credentials required.
 
 ## Commands
 
-### `price`
+| Command | Description |
+|---------|-------------|
+| `intro` | intro reference |
+| `quickstart` | quickstart reference |
+| `patterns` | patterns reference |
+| `debugging` | debugging reference |
+| `performance` | performance reference |
+| `security` | security reference |
+| `migration` | migration reference |
+| `cheatsheet` | cheatsheet reference |
 
-```bash
-scripts/script.sh price <coin>
-```
+## Output Format
 
-### `top`
-
-```bash
-scripts/script.sh top <coin count>
-```
-
-### `volume`
-
-```bash
-scripts/script.sh volume <coin>
-```
-
-### `watch`
-
-```bash
-scripts/script.sh watch <coin>
-```
-
-### `watchlist`
-
-```bash
-scripts/script.sh watchlist
-```
-
-### `alerts`
-
-```bash
-scripts/script.sh alerts
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/crypto-whale-tracker/`.
+All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
 
 ---
 

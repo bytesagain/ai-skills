@@ -1,9 +1,0 @@
-{
-  "name": "sql-scanner",
-  "description": "Detect SQL injection vulnerabilities and assess DB security. Use when checking queries, validating sanitization, generating tests, formatting reports.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

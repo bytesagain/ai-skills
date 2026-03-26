@@ -1,9 +1,0 @@
-{
-  "name": "image-processor",
-  "description": "ImageMagick is a free, open-source software suite for creating, editing, converting, and displaying image-processor, c, command-line-image-tool.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

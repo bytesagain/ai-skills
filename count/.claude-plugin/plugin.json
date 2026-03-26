@@ -1,9 +1,0 @@
-{
-  "name": "count",
-  "description": "Count words, lines, and characters with frequency analysis tools. Use when counting frequencies, analyzing text length, aggregating file stats.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

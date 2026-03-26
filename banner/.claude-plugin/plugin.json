@@ -1,9 +1,0 @@
-{
-  "name": "banner",
-  "description": "Create ASCII art banners and styled text for terminal displays. Use when decorating CLI output, generating headers, or adding flair to scripts.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

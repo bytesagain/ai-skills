@@ -1,9 +1,0 @@
-{
-  "name": "diffview",
-  "description": "Visualize file diffs side-by-side with syntax-highlighted change views. Use when reviewing changes, comparing versions, inspecting merge results.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

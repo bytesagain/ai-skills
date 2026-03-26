@@ -1,9 +1,0 @@
-{
-  "name": "windows-setup",
-  "description": "PowerShell script for automation of routine tasks done after fresh installations of Windows 10 / Ser win10 initial setup script, powershell, powershell.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

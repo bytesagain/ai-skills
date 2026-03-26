@@ -1,9 +1,0 @@
-{
-  "name": "stripe-manager",
-  "description": "Manage Stripe payments, customers, and subscriptions from terminal. Use when tracking payments, checking balances, summarizing revenue, exporting data.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}
