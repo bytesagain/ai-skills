@@ -1,115 +1,63 @@
 ---
-name: "slot"
-version: "1.0.0"
-description: "Analyze slot operations. Use when you need to understand slot mechanisms, evaluate protocol security, or reference on-chain concepts."
+name: "Slot — Time Slot & Schedule Block Manager"
+description: "Use when managing time slots, creating schedule blocks, detecting booking conflicts, exporting calendars, or applying scheduling templates for appointments."
+version: "2.0.1"
 author: "BytesAgain"
-homepage: "https://bytesagain.com"
-source: "https://github.com/bytesagain/ai-skills"
-tags: [slot, blockchain, cli, tool]
-category: "blockchain"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
+tags: ["slot", "schedule", "calendar", "time-management", "booking", "planner"]
 ---
 
-# Slot
+# Slot — Time Slot & Schedule Block Manager
 
-Analyze slot operations. Use when you need to understand slot mechanisms, evaluate protocol security, or reference on-chain concepts.
-
-## When to Use
-
-- **status**: Show current status
-- **add**: Add new entry
-- **list**: List all entries
-- **search**: Search entries
-- **remove**: Remove entry by number
-- **export**: Export data to file
-- **stats**: Show statistics
-- **config**: View or set config
+Create, query, and manage time slots and schedule blocks. Detect conflicts, export to standard calendar formats, and apply reusable templates.
 
 ## Commands
 
-### `status`
-
+### create
+Create a new time slot with date, start/end time, and label.
 ```bash
-scripts/script.sh status
+bash scripts/script.sh create "2024-03-15" "09:00" "10:30" "Team Standup"
 ```
 
-Show current status
-
-### `add`
-
+### list
+List all scheduled slots, optionally filtered by date range.
 ```bash
-scripts/script.sh add
+bash scripts/script.sh list
+bash scripts/script.sh list "2024-03-15" "2024-03-22"
 ```
 
-Add new entry
-
-### `list`
-
+### check-conflict
+Check if a proposed time slot conflicts with existing bookings.
 ```bash
-scripts/script.sh list
+bash scripts/script.sh check-conflict "2024-03-15" "09:30" "10:00"
 ```
 
-List all entries
-
-### `search`
-
+### export
+Export slots to iCal (.ics) or CSV format.
 ```bash
-scripts/script.sh search
+bash scripts/script.sh export ics
+bash scripts/script.sh export csv
 ```
 
-Search entries
-
-### `remove`
-
+### templates
+Show or apply common scheduling templates (work day, pomodoro, etc.).
 ```bash
-scripts/script.sh remove
+bash scripts/script.sh templates
+bash scripts/script.sh templates pomodoro
 ```
 
-Remove entry by number
-
-### `export`
-
+### help
+Show all commands.
 ```bash
-scripts/script.sh export
+bash scripts/script.sh help
 ```
 
-Export data to file
+## Output
+- Slot listings with conflict indicators
+- iCal and CSV exports
+- Template-based batch slot creation
 
-### `stats`
-
-```bash
-scripts/script.sh stats
-```
-
-Show statistics
-
-### `config`
-
-```bash
-scripts/script.sh config
-```
-
-View or set config
-
-### `help`
-
-```bash
-scripts/script.sh help
-```
-
-### `version`
-
-```bash
-scripts/script.sh version
-```
-
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to customize behavior.
-
-| Variable | Description |
-|----------|-------------|
-| `SLOT_DIR` | Data directory (default: ~/.slot/) |
-
----
-
-*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*
+## Feedback
+https://bytesagain.com/feedback/
+Powered by BytesAgain | bytesagain.com

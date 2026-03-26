@@ -1,112 +1,64 @@
 ---
-name: "cam"
-version: "1.0.0"
-description: "Computer-aided manufacturing tool"
+name: "CAM — Computer-Aided Manufacturing Toolpath Reference"
+description: "Use when calculating CNC speeds and feeds, selecting cutting tools, referencing G-code commands, looking up material cutting data, or computing machining parameters."
+version: "2.0.1"
 author: "BytesAgain"
-homepage: "https://bytesagain.com"
-source: "https://github.com/bytesagain/ai-skills"
-tags: [cam, industrial, cli, tool]
-category: "industrial"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
+tags: ["cam", "cnc", "machining", "gcode", "manufacturing", "toolpath", "engineering"]
 ---
 
-# cam
+# CAM — Computer-Aided Manufacturing Toolpath Reference
 
-Computer-aided manufacturing tool
+CNC machining reference — speeds & feeds calculator, toolpath strategies, G-code command reference, material cutting data, and machining parameter computation.
 
 ## Commands
 
-### `status`
-
+### speeds-feeds
+Calculate spindle speed (RPM) and feed rate.
 ```bash
-scripts/script.sh status
+bash scripts/script.sh speeds-feeds 10 80 0.05 3
 ```
 
-Show current status
-
-### `add`
-
+### toolpath
+Toolpath strategy reference (adaptive, pocket, contour, etc.).
 ```bash
-scripts/script.sh add
+bash scripts/script.sh toolpath
+bash scripts/script.sh toolpath adaptive
 ```
 
-Add new entry
-
-### `list`
-
+### gcode
+G-code and M-code command reference.
 ```bash
-scripts/script.sh list
+bash scripts/script.sh gcode
+bash scripts/script.sh gcode G02
 ```
 
-List all entries
-
-### `search`
-
+### materials
+Material cutting data — recommended SFM, chipload, depth of cut.
 ```bash
-scripts/script.sh search
+bash scripts/script.sh materials
+bash scripts/script.sh materials aluminum
 ```
 
-Search entries
-
-### `remove`
-
+### calculate
+General machining calculations (MRR, power, time).
 ```bash
-scripts/script.sh remove
+bash scripts/script.sh calculate mrr 10 2 0.5 800
+bash scripts/script.sh calculate power 50 1500
 ```
 
-Remove entry by number
-
-### `export`
-
+### help
+Show all commands.
 ```bash
-scripts/script.sh export
+bash scripts/script.sh help
 ```
-
-Export data to file
-
-### `stats`
-
-```bash
-scripts/script.sh stats
-```
-
-Show statistics
-
-### `config`
-
-```bash
-scripts/script.sh config
-```
-
-View or set config
-
-### `help`
-
-```bash
-scripts/script.sh help
-```
-
-### `version`
-
-```bash
-scripts/script.sh version
-```
-
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `CAM_DIR` | No | Data directory (default: ~/.cam/) |
-
-## Data Storage
-
-All data stored in `~/.cam/` using JSONL format (one JSON object per line).
 
 ## Output
+- Calculated RPM, feed rates, and machining parameters
+- G-code reference with syntax and examples
+- Material-specific cutting recommendations
 
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
----
-
-*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*
+## Feedback
+https://bytesagain.com/feedback/
+Powered by BytesAgain | bytesagain.com

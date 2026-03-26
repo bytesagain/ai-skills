@@ -1,112 +1,60 @@
 ---
-name: "gear"
-version: "1.0.0"
-description: "Gear ratio and transmission calculator"
+name: "Gear Ratio & Mechanical Drive Calculator"
+description: "Use when calculating gear ratios, converting RPM between shafts, computing torque output, analyzing drivetrain configurations, or selecting motors for mechanical systems."
+version: "2.0.1"
 author: "BytesAgain"
-homepage: "https://bytesagain.com"
-source: "https://github.com/bytesagain/ai-skills"
-tags: [gear, industrial, cli, tool]
-category: "industrial"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
+tags: ["gear", "mechanical", "engineering", "torque", "drivetrain", "motor", "calculator"]
 ---
 
-# gear
+# Gear Ratio & Mechanical Drive Calculator
 
-Gear ratio and transmission calculator
+Calculate gear ratios, convert RPM, compute torque, analyze multi-stage drivetrains, and get motor selection guidance for mechanical systems.
 
 ## Commands
 
-### `status`
-
+### ratio
+Calculate gear ratio from tooth counts or diameters.
 ```bash
-scripts/script.sh status
+bash scripts/script.sh ratio 20 60
 ```
 
-Show current status
-
-### `add`
-
+### speed
+Convert RPM through a gear ratio.
 ```bash
-scripts/script.sh add
+bash scripts/script.sh speed 1800 3.5
 ```
 
-Add new entry
-
-### `list`
-
+### torque
+Compute output torque given input torque and gear ratio.
 ```bash
-scripts/script.sh list
+bash scripts/script.sh torque 10 3.5 0.95
 ```
 
-List all entries
-
-### `search`
-
+### drivetrain
+Analyze a multi-stage gear train.
 ```bash
-scripts/script.sh search
+bash scripts/script.sh drivetrain "20:60,15:45,18:72"
 ```
 
-Search entries
-
-### `remove`
-
+### motor-select
+Motor selection helper based on load requirements.
 ```bash
-scripts/script.sh remove
+bash scripts/script.sh motor-select 50 300
 ```
 
-Remove entry by number
-
-### `export`
-
+### help
+Show all commands.
 ```bash
-scripts/script.sh export
+bash scripts/script.sh help
 ```
-
-Export data to file
-
-### `stats`
-
-```bash
-scripts/script.sh stats
-```
-
-Show statistics
-
-### `config`
-
-```bash
-scripts/script.sh config
-```
-
-View or set config
-
-### `help`
-
-```bash
-scripts/script.sh help
-```
-
-### `version`
-
-```bash
-scripts/script.sh version
-```
-
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `GEAR_DIR` | No | Data directory (default: ~/.gear/) |
-
-## Data Storage
-
-All data stored in `~/.gear/` using JSONL format (one JSON object per line).
 
 ## Output
+- Gear ratios with speed/torque multipliers
+- Multi-stage drivetrain analysis
+- Motor specification recommendations
 
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
----
-
-*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*
+## Feedback
+https://bytesagain.com/feedback/
+Powered by BytesAgain | bytesagain.com

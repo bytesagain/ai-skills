@@ -1,103 +1,61 @@
 ---
-name: "halving"
-version: "1.0.0"
-description: "Halving reference tool. Use when working with halving in blockchain contexts."
+name: "Bitcoin Halving Countdown & Impact Analyzer"
+description: "Use when checking next Bitcoin halving countdown, reviewing historical halving price impacts, analyzing mining economics, or studying BTC 4-year market cycles."
+version: "2.0.1"
 author: "BytesAgain"
-homepage: "https://bytesagain.com"
-source: "https://github.com/bytesagain/ai-skills"
-tags: [halving, blockchain, finance, reference, cli]
-category: "blockchain"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
+tags: ["bitcoin", "halving", "crypto", "mining", "blockchain", "market-cycles", "btc"]
 ---
 
-# Halving
+# Bitcoin Halving Countdown & Impact Analyzer
 
-Halving reference tool. Use when working with halving in blockchain contexts.
-
-## When to Use
-
-- Working with halving and need quick reference
-- Looking up blockchain standards or best practices for halving
-- Troubleshooting halving issues
-- Need a checklist or guide for halving tasks
+Track the next Bitcoin halving countdown, review historical price impacts, analyze mining economics shifts, and understand BTC's 4-year market cycle patterns.
 
 ## Commands
 
-### `intro`
-
+### countdown
+Estimate time remaining until the next Bitcoin halving.
 ```bash
-scripts/script.sh intro
+bash scripts/script.sh countdown
 ```
 
-Overview and fundamentals
-
-### `formulas`
-
+### history
+Complete history of all Bitcoin halvings with dates, blocks, and prices.
 ```bash
-scripts/script.sh formulas
+bash scripts/script.sh history
 ```
 
-Key formulas and calculations
-
-### `regulations`
-
+### impact
+Analyze price impact before and after each halving event.
 ```bash
-scripts/script.sh regulations
+bash scripts/script.sh impact
 ```
 
-Regulatory framework and compliance
-
-### `risks`
-
+### mining
+Mining reward economics and miner profitability after halvings.
 ```bash
-scripts/script.sh risks
+bash scripts/script.sh mining
 ```
 
-Risk factors and mitigation
-
-### `instruments`
-
+### cycles
+Bitcoin's 4-year market cycle theory and phase analysis.
 ```bash
-scripts/script.sh instruments
+bash scripts/script.sh cycles
 ```
 
-Instruments and tools overview
-
-### `strategies`
-
+### help
+Show all commands.
 ```bash
-scripts/script.sh strategies
+bash scripts/script.sh help
 ```
 
-Common strategies and approaches
+## Output
+- Estimated halving date and block countdown
+- Historical halving data with price performance
+- Mining reward and hash rate analysis
+- Cycle phase identification
 
-### `glossary`
-
-```bash
-scripts/script.sh glossary
-```
-
-Key terms and definitions
-
-### `checklist`
-
-```bash
-scripts/script.sh checklist
-```
-
-Due diligence checklist
-
-### `help`
-
-```bash
-scripts/script.sh help
-```
-
-### `version`
-
-```bash
-scripts/script.sh version
-```
-
----
-
-*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*
+## Feedback
+https://bytesagain.com/feedback/
+Powered by BytesAgain | bytesagain.com
