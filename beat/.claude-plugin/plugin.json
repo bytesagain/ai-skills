@@ -1,9 +1,0 @@
-{
-  "name": "beat",
-  "description": "Track, analyze, and manage music and audio files from the command line. Use when organizing playlists, converting formats, or analyzing metadata.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

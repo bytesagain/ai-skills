@@ -1,9 +1,0 @@
-{
-  "name": "shell-script",
-  "description": "Generate, explain, and debug shell scripts with ready-made templates. Use when writing Bash, debugging errors, creating cron jobs, checking syntax.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

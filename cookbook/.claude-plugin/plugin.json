@@ -1,9 +1,0 @@
-{
-  "name": "cookbook",
-  "description": "Track cookbook personal activities and daily routines. Use when managing health goals, organizing tasks, or building productive habits.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

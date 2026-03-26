@@ -1,9 +1,0 @@
-{
-  "name": "poem-generator",
-  "description": "Generate poems as haiku, couplets, acrostic, or free verse. Use when drafting poetry, composing haiku, writing couplets, translating classical verse.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

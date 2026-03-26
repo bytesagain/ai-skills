@@ -1,9 +1,0 @@
-{
-  "name": "spec-workflow-mcp",
-  "description": "Serve spec-driven dev tools via MCP for AI-assisted workflows. Use when adding tasks, planning iterations, tracking completion, reviewing quality.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

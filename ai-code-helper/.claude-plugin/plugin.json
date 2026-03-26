@@ -1,9 +1,0 @@
-{
-  "name": "ai-code-helper",
-  "description": "Review, validate, and generate code with AI-powered linting. Use when fixing bugs, generating boilerplate, formatting, or running analysis.",
-  "version": "2.0.1",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

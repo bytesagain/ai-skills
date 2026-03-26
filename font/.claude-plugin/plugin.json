@@ -1,9 +1,0 @@
-{
-  "name": "font",
-  "description": "Work with system fonts. Use when listing, searching, previewing, getting metadata, finding pairings, or installing font files.",
-  "version": "3.4.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

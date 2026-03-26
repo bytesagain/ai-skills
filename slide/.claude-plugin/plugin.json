@@ -1,9 +1,0 @@
-{
-  "name": "slide",
-  "description": "Create and manage presentation slides using JSONL storage. Use when building slide decks, applying themes, or exporting to HTML presentations.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "persona-forge",
-  "description": "\u89d2\u8272\u8bbe\u8ba1\u5de5\u5177\u3002\u521b\u5efa\u89d2\u8272\u6863\u6848\u3001\u80cc\u666f\u6545\u4e8b\u3001\u6027\u683c\u7279\u5f81\u3001\u4eba\u7269\u5173\u7cfb\u3001\u89d2\u8272\u5f27\u5149\u3001\u89d2\u8272\u5361\u3002Character creator with profiles, backstories, personality traits, relationships, character arcs.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

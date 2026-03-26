@@ -1,9 +1,0 @@
-{
-  "name": "code-templates",
-  "description": "Configure and manage Claude Code templates, presets, and monitoring. Use when standardizing project setups, sharing configs, or initializing repos.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

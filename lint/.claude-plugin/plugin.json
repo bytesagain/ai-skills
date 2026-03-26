@@ -1,9 +1,0 @@
-{
-  "name": "lint",
-  "description": "Check code syntax, enforce style, and suggest auto-fixes with CI integration. Use when linting PRs, enforcing code style, detecting errors before merge.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

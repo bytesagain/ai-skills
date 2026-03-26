@@ -1,9 +1,0 @@
-{
-  "name": "time-tracker",
-  "description": "Track work time with categories, reports, and Pomodoro. Use when adding entries, listing logs, tracking projects, reviewing weekly stats.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

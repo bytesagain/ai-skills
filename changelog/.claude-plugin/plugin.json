@@ -1,9 +1,0 @@
-{
-  "name": "changelog",
-  "description": "Parse commits and generate versioned changelogs in Markdown format. Use when preparing releases, formatting commit history, or detecting breaking changes.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

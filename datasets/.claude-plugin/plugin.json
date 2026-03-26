@@ -1,9 +1,0 @@
-{
-  "name": "datasets",
-  "description": "Browse and load ready-to-use AI/ML datasets with fast manipulation. Use when searching datasets, loading training data, transforming formats.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

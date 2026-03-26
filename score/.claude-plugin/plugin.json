@@ -1,9 +1,0 @@
-{
-  "name": "score",
-  "description": "Track game scores, brackets, and player statistics. Use when recording results, scoring rounds, ranking leaderboards, reviewing game history, computing stats.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

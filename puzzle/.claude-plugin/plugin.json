@@ -1,9 +1,0 @@
-{
-  "name": "puzzle",
-  "description": "Brain teasers, riddles, and logic puzzles with streak tracking. Use when exercising your brain.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

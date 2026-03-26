@@ -1,9 +1,0 @@
-{
-  "name": "note-taker",
-  "description": "\u7b14\u8bb0\u6574\u7406\u52a9\u624b\u3002\u5eb7\u5948\u5c14\u7b14\u8bb0\u6cd5\u3001\u5361\u7247\u76d2\u7b14\u8bb0(Zettelkasten)\u3001\u601d\u7ef4\u5bfc\u56fe\u7b14\u8bb0\u3001\u4f1a\u8bae\u7b14\u8bb0\u3001\u8bfe\u5802\u7b14\u8bb0\u3001\u7b14\u8bb0\u6574\u7406\u3002Note-taking with Cornell method, Zettelkasten, mind maps, meeting notes, lecture notes.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "excuse-generator",
-  "description": "Generate polite excuses for work, school, or social situations on demand. Use when drafting leave notes, declining invitations, or composing refusals.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

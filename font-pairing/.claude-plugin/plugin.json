@@ -1,9 +1,0 @@
-{
-  "name": "font-pairing",
-  "description": "\u5b57\u4f53\u642d\u914d\u63a8\u8350\u3001\u4e2d\u6587\u5b57\u4f53\u6307\u5357\u3001Web\u5b57\u4f53\u52a0\u8f7d\u3001\u6807\u9898\u5b57\u4f53\u3001\u7cfb\u7edf\u5b57\u4f53\u6808\u3001\u9884\u89c8HTML\u751f\u6210\u3002Font pairing recommendations, Chinese fonts guide, web fonts, heading fonts, system font stacks.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

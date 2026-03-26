@@ -1,9 +1,0 @@
-{
-  "name": "perftest",
-  "description": "Run HTTP performance tests with latency and throughput measurement. Use when benchmarking web services. Requires curl.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

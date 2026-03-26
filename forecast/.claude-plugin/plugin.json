@@ -1,9 +1,0 @@
-{
-  "name": "forecast",
-  "description": "Calculate forecast financial metrics and business data. Use when tracking expenses, analyzing investments, or generating financial reports.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

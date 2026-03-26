@@ -1,9 +1,0 @@
-{
-  "name": "yamlcheck",
-  "description": "Validate YAML syntax using python3, lint configs, and convert YAML to JSON. Use when checking syntax, finding errors, or converting formats.",
-  "version": "3.0.2",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

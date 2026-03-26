@@ -1,9 +1,0 @@
-{
-  "name": "email-template",
-  "description": "\u90ae\u4ef6\u6a21\u677f\u5e93\u3002\u6b22\u8fce\u90ae\u4ef6\u3001Newsletter\u3001\u4e8b\u52a1\u90ae\u4ef6\u3001\u51b7\u542f\u52a8\u90ae\u4ef6\u3001\u8ddf\u8fdb\u90ae\u4ef6\u3001\u50ac\u6b3e\u90ae\u4ef6\u6a21\u677f\u751f\u6210\u3002Email template library with welcome, newsletter, transactional, cold outreach, follow-up.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

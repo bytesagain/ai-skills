@@ -1,9 +1,0 @@
-{
-  "name": "horoscope",
-  "description": "Read daily horoscopes, check zodiac compatibility, and explore sign traits. Use when checking fortunes, matching compatibility, or analyzing sign traits.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

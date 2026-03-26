@@ -1,9 +1,0 @@
-{
-  "name": "sql-generator",
-  "description": "Generate SQL from natural language, explain queries, and optimize perf. Use when querying data, importing schemas, transforming dialects, validating syntax.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

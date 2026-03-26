@@ -1,7 +1,7 @@
 ---
 name: "MACD — Moving Average Convergence Divergence"
 description: "Use when calculating MACD lines, spotting signal crossovers, reading histogram momentum, identifying divergence, or building MACD-based trading strategies."
-version: "2.0.1"
+version: "2.0.3"
 author: "BytesAgain"
 homepage: https://bytesagain.com
 source: https://github.com/bytesagain/ai-skills

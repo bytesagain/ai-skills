@@ -1,9 +1,0 @@
-{
-  "name": "tripwire",
-  "description": "Tripwire host-based IDS reference. Cryptographic key setup, database initialization, integrity checks, policy rules with severity levels, twcfg.txt configuration, and report analysis with twprint.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

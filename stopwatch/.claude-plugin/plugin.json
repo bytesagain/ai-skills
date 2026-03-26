@@ -1,9 +1,0 @@
-{
-  "name": "stopwatch",
-  "description": "Run stopwatch, timer, and lap tracking with precision in terminal. Use when timing tasks, checking durations, running countdowns, analyzing splits.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

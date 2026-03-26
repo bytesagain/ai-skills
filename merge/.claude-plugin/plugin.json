@@ -1,9 +1,0 @@
-{
-  "name": "merge",
-  "description": "Combine files, resolve conflicts, concatenate data, and deduplicate across sources. Use when merging files, resolving conflicts, deduplicating datasets.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

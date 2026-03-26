@@ -1,9 +1,0 @@
-{
-  "name": "bigdata",
-  "description": "Split large files, run parallel processing, and stream batch analysis. Use when sampling datasets, aggregating logs, or transforming bulk data.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

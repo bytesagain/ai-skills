@@ -1,9 +1,0 @@
-{
-  "name": "dockerlabs",
-  "description": "Learn Docker hands-on with tutorials on containers and orchestration. Use when studying Docker, practicing networking, exploring swarm mode.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

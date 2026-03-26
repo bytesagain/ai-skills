@@ -1,9 +1,0 @@
-{
-  "name": "tcpdump",
-  "description": "Tcpdump reference tool. Use when working with tcpdump in devtools contexts.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

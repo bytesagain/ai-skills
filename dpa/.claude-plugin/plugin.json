@@ -1,9 +1,0 @@
-{
-  "name": "dpa",
-  "description": "Data Processing Agreement reference \u2014 GDPR Article 28, processor obligations, sub-processor management, and cross-border transfers. Use when drafting or reviewing DPAs with vendors.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

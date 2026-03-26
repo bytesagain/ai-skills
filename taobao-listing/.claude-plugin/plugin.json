@@ -1,9 +1,0 @@
-{
-  "name": "taobao-listing",
-  "description": "Generate Taobao product titles, detail copy, and keywords. Use when drafting titles, outlining pages, optimizing SEO, scheduling promos.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

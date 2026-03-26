@@ -1,9 +1,0 @@
-{
-  "name": "student",
-  "description": "Help with coursework. Use when taking notes, summarizing readings, formatting citations, outlining essays, or calculating GPA.",
-  "version": "3.4.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

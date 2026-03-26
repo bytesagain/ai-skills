@@ -1,9 +1,0 @@
-{
-  "name": "wechat-mini-app",
-  "description": "Scaffold WeChat mini programs with page generation and deployment. Use when creating mini apps, generating pages, integrating APIs, or publishing builds.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

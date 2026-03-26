@@ -1,9 +1,0 @@
-{
-  "name": "email-writer",
-  "description": "Email writing assistant. \u90ae\u4ef6\u5199\u4f5c\u3001\u90ae\u4ef6\u52a9\u624b\u3001\u5546\u52a1\u90ae\u4ef6\u3001business email\u3001\u82f1\u6587\u90ae\u4ef6\u3001English email\u3001\u6c42\u804c\u90ae\u4ef6\u3001job application email\u3001\u8ddf\u8fdb\u90ae\u4ef6\u3001follow-up email\u3001\u51b7\u542f\u52a8\u90ae\u4ef6\u3001cold email\u3001\u9053\u6b49\u90ae\u4ef6\u3001apology email.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

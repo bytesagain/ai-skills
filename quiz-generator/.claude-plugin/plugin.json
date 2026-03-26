@@ -1,9 +1,0 @@
-{
-  "name": "quiz-generator",
-  "description": "\u8003\u8bd5\u9898\u76ee\u751f\u6210\u5668\u3002\u9009\u62e9\u9898/\u586b\u7a7a\u9898/\u7b80\u7b54\u9898\u751f\u6210\u3001\u6a21\u62df\u8003\u8bd5\u3001\u7b54\u6848\u89e3\u6790\u3001\u96be\u5ea6\u5206\u7ea7\u3001\u683c\u5f0f\u5316\u8f93\u51fa\u3001\u9898\u5e93\u7ba1\u7406\u3002Quiz generator with multiple choice, fill-in-blank, short answer, mock exams, explanations.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

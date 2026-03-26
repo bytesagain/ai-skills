@@ -1,9 +1,0 @@
-{
-  "name": "meditation",
-  "description": "Guide meditation practice. Use when starting timed sessions, breathing exercises, body scans, logging practice, or viewing stats.",
-  "version": "3.4.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

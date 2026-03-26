@@ -1,9 +1,0 @@
-{
-  "name": "test-publish-check",
-  "description": "Run pre-publish checks on code quality, API status, and deploy config. Use when validating releases, configuring gates, checking status, listing blockers.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

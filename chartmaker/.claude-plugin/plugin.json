@@ -1,9 +1,0 @@
-{
-  "name": "chartmaker",
-  "description": "Visualize data with bar charts, sparklines, and progress bars in terminal. Use when plotting metrics, rendering inline charts, or transforming data.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

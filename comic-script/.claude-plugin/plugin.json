@@ -1,9 +1,0 @@
-{
-  "name": "comic-script",
-  "description": "Draft comic storyboards with panels, dialogue, and scene pacing. Use when designing panels, writing dialogue, structuring comic chapters.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

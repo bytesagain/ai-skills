@@ -1,9 +1,0 @@
-{
-  "name": "bookmark-keeper",
-  "description": "Save, organize, and search web bookmarks with tags and categories. Use when collecting research links, organizing lists, or reviewing resources.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "unit-converter",
-  "description": "Convert units across length, weight, temperature, area, volume, and energy. Use when converting measurements.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "training-plan",
-  "description": "Design training plans with curriculum, evaluation, and scheduling. Use when adding modules, prioritizing gaps, planning sessions, reviewing progress.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "currconv",
-  "description": "Convert currencies using frankfurter.app free API. Use when converting amounts, checking exchange rates, or viewing rate history. Requires curl.",
-  "version": "3.0.1",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

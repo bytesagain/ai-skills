@@ -1,9 +1,0 @@
-{
-  "name": "customer-service-reply",
-  "description": "Generate customer service replies for inquiries, complaints, and refunds. Use when drafting support replies, handling refunds, writing FAQ answers.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

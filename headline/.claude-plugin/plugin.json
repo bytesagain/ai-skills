@@ -1,9 +1,0 @@
-{
-  "name": "headline",
-  "description": "Create and optimize marketing headlines using scoring and A/B testing tools. Use when writing blog titles, ad copy, or comparing headline variations.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

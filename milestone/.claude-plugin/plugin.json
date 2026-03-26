@@ -1,9 +1,0 @@
-{
-  "name": "milestone",
-  "description": "Track project milestones, log progress, and export completion reports locally. Use when marking milestones, reviewing progress, exporting timeline data.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

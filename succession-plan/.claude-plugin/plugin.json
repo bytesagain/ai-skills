@@ -1,9 +1,0 @@
-{
-  "name": "succession-plan",
-  "description": "Design succession plans with role mapping and transition roadmaps. Use when adding positions, listing candidates, prioritizing paths, planning transfers.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "container-labs",
-  "description": "This is a collection of tutorials for learning how to use Docker with various tools. Contributions w docker-labs, php, containers, docker, docker-compose.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

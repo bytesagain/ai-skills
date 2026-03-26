@@ -1,9 +1,0 @@
-{
-  "name": "exercise-form",
-  "description": "Exercise form guide with warmup routines and workout plans. Use when planning workouts.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "webhook-tester",
-  "description": "Send test payloads and inspect webhook responses locally. Use when debugging integrations, validating schemas, testing error handling, or simulating calls.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

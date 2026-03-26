@@ -1,9 +1,0 @@
-{
-  "name": "benchmark-tool",
-  "description": "Benchmark CPU, memory, disk I/O, and network on your system. Use when measuring server performance.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

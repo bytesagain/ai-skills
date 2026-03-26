@@ -1,9 +1,0 @@
-{
-  "name": "unitconv",
-  "description": "Convert units for length, weight, temperature, data, and speed. Use when switching measurement systems, sizing storage, or adjusting recipe quantities.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

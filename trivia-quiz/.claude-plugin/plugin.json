@@ -1,9 +1,0 @@
-{
-  "name": "trivia-quiz",
-  "description": "Play knowledge quizzes with facts, categories, and daily challenges. Use when learning topics, drilling flashcards, reviewing answers, tracking progress.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

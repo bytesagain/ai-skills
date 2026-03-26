@@ -1,9 +1,0 @@
-{
-  "name": "dotfiles",
-  "description": "Backup, sync, and version-track dotfiles across multiple machines. Use when syncing configs, backing up settings, restoring on new machines.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

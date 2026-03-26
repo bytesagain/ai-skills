@@ -1,9 +1,0 @@
-{
-  "name": "classical-chinese",
-  "description": "Translate and annotate classical Chinese texts with poetry analysis. Use when reading ancient prose, analyzing poems, or comparing classical usage.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

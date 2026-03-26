@@ -1,9 +1,0 @@
-{
-  "name": "diskmon",
-  "description": "Watch disk space in real time and alert before storage runs low. Use when monitoring usage, finding large dirs, preventing disk-full events.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

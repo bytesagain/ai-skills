@@ -1,9 +1,0 @@
-{
-  "name": "newsletter-writer",
-  "description": "Newsletter\u90ae\u4ef6\u5185\u5bb9\u751f\u6210\u3001\u6807\u9898\u4f18\u5316\u3001\u53d7\u4f17\u5206\u7c7b\u3001A/B\u6d4b\u8bd5\u6587\u6848\u3001\u53d1\u9001\u65f6\u95f4\u5efa\u8bae\u3001\u6548\u679c\u5206\u6790\u3002Newsletter content writer with subject optimization, audience segmentation, A/B testing, scheduling.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

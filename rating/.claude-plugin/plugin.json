@@ -1,9 +1,0 @@
-{
-  "name": "rating",
-  "description": "Calculate scores, rankings, and review aggregations. Use when computing star ratings, checking distributions, converting scales, analyzing sentiment.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

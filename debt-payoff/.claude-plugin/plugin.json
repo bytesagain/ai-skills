@@ -1,9 +1,0 @@
-{
-  "name": "debt-payoff",
-  "description": "\u8fd8\u503a\u7b56\u7565\u5de5\u5177\u3002\u8fd8\u6b3e\u8ba1\u5212\u3001\u96ea\u7403\u6cd5\u3001\u96ea\u5d29\u6cd5\u3001\u503a\u52a1\u5408\u5e76\u3001\u534f\u5546\u6280\u5de7\u3001\u8fd8\u6e05\u65f6\u95f4\u7ebf\u3002Debt payoff planner with payment plan, snowball, avalanche, consolidation, negotiation tips.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

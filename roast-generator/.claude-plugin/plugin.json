@@ -1,9 +1,0 @@
-{
-  "name": "roast-generator",
-  "description": "Generate comedic roasts in gentle or savage mode. Use when writing friendly jabs, composing rap battles, crafting celebrity roasts, listing self-burns.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

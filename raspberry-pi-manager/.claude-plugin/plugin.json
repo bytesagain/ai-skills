@@ -1,9 +1,0 @@
-{
-  "name": "raspberry-pi-manager",
-  "description": "Manage Raspberry Pi devices \u2014 GPIO control, system monitoring (CPU/temp/memory), service management, sensor data reading.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

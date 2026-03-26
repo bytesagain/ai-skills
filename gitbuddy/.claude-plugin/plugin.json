@@ -1,9 +1,0 @@
-{
-  "name": "gitbuddy",
-  "description": "Extend Git with utilities for changelogs, branch cleanup, and repo stats. Use when generating changelogs, squashing branches, or viewing repo statistics.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

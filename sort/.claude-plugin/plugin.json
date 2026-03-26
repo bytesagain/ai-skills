@@ -1,9 +1,0 @@
-{
-  "name": "sort",
-  "description": "Sort files, lines, and columns with custom ordering and dedup. Use when scanning duplicates, monitoring changes, reporting results, alerting anomalies.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

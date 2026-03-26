@@ -1,7 +1,7 @@
 ---
 name: "Slot — Time Slot & Schedule Block Manager"
 description: "Use when managing time slots, creating schedule blocks, detecting booking conflicts, exporting calendars, or applying scheduling templates for appointments."
-version: "2.0.1"
+version: "2.0.3"
 author: "BytesAgain"
 homepage: https://bytesagain.com
 source: https://github.com/bytesagain/ai-skills

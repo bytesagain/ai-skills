@@ -1,9 +1,0 @@
-{
-  "name": "registration",
-  "description": "Manage registration records and attendee data. Use when logging sign-ups, checking capacity, converting export formats, generating confirmation reports.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "zapier-recipe",
-  "description": "Design Zapier/Make automation recipes with triggers and actions. Use when building integrations, chaining workflows, configuring triggers, or templating.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

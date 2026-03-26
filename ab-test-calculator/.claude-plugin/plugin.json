@@ -1,9 +1,0 @@
-{
-  "name": "ab-test-calculator",
-  "description": "A/B\u6d4b\u8bd5\u8ba1\u7b97\u5668\u3002\u6837\u672c\u91cf\u8ba1\u7b97\u3001\u7edf\u8ba1\u663e\u8457\u6027\u68c0\u9a8c\u3001\u5b9e\u9a8c\u65f6\u957f\u9884\u4f30\u3001\u7ed3\u679c\u62a5\u544a\u3001\u8d1d\u53f6\u65af\u5206\u6790\u3002AB test calculator with sample size, significance testing, duration estimation, reports.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

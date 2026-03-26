@@ -1,9 +1,0 @@
-{
-  "name": "hash",
-  "description": "Generate MD5 and SHA checksums, verify integrity, and compare hash values. Use when computing checksums, verifying downloads, or comparing hash outputs.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "time-logger",
-  "description": "Log time entries and see where your hours go each day. Use when scanning hours, monitoring totals, reporting summaries, ranking categories.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "checklist-maker",
-  "description": "Generate Markdown checklists for life and work scenarios from templates. Use when creating packing lists, onboarding guides, or launch checklists.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

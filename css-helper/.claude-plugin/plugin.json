@@ -1,9 +1,0 @@
-{
-  "name": "css-helper",
-  "description": "Generate CSS for flexbox, grid, animations, gradients, and breakpoints. Use when building layouts, creating animations, generating gradients.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

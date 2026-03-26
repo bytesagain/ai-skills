@@ -1,9 +1,0 @@
-{
-  "name": "tax-calculator-cn",
-  "description": "Calculate Chinese income tax for salary, bonus, and deductions. Use when tracking tax, comparing offers, summarizing annual tax, budgeting income.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

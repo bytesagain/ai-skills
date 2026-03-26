@@ -1,9 +1,0 @@
-{
-  "name": "snippet",
-  "description": "Save and search code snippets in a personal vault for instant recall. Use when checking syntax, validating blocks, generating boilerplate, formatting code.",
-  "version": "3.0.1",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

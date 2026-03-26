@@ -1,9 +1,0 @@
-{
-  "name": "sleep-tracker",
-  "description": "\u7761\u7720\u6539\u5584\u5de5\u5177\u3002\u7761\u7720\u5206\u6790\u3001\u6539\u5584\u5efa\u8bae\u3001\u4f5c\u606f\u89c4\u5212\u3001\u7761\u7720\u73af\u5883\u4f18\u5316\u3001\u5c0f\u7761\u6307\u5357\u3001\u7761\u7720\u65e5\u8bb0\u3002Sleep tracker with analysis, improvement tips, schedule planning, environment optimization, nap guide.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

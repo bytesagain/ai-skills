@@ -1,9 +1,0 @@
-{
-  "name": "terminal-dashboard",
-  "description": "Tool for shell commands execution, visualization and alerting. Configured with a simple YAML file. terminal-dashboard, go, alerting, charts, cmd.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

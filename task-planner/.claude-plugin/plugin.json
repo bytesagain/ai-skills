@@ -1,9 +1,0 @@
-{
-  "name": "task-planner",
-  "description": "Plan and prioritize tasks with due dates and reminders. Use when adding tasks, listing priorities, tracking completion, planning schedules.",
-  "version": "3.0.1",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

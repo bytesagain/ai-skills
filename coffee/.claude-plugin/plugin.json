@@ -1,9 +1,0 @@
-{
-  "name": "coffee",
-  "description": "Track coffee brewing logs and tasting notes locally. Use when logging espresso shots, comparing brew methods, reviewing bean origins.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

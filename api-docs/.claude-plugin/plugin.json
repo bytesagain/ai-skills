@@ -1,9 +1,0 @@
-{
-  "name": "api-docs",
-  "description": "ShowDoc is a tool greatly applicable for an IT team to share documents online\u4e00\u4e2a\u975e\u5e38\u9002\u5408IT\u56e2\u961f\u7684\u5728\u7ebfAPI\u6587\u6863\u3001\u6280\u672f\u6587\u6863 api-docs, php, api, document, documentation-tool.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

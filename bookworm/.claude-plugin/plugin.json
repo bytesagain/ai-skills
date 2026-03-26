@@ -1,9 +1,0 @@
-{
-  "name": "bookworm",
-  "description": "Log books, track reading habits, and review reading streaks over time. Use when recording reads, maintaining goals, or analyzing genre preferences.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

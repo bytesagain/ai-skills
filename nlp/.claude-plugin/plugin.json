@@ -1,9 +1,0 @@
-{
-  "name": "nlp",
-  "description": "Process text with NLP. Use when tokenizing, analyzing sentiment, extracting entities, summarizing documents, or measuring similarity.",
-  "version": "3.4.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

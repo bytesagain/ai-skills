@@ -1,9 +1,0 @@
-{
-  "name": "live-stream-script",
-  "description": "Generate live-stream scripts for product pitches, hooks, and closing CTAs. Use when preparing sales scripts, writing product intros, crafting hooks.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

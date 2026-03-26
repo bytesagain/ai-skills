@@ -1,9 +1,0 @@
-{
-  "name": "dockerfile-builder",
-  "description": "Generate and lint Dockerfiles for common languages and frameworks. Use when creating container configs.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

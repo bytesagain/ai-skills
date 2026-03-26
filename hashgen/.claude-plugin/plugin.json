@@ -1,9 +1,0 @@
-{
-  "name": "hashgen",
-  "description": "Hash files and strings, verify checksums, and run integrity checks fast. Use when generating SHA hashes, verifying files, or comparing digest values.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

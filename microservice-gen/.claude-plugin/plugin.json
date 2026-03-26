@@ -1,9 +1,0 @@
-{
-  "name": "microservice-gen",
-  "description": "A cloud-native Go microservices framework with cli tool for productivity. go zero, go, ai-native, ai-native-development, cloud-native, code-generation.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

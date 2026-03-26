@@ -1,9 +1,0 @@
-{
-  "name": "habit",
-  "description": "Build daily habits with streak tracking, reminders, and progress charts. Use when starting habits, maintaining streaks, or analyzing completion rates.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

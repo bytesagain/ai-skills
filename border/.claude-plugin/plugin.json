@@ -1,9 +1,0 @@
-{
-  "name": "border",
-  "description": "Generate CSS border styles including radius, shadow, and animations using templates. Use when you need to create, preview,",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

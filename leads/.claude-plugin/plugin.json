@@ -1,9 +1,0 @@
-{
-  "name": "leads",
-  "description": "Manage sales leads locally. Use when adding prospects, scoring leads, setting follow-ups, tracking conversions, or viewing funnels.",
-  "version": "3.4.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

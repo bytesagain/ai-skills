@@ -1,9 +1,0 @@
-{
-  "name": "halving",
-  "description": "Halving reference tool. Use when working with halving in blockchain contexts.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

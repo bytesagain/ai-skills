@@ -1,9 +1,0 @@
-{
-  "name": "ppt-outline",
-  "description": "PPT outline and HTML presentation generator. PPT\u5927\u7eb2\u3001PPT\u6a21\u677f\u3001\u6f14\u793a\u6587\u7a3f\u3001presentation\u3001PowerPoint\u3001\u5e7b\u706f\u7247\u3001slides\u3001HTML\u6f14\u793a\u6587\u7a3f\u3001HTML slides\u3001\u6d4f\u89c8\u5668\u6f14\u793a\u3001\u5546\u4e1a\u8def\u6f14\u3001pitch deck\u3001BP\u5546\u4e1a\u8ba1\u5212\u4e66\u3001business.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

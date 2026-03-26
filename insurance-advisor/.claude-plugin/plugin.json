@@ -1,9 +1,0 @@
-{
-  "name": "insurance-advisor",
-  "description": "\u4fdd\u9669\u65b9\u6848\u987e\u95ee\u3002\u9669\u79cd\u63a8\u8350\u3001\u4ea7\u54c1\u5bf9\u6bd4\u3001\u4fdd\u8d39\u8ba1\u7b97\u3001\u7406\u8d54\u6307\u5357\u3001\u5b9a\u671f\u5bff\u9669\u3001\u5065\u5eb7\u9669\u65b9\u6848\u3002Insurance advisor with recommendation, comparison, premium calculation, claim guide, term life.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

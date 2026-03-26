@@ -1,9 +1,0 @@
-{
-  "name": "chefpad",
-  "description": "Manage recipes and grocery lists with ingredient tracking and meal plans. Use when adding recipes, searching by ingredient, or building shopping lists.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

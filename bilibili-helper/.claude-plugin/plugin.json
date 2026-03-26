@@ -1,9 +1,0 @@
-{
-  "name": "bilibili-helper",
-  "description": "Optimize Bilibili video titles, tags, and descriptions for engagement. Use when planning uploads, writing intros, or managing video comments.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

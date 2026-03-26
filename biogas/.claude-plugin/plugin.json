@@ -1,9 +1,0 @@
-{
-  "name": "biogas",
-  "description": "Biogas technology reference \u2014 anaerobic digestion, methane yield, feedstock ratios, and upgrading. Use when designing biogas plants, optimizing digester performance, or evaluating feedstock options.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

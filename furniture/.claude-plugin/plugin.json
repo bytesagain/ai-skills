@@ -1,9 +1,0 @@
-{
-  "name": "furniture",
-  "description": "Track home furniture, schedule maintenance, and manage warranty details. Use when cataloging furniture, scheduling cleaning, or tracking warranty expiry dates.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

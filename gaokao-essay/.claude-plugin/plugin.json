@@ -1,9 +1,0 @@
-{
-  "name": "gaokao-essay",
-  "description": "Generate Gaokao essays with argumentative and narrative templates and\u7d20\u6750. Use when practicing prompts, studying models, or drafting essay openings.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

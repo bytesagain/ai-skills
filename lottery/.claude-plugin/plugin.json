@@ -1,9 +1,0 @@
-{
-  "name": "lottery",
-  "description": "Generate lottery numbers and check results. Use when picking numbers for draws.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "commit-helper",
-  "description": "Generate conventional commit messages and changelogs automatically. Use when writing commits, enforcing conventions, generating changelogs.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

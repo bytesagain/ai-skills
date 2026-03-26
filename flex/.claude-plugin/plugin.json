@@ -1,9 +1,0 @@
-{
-  "name": "flex",
-  "description": "Generate CSS Flexbox layouts using interactive CLI commands. Use when building responsive flex containers, rows, columns, or alignment configurations.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

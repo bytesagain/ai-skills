@@ -1,9 +1,0 @@
-{
-  "name": "sms",
-  "description": "Manage SMS templates with variable substitution and formatting. Use when preparing bulk messages.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

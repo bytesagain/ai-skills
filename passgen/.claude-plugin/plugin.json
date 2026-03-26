@@ -1,9 +1,0 @@
-{
-  "name": "passgen",
-  "description": "Generate strong passwords and check credential strength. Use when creating passphrases, auditing policies, rotating credentials, batch generating.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

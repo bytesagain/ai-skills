@@ -1,9 +1,0 @@
-{
-  "name": "data-visualizer",
-  "description": "Terminal ASCII chart toolkit. Create bar charts, sparklines, histograms, and gauges from CSV or JSON data in the terminal.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

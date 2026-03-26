@@ -1,9 +1,0 @@
-{
-  "name": "content-calendar-scheduler",
-  "description": "Plan content publishing schedules with editorial calendar views. Use when scheduling posts, planning campaigns, tracking publishing deadlines.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

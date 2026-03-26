@@ -1,9 +1,0 @@
-{
-  "name": "crypto-defi",
-  "description": "Calculate DeFi yields including APY, impermanent loss, and staking rewards. Use when estimating returns, comparing protocols, tracking farming.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "loto",
-  "description": "Lockout-tagout procedure generator",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

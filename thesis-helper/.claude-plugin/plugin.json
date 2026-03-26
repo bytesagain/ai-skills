@@ -1,9 +1,0 @@
-{
-  "name": "thesis-helper",
-  "description": "\u8bba\u6587\u5199\u4f5c\u52a9\u624b\u3002\u8bba\u6587\u5927\u7eb2\u751f\u6210\u3001\u6587\u732e\u7efc\u8ff0\u6846\u67b6\u3001\u6458\u8981\u751f\u6210\u3001\u5f15\u7528\u683c\u5f0f\u8f6c\u6362\u3001\u683c\u5f0f\u89c4\u8303\u68c0\u67e5\u3001\u7b54\u8fa9\u51c6\u5907\u3002Thesis helper with outline generation, literature review, abstract writing, citation formatting, style guide.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

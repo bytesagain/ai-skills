@@ -1,9 +1,0 @@
-{
-  "name": "mealplan",
-  "description": "Plan meals with calorie tracking and shopping lists. Use when organizing weekly meals.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "browser-devtools",
-  "description": "Build Chrome Apps and Web Apps with integrated developer tooling. Use when prototyping extensions, debugging web apps, or packaging Chrome apps.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

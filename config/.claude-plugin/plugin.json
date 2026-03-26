@@ -1,9 +1,0 @@
-{
-  "name": "config",
-  "description": "Manage app configuration files with init, list, and add operations. Use when initializing configs, listing settings, switching environments.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "llm-flow",
-  "description": "Langflow is a powerful tool for building and deploying AI-powered agents and workflows. llm-flow, python, agents, chatgpt, generative-ai.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

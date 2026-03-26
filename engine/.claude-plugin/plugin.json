@@ -1,9 +1,0 @@
-{
-  "name": "engine",
-  "description": "Rule engine reference \u2014 decision tables, Rete algorithm, forward/backward chaining, and business rule management. Use when evaluating business rules, building decision trees, or implementing policy en",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "brand-namer",
-  "description": "Generate brand names with domain checks and analysis. Use when naming a startup, checking domain availability, or brainstorming product names.",
-  "version": "3.0.3",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

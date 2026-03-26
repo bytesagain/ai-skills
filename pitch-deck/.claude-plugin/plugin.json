@@ -1,9 +1,0 @@
-{
-  "name": "pitch-deck",
-  "description": "Build investor pitch decks with slide structure. Use when outlining narratives, preparing demo day talks, drafting investor Q&A, refining proposals.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

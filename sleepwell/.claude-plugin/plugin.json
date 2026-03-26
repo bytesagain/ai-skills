@@ -1,9 +1,0 @@
-{
-  "name": "sleepwell",
-  "description": "Track sleep habits and analyze rest patterns over time. Use when logging bedtimes, planning schedules, tracking streaks, reviewing weekly patterns.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

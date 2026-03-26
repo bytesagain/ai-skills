@@ -1,9 +1,0 @@
-{
-  "name": "thresh",
-  "description": "Grain threshing reference \u2014 threshing methods, combine harvester operation, crop-specific settings, grain loss reduction, and post-harvest handling. Use when planning harvest operations, optimizing co",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

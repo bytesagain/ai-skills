@@ -1,9 +1,0 @@
-{
-  "name": "regexr",
-  "description": "Create, test, and learn regular expressions with live matching. Use when validating patterns, checking groups, generating regex, linting syntax.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

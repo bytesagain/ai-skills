@@ -1,9 +1,0 @@
-{
-  "name": "sop-writer",
-  "description": "Draft SOPs with flowcharts, checklists, and training materials. Use when writing procedures, outlining flows, creating checklists, designing training docs.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

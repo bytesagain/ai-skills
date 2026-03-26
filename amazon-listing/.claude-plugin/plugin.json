@@ -1,9 +1,0 @@
-{
-  "name": "amazon-listing",
-  "description": "\u4e9a\u9a6c\u900aListing\u4f18\u5316\u5de5\u5177\u3002\u6807\u9898\u4f18\u5316\u3001\u4e94\u70b9\u63cf\u8ff0\u3001\u540e\u53f0\u5173\u952e\u8bcd\u3001PPC\u5e7f\u544a\u3001\u8bc4\u4ef7\u7ba1\u7406\u3001\u6392\u540d\u63d0\u5347\u3002Amazon listing optimizer with title, bullets, backend keywords, PPC, reviews.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

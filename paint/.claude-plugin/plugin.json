@@ -1,9 +1,0 @@
-{
-  "name": "paint",
-  "description": "Generate color palettes, gradients, and textures. Use when creating harmonized palettes, previewing schemes, converting color spaces, making patterns.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

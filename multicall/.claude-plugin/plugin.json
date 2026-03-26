@@ -1,9 +1,0 @@
-{
-  "name": "multicall",
-  "description": "Analyze multicall operations. Use when you need to understand multicall mechanisms, evaluate protocol security, or reference on-chain concepts.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

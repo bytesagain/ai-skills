@@ -1,9 +1,0 @@
-{
-  "name": "debate-helper",
-  "description": "Build debate arguments and plan rebuttals with structured evidence. Use when constructing arguments, preparing rebuttals, structuring outlines.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

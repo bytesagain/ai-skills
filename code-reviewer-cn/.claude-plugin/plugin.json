@@ -1,9 +1,0 @@
-{
-  "name": "code-reviewer-cn",
-  "description": "Review code with refactoring tips, security checks, and docs in Chinese. Use when auditing PRs, analyzing complexity, or enforcing conventions.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

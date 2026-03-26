@@ -1,9 +1,0 @@
-{
-  "name": "dashboard-builder",
-  "description": "Build and render ASCII dashboards in terminal with bar charts, gauges, tables, and text panels. Use when visualizing metrics or monitoring data.",
-  "version": "3.3.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "job-search-assistant",
-  "description": "Streamline job hunting with resume tailoring, cover letters, and tracking. Use when tailoring resumes, writing covers, or tracking job applications.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

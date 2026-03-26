@@ -1,9 +1,0 @@
-{
-  "name": "design-tool",
-  "description": "Penpot: The open-source design tool for design and code collaboration design-tool, clojure, clojure, clojurescript, design, prototyping.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

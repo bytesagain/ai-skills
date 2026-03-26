@@ -1,9 +1,0 @@
-{
-  "name": "codepal",
-  "description": "Analyze codebases quickly with AI-powered intelligence and insights. Use when understanding unfamiliar repos, checking quality, or generating summaries.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

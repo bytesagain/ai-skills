@@ -1,9 +1,0 @@
-{
-  "name": "arrow",
-  "description": "Apache Arrow in-memory columnar format reference. Zero-copy data exchange, columnar memory layout with validity bitmaps, pyarrow Table/RecordBatch/compute, Arrow Flight RPC for high-performance transf",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

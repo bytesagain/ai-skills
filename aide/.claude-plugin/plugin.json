@@ -1,9 +1,0 @@
-{
-  "name": "aide",
-  "description": "AIDE file integrity monitoring reference. Database initialization, integrity checks, update workflow, aide.conf configuration, selection rules, report parsing, and production deployment with CIS bench",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

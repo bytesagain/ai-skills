@@ -1,9 +1,0 @@
-{
-  "name": "netping",
-  "description": "Check connectivity with ping, port scan, and DNS lookup in one fast tool. Use when testing reachability, scanning ports, resolving DNS records quickly.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

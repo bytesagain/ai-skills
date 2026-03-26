@@ -1,9 +1,0 @@
-{
-  "name": "ui-component",
-  "description": "Generate standalone HTML/CSS components: forms, cards, modals. Use when picking palettes, choosing fonts, laying out grids, adjusting spacing.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

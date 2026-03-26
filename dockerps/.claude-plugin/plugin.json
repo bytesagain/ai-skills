@@ -1,9 +1,0 @@
-{
-  "name": "dockerps",
-  "description": "View and manage Docker container processes and stats. Use when monitoring containers. Requires docker.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "official-doc",
-  "description": "Generate official documents with format checking, tone validation, and templates. Use when drafting official letters, checking format, applying templates.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

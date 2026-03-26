@@ -1,9 +1,0 @@
-{
-  "name": "deepfocus",
-  "description": "Run Pomodoro sessions with break timers and productivity tracking. Use when starting focus sessions, tracking streaks, reviewing productivity.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

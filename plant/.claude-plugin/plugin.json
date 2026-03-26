@@ -1,9 +1,0 @@
-{
-  "name": "plant",
-  "description": "Manage houseplant care with watering and fertilizer schedules. Use when adding plants, tracking watering, scheduling fertilizing, setting care reminders.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "fixture",
-  "description": "Generate and manage test data fixtures using CLI templates. Use when creating seed data, mock records, or reproducible test datasets.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

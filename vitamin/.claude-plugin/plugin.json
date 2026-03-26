@@ -1,9 +1,0 @@
-{
-  "name": "vitamin",
-  "description": "Track vitamin and supplement intake with goals and reminders. Use when logging supplements, setting nutrition goals, reviewing history, or scheduling doses.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

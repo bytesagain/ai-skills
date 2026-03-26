@@ -1,9 +1,0 @@
-{
-  "name": "ci-cd-pipeline",
-  "description": "Generate CI/CD configs for GitHub Actions, GitLab CI, and Jenkins. Use when setting up pipelines, configuring test stages, or automating deploys.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

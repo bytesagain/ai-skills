@@ -1,9 +1,0 @@
-{
-  "name": "image-prompt",
-  "description": "AI image prompt optimizer. Generate and enhance prompts for Midjourney, DALL-E, and Stable Diffusion. Includes prompt enhancement.",
-  "version": "2.1.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

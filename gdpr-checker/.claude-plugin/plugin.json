@@ -1,9 +1,0 @@
-{
-  "name": "gdpr-checker",
-  "description": "Check GDPR compliance with audits, consent reviews, and breach prep plans. Use when running audits, verifying consent, or preparing breach responses.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "network-config",
-  "description": "A powerful open-source tool for managing networks and troubleshooting network problems! network-config, c#, aws-ssm, dns, dns-lookup, icmp.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "beancount",
-  "description": "Record income and expenses, generate monthly reports, and track savings. Use when logging transactions, reviewing budgets, or planning goals.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

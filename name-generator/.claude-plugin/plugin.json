@@ -1,9 +1,0 @@
-{
-  "name": "name-generator",
-  "description": "Generate names for babies, brands, and pen names with meaning analysis. Use when brainstorming names, picking brand names, choosing names with meanings.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

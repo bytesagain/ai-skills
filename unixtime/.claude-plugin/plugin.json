@@ -1,9 +1,0 @@
-{
-  "name": "unixtime",
-  "description": "Convert Unix timestamps to dates and back. Use when parsing epoch values, calculating time differences, debugging logs, or generating relative dates.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

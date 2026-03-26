@@ -1,9 +1,0 @@
-{
-  "name": "syslog",
-  "description": "Syslog protocol and daemon reference. RFC 5424, facility/severity codes, remote logging over TCP/UDP/TLS, logrotate integration, logger testing, and log security hardening.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

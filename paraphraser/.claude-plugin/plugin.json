@@ -1,9 +1,0 @@
-{
-  "name": "paraphraser",
-  "description": "Rewrite text for tone, clarity, or originality. Use when paraphrasing paragraphs, simplifying jargon, formalizing drafts, comparing versions.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

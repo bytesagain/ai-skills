@@ -1,9 +1,0 @@
-{
-  "name": "aws-security",
-  "description": "List of open source tools for AWS security: defensive, offensive, auditing, DFIR, etc. my arsenal of aws security tools, shell, auditing, aws-infrastructure.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "ad-copywriter",
-  "description": "Generate ad copy for feeds, search, and social with A/B variants. Use when writing headlines, crafting CTAs, or optimizing ad keywords.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

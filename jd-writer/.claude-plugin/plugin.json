@@ -1,9 +1,0 @@
-{
-  "name": "jd-writer",
-  "description": "Write job descriptions with requirements, perks, and inclusivity language. Use when drafting postings, writing requirements, or checking JD inclusivity.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

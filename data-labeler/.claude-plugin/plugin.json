@@ -1,9 +1,0 @@
-{
-  "name": "data-labeler",
-  "description": "Label Studio is a multi-type data labeling and annotation tool with standardized output format label studio, typescript, annotation, annotation-tool.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

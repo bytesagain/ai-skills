@@ -1,9 +1,0 @@
-{
-  "name": "ping",
-  "description": "Monitor network connectivity and diagnose latency issues using ping and traceroute. Use when troubleshooting network problems or checking host availability.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

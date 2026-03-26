@@ -1,9 +1,0 @@
-{
-  "name": "dictionary",
-  "description": "Look up definitions, synonyms, etymology, and usage examples fast. Use when checking meanings, finding synonyms, exploring etymology.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "fish",
-  "description": "Configure Fish shell abbreviations, completions, and prompt themes easily. Use when setting aliases, writing functions, customizing prompts, or adding plugins.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

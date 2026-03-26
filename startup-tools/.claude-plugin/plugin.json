@@ -1,9 +1,0 @@
-{
-  "name": "startup-tools",
-  "description": "\u521b\u4e1a\u5de5\u5177\u5305\u3002\u521b\u4e1a\u6e05\u5355\u3001\u516c\u53f8\u6ce8\u518c\u3001MVP\u89c4\u5212\u3001\u878d\u8d44\u51c6\u5907\u3001\u6cd5\u5f8b\u5408\u89c4\u3001\u589e\u957f\u7b56\u7565\u3002Startup toolkit with checklist, register, MVP planning, fundraise, legal compliance.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

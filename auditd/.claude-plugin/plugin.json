@@ -1,9 +1,0 @@
-{
-  "name": "auditd",
-  "description": "Linux Audit Framework reference. auditctl rules for file watches and syscall auditing, auditd.conf configuration, ausearch log queries, aureport summaries, audit.log format, CIS/PCI-DSS compliance rul",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

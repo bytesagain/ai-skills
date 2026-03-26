@@ -1,9 +1,0 @@
-{
-  "name": "dividend",
-  "description": "Track dividend income, view yield stats, and export payment history. Use when logging payments, calculating yields, tracking payout schedules.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "bonds",
-  "description": "Record bond holdings, analyze yields, and track maturity dates. Use when managing fixed-income portfolios, comparing yields, or exporting data.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

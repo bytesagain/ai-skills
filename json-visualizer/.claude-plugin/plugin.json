@@ -1,9 +1,0 @@
-{
-  "name": "json-visualizer",
-  "description": "\u2728 practical and open-source visualization application that transforms various data formats, such as json-visualizer, typescript, csv, diagrams, graph, json.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

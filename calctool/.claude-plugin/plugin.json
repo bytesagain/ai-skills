@@ -1,9 +1,0 @@
-{
-  "name": "calctool",
-  "description": "Perform basic, scientific, and financial calculations from the terminal. Use when computing interest, converting units, or solving quick math.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

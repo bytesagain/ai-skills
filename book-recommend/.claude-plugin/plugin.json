@@ -1,9 +1,0 @@
-{
-  "name": "book-recommend",
-  "description": "\u4e66\u5355\u63a8\u8350\u52a9\u624b\u3002\u4e2a\u6027\u5316\u63a8\u8350\u3001\u4e66\u7c4d\u6458\u8981\u3001\u540c\u7c7b\u4e66\u63a8\u8350\u3001\u9605\u8bfb\u6e05\u5355\u3001\u8bfb\u4e66\u4f1a\u65b9\u6848\u3001\u5e74\u5ea6\u4e66\u5355\u3002Book recommendation with personalized picks, summaries, similar books, reading lists, book clubs.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

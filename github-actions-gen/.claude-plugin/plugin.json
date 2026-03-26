@@ -1,9 +1,0 @@
-{
-  "name": "github-actions-gen",
-  "description": "Generate GitHub Actions workflow YAML files for CI/CD. Use when setting up automated pipelines.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

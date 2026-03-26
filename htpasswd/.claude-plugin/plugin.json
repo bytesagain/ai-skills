@@ -1,9 +1,0 @@
-{
-  "name": "htpasswd",
-  "description": "Generate htpasswd entries for Apache/Nginx basic auth password management. Use when creating credentials, managing password files, or verifying users.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

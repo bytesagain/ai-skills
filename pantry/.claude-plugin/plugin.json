@@ -1,9 +1,0 @@
-{
-  "name": "pantry",
-  "description": "Organize pantry stock, expiry dates, and shopping lists. Use when adding items, checking inventory, scheduling restocks, setting expiry reminders.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

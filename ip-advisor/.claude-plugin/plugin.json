@@ -1,9 +1,0 @@
-{
-  "name": "ip-advisor",
-  "description": "Analyze IP addresses with subnet calculation and CIDR notation. Use when planning network addressing.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

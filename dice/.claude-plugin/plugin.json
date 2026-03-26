@@ -1,9 +1,0 @@
-{
-  "name": "dice",
-  "description": "Roll dice, track scores, and manage game stats for tabletop gaming. Use when rolling dice, tracking scores, ranking players, reviewing history.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

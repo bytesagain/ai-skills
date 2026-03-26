@@ -1,9 +1,0 @@
-{
-  "name": "readme-template",
-  "description": "Apply polished README templates to any project. Use when initializing repos, configuring doc structure, listing feature sections, adding guidelines.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

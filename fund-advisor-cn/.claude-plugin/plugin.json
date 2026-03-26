@@ -1,9 +1,0 @@
-{
-  "name": "fund-advisor-cn",
-  "description": "Screen Chinese funds, plan DCA strategies, and assess portfolio risk levels. Use when screening A-share funds, planning DCA, or comparing fund categories.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

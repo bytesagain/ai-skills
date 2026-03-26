@@ -1,9 +1,0 @@
-{
-  "name": "mileage",
-  "description": "Log vehicle mileage, review driving trends, and export trip reports for tracking. Use when logging trips, tracking fuel economy, exporting mileage data.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

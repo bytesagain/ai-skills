@@ -1,9 +1,0 @@
-{
-  "name": "data-analytics",
-  "description": "The easy-to-use open source Business Intelligence and Embedded Analytics tool that lets everyone wor data-analytics, clojure, analytics, bi.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

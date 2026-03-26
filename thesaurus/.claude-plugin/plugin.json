@@ -1,9 +1,0 @@
-{
-  "name": "thesaurus",
-  "description": "Look up synonyms, antonyms, and related words with history and export. Use when finding alternatives, checking usage, running drills, analyzing frequency.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "orders",
-  "description": "Track orders locally. Use when creating orders, checking status, updating quantities, canceling, or generating sales reports.",
-  "version": "3.4.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

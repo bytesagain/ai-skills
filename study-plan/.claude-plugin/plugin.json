@@ -1,9 +1,0 @@
-{
-  "name": "study-plan",
-  "description": "Create study plans for exams with schedules and reminders. Use when adding tasks, planning reviews, tracking progress, prioritizing subjects.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

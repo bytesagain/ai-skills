@@ -1,9 +1,0 @@
-{
-  "name": "meme-generator",
-  "description": "Generate meme captions using trending templates and viral reaction formats. Use when creating meme text, picking templates, crafting reaction captions.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

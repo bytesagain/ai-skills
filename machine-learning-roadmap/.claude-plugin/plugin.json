@@ -1,9 +1,0 @@
-{
-  "name": "machine-learning-roadmap",
-  "description": "Follow a structured ML roadmap connecting concepts, tools, and learning resources. Use when planning study paths, discovering resources, mapping skills.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

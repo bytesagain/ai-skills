@@ -1,9 +1,0 @@
-{
-  "name": "rotate",
-  "description": "Generate rotate UI elements and design assets. Use when building interfaces, creating visual components, or styling web pages.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

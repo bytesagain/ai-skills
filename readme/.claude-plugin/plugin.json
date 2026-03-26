@@ -1,9 +1,0 @@
-{
-  "name": "readme",
-  "description": "Generate README files with badges, TOC, and API docs. Use when scaffolding project docs, validating structure, generating contents, formatting references.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

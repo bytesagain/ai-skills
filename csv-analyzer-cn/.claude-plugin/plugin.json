@@ -1,9 +1,0 @@
-{
-  "name": "csv-analyzer-cn",
-  "description": "Analyze CSV files with stats, SVG charts, merging, and format export. Use when generating summaries, creating charts, merging CSV files.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

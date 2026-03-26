@@ -1,9 +1,0 @@
-{
-  "name": "quick-memo",
-  "description": "Capture and search short notes from the terminal. Use when scanning memos, monitoring note updates, reporting tagged entries, viewing recent notes.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

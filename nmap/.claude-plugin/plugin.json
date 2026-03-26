@@ -1,9 +1,0 @@
-{
-  "name": "nmap",
-  "description": "Nmap reference tool. Use when working with nmap in devtools contexts.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

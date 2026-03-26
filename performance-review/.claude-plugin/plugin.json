@@ -1,9 +1,0 @@
-{
-  "name": "performance-review",
-  "description": "Draft performance reviews and KPI summaries. Use when writing self-assessments, composing manager feedback, setting SMART goals, preparing promotions.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

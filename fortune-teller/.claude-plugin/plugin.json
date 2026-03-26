@@ -1,9 +1,0 @@
-{
-  "name": "fortune-teller",
-  "description": "Draw tarot cards, cast I Ching hexagrams, and check daily fortunes for fun. Use when pulling spreads, casting hexagrams, or playing fortune games.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

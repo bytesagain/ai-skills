@@ -1,9 +1,0 @@
-{
-  "name": "cpu",
-  "description": "Monitor CPU load, per-core usage, and rank top resource-consuming processes. Use when checking temperatures, ranking processes, tracking load.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

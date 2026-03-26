@@ -1,9 +1,0 @@
-{
-  "name": "error",
-  "description": "Error handling reference \u2014 error types, exception patterns, HTTP status codes, retry strategies, and observability. Use when designing error handling, debugging failures, or implementing resilient sys",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

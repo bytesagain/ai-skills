@@ -1,9 +1,0 @@
-{
-  "name": "outline",
-  "description": "Generate document outlines with TOC, chapter planning, and hierarchy management. Use when structuring documents, planning chapters, creating outlines.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "llm",
-  "description": "Build and evaluate LLM prompts. Use when crafting system prompts, comparing variants, estimating tokens, or managing prompt templates.",
-  "version": "3.4.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

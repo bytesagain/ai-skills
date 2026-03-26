@@ -1,9 +1,0 @@
-{
-  "name": "session",
-  "description": "Manage session state and lifecycle using JSONL storage. Use when tracking user sessions, expiring stale data, or auditing session activity.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

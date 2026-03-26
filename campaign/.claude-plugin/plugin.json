@@ -1,9 +1,0 @@
-{
-  "name": "campaign",
-  "description": "Plan marketing campaigns with A/B testing, budgets, and ROI tracking. Use when launching ad campaigns, optimizing creatives, or scheduling content.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

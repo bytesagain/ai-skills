@@ -1,9 +1,0 @@
-{
-  "name": "syscheck",
-  "description": "Check system health with CPU, memory, disk, and process stats. Use when scanning resources, monitoring load, reporting disk usage, alerting thresholds.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

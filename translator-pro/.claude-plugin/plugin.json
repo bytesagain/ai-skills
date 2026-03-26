@@ -1,9 +1,0 @@
-{
-  "name": "translator-pro",
-  "description": "Test translation quality with built-in dictionaries and comparison tools. Use when evaluating translations.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

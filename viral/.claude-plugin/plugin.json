@@ -1,9 +1,0 @@
-{
-  "name": "viral",
-  "description": "Detect trends, score shareability, and write viral hooks. Use when crafting headlines, optimizing post timing, analyzing engagement, or drafting hooks.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

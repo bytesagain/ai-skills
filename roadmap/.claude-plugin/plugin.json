@@ -1,9 +1,0 @@
-{
-  "name": "roadmap",
-  "description": "Plan product roadmaps with milestones and dependencies. Use when adding features, planning sprints, tracking milestone progress, reviewing priorities.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

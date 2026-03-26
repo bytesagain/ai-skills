@@ -1,9 +1,0 @@
-{
-  "name": "web-profiler",
-  "description": "Provides a development tool that gives detailed information about the execution of any request web profiler bundle, twig, component, dev, php, symfony.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "grpc",
-  "description": "Grpc reference tool. Use when working with grpc in devtools contexts.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

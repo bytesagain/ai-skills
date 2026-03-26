@@ -1,9 +1,0 @@
-{
-  "name": "review-responder",
-  "description": "\u8bc4\u4ef7\u56de\u590d\u52a9\u624b\u3002\u597d\u8bc4\u56de\u590d\u3001\u5dee\u8bc4\u5904\u7406\u3001\u56de\u590d\u6a21\u677f\u3001\u8bc4\u4ef7\u5206\u6790\u3001\u6539\u8fdb\u5efa\u8bae\u3001\u6279\u91cf\u56de\u590d\u3002Review response assistant with positive, negative, templates, analysis, improvement.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

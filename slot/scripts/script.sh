@@ -3,7 +3,7 @@
 # Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-VERSION="2.0.1"
+VERSION="2.0.3"
 SLOT_DIR="${SLOT_DATA_DIR:-$HOME/.slot-manager}"
 SLOT_FILE="${SLOT_DIR}/slots.csv"
 

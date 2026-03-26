@@ -1,9 +1,0 @@
-{
-  "name": "flowdo",
-  "description": "Manage tasks in kanban columns with priorities and workflow tracking. Use when organizing tasks, moving items through stages, or tracking completion.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

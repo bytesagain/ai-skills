@@ -1,9 +1,0 @@
-{
-  "name": "terms-of-service",
-  "description": "Generate terms of service for SaaS, e-commerce, and apps. Use when drafting agreements, configuring clauses, listing requirements, searching templates.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

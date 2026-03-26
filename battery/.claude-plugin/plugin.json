@@ -1,9 +1,0 @@
-{
-  "name": "battery",
-  "description": "Monitor battery levels, track charge cycles, and analyze power usage. Use when checking device health, optimizing power, or logging history.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

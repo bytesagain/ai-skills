@@ -1,9 +1,0 @@
-{
-  "name": "apicheck",
-  "description": "API\u8bf7\u6c42\u6784\u9020\u3001curl\u547d\u4ee4\u751f\u6210\u3001Mock\u6570\u636e\u3001API\u6587\u6863\u3001HTTP\u72b6\u6001\u7801\u901f\u67e5\u3001Headers\u8bf4\u660e\u3002API request builder, curl generator, mock data, API documentation, HTTP status codes.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

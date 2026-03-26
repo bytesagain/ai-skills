@@ -1,9 +1,0 @@
-{
-  "name": "procmon",
-  "description": "Watch and control running processes in real time. Use when scanning active PIDs, monitoring resource spikes, reporting trees, alerting on crashes.",
-  "version": "3.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "mock",
-  "description": "Generate mock data and simulate API endpoints using CLI tools. Use when prototyping APIs or testing integrations.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

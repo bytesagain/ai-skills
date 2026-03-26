@@ -1,9 +1,0 @@
-{
-  "name": "bingo",
-  "description": "Generate and play bingo cards with number calling and verification. Use when running bingo games.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

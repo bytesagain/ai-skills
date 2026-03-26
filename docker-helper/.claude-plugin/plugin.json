@@ -1,9 +1,0 @@
-{
-  "name": "docker-helper",
-  "description": "Generate Dockerfiles, compose configs, and debug container issues. Use when writing Dockerfiles, composing stacks, debugging containers.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

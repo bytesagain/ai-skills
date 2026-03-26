@@ -1,9 +1,0 @@
-{
-  "name": "cashflow",
-  "description": "Track personal cash flow with simple terminal commands and local storage. Use when logging daily expenses, reviewing balance, or exporting records.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

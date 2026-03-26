@@ -1,9 +1,0 @@
-{
-  "name": "gripper",
-  "description": "Robot gripper reference \u2014 jaw types, force calculation, pneumatic vs electric, and end-effector selection. Use when designing gripping systems, selecting actuators, or sizing grippers for robotic appl",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

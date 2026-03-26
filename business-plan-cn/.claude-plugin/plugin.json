@@ -1,9 +1,0 @@
-{
-  "name": "business-plan-cn",
-  "description": "Generate Chinese business plans with lean canvas, SWOT, and financials. Use when writing investor decks, analyzing markets, or modeling revenue.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

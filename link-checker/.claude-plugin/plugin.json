@@ -1,9 +1,0 @@
-{
-  "name": "link-checker",
-  "description": "Crawl web pages and detect broken links, redirects, and HTTP errors. Use when auditing site links, finding 404 errors, validating URLs before launch.",
-  "version": "2.1.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

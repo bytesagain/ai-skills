@@ -1,9 +1,0 @@
-{
-  "name": "survey-designer",
-  "description": "Design surveys with question types, skip logic, and templates. Use when adding questions, setting logic, laying out forms, checking contrast, spacing elements.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

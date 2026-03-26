@@ -1,9 +1,0 @@
-{
-  "name": "iso",
-  "description": "ISO standard compliance checker",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

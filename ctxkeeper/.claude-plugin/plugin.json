@@ -1,9 +1,0 @@
-{
-  "name": "ctxkeeper",
-  "description": "Manage conversation context with saving, loading, and pruning tools. Use when preserving context, loading sessions, pruning old history.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

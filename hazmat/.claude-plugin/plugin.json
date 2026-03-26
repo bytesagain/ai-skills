@@ -1,9 +1,0 @@
-{
-  "name": "hazmat",
-  "description": "Hazardous material classification tool",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

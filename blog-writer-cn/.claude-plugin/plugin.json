@@ -1,9 +1,0 @@
-{
-  "name": "blog-writer-cn",
-  "description": "Write Chinese blog articles with SEO diagnostics and style rewriting. Use when drafting Mandarin content, planning series, or generating CTAs.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

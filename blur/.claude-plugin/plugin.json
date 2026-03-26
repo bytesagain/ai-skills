@@ -1,9 +1,0 @@
-{
-  "name": "blur",
-  "description": "Apply image blur effects and privacy masks using Python PIL processing. Use when you need to blur, redact faces, or mask sensitive regions in images.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

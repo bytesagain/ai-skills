@@ -1,9 +1,0 @@
-{
-  "name": "cache",
-  "description": "Manage a local key-value cache store using bash and Python. Use when caching API responses, session data, or computed results with TTL support.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

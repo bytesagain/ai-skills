@@ -1,9 +1,0 @@
-{
-  "name": "clamav",
-  "description": "ClamAV open-source antivirus reference. clamscan, freshclam database updates, clamd daemon configuration, custom signatures, quarantine workflows, automated scanning, and performance tuning.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "name": "music-playlist",
-  "description": "Curate playlists by mood and scene with track analysis and year-end summaries. Use when building playlists, discovering music, summarizing yearly listening.",
-  "version": "2.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}

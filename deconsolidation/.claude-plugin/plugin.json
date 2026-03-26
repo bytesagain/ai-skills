@@ -1,9 +1,0 @@
-{
-  "name": "deconsolidation",
-  "description": "Deconsolidation reference \u2014 container stripping, cargo breakdown, cross-dock operations, and LCL unpacking. Use when planning deconsolidation workflows or optimizing warehouse receiving.",
-  "version": "1.0.0",
-  "author": {
-    "name": "BytesAgain",
-    "url": "https://bytesagain.com"
-  }
-}
