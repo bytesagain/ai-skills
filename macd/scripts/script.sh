@@ -1,433 +1,432 @@
 #!/usr/bin/env bash
-# macd — MACD (Moving Average Convergence Divergence) Calculator & Reference
+# macd — MACD (Moving Average Convergence Divergence) Calculator
+# Requires: python3 (standard library only)
 # Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 set -euo pipefail
 
-VERSION="2.0.3"
+VERSION="2.0.4"
 
 cmd_calculate() {
-    local fast="${1:-12}"
-    local slow="${2:-26}"
-    local signal="${3:-9}"
-    cat <<EOF
-═══════════════════════════════════════════════════
-  MACD Calculator — Parameters: (${fast}, ${slow}, ${signal})
-═══════════════════════════════════════════════════
+    local prices="${1:-}"
+    local fast="${2:-12}"
+    local slow="${3:-26}"
+    local signal="${4:-9}"
 
-【What is MACD?】
-  MACD (Moving Average Convergence Divergence) is a trend-following
-  momentum indicator developed by Gerald Appel in the late 1970s.
-  It shows the relationship between two exponential moving averages.
+    if [ -z "$prices" ]; then
+        echo "Usage: bash scripts/script.sh calculate \"price1,price2,...\" [fast] [slow] [signal]"
+        echo "  Defaults: fast=12, slow=26, signal=9"
+        echo ""
+        echo "Example:"
+        echo "  bash scripts/script.sh calculate \"170.5,171.2,172.8,171.0,173.5,174.2,175.0,174.8,176.1,175.5,177.2,178.0,176.5,177.8,179.0,178.5,180.2,179.8,181.0,180.5,182.3,181.8,183.0,182.5,184.0,183.5\""
+        return 1
+    fi
 
-【MACD Formula】
-  MACD Line   = EMA(${fast}) - EMA(${slow})
-  Signal Line = EMA(${signal}) of MACD Line
-  Histogram   = MACD Line - Signal Line
+    PRICES="$prices" FAST="$fast" SLOW="$slow" SIGNAL="$signal" python3 << 'PYEOF'
+import os
 
-【EMA Calculation (Exponential Moving Average)】
-  Multiplier = 2 / (Period + 1)
+prices_str = os.environ["PRICES"]
+fast = int(os.environ["FAST"])
+slow = int(os.environ["SLOW"])
+signal_p = int(os.environ["SIGNAL"])
 
-  EMA${fast} multiplier = 2 / (${fast} + 1) = $(python3 -c "print(f'{2/(${fast}+1):.4f}')")
-  EMA${slow} multiplier = 2 / (${slow} + 1) = $(python3 -c "print(f'{2/(${slow}+1):.4f}')")
-  Signal multiplier     = 2 / (${signal} + 1) = $(python3 -c "print(f'{2/(${signal}+1):.4f}')")
+prices = [float(p.strip()) for p in prices_str.split(",") if p.strip()]
 
-  EMA_today = (Price_today × Multiplier) + (EMA_yesterday × (1 - Multiplier))
+if len(prices) < slow + signal_p:
+    print(f"Error: Need at least {slow + signal_p} prices, got {len(prices)}")
+    exit(1)
 
-【Step-by-step Calculation】
-  1. Collect at least ${slow} + ${signal} periods of closing prices
-  2. Calculate ${fast}-period EMA of closing prices
-  3. Calculate ${slow}-period EMA of closing prices
-  4. MACD Line = EMA(${fast}) - EMA(${slow})
-  5. Signal Line = ${signal}-period EMA of the MACD Line
-  6. Histogram = MACD Line - Signal Line
+def calc_ema(data, period):
+    """Calculate EMA series from price data."""
+    ema = []
+    # First EMA = SMA of first 'period' values
+    sma = sum(data[:period]) / period
+    ema.append(sma)
+    mult = 2.0 / (period + 1)
+    for i in range(period, len(data)):
+        val = data[i] * mult + ema[-1] * (1 - mult)
+        ema.append(val)
+    return ema
 
-【Worked Example (Daily Closes)】
-  Assume 26 days of price data ending with:
-    Day 25: EMA(12) = 176.42, EMA(26) = 174.89
-    Day 26: Close = 177.30
+# Calculate EMAs
+ema_fast = calc_ema(prices, fast)
+ema_slow = calc_ema(prices, slow)
 
-  Step 1 — Update EMA(12):
-    EMA(12) = 177.30 × $(python3 -c "print(f'{2/(${fast}+1):.4f}')") + 176.42 × $(python3 -c "print(f'{1-2/(${fast}+1):.4f}')") = 176.56
+# Align: ema_fast starts at index fast-1, ema_slow at slow-1
+# MACD line starts where both exist
+offset = slow - fast
+macd_line = []
+for i in range(len(ema_slow)):
+    macd_val = ema_fast[i + offset] - ema_slow[i]
+    macd_line.append(macd_val)
 
-  Step 2 — Update EMA(26):
-    EMA(26) = 177.30 × $(python3 -c "print(f'{2/(${slow}+1):.4f}')") + 174.89 × $(python3 -c "print(f'{1-2/(${slow}+1):.4f}')") = 175.07
+# Signal line = EMA of MACD line
+signal_line = calc_ema(macd_line, signal_p)
 
-  Step 3 — MACD Line:
-    MACD = 176.56 - 175.07 = 1.49
+# Histogram
+hist_offset = signal_p
+histogram = []
+for i in range(len(signal_line)):
+    h = macd_line[i + signal_p - 1 + 1 - 1] - signal_line[i]
+    histogram.append(h)
 
-  Step 4 — Signal Line (if prev signal = 1.20):
-    Signal = 1.49 × $(python3 -c "print(f'{2/(${signal}+1):.4f}')") + 1.20 × $(python3 -c "print(f'{1-2/(${signal}+1):.4f}')") = 1.26
+# Recalculate aligned
+# ema_slow starts at index slow-1 of prices
+# macd_line[j] corresponds to prices index slow-1+j
+# signal_line starts at index signal_p-1 of macd_line
+# So signal_line[k] corresponds to macd_line[signal_p-1+k]
 
-  Step 5 — Histogram:
-    Histogram = 1.49 - 1.26 = 0.23 (positive, bullish momentum)
+print("=" * 60)
+print(f"  MACD Calculator — ({fast}, {slow}, {signal_p})")
+print("=" * 60)
+print(f"  Input: {len(prices)} prices")
+print(f"  EMA({fast}) multiplier: {2/(fast+1):.4f}")
+print(f"  EMA({slow}) multiplier: {2/(slow+1):.4f}")
+print(f"  Signal multiplier:  {2/(signal_p+1):.4f}")
+print()
 
-【Key Readings】
-  MACD > 0 and rising   → Bullish momentum strengthening
-  MACD > 0 and falling  → Bullish momentum weakening
-  MACD < 0 and falling  → Bearish momentum strengthening
-  MACD < 0 and rising   → Bearish momentum weakening
+# Show last 10 data points with aligned indices
+n_show = min(10, len(signal_line))
+print(f"  Last {n_show} computed values:")
+print(f"  {'Day':<6} {'Price':<10} {'EMA'+str(fast):<12} {'EMA'+str(slow):<12} {'MACD':<10} {'Signal':<10} {'Hist':<10}")
+print(f"  {'-'*70}")
 
-【Common Parameter Sets】
-  Setting        Fast  Slow  Signal   Use Case
-  ──────────────────────────────────────────────────
-  Standard       12    26    9        Default (all markets) ⭐
-  Short-term     5     13    1        Scalping / day trading
-  Crypto fast    8     21    5        Volatile crypto markets
-  Long-term      19    39    9        Position trading / investing
-  Weekly         12    26    9        Weekly chart analysis
+for i in range(len(signal_line) - n_show, len(signal_line)):
+    macd_idx = i + signal_p - 1
+    price_idx = slow - 1 + macd_idx
+    if price_idx < len(prices) and macd_idx < len(macd_line):
+        ema_f_idx = macd_idx + offset
+        p = prices[price_idx] if price_idx < len(prices) else 0
+        ef = ema_fast[ema_f_idx] if ema_f_idx < len(ema_fast) else 0
+        es = ema_slow[macd_idx] if macd_idx < len(ema_slow) else 0
+        m = macd_line[macd_idx]
+        s = signal_line[i]
+        h = m - s
+        print(f"  {price_idx+1:<6} {p:<10.2f} {ef:<12.4f} {es:<12.4f} {m:<10.4f} {s:<10.4f} {h:<+10.4f}")
 
-📖 More skills: bytesagain.com
-EOF
+# Current values (last)
+last_macd = macd_line[-1]
+last_signal = signal_line[-1]
+last_hist = last_macd - last_signal
+
+print()
+print(f"  Current MACD:      {last_macd:+.4f}")
+print(f"  Current Signal:    {last_signal:+.4f}")
+print(f"  Current Histogram: {last_hist:+.4f}")
+print()
+
+# Generate signal
+if last_macd > last_signal:
+    if last_hist > 0 and len(histogram) > 1 and histogram[-1] > histogram[-2]:
+        sig = "BULLISH (MACD above signal, histogram expanding)"
+    else:
+        sig = "BULLISH (MACD above signal)"
+else:
+    if last_hist < 0 and len(histogram) > 1 and histogram[-1] < histogram[-2]:
+        sig = "BEARISH (MACD below signal, histogram expanding down)"
+    else:
+        sig = "BEARISH (MACD below signal)"
+
+if abs(last_hist) < 0.05:
+    sig += " ⚠️ Near crossover"
+
+print(f"  Signal: {sig}")
+print(f"\n📖 More skills: bytesagain.com")
+PYEOF
+}
+
+cmd_calculate_file() {
+    local file="${1:-}"
+    if [ -z "$file" ] || [ ! -f "$file" ]; then
+        echo "Usage: bash scripts/script.sh calculate-file <prices.csv>"
+        echo "  CSV format: one price per line, or first column of CSV"
+        return 1
+    fi
+
+    # Extract prices from CSV (first numeric column)
+    local prices
+    prices=$(python3 << PYEOF
+import csv, sys
+with open("$file") as f:
+    reader = csv.reader(f)
+    vals = []
+    for row in reader:
+        for cell in row:
+            cell = cell.strip()
+            try:
+                v = float(cell)
+                vals.append(str(v))
+                break
+            except ValueError:
+                continue
+    print(",".join(vals))
+PYEOF
+    )
+
+    if [ -z "$prices" ]; then
+        echo "Error: No numeric data found in $file"
+        return 1
+    fi
+
+    cmd_calculate "$prices" "${2:-12}" "${3:-26}" "${4:-9}"
 }
 
 cmd_interpret() {
     local macd_val="${1:-}"
     local signal_val="${2:-}"
+
     if [ -z "$macd_val" ] || [ -z "$signal_val" ]; then
         echo "Usage: bash scripts/script.sh interpret <macd_value> <signal_value>"
         echo "Example: bash scripts/script.sh interpret 1.25 0.80"
         return 1
     fi
 
-    MACD_VAL="$macd_val" SIGNAL_VAL="$signal_val" python3 -u <<'PYEOF'
+    MACD_VAL="$macd_val" SIG_VAL="$signal_val" python3 << 'PYEOF'
 import os
 
 macd = float(os.environ["MACD_VAL"])
-signal = float(os.environ["SIGNAL_VAL"])
-histogram = macd - signal
+signal = float(os.environ["SIG_VAL"])
+hist = macd - signal
 
-print("═" * 50)
+print("=" * 55)
 print(f"  MACD Analysis")
-print("═" * 50)
-print(f"\n  MACD Line:   {macd:+.4f}")
+print("=" * 55)
+print(f"  MACD Line:   {macd:+.4f}")
 print(f"  Signal Line: {signal:+.4f}")
-print(f"  Histogram:   {histogram:+.4f}")
+print(f"  Histogram:   {hist:+.4f}")
+print()
 
-# Determine trend
+# Zone analysis
 if macd > 0 and signal > 0:
-    trend = "📈 BULLISH — Both lines above zero"
+    zone = "ABOVE ZERO — Bullish territory"
 elif macd < 0 and signal < 0:
-    trend = "📉 BEARISH — Both lines below zero"
-elif macd > 0 and signal < 0:
-    trend = "🔄 TRANSITIONING BULLISH — MACD crossed above zero"
+    zone = "BELOW ZERO — Bearish territory"
 else:
-    trend = "🔄 TRANSITIONING BEARISH — MACD crossed below zero"
+    zone = "ZERO LINE AREA — Trend transition"
 
-# Determine signal
-if histogram > 0 and macd > signal:
-    if histogram > abs(macd) * 0.3:
-        action = "🟢 STRONG BUY — MACD well above signal, momentum strong"
+# Crossover
+if macd > signal:
+    cross = "MACD above Signal — Bullish"
+    if hist > 0.5:
+        momentum = "Strong upward momentum"
+    elif hist > 0:
+        momentum = "Mild upward momentum"
     else:
-        action = "🟢 BUY — MACD above signal line"
-elif histogram < 0 and macd < signal:
-    if abs(histogram) > abs(macd) * 0.3:
-        action = "🔴 STRONG SELL — MACD well below signal, momentum bearish"
+        momentum = "Weak momentum"
+else:
+    cross = "MACD below Signal — Bearish"
+    if hist < -0.5:
+        momentum = "Strong downward momentum"
+    elif hist < 0:
+        momentum = "Mild downward momentum"
     else:
-        action = "🔴 SELL — MACD below signal line"
+        momentum = "Weak momentum"
+
+# Action
+if macd > signal and macd > 0:
+    action = "Hold longs. Trail stop below support."
+elif macd > signal and macd <= 0:
+    action = "Potential bottom. Watch for zero-line crossover to confirm."
+elif macd < signal and macd < 0:
+    action = "Bearish. Avoid longs. Look for oversold bounce signals."
 else:
-    action = "⚪ NEUTRAL — Lines converging, watch for crossover"
+    action = "Topping signal. Consider taking profits. Tighten stops."
 
-# Histogram momentum
-if histogram > 0:
-    h_reading = "Positive — bullish momentum"
-    h_bars = "▓" * min(int(abs(histogram) * 10) + 1, 20)
-    h_color = f"  ▲ {h_bars}"
-else:
-    h_reading = "Negative — bearish momentum"
-    h_bars = "▓" * min(int(abs(histogram) * 10) + 1, 20)
-    h_color = f"  ▼ {h_bars}"
+print(f"  Zone:     {zone}")
+print(f"  Cross:    {cross}")
+print(f"  Momentum: {momentum}")
+print(f"  Action:   {action}")
 
-print(f"\n  Trend:     {trend}")
-print(f"  Signal:    {action}")
-print(f"  Histogram: {h_reading}")
-print(f"  {h_color}")
+if abs(hist) < 0.1:
+    print(f"\n  ⚠️  Histogram near zero — crossover imminent!")
 
-# Distance analysis
-distance = abs(macd - signal)
-print(f"\n  Line Separation: {distance:.4f}")
-if distance < 0.1:
-    print("  ⚠️  Lines very close — crossover imminent!")
-    print("     Watch next 1-3 candles for confirmation.")
-elif distance > 2.0:
-    print("  ⚠️  Lines far apart — extended move, reversion likely.")
-    print("     Consider taking partial profits.")
-
-print(f"\n  💡 Tip: Confirm MACD signals with volume and")
-print(f"     support/resistance levels for better accuracy.")
 print(f"\n📖 More skills: bytesagain.com")
 PYEOF
 }
 
 cmd_crossover() {
-    cat <<'EOF'
+    cat << 'EOF'
 ═══════════════════════════════════════════════════
   MACD Crossover Patterns
 ═══════════════════════════════════════════════════
 
-【Bullish Crossover 🟢 (Buy Signal)】
-  MACD Line crosses ABOVE the Signal Line
+【Bullish Crossover 🟢】
+  MACD line crosses ABOVE signal line
+  Histogram: negative → positive
 
-  Strength levels:
-  1. Below zero line → Early reversal signal (moderate)
-  2. At zero line    → Trend confirmation (strong)
-  3. Above zero line → Momentum continuation (use caution)
+  Strength filters:
+    ✅ Strong: occurs below zero line (early trend)
+    ⚠️ Medium: occurs near zero line
+    ❌ Weak: occurs far above zero (late, risky)
 
-  Entry rules:
-  • Wait for the crossover candle to close
-  • Confirm with increasing volume
-  • Best when histogram bars start turning positive
-  • Place stop-loss below recent swing low
+  Entry: Buy on close after crossover confirms
+  Stop:  Below recent swing low
+  Target: Previous resistance or 2:1 R:R
 
-【Bearish Crossover 🔴 (Sell Signal)】
-  MACD Line crosses BELOW the Signal Line
+【Bearish Crossover 🔴】
+  MACD line crosses BELOW signal line
+  Histogram: positive → negative
 
-  Strength levels:
-  1. Above zero line → Early reversal signal (moderate)
-  2. At zero line    → Trend confirmation (strong)
-  3. Below zero line → Momentum continuation (use caution)
+  Strength filters:
+    ✅ Strong: occurs above zero line (early trend)
+    ⚠️ Medium: occurs near zero line
+    ❌ Weak: occurs far below zero (late, risky)
 
-  Exit rules:
-  • Wait for the crossover candle to close
-  • Confirm with increasing volume
-  • Best when histogram bars start turning negative
-  • Place stop-loss above recent swing high
+  Entry: Sell/short on close after crossover confirms
+  Stop:  Above recent swing high
+  Target: Previous support or 2:1 R:R
 
 【Zero Line Crossover】
-  MACD Line crosses the Zero Line (not the signal line)
+  MACD crosses above zero = bullish trend confirmed
+  MACD crosses below zero = bearish trend confirmed
 
-  MACD crosses above 0:
-  → EMA(12) > EMA(26), short-term momentum > long-term
-  → Bullish trend confirmation
+  More significant than signal crossover but lags more.
+  Use as trend filter, not entry trigger.
 
-  MACD crosses below 0:
-  → EMA(12) < EMA(26), short-term momentum < long-term
-  → Bearish trend confirmation
+【False Crossover Filters】
+  Skip crossover if:
+  - Histogram bar is tiny (< 0.05)
+  - Crossover happens in choppy sideways market
+  - Volume is declining during crossover
+  - Price is inside a tight range
 
-【False Crossover Filter】
-  Not every crossover is a valid signal. Filter with:
-
-  ✅ Volume confirmation (higher volume = stronger signal)
-  ✅ Crossover after a clear trend (not in chop)
-  ✅ Histogram bars growing after crossover
-  ✅ Price at key support/resistance level
-  ❌ Ignore crossovers in tight consolidation
-  ❌ Ignore if histogram is tiny (< 0.05 separation)
-  ❌ Beware of whipsaw in sideways markets
-
-【Crossover + Histogram Confirmation】
-  The strongest signals combine crossover with histogram:
-
-  1. Histogram shrinking → approaching crossover
-  2. Histogram crosses zero → crossover confirmed
-  3. Histogram growing → momentum building after crossover
-
-  Think of histogram as the "speed" of the MACD/Signal gap.
-  Shrinking histogram = deceleration = warning sign.
+  Confirm with:
+  - Volume spike on crossover bar
+  - Price breaks key support/resistance
+  - RSI confirms direction (> 50 bullish, < 50 bearish)
 
 📖 More skills: bytesagain.com
 EOF
 }
 
 cmd_histogram() {
-    cat <<'EOF'
+    cat << 'EOF'
 ═══════════════════════════════════════════════════
-  MACD Histogram — Deep Dive
+  MACD Histogram Deep Dive
 ═══════════════════════════════════════════════════
 
 【What the Histogram Shows】
   Histogram = MACD Line - Signal Line
-  It measures the DISTANCE between MACD and its signal line.
-  Think of it as "momentum of momentum."
+  Positive bars: MACD above signal (bullish momentum)
+  Negative bars: MACD below signal (bearish momentum)
+  Bar height = momentum strength
 
-  Positive histogram → MACD above signal → bullish momentum
-  Negative histogram → MACD below signal → bearish momentum
-
-【Reading Histogram Bars】
-  ▓▓▓▓▓▓▓▓  Growing positive bars = accelerating bullish momentum
-  ▓▓▓▓▓     Shrinking positive bars = decelerating (warning!)
-  ▓▓
-  ──────── zero line ────────
-  ▓▓
-  ▓▓▓▓▓     Growing negative bars = accelerating bearish momentum
-  ▓▓▓▓▓▓▓▓  Shrinking negative bars = bears losing control
-
-【Four Phases of Histogram】
-
-  Phase 1: Positive & Growing  📈
-    → Strong bullish momentum
-    → Hold long positions
-    → Don't short against this
-
-  Phase 2: Positive & Shrinking  ⚠️
-    → Bulls losing steam
-    → Tighten stops on longs
-    → Prepare for possible crossover
-
-  Phase 3: Negative & Growing  📉
-    → Strong bearish momentum
-    → Hold short positions
-    → Don't buy against this
-
-  Phase 4: Negative & Shrinking  ⚠️
-    → Bears losing steam
-    → Tighten stops on shorts
-    → Prepare for possible bullish crossover
+【Alexander Elder's Histogram Rules】
+  1. Histogram rising = momentum increasing (don't short)
+  2. Histogram falling = momentum decreasing (don't buy)
+  3. New histogram peak > previous peak = strong trend
+  4. New histogram peak < previous peak = weakening trend (divergence!)
 
 【Histogram Divergence (Most Powerful Signal)】
+  Bullish: Price makes lower low, histogram makes higher low
+    → Selling exhaustion, reversal likely
+    → Best signal when histogram is below zero
 
-  Bullish histogram divergence:
-    Price:     Lower Low  ↘
-    Histogram: Higher Low ↗  (shallower negative bar)
-    → Bears exhausting, reversal coming
-    → This often leads crossover by 2-5 bars
+  Bearish: Price makes higher high, histogram makes lower high
+    → Buying exhaustion, reversal likely
+    → Best signal when histogram is above zero
 
-  Bearish histogram divergence:
-    Price:     Higher High ↗
-    Histogram: Lower High  ↘  (shorter positive bar)
-    → Bulls exhausting, pullback coming
-    → Excellent profit-taking signal
+【Reading Histogram Shape】
+  Expanding bars (growing taller):
+    → Trend accelerating, stay in trade
 
-【Histogram Peak/Trough Analysis】
-  • Histogram peak → histogram starts declining = first sell warning
-  • Histogram trough → histogram starts rising = first buy warning
-  • These signals come BEFORE the actual MACD/Signal crossover
-  • Earlier entry = better price, but more false signals
+  Contracting bars (getting shorter):
+    → Trend decelerating, prepare for reversal
+    → Tighten stops, take partial profits
 
-【Histogram Zero Cross = MACD Crossover】
-  When histogram crosses zero, it means MACD and Signal
-  have crossed. This is mathematically identical.
-  But watching histogram APPROACH zero gives you advance notice.
+  Bars crossing zero:
+    → Crossover event (see crossover command)
+
+【Common Mistakes】
+  ❌ Trading histogram in isolation
+  ❌ Ignoring the actual bar height (tiny = meaningless)
+  ❌ Fighting expanding histogram (counter-trend trading)
+  ✅ Use histogram + price action + volume together
 
 📖 More skills: bytesagain.com
 EOF
 }
 
 cmd_strategies() {
-    cat <<'EOF'
+    cat << 'EOF'
 ═══════════════════════════════════════════════════
   MACD Trading Strategies
 ═══════════════════════════════════════════════════
 
-【Strategy 1: Classic MACD Crossover】
-  Entry:  Buy when MACD crosses above signal below zero line
-  Exit:   Sell when MACD crosses below signal above zero line
-  Stop:   Below recent swing low (for longs)
+【Strategy 1: Classic Crossover】
+  Entry:  MACD crosses above signal → BUY
+          MACD crosses below signal → SELL
+  Stop:   Below/above recent swing
   Target: 2:1 reward-to-risk minimum
-  Best:   Trending markets with clear direction
-  Avoid:  Sideways/choppy markets (whipsaw risk)
+  Filter: Only trade crossovers in direction of daily trend
+  Best:   Trending markets
 
-【Strategy 2: MACD + RSI Confirmation】
-  Setup:  MACD (12,26,9) + RSI (14)
+【Strategy 2: Zero Line Rejection】
+  Setup:  MACD pulls back toward zero but does not cross
+  Long:   MACD dips toward zero, bounces up → BUY
+  Short:  MACD rallies toward zero, turns down → SELL
+  Edge:   Catches trend continuation after pullback
+  Best:   Strong trending markets
 
-  Long entry:
-    1. MACD bullish crossover (MACD > Signal)
-    2. RSI > 50 but < 70 (bullish but not overbought)
-    3. Enter on next candle open
-    4. Stop below swing low
+【Strategy 3: Histogram Divergence】
+  Bullish: Price lower low + histogram higher low → BUY
+  Bearish: Price higher high + histogram lower high → SELL
+  Stop:   Beyond the divergence swing point
+  Note:   Most reliable MACD signal (Elder)
+  Best:   Reversals at support/resistance
 
-  Short entry:
-    1. MACD bearish crossover (MACD < Signal)
-    2. RSI < 50 but > 30 (bearish but not oversold)
-    3. Enter on next candle open
-    4. Stop above swing high
+【Strategy 4: MACD + Moving Average Filter】
+  Setup:  Add 200-period SMA to chart
+  Long:   Price > 200 SMA AND MACD bullish crossover → BUY
+  Short:  Price < 200 SMA AND MACD bearish crossover → SELL
+  Edge:   Filters out counter-trend signals
+  Best:   Swing trading (daily chart)
 
-  Edge: RSI filters out weak crossover signals.
+【Strategy 5: Multi-Timeframe MACD】
+  Weekly MACD: Determines trend direction
+  Daily MACD:  Determines entry timing
 
-【Strategy 3: Histogram Reversal】
-  This is Alexander Elder's favorite MACD technique.
+  If Weekly MACD > 0 (bullish):
+    → Only take daily bullish crossovers (ignore bearish)
+  If Weekly MACD < 0 (bearish):
+    → Only take daily bearish crossovers (ignore bullish)
 
-  Buy signal:
-    1. Histogram is below zero (bearish zone)
-    2. Histogram starts rising (bar less negative than previous)
-    3. This is a "buy" — bears are losing momentum
-    4. Best when histogram turns from a new low
+  Edge: Dramatically reduces false signals
 
-  Sell signal:
-    1. Histogram is above zero (bullish zone)
-    2. Histogram starts falling (bar less positive than previous)
-    3. This is a "sell" — bulls are losing momentum
-    4. Best when histogram turns from a new high
-
-  Key: You're trading the TURN of momentum, not waiting
-  for the full crossover. Earlier entry, tighter risk.
-
-【Strategy 4: MACD Divergence Trading】
-  The highest-probability MACD signal.
-
-  Bullish divergence trade:
-    1. Price makes lower low
-    2. MACD (or histogram) makes higher low
-    3. Wait for bullish crossover confirmation
-    4. Enter with stop below the price low
-    5. Target: previous swing high or 2:1 R:R
-
-  Bearish divergence trade:
-    1. Price makes higher high
-    2. MACD (or histogram) makes lower high
-    3. Wait for bearish crossover confirmation
-    4. Enter with stop above the price high
-    5. Target: previous swing low or 2:1 R:R
-
-  ⚠️ Divergence in strong trends can persist!
-  Always wait for crossover confirmation.
-
-【Strategy 5: Zero Line Rejection】
-  In strong trends, MACD pulls back to zero but doesn't cross.
-
-  Bullish zero line rejection:
-    1. MACD has been positive (uptrend)
-    2. MACD pulls back toward zero
-    3. MACD bounces from zero (doesn't go negative)
-    4. Enter long → trend continuation
-
-  Bearish zero line rejection:
-    1. MACD has been negative (downtrend)
-    2. MACD rallies toward zero
-    3. MACD drops from zero (doesn't go positive)
-    4. Enter short → trend continuation
-
-  This is a trend-following pullback strategy.
-  Works beautifully in strong directional markets.
-
-【Strategy 6: Multi-Timeframe MACD】
-  Weekly MACD: Determine primary trend direction
-  Daily MACD:  Time your entries
-
-  If Weekly MACD > 0 (bullish trend):
-    → Only take bullish crossovers on daily
-    → Ignore bearish daily crossovers (counter-trend)
-
-  If Weekly MACD < 0 (bearish trend):
-    → Only take bearish crossovers on daily
-    → Ignore bullish daily crossovers (counter-trend)
-
-  This dramatically reduces false signals.
+【Parameter Variations】
+  Standard:   (12, 26, 9) — most common, balanced
+  Fast:       (8, 17, 9) — more signals, more noise
+  Slow:       (21, 55, 9) — fewer signals, higher quality
+  Crypto:     (12, 26, 9) on 4H chart — best for crypto volatility
 
 📖 More skills: bytesagain.com
 EOF
 }
 
 cmd_help() {
-    cat <<EOF
-MACD v${VERSION} — Moving Average Convergence Divergence
+    cat << EOF
+MACD v${VERSION} — Moving Average Convergence Divergence Calculator
 
 Commands:
-  calculate [fast] [slow] [signal]   Calculate MACD step-by-step (default: 12,26,9)
-  interpret <macd> <signal>          Interpret MACD & signal values with trading signals
-  crossover                          MACD/signal line crossover patterns
-  histogram                          MACD histogram deep dive & momentum reading
-  strategies                         Proven MACD trading strategies
-  help                               Show this help
-  version                            Show version
+  calculate <prices> [fast] [slow] [sig]
+                         Compute MACD from comma-separated prices
+  calculate-file <csv>   Compute MACD from a CSV file
+  interpret <macd> <sig> Interpret MACD/signal values
+  crossover              Crossover patterns and trading rules
+  histogram              Histogram analysis guide
+  strategies             MACD trading strategies
+  help                   Show this help
+  version                Show version
 
 Usage:
-  bash scripts/script.sh calculate 12 26 9
+  bash scripts/script.sh calculate "170.5,171.2,...,183.5"
+  bash scripts/script.sh calculate-file prices.csv
   bash scripts/script.sh interpret 1.25 0.80
-  bash scripts/script.sh crossover
+
+Requires: python3 (standard library only)
 
 Related skills:
-  clawhub install rsi        — RSI overbought/oversold analysis
-  clawhub install atr        — ATR volatility & position sizing
+  clawhub install rsi
+  clawhub install atr
 Browse all: bytesagain.com
 
 Powered by BytesAgain | bytesagain.com
@@ -435,11 +434,12 @@ EOF
 }
 
 case "${1:-help}" in
-    calculate)   shift; cmd_calculate "$@" ;;
-    interpret)   shift; cmd_interpret "$@" ;;
-    crossover)   cmd_crossover ;;
-    histogram)   cmd_histogram ;;
-    strategies)  cmd_strategies ;;
-    version)     echo "macd v${VERSION}" ;;
-    help|*)      cmd_help ;;
+    calculate)       shift; cmd_calculate "$@" ;;
+    calculate-file)  shift; cmd_calculate_file "$@" ;;
+    interpret)       shift; cmd_interpret "$@" ;;
+    crossover)       cmd_crossover ;;
+    histogram)       cmd_histogram ;;
+    strategies)      cmd_strategies ;;
+    version)         echo "macd v${VERSION}" ;;
+    help|*)          cmd_help ;;
 esac
