@@ -1,60 +1,48 @@
 ---
-name: "BytesAgain Shopping Deals — All-in-One Price Tracker & Coupon Finder"
-description: "Use when searching for deals on JD.com, Taobao, Amazon JP, AliExpress, or Pinduoduo. Get real-time prices, hidden coupons, and direct purchase links."
-version: "1.2.0"
+name: "BytesAgain Shopping Deals — 全能购物比价与隐藏优惠券助手"
+description: "Use when searching for deals on JD.com, Taobao, Amazon JP, AliExpress, or Pinduoduo. 支持京东、淘宝、拼多多、亚马逊、速卖通全网搜券与比价，自动生成佣金链接。"
+version: "1.3.0"
 author: "BytesAgain"
 homepage: https://bytesagain.com
 source: https://github.com/bytesagain/ai-skills
-tags: ["shopping", "deals", "coupons", "ecommerce", "price-comparison", "jd", "amazon", "taobao", "aliexpress"]
+tags: ["shopping", "deals", "coupons", "ecommerce", "jd", "amazon", "taobao", "pinduoduo", "比价", "优惠券"]
 ---
 
-# BytesAgain Shopping Deals
+# BytesAgain Shopping Deals / 楼台购物助手
 
-The ultimate AI shopping companion. Find the best prices, claim hidden coupons, and discover trending deals across major global e-commerce platforms.
+全能 AI 购物伴侣。支持全球主流电商平台实时查价、领取隐藏优惠券、发现热门爆款。
 
-Platforms supported:
-- **JD.com (京东)** — Search products and find coupons.
-- **Pinduoduo (拼多多)** — High-commission deals.
-- **Taobao/Tmall (淘宝/天猫)** — Global product search.
-- **Amazon Japan** — Electronics, household goods, and more.
-- **AliExpress** — Global cross-border deals.
+## 主要功能 / Main Features
+- **JD.com (京东)** — 搜索商品及隐藏优惠券。
+- **Pinduoduo (拼多多)** — 发现高佣金爆款。
+- **Taobao/Tmall (淘宝/天猫)** — 全网深度比价。
+- **Amazon Japan (亚马逊日本)** — 自动关联返利标签。
+- **AliExpress (速卖通)** — 全球跨境好物推荐。
 
-## Requirements
+## 要求 / Requirements
 - bash 4+
-- python3 (standard library)
+- python3 (with `requests` library)
 - curl
 
-## Commands
+## 命令 / Commands
 
 ### search
-Search for products across multiple platforms.
+全网搜索商品。
 ```bash
-bash scripts/script.sh search "iphone 16" --source jd
-bash scripts/script.sh search "coffee beans" --source amazon
+bash scripts/script.sh search "iphone 16" jd
+bash scripts/script.sh search "coffee beans" amazon
 ```
 
-### coupons
-Find hidden coupons for a specific product or keyword.
+### link
+生成带佣金的购买链接（支持拼多多等）。
 ```bash
-bash scripts/script.sh coupons "skincare"
+bash scripts/script.sh link pdd 574744426578
 ```
 
-### trending
-Discover current trending products and top-selling deals.
-```bash
-bash scripts/script.sh trending --source pdd
-```
-
-### detail
-Get product details and a direct purchase link.
-```bash
-bash scripts/script.sh detail --id "GOODS_ID" --source "jd"
-```
-
-## Safety & Transparency
-- This tool makes outbound network calls to official e-commerce APIs and trusted price-aggregation endpoints.
-- No personal user data or payment information is collected.
-- All links generated include affiliate tags to support the project.
+## 安全与隐私 / Safety
+- 脚本仅调用电商平台公开 API 或授权接口。
+- **不会** 读取任何本地隐私文件。
+- 生成的链接包含返利标签以支持本项目。
 
 ## Feedback
 https://bytesagain.com/feedback/

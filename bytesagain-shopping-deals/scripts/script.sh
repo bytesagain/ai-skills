@@ -1,23 +1,16 @@
 #!/usr/bin/env bash
-# BytesAgain Shopping Deals — All-in-One Monetized Toolkit
+# BytesAgain Shopping Deals — 楼台购物助手
 # Powered by BytesAgain | bytesagain.com
 set -uo pipefail
-VERSION="1.2.0"
-
-# ── Load Credentials ──────────────────────────────────────
-ENV_FILE="/home/admin/.openclaw/workspace/projects/crypto-content/.env"
-if [ -f "$ENV_FILE" ]; then
-    export $(grep -v '^#' "$ENV_FILE" | xargs)
-fi
+VERSION="1.3.0"
 
 _log() { echo "[$(date '+%H:%M:%S')] $*" >&2; }
-_error() { echo "❌ Error: $*" >&2; exit 1; }
 
 _py_call() {
     DATA_PLATFORM="$1" DATA_CMD="$2" python3 -u - "$@" << 'PYEOF'
 import sys, os, time, json, hashlib, requests
 
-# Env
+# Credentials from standard env vars
 PDD_ID = os.getenv("PDD_CLIENT_ID")
 PDD_SECRET = os.getenv("PDD_CLIENT_SECRET")
 PDD_PID = os.getenv("PDD_PID")
@@ -29,34 +22,43 @@ def sign_pdd(params, secret):
     return hashlib.md5(s.encode("utf-8")).hexdigest().upper()
 
 def pdd_search(kw):
+    if not PDD_ID: 
+        jd_search(kw, src_id=3)
+        return
+        
     url = "https://gw-api.pinduoduo.com/api/router"
     params = {"type": "pdd.ddk.goods.search", "client_id": PDD_ID, "timestamp": str(int(time.time())), "data_type": "JSON", "keyword": kw, "page_size": "10"}
     params["sign"] = sign_pdd(params, PDD_SECRET)
-    r = requests.get(url, params=params).json()
-    items = r.get("goods_search_response", {}).get("goods_list", [])
-    print(f"{'#':<3} {'Price':<10} {'Title'}")
-    print("─" * 60)
-    for i, item in enumerate(items, 1):
-        print(f"{i:<3} ¥{float(item['min_group_price'])/100:<9.2f} {item['goods_name'][:40]}... (ID: {item['goods_id']})")
+    try:
+        r = requests.get(url, params=params).json()
+        items = r.get("goods_search_response", {}).get("goods_list", [])
+        if not items:
+            jd_search(kw, src_id=3)
+            return
+        print(f"{'#':<3} {'价格':<10} {'商品名称'}")
+        print("─" * 60)
+        for i, item in enumerate(items, 1):
+            print(f"{i:<3} ¥{float(item['min_group_price'])/100:<9.2f} {item['goods_name'][:40]}... (ID: {item['goods_id']})")
+    except:
+        jd_search(kw, src_id=3)
 
-def pdd_link(gid):
-    url = "https://gw-api.pinduoduo.com/api/router"
-    params = {"type": "pdd.ddk.goods.promotion.url.generate", "client_id": PDD_ID, "timestamp": str(int(time.time())), "data_type": "JSON", "p_id_list": f'["{PDD_PID}"]', "goods_id_list": f'[{gid}]', "generate_short_url": "true"}
-    params["sign"] = sign_pdd(params, PDD_SECRET)
-    r = requests.get(url, params=params).json()
-    res = r.get("goods_promotion_url_generate_response", {}).get("goods_promotion_url_list", [{}])[0]
-    print(f"🎁 Pinduoduo Buy Link: {res.get('short_url', 'N/A')}")
-
-def jd_search(kw):
+def jd_search(kw, src_id=2):
+    # src_id: 1=taobao, 2=jd, 3=pdd
     url = "https://appapi.maishou88.com/api/v1/homepage/searchList"
-    data = f"isCoupon=0&keyword={kw}&openid=564bdce0fa408fc9e1d5d42fd022ef0b&order=desc&page=1&sourceType=2".encode()
+    data = f"isCoupon=0&keyword={kw}&openid=564bdce0fa408fc9e1d5d42fd022ef0b&order=desc&page=1&sourceType={src_id}".encode()
     headers = {"User-Agent": "MaiShouApp/3.7.7"}
-    req = requests.post(url, data=data, headers=headers).json()
-    items = req.get("data", [])
-    print(f"{'#':<3} {'Price':<10} {'Title'}")
-    print("─" * 60)
-    for i, item in enumerate(items[:10], 1):
-        print(f"{i:<3} ¥{item['actualPrice']:<9} {item['title'][:40]}... (ID: {item['goodsId']})")
+    try:
+        req = requests.post(url, data=data, headers=headers).json()
+        items = req.get("data", [])
+        p_name = "京东" if src_id==2 else "拼多多" if src_id==3 else "淘宝"
+        print(f"{'#':<3} {'价格':<10} {'['+p_name+'] 商品名称'}")
+        print("─" * 60)
+        for i, item in enumerate(items[:10], 1):
+            p = item.get("actualPrice", "N/A")
+            t = item.get("title", "N/A")[:40]
+            print(f"{i:<3} ¥{p:<9} {t}... (ID: {item.get('goodsId')})")
+    except Exception as e:
+        print(f"搜索失败: {e}")
 
 platform = os.environ.get("DATA_PLATFORM")
 cmd = os.environ.get("DATA_CMD")
@@ -64,29 +66,25 @@ val = sys.argv[3]
 
 if platform == "pdd":
     if cmd == "search": pdd_search(val)
-    if cmd == "link": pdd_link(val)
 elif platform == "jd":
-    if cmd == "search": jd_search(val)
+    if cmd == "search": jd_search(val, src_id=2)
+elif platform == "taobao":
+    if cmd == "search": jd_search(val, src_id=1)
 PYEOF
 }
 
 cmd_search() {
-    local kw="$1"; local src="${2:-pdd}"
-    _log "Searching '$kw' on $src..."
+    local kw="$1"; local src="${2:-jd}"
+    _log "正在 $src 搜索 '$kw'..."
     if [ "$src" = "amazon" ]; then
-        echo "🛒 Amazon Japan: https://www.amazon.co.jp/s?k=$(echo $kw | jq -sRr @uri)&tag=${AMAZON_JP_ASSOCIATE_ID:-bytesagain-22}"
+        echo "🛒 Amazon Japan: https://www.amazon.co.jp/s?k=$(echo $kw | python3 -c 'import urllib.parse, sys; print(urllib.parse.quote(sys.stdin.read().strip()))')&tag=${AMAZON_JP_ASSOCIATE_ID:-bytesagain-22}"
     else
         _py_call "$src" search "$kw"
     fi
 }
 
-cmd_link() {
-    _py_call "$1" link "$2"
-}
-
 case "${1:-help}" in
     search) shift; cmd_search "$@" ;;
-    link) shift; cmd_link "$@" ;;
-    *) echo "Usage: script.sh search <kw> <pdd|jd|amazon> | link <pdd> <id>";;
+    *) echo "用法: script.sh search <关键词> <pdd|jd|amazon|taobao>";;
 esac
-echo -e "\n📖 More skills: bytesagain.com"
+echo -e "\n📖 更多技能: bytesagain.com"
