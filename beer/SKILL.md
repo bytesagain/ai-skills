@@ -1,112 +1,85 @@
 ---
-name: "beer"
-version: "1.0.0"
-description: "Catalog beers, log tasting notes, and track brewing recipes locally. Use when rating craft beers, recording homebrew batches, or browsing styles."
+name: "Beer — Styles Encyclopedia, Food Pairing & Homebrew Guide"
+description: "Use when exploring beer styles, pairing beer with food, calculating ABV for homebrew, finding craft beer recommendations, or learning tasting techniques."
+version: "2.0.1"
 author: "BytesAgain"
-homepage: "https://bytesagain.com"
-source: "https://github.com/bytesagain/ai-skills"
-tags: [beer, general, cli, tool]
-category: "general"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
+tags: ["beer", "craft-beer", "homebrew", "brewing", "ipa", "stout", "lifestyle"]
 ---
 
-# beer
+# Beer — Styles Encyclopedia, Food Pairing & Homebrew Guide
 
-Catalog beers, log tasting notes, and track brewing recipes locally. Use when rating craft beers, recording homebrew batches, or browsing styles.
+Your AI beer sommelier. Styles encyclopedia, food pairing guide, ABV calculator, tasting notes framework, and craft beer recommendations.
+
+## Requirements
+- bash 4+
 
 ## Commands
 
-### `status`
-
+### styles
+Beer style encyclopedia with flavor profiles and examples.
 ```bash
-scripts/script.sh status
+bash scripts/script.sh styles ipa
+bash scripts/script.sh styles stout
+bash scripts/script.sh styles lager
+bash scripts/script.sh styles wheat
+bash scripts/script.sh styles sour
+bash scripts/script.sh styles porter
+bash scripts/script.sh styles pilsner
+bash scripts/script.sh styles list
 ```
 
-Show current status
-
-### `add`
-
+### pair
+Beer and food pairing recommendations.
 ```bash
-scripts/script.sh add
+bash scripts/script.sh pair bbq
+bash scripts/script.sh pair pizza
+bash scripts/script.sh pair seafood
+bash scripts/script.sh pair cheese
+bash scripts/script.sh pair dessert
+bash scripts/script.sh pair spicy
+bash scripts/script.sh pair list
 ```
 
-Add new entry
-
-### `list`
-
+### abv
+Calculate alcohol by volume for homebrewing.
 ```bash
-scripts/script.sh list
+bash scripts/script.sh abv 1.050 1.010
 ```
 
-List all entries
-
-### `search`
-
+### taste
+Beer tasting notes framework and scoring guide.
 ```bash
-scripts/script.sh search
+bash scripts/script.sh taste
 ```
 
-Search entries
-
-### `remove`
-
+### homebrew
+Homebrew recipes and getting started guide.
 ```bash
-scripts/script.sh remove
+bash scripts/script.sh homebrew starter
+bash scripts/script.sh homebrew wheat
+bash scripts/script.sh homebrew ipa
+bash scripts/script.sh homebrew list
 ```
 
-Remove entry by number
-
-### `export`
-
+### shop
+Craft beer and gear recommendations.
 ```bash
-scripts/script.sh export
+bash scripts/script.sh shop craft
+bash scripts/script.sh shop gear
+bash scripts/script.sh shop glasses
 ```
 
-Export data to file
-
-### `stats`
-
+### help
+Show all commands.
 ```bash
-scripts/script.sh stats
+bash scripts/script.sh help
 ```
-
-Show statistics
-
-### `config`
-
-```bash
-scripts/script.sh config
-```
-
-View or set config
-
-### `help`
-
-```bash
-scripts/script.sh help
-```
-
-### `version`
-
-```bash
-scripts/script.sh version
-```
-
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `BEER_DIR` | No | Data directory (default: ~/.beer/) |
-
-## Data Storage
-
-All data stored in `~/.beer/` using JSONL format (one JSON object per line).
 
 ## Output
+Structured guides, calculations, and recommendations to stdout.
 
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
----
-
-*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*
+## Feedback
+https://bytesagain.com/feedback/
+Powered by BytesAgain | bytesagain.com

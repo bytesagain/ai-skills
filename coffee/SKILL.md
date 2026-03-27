@@ -1,112 +1,97 @@
 ---
-name: "coffee"
-version: "1.0.0"
-description: "Track coffee brewing logs and tasting notes locally. Use when logging espresso shots, comparing brew methods, reviewing bean origins."
+name: "Coffee — Brew Guide, Bean Encyclopedia & Gear Finder"
+description: "Use when choosing brew methods, calculating coffee ratios, exploring bean origins, finding coffee gear deals, or learning latte art and specialty recipes."
+version: "2.0.1"
 author: "BytesAgain"
-homepage: "https://bytesagain.com"
-source: "https://github.com/bytesagain/ai-skills"
-tags: [coffee, general, cli, tool]
-category: "general"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
+tags: ["coffee", "brewing", "espresso", "latte", "beans", "cafe", "barista", "lifestyle"]
 ---
 
-# coffee
+# Coffee — Brew Guide, Bean Encyclopedia & Gear Finder
 
-Track coffee brewing logs and tasting notes locally. Use when logging espresso shots, comparing brew methods, reviewing bean origins.
+Your AI barista. Brew methods, bean origins, ratio calculator, caffeine tracker, specialty recipes, and coffee gear recommendations.
+
+## Requirements
+- bash 4+
+- curl (for shop/deals commands)
 
 ## Commands
 
-### `status`
-
+### brew
+Brewing method guide with parameters (time, temp, grind, ratio).
 ```bash
-scripts/script.sh status
+bash scripts/script.sh brew pourover
+bash scripts/script.sh brew espresso
+bash scripts/script.sh brew frenchpress
+bash scripts/script.sh brew coldbrew
+bash scripts/script.sh brew aeropress
+bash scripts/script.sh brew mokapot
+bash scripts/script.sh brew chemex
+bash scripts/script.sh brew siphon
 ```
 
-Show current status
-
-### `add`
-
+### ratio
+Calculate coffee-to-water ratio for any number of cups.
 ```bash
-scripts/script.sh add
+bash scripts/script.sh ratio 2
+bash scripts/script.sh ratio 4 strong
+bash scripts/script.sh ratio 1 light
 ```
 
-Add new entry
-
-### `list`
-
+### beans
+Coffee bean origin encyclopedia — flavor profiles, altitude, processing.
 ```bash
-scripts/script.sh list
+bash scripts/script.sh beans ethiopia
+bash scripts/script.sh beans colombia
+bash scripts/script.sh beans brazil
+bash scripts/script.sh beans kenya
+bash scripts/script.sh beans guatemala
+bash scripts/script.sh beans list
 ```
 
-List all entries
-
-### `search`
-
+### caffeine
+Caffeine content comparison across drink types.
 ```bash
-scripts/script.sh search
+bash scripts/script.sh caffeine
+bash scripts/script.sh caffeine espresso
 ```
 
-Search entries
-
-### `remove`
-
+### recipe
+Specialty coffee recipes.
 ```bash
-scripts/script.sh remove
+bash scripts/script.sh recipe dirty
+bash scripts/script.sh recipe oatlatte
+bash scripts/script.sh recipe mocha
+bash scripts/script.sh recipe affogato
+bash scripts/script.sh recipe coldbrew-tonic
+bash scripts/script.sh recipe list
 ```
 
-Remove entry by number
-
-### `export`
-
+### shop
+Coffee gear and bean recommendations with purchase links.
 ```bash
-scripts/script.sh export
+bash scripts/script.sh shop grinder
+bash scripts/script.sh shop beans
+bash scripts/script.sh shop machine
+bash scripts/script.sh shop accessories
 ```
 
-Export data to file
-
-### `stats`
-
+### quiz
+Find your perfect coffee style based on taste preferences.
 ```bash
-scripts/script.sh stats
+bash scripts/script.sh quiz
 ```
 
-Show statistics
-
-### `config`
-
+### help
+Show all commands.
 ```bash
-scripts/script.sh config
+bash scripts/script.sh help
 ```
-
-View or set config
-
-### `help`
-
-```bash
-scripts/script.sh help
-```
-
-### `version`
-
-```bash
-scripts/script.sh version
-```
-
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `COFFEE_DIR` | No | Data directory (default: ~/.coffee/) |
-
-## Data Storage
-
-All data stored in `~/.coffee/` using JSONL format (one JSON object per line).
 
 ## Output
+Structured guides, calculations, and recommendations to stdout.
 
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
----
-
-*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*
+## Feedback
+https://bytesagain.com/feedback/
+Powered by BytesAgain | bytesagain.com
