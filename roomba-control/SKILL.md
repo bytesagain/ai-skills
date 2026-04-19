@@ -1,5 +1,5 @@
 ---
-name: "roomba-control"
+name: bytesagain-roomba-control
 version: "3.0.1"
 description: "Reference tool for life — covers intro, quickstart, patterns and more. Quick lookup for Roomba Control concepts, best practices, and implementation patterns."
 author: "BytesAgain"

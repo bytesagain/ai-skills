@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # story-writer — Interactive story and fiction writing toolkit
 set -euo pipefail
-VERSION="2.0.0"
+VERSION="2.0.2"
 DATA_DIR="${STORY_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/story-writer}"
 mkdir -p "$DATA_DIR/stories" "$DATA_DIR/characters"
 

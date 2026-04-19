@@ -1,206 +1,161 @@
-#!/bin/bash
-# Debugger - Code Debugging Tools Reference
-# Powered by BytesAgain — https://bytesagain.com
-
+#!/usr/bin/env bash
+# debugger — Error analyzer and fix suggester
 set -euo pipefail
 
-cmd_intro() {
-cat << 'EOF'
-╔══════════════════════════════════════════════════════════════╗
-║              DEBUGGER REFERENCE                             ║
-║          Code Debugging Tools & Techniques                  ║
-╚══════════════════════════════════════════════════════════════╝
+CMD="${1:-help}"
+shift || true
+INPUT="${*:-}"
 
-Debuggers let you pause execution, inspect state, step through
-code, and find bugs interactively.
+PATTERNS_FILE="/tmp/debug-patterns.json"
 
-DEBUGGERS BY LANGUAGE:
-  JavaScript   Chrome DevTools, Node Inspector, VS Code
-  Python       pdb, ipdb, debugpy, pudb
-  Go           Delve (dlv)
-  Rust         rust-gdb, rust-lldb, CodeLLDB
-  C/C++        GDB, LLDB, Valgrind
-  Java         JDB, IntelliJ IDEA debugger
-  Ruby         debug.gem, byebug, pry
-  PHP          Xdebug, phpdbg
-  .NET         dotnet-dump, VS debugger
-  Shell        bash -x, set -x, bashdb
-
-DEBUG APPROACHES:
-  Interactive    Breakpoints, step, inspect (debugger)
-  Print debug    console.log / print / fmt.Println
-  Logging        Structured logs (Winston, loguru)
-  Tracing        Distributed traces (Jaeger, Zipkin)
-  Core dump      Post-mortem analysis (gdb core)
-  Time-travel    Record + replay (rr, Replay.io)
-  Remote         Attach to running process
-EOF
+init_patterns() {
+python3 << 'PYEOF'
+import json
+patterns = [
+    {"pattern": "TypeError: 'NoneType'", "lang": "Python", "cause": "Variable is None when a value was expected", "fix": "Add a None check before using the variable: if var is not None:"},
+    {"pattern": "ModuleNotFoundError", "lang": "Python", "cause": "Module not installed or wrong environment", "fix": "Run: pip install <module_name> or activate the correct virtualenv"},
+    {"pattern": "IndentationError", "lang": "Python", "cause": "Mixed tabs and spaces or wrong indentation level", "fix": "Use consistent 4-space indentation. Run: python -m tabnanny script.py"},
+    {"pattern": "KeyError", "lang": "Python", "cause": "Dictionary key does not exist", "fix": "Use dict.get(key, default) or check 'if key in dict' before access"},
+    {"pattern": "ImportError", "lang": "Python", "cause": "Cannot import name from module", "fix": "Check spelling, ensure package is installed, check __init__.py"},
+    {"pattern": "ECONNREFUSED", "lang": "Node/System", "cause": "Connection refused — target service is not running or wrong port", "fix": "Check the service is running: systemctl status <service> or netstat -tlnp"},
+    {"pattern": "ENOENT", "lang": "Node/System", "cause": "File or directory does not exist", "fix": "Check the path exists: ls -la <path>. Check for typos in the filename"},
+    {"pattern": "EACCES", "lang": "Node/System", "cause": "Permission denied", "fix": "Check file permissions: chmod 644 <file> or run with appropriate user"},
+    {"pattern": "Cannot find module", "lang": "Node", "cause": "npm module not installed", "fix": "Run: npm install <module> or npm install in project root"},
+    {"pattern": "SyntaxError: Unexpected token", "lang": "Node/JS", "cause": "JavaScript syntax error", "fix": "Check for missing brackets, commas, or semicolons near the indicated line"},
+    {"pattern": "panic: runtime error", "lang": "Go", "cause": "Runtime panic — nil pointer or index out of bounds", "fix": "Add nil checks before dereferencing pointers. Check slice bounds"},
+    {"pattern": "undefined: ", "lang": "Go", "cause": "Symbol not defined in scope", "fix": "Check import paths, spelling, and that the package is in go.mod"},
+    {"pattern": "command not found", "lang": "Bash", "cause": "Command not installed or not in PATH", "fix": "Install the command or add its directory to PATH: export PATH=$PATH:/path/to/bin"},
+    {"pattern": "No such file or directory", "lang": "Bash", "cause": "File or path does not exist", "fix": "Check the path with: ls -la <path>. Ensure working directory is correct"},
+    {"pattern": "Permission denied", "lang": "Bash", "cause": "Insufficient permissions to access file or execute command", "fix": "Use chmod to fix permissions or prefix with sudo if appropriate"},
+    {"pattern": "OOMKilled", "lang": "Docker/K8s", "cause": "Container killed due to out of memory", "fix": "Increase memory limits in container spec or optimize application memory usage"},
+    {"pattern": "CrashLoopBackOff", "lang": "Kubernetes", "cause": "Container keeps crashing and restarting", "fix": "Check logs: kubectl logs <pod> --previous. Fix the application startup error"},
+    {"pattern": "ImagePullBackOff", "lang": "Kubernetes", "cause": "Cannot pull container image", "fix": "Check image name/tag, registry credentials: kubectl describe pod <pod>"},
+    {"pattern": "fatal: not a git repository", "lang": "Git", "cause": "Not inside a git repository", "fix": "Run: git init or cd to the correct directory"},
+    {"pattern": "CONFLICT", "lang": "Git", "cause": "Merge conflict in files", "fix": "Edit conflicted files, remove conflict markers, then: git add <file> && git commit"},
+    {"pattern": "Connection refused.*5432", "lang": "PostgreSQL", "cause": "PostgreSQL not running or wrong port", "fix": "Start PostgreSQL: systemctl start postgresql or check pg_hba.conf"},
+    {"pattern": "Access denied for user", "lang": "MySQL", "cause": "Wrong MySQL credentials or insufficient privileges", "fix": "Check username/password. Grant privileges: GRANT ALL ON db.* TO user@host"},
+    {"pattern": "SSL certificate problem", "lang": "curl/HTTP", "cause": "SSL certificate verification failed", "fix": "Update CA certificates: apt-get install ca-certificates or use --insecure for testing only"},
+    {"pattern": "Too many open files", "lang": "System", "cause": "File descriptor limit exceeded", "fix": "Increase ulimit: ulimit -n 65536 or set in /etc/security/limits.conf"},
+]
+with open("/tmp/debug-patterns.json", "w") as f:
+    json.dump(patterns, f)
+print(f"Loaded {len(patterns)} error patterns")
+PYEOF
 }
 
-cmd_javascript() {
-cat << 'EOF'
-JAVASCRIPT / NODE.JS DEBUGGING
-==================================
+do_analyze() {
+    local input="$1"
+    local text
+    if [ -f "$input" ]; then
+        text=$(cat "$input")
+    else
+        text="$input"
+    fi
+    DBG_TEXT="$text" python3 << 'PYEOF'
+import json, re, sys, os
 
-CHROME DEVTOOLS:
-  // In code
-  debugger;              // Breakpoint in source
+text = os.environ.get("DBG_TEXT", "")
+with open("/tmp/debug-patterns.json") as f:
+    patterns = json.load(f)
 
-  // Console tricks
-  console.log({a, b, c})         // Named output
-  console.table(arrayOfObjects)  // Table format
-  console.trace("stack")         // Stack trace
-  console.time("op"); doThing(); console.timeEnd("op")
-  console.group("Section"); ...; console.groupEnd()
-  console.assert(x > 0, "x must be positive")
-  copy(obj)                      // Copy to clipboard
+matches = []
+for p in patterns:
+    if p["pattern"].lower() in text.lower():
+        matches.append(p)
 
-  // Breakpoint types (Sources panel)
-  - Line breakpoint              Click line number
-  - Conditional breakpoint       Right-click → condition
-  - Logpoint                     Right-click → log message
-  - DOM breakpoint               Elements → Break on...
-  - XHR/fetch breakpoint         Sources → XHR Breakpoints
-  - Event listener breakpoint    Sources → Event Listeners
+if not matches:
+    print("⚠️  No known error patterns matched.")
+    print("Try: debugger explain '<error message>' for specific error codes")
+    sys.exit(0)
 
-NODE.JS:
-  # Built-in inspector
-  node --inspect app.js            # Start with debugger
-  node --inspect-brk app.js        # Break on first line
-  # Open chrome://inspect in Chrome
-
-  # VS Code launch.json
-  {
-    "type": "node",
-    "request": "launch",
-    "name": "Debug",
-    "program": "${workspaceFolder}/src/index.js",
-    "skipFiles": ["<node_internals>/**"],
-    "env": { "DEBUG": "*" }
-  }
-
-  # Attach to running process
-  kill -USR1 <pid>                 # Enable inspector on running Node
-  # Then attach via Chrome DevTools or VS Code
-
-REACT DEVTOOLS:
-  // Browser extension → Components tab
-  // Inspect props, state, hooks, context
-  // Profiler → record renders, identify slow components
-  // $r in console = selected component
-
-DEBUG TIPS:
-  // Conditional console.log
-  process.env.DEBUG && console.log("debug info")
-
-  // Debug module
-  const debug = require('debug')('app:server');
-  debug('listening on port %d', port);
-  // Run: DEBUG=app:* node app.js
-EOF
+print(f"🔍 Found {len(matches)} matching pattern(s):\n")
+for i, m in enumerate(matches, 1):
+    print(f"{'='*50}")
+    print(f"Match {i}: [{m['lang']}] {m['pattern']}")
+    print(f"  Cause:  {m['cause']}")
+    print(f"  Fix:    {m['fix']}")
+print(f"{'='*50}")
+PYEOF
 }
 
-cmd_python_systems() {
-cat << 'EOF'
-PYTHON & SYSTEMS DEBUGGING
-==============================
+do_explain() {
+    local query="$1"
+    DBG_QUERY="$query" python3 << 'PYEOF'
+import json, os
 
-PDB (Python Debugger):
-  # Drop into debugger
-  import pdb; pdb.set_trace()       # Python 3.6+
-  breakpoint()                       # Python 3.7+ (preferred)
+query = os.environ.get("DBG_QUERY", "")
+with open("/tmp/debug-patterns.json") as f:
+    patterns = json.load(f)
 
-  # PDB commands
-  n(ext)      Execute next line (step over)
-  s(tep)      Step into function
-  c(ontinue)  Continue to next breakpoint
-  r(eturn)    Continue until function returns
-  l(ist)      Show source code around current line
-  ll          Show entire current function
-  p expr      Print expression
-  pp expr     Pretty-print expression
-  w(here)     Show call stack
-  u(p)        Go up one frame
-  d(own)      Go down one frame
-  b 42        Set breakpoint at line 42
-  b func      Set breakpoint at function
-  b file:42   Breakpoint in specific file
-  cl 1        Clear breakpoint 1
-  a(rgs)      Print function arguments
-  !statement  Execute Python statement
-  q(uit)      Quit debugger
+matches = [p for p in patterns if query.lower() in p["pattern"].lower() or query.lower() in p["cause"].lower()]
 
-IPDB (IPython debugger):
-  pip install ipdb
-  import ipdb; ipdb.set_trace()
-  # Same commands but with tab completion, syntax highlighting
+if not matches:
+    print(f"❓ No explanation found for: {query}")
+    print("Common error codes: ECONNREFUSED ENOENT EACCES EPERM ETIMEDOUT EADDRINUSE")
+else:
+    for m in matches:
+        print(f"\n📖 [{m['lang']}] {m['pattern']}")
+        print(f"   Meaning: {m['cause']}")
+        print(f"   Fix:     {m['fix']}")
+PYEOF
+}
 
-PUDB (TUI debugger):
-  pip install pudb
-  python -m pudb script.py
-  # Full-screen terminal debugger with variable inspector
+do_suggest() {
+    local input="$1"
+    local text
+    if [ -f "$input" ]; then
+        text=$(tail -50 "$input")
+    else
+        text="$input"
+    fi
 
-REMOTE DEBUGGING (debugpy):
-  pip install debugpy
-  import debugpy
-  debugpy.listen(5678)
-  debugpy.wait_for_client()
-  breakpoint()
-  # VS Code: Attach to port 5678
+    echo "💡 Fix Suggestions:"
+    echo ""
+    DBG_TEXT="$text" python3 << 'PYEOF'
+import json, os
 
-GDB (C/C++):
-  gcc -g -O0 program.c -o program   # Compile with debug info
-  gdb ./program
+text = os.environ.get("DBG_TEXT", "")
+with open("/tmp/debug-patterns.json") as f:
+    patterns = json.load(f)
 
-  (gdb) run                          # Start program
-  (gdb) break main                   # Breakpoint at main
-  (gdb) break file.c:42              # Breakpoint at line
-  (gdb) next                         # Step over
-  (gdb) step                         # Step into
-  (gdb) print variable               # Print value
-  (gdb) info locals                  # All local variables
-  (gdb) backtrace                    # Call stack
-  (gdb) watch variable               # Break when value changes
-  (gdb) frame 3                      # Switch to frame 3
-  (gdb) thread info                  # List threads
-  (gdb) core-file core               # Load core dump
+suggestions = []
+for p in patterns:
+    if p["pattern"].lower() in text.lower():
+        suggestions.append(f"  → [{p['lang']}] {p['fix']}")
 
-DELVE (Go):
-  go install github.com/go-delve/delve/cmd/dlv@latest
-  dlv debug ./main.go                # Debug
-  dlv test ./...                     # Debug tests
-  dlv attach <pid>                   # Attach to process
-
-  (dlv) break main.main
-  (dlv) continue
-  (dlv) next / step / stepout
-  (dlv) print variable
-  (dlv) goroutines                   # List goroutines
-  (dlv) goroutine 1                  # Switch goroutine
-  (dlv) locals                       # Local variables
-  (dlv) stack                        # Call stack
-
-Powered by BytesAgain — https://bytesagain.com
-Contact: hello@bytesagain.com
-EOF
+if suggestions:
+    for s in suggestions:
+        print(s)
+else:
+    print("  → No specific suggestions. Try:")
+    print("    1. Check the full stack trace for the root error")
+    print("    2. Search the error message online")
+    print("    3. Run with verbose/debug flags (-v, --debug, -x for bash)")
+    print("    4. Check recent changes: git diff HEAD~1")
+PYEOF
 }
 
 show_help() {
-cat << 'EOF'
-Debugger - Code Debugging Tools Reference
-
-Commands:
-  intro             Overview, approaches
-  javascript        Chrome DevTools, Node.js, React
-  python_systems    pdb/ipdb/pudb, GDB, Delve
-
-Usage: $0 <command>
-EOF
+    echo "debug — Error analyzer and fix suggester"
+    echo ""
+    echo "Usage:"
+    echo "  debug analyze <error_text_or_file>   Analyze error and find root cause"
+    echo "  debug explain <error_code_or_message> Explain what an error means"
+    echo "  debug suggest <error_text_or_file>   Get fix suggestions"
+    echo ""
+    echo "Examples:"
+    echo "  debug analyze \"TypeError: 'NoneType' object is not subscriptable\""
+    echo "  debug explain ECONNREFUSED"
+    echo "  debug suggest error.log"
+    echo ""
 }
 
-case "${1:-help}" in
-  intro)          cmd_intro ;;
-  javascript)     cmd_javascript ;;
-  python_systems) cmd_python_systems ;;
-  help|*)         show_help ;;
+init_patterns
+
+case "$CMD" in
+    analyze) do_analyze "$INPUT" ;;
+    explain) do_explain "$INPUT" ;;
+    suggest) do_suggest "$INPUT" ;;
+    help|--help|-h) show_help ;;
+    *) echo "Unknown command: $CMD"; show_help; exit 1 ;;
 esac

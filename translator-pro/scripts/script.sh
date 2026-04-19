@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-VERSION="3.0.0"
+VERSION="3.0.3"
 SCRIPT_NAME="translator-pro-test"
 DATA_DIR="$HOME/.local/share/translator-pro-test"
 mkdir -p "$DATA_DIR"

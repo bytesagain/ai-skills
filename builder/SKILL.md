@@ -1,35 +1,44 @@
----
-name: "builder"
-version: "5.0.0"
-description: "Software build systems reference — Make, CMake, Bazel, Gradle, incremental builds, remote caching, and dependency management"
-author: "BytesAgain"
-homepage: "https://bytesagain.com"
-source: "https://github.com/bytesagain/ai-skills"
-tags: [build-systems, make, cmake, bazel, gradle]
-category: "devtools"
----
+# builder
 
-# Builder
+Project scaffold generator — create ready-to-use project structures for Node.js, Python, Go, and more with a single command. Lists templates, initializes directories, and generates boilerplate files.
 
-Software build systems reference — Make, CMake, Bazel, Gradle, incremental builds, remote caching, and dependency management. No API keys or credentials required — outputs reference documentation only.
+## Usage
+
+```
+builder list
+builder init <template> <project_name>
+builder generate <template> <output_dir>
+```
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `intro` | Build systems overview and core concepts |
-| `quickstart` | Getting started with build tools |
-| `patterns` | Common build patterns and best practices |
-| `debugging` | Build troubleshooting and debugging |
-| `performance` | Build performance optimization |
-| `security` | Supply chain security and dependency scanning |
-| `migration` | Migrating between build systems |
-| `cheatsheet` | Quick reference for Make, CMake, Bazel, Gradle |
+- `list` — Show all available project templates with descriptions
+- `init` — Create a new project directory with full scaffold in current location
+- `generate` — Generate project scaffold in a specified output directory
 
-## Output Format
+## Examples
 
-All commands output plain-text reference documentation via heredoc. No external API calls, no credentials needed, no network access.
+```bash
+builder list
+builder init node my-api
+builder init python-flask web-app
+builder init go my-service
+builder generate node-cli /tmp/my-tool
+```
 
----
+## Templates
 
-*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*
+- `node` — Node.js REST API (Express + package.json + .gitignore)
+- `node-cli` — Node.js CLI tool with commander
+- `python` — Python project with virtualenv setup and requirements.txt
+- `python-flask` — Flask web app with app factory pattern
+- `go` — Go module with main.go and go.mod
+- `go-cli` — Go CLI with cobra framework structure
+
+## Requirements
+
+- bash
+
+## When to Use
+
+Use when starting a new project and want a consistent, ready-to-code directory structure without manual setup.

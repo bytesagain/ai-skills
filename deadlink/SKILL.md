@@ -26,7 +26,7 @@ Check URLs for broken links. Scan individual URLs, files containing links, or cr
 
 ```bash
 # Check a single URL
-deadlink check https://example.com/page
+deadlink check [Technical Reference]
 # → 200 OK
 
 # Scan a markdown file for broken links
@@ -34,7 +34,7 @@ deadlink scan README.md
 # → Extracts all http/https URLs and checks each one
 
 # Crawl a website
-deadlink site https://example.com 1
+deadlink site [Technical Reference] 1
 # → Fetches the page, extracts all links, checks each
 
 # Generate a report file
@@ -58,6 +58,6 @@ deadlink report bookmarks.html
 ## Notes
 
 - Timeout: 10 seconds per URL (5s connect timeout)
-- URLs are extracted using regex pattern matching for `http://` and `https://` links
+- URLs are extracted using regex pattern matching for `[Technical Reference] and `[Technical Reference] links
 - The `site` command does basic HTML link extraction (href and src attributes)
 - Reports are saved as plain text files in the current directory

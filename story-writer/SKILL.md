@@ -1,47 +1,28 @@
 ---
-version: "2.0.0"
-name: story-writer
-description: "小说创作、角色设计、情节设计(三幕式)、对话生成、世界观构建、续写。Story writing with character design, three-act plot structure, dialogue generation, worldbuilding."
-author: BytesAgain
+name: "Story Writer — Bilingual Enhanced Edition"
+description: "小说创作、角色设计、情节设计(三幕式)、对话生成、世界观构建、续写。Story writing with character design, three-act plot structure, dialogue generation, worldbuilding. Supports bilingual documentation and optimized AI agent interaction. 支持中英双语文档与AI助手深度优化。"
+version: "2.0.2"
+author: "BytesAgain"
 homepage: https://bytesagain.com
 source: https://github.com/bytesagain/ai-skills
+tags: ["story-writer", "bilingual", "pro", "efficiency"]
 ---
-# story-writer
 
-小说创作、角色设计、情节设计(三幕式)、对话生成、世界观构建、续写。Story writing with character design, three-act plot structure, dialogue generation, worldbuilding, and continuation.
+# Story Writer / 楼台助手
 
-## 如何使用
+## Quick Start / 快速开始
+Just ask your AI assistant: / 直接告诉 AI 助手：
+- "Write a sci-fi short story about AI" (写一个关于AI的科幻短篇)
+- "Create a plot outline for a thriller" (为一个惊悚片创建一个情节大纲)
+- "Draft a video script for a tech review" (起草一个科技测评视频脚本)
 
-1. 选择你需要的功能命令
-2. 输入你的具体需求描述
-3. 获取专业的输出结果
-4. 根据需要调整和完善
+## Description / 描述
+小说创作、角色设计、情节设计(三幕式)、对话生成、世界观构建、续写。Story writing with character design, three-act plot structure, dialogue generation, worldbuilding.
 
-## 命令速查
+## Requirements / 要求
+- bash 4+
+- python3
 
-```
-  write           write
-  character       character
-  plot            plot
-  dialogue        dialogue
-  worldbuild      worldbuild
-  continue        continue
-```
-
-## 专业建议
-
-- 冲突驱动**：每个好故事的核心都是冲突——人vs人、人vs自然、人vs自我
-- 展示而非讲述**（Show, Don't Tell）：用行动和对话展示角色性格，而非直接描述
-- 三幕式结构**：建置（25%）→ 对抗（50%）→ 解决（25%）
-- 角色弧光**：角色要有成长和变化，开头和结尾的TA不一样
-- 钩子开头**：第一段就要抓住读者
-
----
-*story-writer by BytesAgain*
----
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
+## Feedback
+https://bytesagain.com/feedback/
 Powered by BytesAgain | bytesagain.com
-
-## Commands
-
-Run `story-writer help` to see all available commands.

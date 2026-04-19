@@ -74,9 +74,9 @@ CRONTAB FILE FORMAT:
   HOME=/home/admin
 
   # Jobs
-  0 5 * * * /home/admin/scripts/backup.sh
-  */10 * * * * /usr/bin/python3 /home/admin/monitor.py
-  0 0 * * 0 /home/admin/scripts/weekly-cleanup.sh
+  0 5 * * * ./scripts/backup.sh
+  */10 * * * * /usr/bin/python3 ./monitor.py
+  0 0 * * 0 ./scripts/weekly-cleanup.sh
 
 SYSTEM CRONTAB (/etc/crontab):
   # Has extra user field
@@ -165,7 +165,7 @@ ENVIRONMENT GOTCHAS:
   - HOME may differ from expected
 
   Fix: Set PATH in crontab or use full paths:
-  PATH=/usr/local/bin:/usr/bin:/bin:/home/admin/.local/bin
+  PATH=/usr/local/bin:/usr/bin:/bin:./.local/bin
   0 * * * * /full/path/to/python3 /full/path/to/script.py
 
 DEBUGGING:
@@ -205,7 +205,7 @@ SYSTEMD TIMER EQUIVALENT:
 
   [Service]
   Type=oneshot
-  ExecStart=/home/admin/scripts/backup.sh
+  ExecStart=./scripts/backup.sh
   User=admin
 
   systemctl enable --now backup.timer

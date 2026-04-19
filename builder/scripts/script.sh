@@ -1,255 +1,315 @@
 #!/usr/bin/env bash
-# builder — Builder reference tool. Use when working with builder in devtools contexts.
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+# builder — Project scaffold generator
 set -euo pipefail
 
-VERSION="5.0.0"
+CMD="${1:-help}"
+shift || true
+TEMPLATE="${1:-}"
+NAME="${2:-my-project}"
+OUTDIR="${2:-$(pwd)/$NAME}"
 
 show_help() {
-    cat << 'HELPEOF'
-builder v$VERSION — Builder Reference Tool
-
-Usage: builder <command>
-
-Commands:
-  intro           Overview and core concepts
-  quickstart      Getting started guide
-  patterns        Common patterns and best practices
-  debugging       Debugging and troubleshooting
-  performance     Performance optimization tips
-  security        Security considerations
-  migration       Migration and upgrade guide
-  cheatsheet      Quick reference cheat sheet
-  help              Show this help
-  version           Show version
-
-Powered by BytesAgain | bytesagain.com
-HELPEOF
+    echo "builder — Project scaffold generator"
+    echo ""
+    echo "Usage:"
+    echo "  builder list                          List available templates"
+    echo "  builder init <template> <name>        Create project in current dir"
+    echo "  builder generate <template> <outdir>  Generate in specific directory"
+    echo ""
+    echo "Templates: node, node-cli, python, python-flask, go, go-cli"
 }
 
-cmd_intro() {
-    cat << 'EOF'
-# Builder — Overview
+cmd_list() {
+    echo "Available project templates:"
+    echo ""
+    echo "  node          Node.js REST API with Express"
+    echo "  node-cli      Node.js CLI tool with commander"
+    echo "  python        Python project with virtualenv"
+    echo "  python-flask  Flask web application"
+    echo "  go            Go module with main.go"
+    echo "  go-cli        Go CLI with cobra structure"
+    echo ""
+    echo "Usage: builder init <template> <project-name>"
+}
 
-## What is Builder?
-Builder (builder) is a specialized tool/concept in the devtools domain.
-It provides essential capabilities for professionals working with builder.
-
-## Key Concepts
-- Core builder principles and fundamentals
-- How builder fits into the broader devtools ecosystem  
-- Essential terminology every practitioner should know
-
-## Why Builder Matters
-Understanding builder is critical for:
-- Improving efficiency in devtools workflows
-- Reducing errors and downtime
-- Meeting industry standards and compliance requirements
-- Enabling better decision-making with accurate data
-
-## Getting Started
-1. Understand the basic builder concepts
-2. Learn the standard tools and interfaces
-3. Practice with common scenarios
-4. Review safety and compliance requirements
+scaffold_node() {
+    local dir="$1"
+    mkdir -p "$dir/src" "$dir/tests"
+    cat > "$dir/package.json" << 'EOF'
+{
+  "name": "my-app",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "express": "^4.18.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0",
+    "jest": "^29.0.0"
+  }
+}
 EOF
-}
+    cat > "$dir/src/index.js" << 'EOF'
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-cmd_quickstart() {
-    cat << 'EOF'
-# Builder — Quick Start Guide
+app.use(express.json());
 
-## Prerequisites
-- Basic understanding of devtools concepts
-- Required tools and access credentials
-- System meeting minimum requirements
+app.get('/', (req, res) => {
+  res.json({ status: 'ok', message: 'Hello World' });
+});
 
-## Installation
-1. Download or clone the builder package
-2. Install dependencies
-3. Configure initial settings
-4. Verify installation
-
-## First Steps
-1. Run the hello-world example
-2. Review the default configuration
-3. Try a simple real-world task
-4. Explore available commands and options
-
-## Next Steps
-- Read the full documentation
-- Join the community forum
-- Try advanced features
-- Set up automated workflows
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 EOF
-}
-
-cmd_patterns() {
-    cat << 'EOF'
-# Builder — Common Patterns & Best Practices
-
-## Design Patterns
-1. **Standard Pattern**: The most common approach for builder
-2. **Scalable Pattern**: For high-volume or distributed scenarios
-3. **Resilient Pattern**: For fault-tolerant implementations
-
-## Best Practices
-- Follow the principle of least privilege
-- Use version control for all configurations
-- Implement comprehensive logging
-- Test changes in staging before production
-- Document all custom configurations
-
-## Anti-Patterns to Avoid
-- Hardcoding credentials or configuration
-- Skipping validation and error handling
-- Ignoring monitoring and alerting
-- Making changes without documentation
-- Over-engineering simple solutions
+    cat > "$dir/.gitignore" << 'EOF'
+node_modules/
+.env
+*.log
 EOF
+    echo "  src/index.js"
+    echo "  package.json"
+    echo "  .gitignore"
 }
 
-cmd_debugging() {
-    cat << 'EOF'
-# Builder — Debugging Guide
-
-## Common Errors
-1. **Connection refused**: Check service status and network
-2. **Permission denied**: Verify credentials and access rights
-3. **Timeout**: Check network, increase limits, optimize queries
-4. **Invalid input**: Validate data format and encoding
-
-## Debugging Tools
-- Built-in logging and diagnostics
-- Network analysis tools (tcpdump, wireshark)
-- System monitoring (top, htop, iostat)
-- Application-specific debug modes
-
-## Debug Workflow
-1. Reproduce the issue consistently
-2. Check logs for error messages
-3. Isolate the failing component
-4. Test with minimal configuration
-5. Apply fix and verify
+scaffold_python() {
+    local dir="$1"
+    mkdir -p "$dir/src" "$dir/tests"
+    cat > "$dir/requirements.txt" << 'EOF'
+# Add your dependencies here
+requests>=2.28.0
 EOF
-}
+    cat > "$dir/src/main.py" << 'EOF'
+def main():
+    print("Hello, World!")
 
-cmd_performance() {
-    cat << 'EOF'
-# Builder — Performance Optimization
-
-## Key Metrics
-- Response time / latency
-- Throughput / operations per second
-- Resource utilization (CPU, memory, I/O)
-- Error rate and retry frequency
-
-## Optimization Strategies
-1. **Caching**: Reduce redundant operations
-2. **Batching**: Group small operations
-3. **Indexing**: Speed up data lookups
-4. **Compression**: Reduce data transfer size
-5. **Parallel Processing**: Utilize multiple cores
-
-## Monitoring
-- Set up baseline performance metrics
-- Configure alerts for anomalies
-- Track trends over time
-- Regular capacity planning reviews
+if __name__ == "__main__":
+    main()
 EOF
-}
-
-cmd_security() {
-    cat << 'EOF'
-# Builder — Security Considerations
-
-## Authentication & Authorization
-- Use strong, unique credentials
-- Implement role-based access control
-- Enable multi-factor authentication where possible
-- Regularly review and rotate credentials
-
-## Data Protection
-- Encrypt data at rest and in transit
-- Implement proper backup procedures
-- Follow data retention policies
-- Sanitize inputs to prevent injection
-
-## Network Security
-- Use firewalls and network segmentation
-- Monitor for suspicious activity
-- Keep all software patched and updated
-- Disable unnecessary services and ports
+    cat > "$dir/setup.sh" << 'EOF'
+#!/bin/bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+echo "Setup complete. Run: source venv/bin/activate"
 EOF
-}
-
-cmd_migration() {
-    cat << 'EOF'
-# Builder — Migration & Upgrade Guide
-
-## Pre-Migration Checklist
-- [ ] Current system fully documented
-- [ ] Complete backup taken and verified
-- [ ] Target environment prepared
-- [ ] Rollback plan documented
-- [ ] Stakeholders notified
-
-## Migration Steps
-1. Prepare target environment
-2. Export data from source
-3. Transform data if needed
-4. Import to target
-5. Verify data integrity
-6. Update configurations
-7. Test all functionality
-8. Switch traffic / go live
-
-## Post-Migration
-- Monitor for errors and performance
-- Verify all integrations working
-- Update documentation
-- Decommission old system after confirmation
+    chmod +x "$dir/setup.sh"
+    cat > "$dir/.gitignore" << 'EOF'
+venv/
+__pycache__/
+*.pyc
+.env
 EOF
+    echo "  src/main.py"
+    echo "  requirements.txt"
+    echo "  setup.sh"
+    echo "  .gitignore"
 }
 
-cmd_cheatsheet() {
-    cat << 'EOF'
-# Builder — Quick Reference
-
-## Essential Commands
-| Command | Description |
-|---------|-------------|
-| help | Show available commands |
-| version | Display version info |
-| intro | Overview and fundamentals |
-| troubleshooting | Common problems and fixes |
-
-## Common Workflows
-1. **Setup**: install → configure → verify → test
-2. **Daily**: check → monitor → report → review
-3. **Issue**: diagnose → isolate → fix → verify → document
-
-## Key Shortcuts
-- Use tab completion for commands
-- Check logs first when troubleshooting
-- Always backup before making changes
-- Document everything you change
+scaffold_flask() {
+    local dir="$1"
+    mkdir -p "$dir/app/templates" "$dir/app/static" "$dir/tests"
+    cat > "$dir/requirements.txt" << 'EOF'
+flask>=3.0.0
+python-dotenv>=1.0.0
 EOF
+    cat > "$dir/app/__init__.py" << 'EOF'
+from flask import Flask
+
+def create_app():
+    app = Flask(__name__)
+
+    from .routes import main
+    app.register_blueprint(main)
+
+    return app
+EOF
+    cat > "$dir/app/routes.py" << 'EOF'
+from flask import Blueprint, jsonify
+
+main = Blueprint('main', __name__)
+
+@main.route('/')
+def index():
+    return jsonify({'status': 'ok'})
+EOF
+    cat > "$dir/run.py" << 'EOF'
+from app import create_app
+app = create_app()
+
+if __name__ == '__main__':
+    app.run(debug=True)
+EOF
+    echo "  app/__init__.py"
+    echo "  app/routes.py"
+    echo "  run.py"
+    echo "  requirements.txt"
 }
 
-CMD="${1:-help}"
-shift 2>/dev/null || true
+scaffold_go() {
+    local dir="$1"
+    local modname
+    modname=$(basename "$dir")
+    mkdir -p "$dir/cmd" "$dir/internal"
+    cat > "$dir/go.mod" << EOF
+module github.com/user/$modname
+
+go 1.21
+EOF
+    cat > "$dir/main.go" << 'EOF'
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, World!")
+}
+EOF
+    cat > "$dir/.gitignore" << 'EOF'
+bin/
+*.exe
+EOF
+    echo "  main.go"
+    echo "  go.mod"
+    echo "  .gitignore"
+}
+
+scaffold_go_cli() {
+    local dir="$1"
+    local modname
+    modname=$(basename "$dir")
+    mkdir -p "$dir/cmd"
+    cat > "$dir/go.mod" << EOF
+module github.com/user/$modname
+
+go 1.21
+
+require github.com/spf13/cobra v1.8.0
+EOF
+    cat > "$dir/main.go" << 'EOF'
+package main
+
+import "github.com/user/myapp/cmd"
+
+func main() {
+    cmd.Execute()
+}
+EOF
+    cat > "$dir/cmd/root.go" << 'EOF'
+package cmd
+
+import (
+    "fmt"
+    "github.com/spf13/cobra"
+)
+
+var rootCmd = &cobra.Command{
+    Use:   "app",
+    Short: "A CLI application",
+    Run: func(cmd *cobra.Command, args []string) {
+        fmt.Println("Hello from CLI!")
+    },
+}
+
+func Execute() {
+    rootCmd.Execute()
+}
+EOF
+    echo "  main.go"
+    echo "  cmd/root.go"
+    echo "  go.mod"
+}
+
+scaffold_node_cli() {
+    local dir="$1"
+    mkdir -p "$dir/bin" "$dir/src"
+    cat > "$dir/package.json" << 'EOF'
+{
+  "name": "my-cli",
+  "version": "1.0.0",
+  "bin": { "my-cli": "./bin/cli.js" },
+  "scripts": { "start": "node bin/cli.js" },
+  "dependencies": { "commander": "^11.0.0" }
+}
+EOF
+    cat > "$dir/bin/cli.js" << 'EOF'
+#!/usr/bin/env node
+const { Command } = require('commander');
+const program = new Command();
+
+program
+  .name('my-cli')
+  .description('CLI tool')
+  .version('1.0.0');
+
+program
+  .command('hello')
+  .description('Say hello')
+  .action(() => console.log('Hello!'));
+
+program.parse();
+EOF
+    chmod +x "$dir/bin/cli.js"
+    echo "  bin/cli.js"
+    echo "  package.json"
+}
+
+do_init() {
+    local template="$1"
+    local name="${2:-my-project}"
+    local dir="$(pwd)/$name"
+
+    if [ -d "$dir" ]; then
+        echo "Error: directory '$dir' already exists"
+        exit 1
+    fi
+    mkdir -p "$dir"
+    echo "🏗  Creating $template project: $name"
+    echo "   Location: $dir"
+    echo "   Files:"
+    case "$template" in
+        node) scaffold_node "$dir" ;;
+        node-cli) scaffold_node_cli "$dir" ;;
+        python) scaffold_python "$dir" ;;
+        python-flask) scaffold_flask "$dir" ;;
+        go) scaffold_go "$dir" ;;
+        go-cli) scaffold_go_cli "$dir" ;;
+        *) echo "Unknown template: $template. Run: builder list"; exit 1 ;;
+    esac
+    echo ""
+    echo "✅ Project '$name' created at $dir"
+}
+
+do_generate() {
+    local template="$1"
+    local outdir="${2:-$(pwd)/generated}"
+    mkdir -p "$outdir"
+    echo "🏗  Generating $template scaffold in: $outdir"
+    echo "   Files:"
+    case "$template" in
+        node) scaffold_node "$outdir" ;;
+        node-cli) scaffold_node_cli "$outdir" ;;
+        python) scaffold_python "$outdir" ;;
+        python-flask) scaffold_flask "$outdir" ;;
+        go) scaffold_go "$outdir" ;;
+        go-cli) scaffold_go_cli "$outdir" ;;
+        *) echo "Unknown template: $template. Run: builder list"; exit 1 ;;
+    esac
+    echo ""
+    echo "✅ Scaffold generated at $outdir"
+}
 
 case "$CMD" in
-    intro) cmd_intro "$@" ;;
-    quickstart) cmd_quickstart "$@" ;;
-    patterns) cmd_patterns "$@" ;;
-    debugging) cmd_debugging "$@" ;;
-    performance) cmd_performance "$@" ;;
-    security) cmd_security "$@" ;;
-    migration) cmd_migration "$@" ;;
-    cheatsheet) cmd_cheatsheet "$@" ;;
+    list) cmd_list ;;
+    init) do_init "$TEMPLATE" "$NAME" ;;
+    generate) do_generate "$TEMPLATE" "$OUTDIR" ;;
     help|--help|-h) show_help ;;
-    version|--version|-v) echo "builder v$VERSION — Powered by BytesAgain" ;;
-    *) echo "Unknown: $CMD"; echo "Run: builder help"; exit 1 ;;
+    *) echo "Unknown command: $CMD"; show_help; exit 1 ;;
 esac

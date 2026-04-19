@@ -31,7 +31,7 @@ favicon check https://github.com
 # → ✓ apple-touch-icon found
 
 # Download a favicon
-favicon download https://google.com google-icon.ico
+favicon download [Technical Reference] google-icon.ico
 
 # Generate an SVG placeholder
 favicon generate "AB" 64

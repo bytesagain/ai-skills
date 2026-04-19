@@ -1,57 +1,28 @@
 ---
-name: "translator-pro-test"
-version: "3.0.0"
-description: "Test translation quality with built-in dictionaries and comparison tools. Use when evaluating translations."
+name: "translator-pro-test — Bilingual Enhanced Edition"
+description: "Test translation quality with built-in dictionaries and comparison tools. Use when evaluating translations. Supports bilingual documentation and optimized AI agent interaction. 支持中英双语文档与AI助手深度优化。"
+version: "3.0.3"
 author: "BytesAgain"
-homepage: "https://bytesagain.com"
+homepage: https://bytesagain.com
+source: https://github.com/bytesagain/ai-skills
+tags: ["translator-pro", "bilingual", "pro", "efficiency"]
 ---
 
-# translator-pro-test
+# translator-pro-test / 楼台助手
 
+## Quick Start / 快速开始
+Just ask your AI assistant: / 直接告诉 AI 助手：
+- "Translate this tech doc to formal Chinese" (将这份技术文档翻译成正式中文)
+- "Polished version of my English email to a client" (润色我发给客户的英文邮件)
+- "Explain the nuance of this slang term" (解释这个俚语的微小差异)
+
+## Description / 描述
 Test translation quality with built-in dictionaries and comparison tools. Use when evaluating translations.
 
-## Commands
+## Requirements / 要求
+- bash 4+
+- python3
 
-### `test`
-
-```bash
-scripts/script.sh test <text from to>
-```
-
-### `dict`
-
-```bash
-scripts/script.sh dict <word>
-```
-
-### `compare`
-
-```bash
-scripts/script.sh compare <text l1 l2>
-```
-
-### `glossary`
-
-```bash
-scripts/script.sh glossary <term>
-```
-
-### `quality`
-
-```bash
-scripts/script.sh quality <original translated>
-```
-
-### `batch`
-
-```bash
-scripts/script.sh batch <file to>
-```
-
-## Data Storage
-
-Data stored in `~/.local/share/translator-pro-test/`.
-
----
-
-*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*
+## Feedback
+https://bytesagain.com/feedback/
+Powered by BytesAgain | bytesagain.com

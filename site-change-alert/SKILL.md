@@ -17,33 +17,33 @@ Monitor web pages for content changes. Take snapshots, diff comparisons, schedul
 ### watch
 Add a URL to the watch list.
 ```bash
-bash scripts/script.sh watch "https://example.com/pricing"
-bash scripts/script.sh watch "https://example.com/status" --selector ".status-text"
+bash scripts/script.sh watch "[Technical Reference]"
+bash scripts/script.sh watch "[Technical Reference]" --selector ".status-text"
 ```
 
 ### check
 Check a URL for changes right now.
 ```bash
-bash scripts/script.sh check "https://example.com/pricing"
+bash scripts/script.sh check "[Technical Reference]"
 bash scripts/script.sh check --all
 ```
 
 ### diff
 Show diff between last two snapshots of a URL.
 ```bash
-bash scripts/script.sh diff "https://example.com/pricing"
+bash scripts/script.sh diff "[Technical Reference]"
 ```
 
 ### schedule
 Set up periodic checking (cron-based).
 ```bash
-bash scripts/script.sh schedule "https://example.com" 30
+bash scripts/script.sh schedule "[Technical Reference]" 30
 ```
 
 ### notify
 Configure notification channels (email, webhook, stdout).
 ```bash
-bash scripts/script.sh notify webhook "https://hooks.slack.com/..."
+bash scripts/script.sh notify webhook "[Technical Reference]"
 bash scripts/script.sh notify email "admin@example.com"
 ```
 

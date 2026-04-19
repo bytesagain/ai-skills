@@ -1,5 +1,5 @@
 ---
-name: "liquidity-monitor"
+name: bytesagain-liquidity-monitor
 version: "4.0.0"
 description: "DeFi liquidity analysis reference — AMM mechanics, Uniswap V2/V3 math, Curve StableSwap, impermanent loss calculation, and MEV protection strategies"
 author: "BytesAgain"

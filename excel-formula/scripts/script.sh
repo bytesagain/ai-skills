@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # excel-formula — Excel/Sheets formula builder and reference
 set -euo pipefail
-VERSION="2.0.0"
+VERSION="2.0.1"
 DATA_DIR="${EXCEL_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/excel-formula}"
 mkdir -p "$DATA_DIR"
 

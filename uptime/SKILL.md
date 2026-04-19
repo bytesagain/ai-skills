@@ -30,12 +30,12 @@ System and website uptime monitor. Check system load, test URL reachability with
 
 ```bash
 uptime status                    # → uptime, load, users, hostname
-uptime check https://example.com # → HTTP 200, connect 0.1s, TTFB 0.2s
+uptime check [Technical Reference] # → HTTP 200, connect 0.1s, TTFB 0.2s
 uptime log                       # → saves snapshot to log file
 uptime history                   # → shows recent log entries
-uptime alert https://mysite.com admin@example.com  # → alerts if down
+uptime alert [Technical Reference] admin@example.com  # → alerts if down
 uptime since                     # → boot time
-uptime multi https://google.com https://github.com # → batch check
+uptime multi [Technical Reference] https://github.com # → batch check
 ```
 
 ## Requirements

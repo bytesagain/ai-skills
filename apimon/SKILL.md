@@ -72,7 +72,7 @@ All activity is also recorded in a central `history.log` for cross-command trace
 
 ```bash
 # Check an API endpoint
-apimon check "GET https://api.example.com/health — 200 OK, 32ms"
+apimon check "GET [Technical Reference] — 200 OK, 32ms"
 
 # Validate a response schema
 apimon validate "POST /orders response matches OrderSchema v2"

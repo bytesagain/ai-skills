@@ -83,8 +83,8 @@ Each entry is stored as `YYYY-MM-DD HH:MM|<value>` for easy parsing and export.
 
 ```bash
 # Add bookmarks with notes
-bookmark-keeper add "https://example.com/rust-guide — thorough Rust tutorial"
-bookmark-keeper add "https://arxiv.org/abs/2401.12345 — attention mechanisms survey paper"
+bookmark-keeper add "[Technical Reference] — thorough Rust tutorial"
+bookmark-keeper add "[Technical Reference] — attention mechanisms survey paper"
 
 # Tag them for organization
 bookmark-keeper tag "rust-guide: #programming #rust #tutorial"

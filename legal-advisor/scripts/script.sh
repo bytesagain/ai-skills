@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # legal-advisor - Legal document templates, contract review checklists, and compliance guides
 set -euo pipefail
-VERSION="2.0.0"
+VERSION="2.0.1"
 DATA_DIR="${LEGAL_ADVISOR_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/legal-advisor}"
 mkdir -p "$DATA_DIR"
 

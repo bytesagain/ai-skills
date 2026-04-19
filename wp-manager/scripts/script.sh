@@ -2,7 +2,7 @@
 # wp-manager — WordPress site management toolkit
 # Full CRUD for pages/posts with cookie auth
 set -euo pipefail
-VERSION="4.0.0"
+VERSION="4.1.0"
 DATA_DIR="${WP_MANAGER_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/wp-manager}"
 mkdir -p "$DATA_DIR"
 
@@ -25,7 +25,7 @@ cmd_login() {
     local password="${1:-}"
     if [ -z "$password" ]; then
         # Try from env file
-        local env_file="/home/admin/.openclaw/workspace/projects/crypto-content/.env"
+        local env_file=".env"
         if [ -f "$env_file" ]; then
             password=$(grep "^WP_PASS=" "$env_file" | cut -d= -f2)
         fi
@@ -330,7 +330,7 @@ cmd_clean_duplicates() {
 #  Blacklist cleanup — remove pages for blacklisted skills
 # ============================================================
 cmd_clean_blacklisted() {
-    local bl_file="${1:-/home/admin/.openclaw/workspace/blacklist.txt}"
+    local bl_file="${1:-blacklist.txt}"
     echo "=== Cleaning pages for blacklisted skills ==="
 
     if [ ! -f "$DATA_DIR/all-pages.jsonl" ]; then
@@ -445,8 +445,103 @@ Site:
   page-count               Cached page count
   sitemap                  Sitemap URLs
 
+Users:
+  list-users               List all WordPress users
+  delete-user <email>      Delete user by email (safe, protects admin)
+
 Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
 EOF
+}
+
+# ============================================================
+#  Users — list and delete
+# ============================================================
+cmd_list_users() {
+    _ensure_auth
+    local nonce page token
+    nonce=$(_get_nonce)
+    page=$(curl -sk -b "$COOKIE_JAR" \
+        "$WP_URL/wp-admin/users.php" --max-time 15 2>/dev/null)
+    echo "$page" | python3 -u << 'PYEOF'
+import sys, re
+html = sys.stdin.read()
+# Extract user rows
+rows = re.findall(r'id="user-(\d+)".*?class="username".*?<a[^>]*>([^<]+)</a>.*?class="email".*?<a[^>]*>([^<]+)</a>', html, re.DOTALL)
+if not rows:
+    # fallback: simpler pattern
+    ids   = re.findall(r'user_id=(\d+)', html)
+    names = re.findall(r'class="row-title"><a[^>]*>([^<]+)</a>', html)
+    print(f"Found {len(ids)} users")
+    for i, uid in enumerate(ids):
+        name = names[i] if i < len(names) else "?"
+        print(f"  ID:{uid} | {name}")
+else:
+    print(f"{'ID':<6} {'Username':<20} {'Email'}")
+    print("-" * 55)
+    for uid, name, email in rows:
+        print(f"{uid:<6} {name:<20} {email}")
+PYEOF
+}
+
+cmd_delete_user() {
+    local email="${1:?Usage: wp-manager delete-user <email>}"
+    _ensure_auth
+    local nonce page uid
+
+    # Find user ID from users.php
+    page=$(curl -sk -b "$COOKIE_JAR" \
+        "$WP_URL/wp-admin/users.php?s=$(python3 -c "import urllib.parse; print(urllib.parse.quote('$email'))")" \
+        --max-time 15 2>/dev/null)
+
+    uid=$(echo "$page" | python3 -c "
+import sys, re
+html = sys.stdin.read()
+m = re.search(r'user_id=(\d+)', html)
+print(m.group(1) if m else '')
+" 2>/dev/null)
+
+    [ -z "$uid" ] && { _error "User not found: $email"; return 1; }
+    [ "$uid" = "1" ] && { _error "Cannot delete admin (ID=1)"; return 1; }
+
+    _info "Found user ID=$uid ($email), deleting..."
+
+    # Get delete nonce from user edit page
+    local edit_page del_nonce
+    edit_page=$(curl -sk -b "$COOKIE_JAR" \
+        "$WP_URL/wp-admin/user-edit.php?user_id=$uid" --max-time 15 2>/dev/null)
+    del_nonce=$(echo "$edit_page" | python3 -c "
+import sys, re
+html = sys.stdin.read()
+m = re.search(r'delete-user_([a-z0-9]+)', html)
+print(m.group(1) if m else '')
+" 2>/dev/null)
+
+    if [ -z "$del_nonce" ]; then
+        _error "Could not get delete nonce. Check login session."
+        return 1
+    fi
+
+    # Confirm deletion (POST to users.php)
+    local result
+    result=$(curl -sk -b "$COOKIE_JAR" -X POST \
+        "$WP_URL/wp-admin/users.php" \
+        --data-urlencode "action=delete" \
+        --data-urlencode "users[]=$uid" \
+        --data-urlencode "delete_option=reassign" \
+        --data-urlencode "reassign_user=1" \
+        --data-urlencode "_wpnonce=$del_nonce" \
+        -L -w "\n%{http_code}" --max-time 15 2>/dev/null)
+
+    local http_code
+    http_code=$(echo "$result" | tail -1)
+
+    if echo "$result" | grep -qi "User deleted\|deleted"; then
+        _info "✅ User $email (ID=$uid) deleted"
+        _log "delete-user" "id=$uid email=$email"
+    else
+        _info "Attempted deletion of ID=$uid (HTTP $http_code)"
+        _info "Please verify in wp-admin"
+    fi
 }
 
 export DATA_DIR
@@ -466,6 +561,8 @@ case "${1:-help}" in
     info)               cmd_info ;;
     page-count|pc)      cmd_page_count ;;
     sitemap)            cmd_sitemap ;;
+    list-users|lu)      cmd_list_users ;;
+    delete-user|du)     shift; cmd_delete_user "$@" ;;
     help|-h)            show_help ;;
     version|-v)         echo "wp-manager v$VERSION" ;;
     *)                  echo "Unknown: $1"; show_help; exit 1 ;;

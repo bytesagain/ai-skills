@@ -1,112 +1,39 @@
----
-name: "redis"
-version: "1.0.0"
-description: "Connect, query, and monitor Redis instances. Use when checking key health, validating data types, generating backups, formatting results, linting configs."
-author: "BytesAgain"
-homepage: "https://bytesagain.com"
-source: "https://github.com/bytesagain/ai-skills"
-tags: [redis, general, cli, tool]
-category: "general"
----
-
 # redis
 
-Connect, query, and monitor Redis instances. Use when checking key health, validating data types, generating backups, formatting results, linting configs.
+Redis command reference and connection testing tool. Browse commands by category, test live connections with redis-cli, and monitor key statistics — all from the terminal. Works offline as a cheatsheet even without a running Redis instance.
+
+## Usage
+
+```
+redis cheatsheet [category]
+redis test [host] [port]
+redis monitor [host] [port]
+```
 
 ## Commands
 
-### `status`
+- `cheatsheet` — Browse Redis commands by category (string, list, hash, set, zset, key, server, scripting)
+- `test` — Test connection to a Redis instance and show basic info
+- `monitor` — Show key count, memory usage, and connected clients
+
+## Examples
 
 ```bash
-scripts/script.sh status
+redis cheatsheet
+redis cheatsheet hash
+redis cheatsheet string
+redis test
+redis test localhost 6379
+redis test 192.168.1.10 6380
+redis monitor
+redis monitor localhost 6379
 ```
 
-Show current status
+## Requirements
 
-### `add`
+- bash
+- redis-cli (optional — cheatsheet works without it)
 
-```bash
-scripts/script.sh add
-```
+## When to Use
 
-Add new entry
-
-### `list`
-
-```bash
-scripts/script.sh list
-```
-
-List all entries
-
-### `search`
-
-```bash
-scripts/script.sh search
-```
-
-Search entries
-
-### `remove`
-
-```bash
-scripts/script.sh remove
-```
-
-Remove entry by number
-
-### `export`
-
-```bash
-scripts/script.sh export
-```
-
-Export data to file
-
-### `stats`
-
-```bash
-scripts/script.sh stats
-```
-
-Show statistics
-
-### `config`
-
-```bash
-scripts/script.sh config
-```
-
-View or set config
-
-### `help`
-
-```bash
-scripts/script.sh help
-```
-
-### `version`
-
-```bash
-scripts/script.sh version
-```
-
-## Configuration
-
-Use `scripts/script.sh config <key> <value>` to set preferences.
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `REDIS_DIR` | No | Data directory (default: ~/.redis/) |
-
-## Data Storage
-
-All data stored in `~/.redis/` using JSONL format (one JSON object per line).
-
-## Output
-
-Structured output to stdout. Exit code 0 on success, 1 on error.
-
----
-
-*Powered by BytesAgain | bytesagain.com | hello@bytesagain.com*
+Use when writing Redis commands and need a quick reference, when debugging Redis connectivity, or when checking instance health and key statistics from the terminal.

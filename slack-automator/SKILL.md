@@ -20,21 +20,21 @@ Send messages to Slack channels via Incoming Webhooks. Supports direct messaging
 
 ### How to Get a Slack Webhook URL
 
-1. Go to [https://api.slack.com/apps](https://api.slack.com/apps)
+1. Go to [[Technical Reference]]([Technical Reference])
 2. Click **Create New App** → **From scratch**
 3. Name it (e.g., "Automator") and select your workspace
 4. In the left sidebar, click **Incoming Webhooks**
 5. Toggle **Activate Incoming Webhooks** to **On**
 6. Click **Add New Webhook to Workspace**
 7. Select the channel to post to and click **Allow**
-8. Copy the webhook URL (starts with `https://hooks.slack.com/services/...`)
+8. Copy the webhook URL (starts with `[Technical Reference])
 
 ## Setup
 
 Configure the webhook URL before sending messages:
 
 ```bash
-scripts/script.sh connect https://hooks.slack.com/services/T00000/B00000/xxxxxxxx
+scripts/script.sh connect [Technical Reference]
 ```
 
 Verify connectivity:
@@ -51,7 +51,7 @@ Save a Slack Incoming Webhook URL to local configuration. The URL is stored in `
 
 ```bash
 # Save your webhook URL
-scripts/script.sh connect https://hooks.slack.com/services/T00000/B00000/xxxxxxxx
+scripts/script.sh connect [Technical Reference]
 # ✅ Webhook URL saved.
 ```
 
@@ -181,7 +181,7 @@ Show the current webhook configuration. The URL is partially masked for security
 ```bash
 scripts/script.sh webhook info
 # === Webhook Configuration ===
-#   URL: https://hooks.slack.com/services/T0...xxxxxxxx
+#   URL: [Technical Reference]
 #   Full URL stored in: ~/.slack-automator/config.json
 ```
 
@@ -276,7 +276,7 @@ View or set configuration values. Available keys: `webhook_url`, `default_channe
 # View all configuration
 scripts/script.sh config
 # === Slack Automator Configuration ===
-#   webhook_url = https://hooks.slack.com/...
+#   webhook_url = [Technical Reference]
 #   default_channel = #general
 
 # Set a specific value
@@ -322,7 +322,7 @@ All data is stored in `~/.slack-automator/`:
 
 ```bash
 # 1. Connect your webhook
-scripts/script.sh connect https://hooks.slack.com/services/T00/B00/xxx
+scripts/script.sh connect [Technical Reference]
 
 # 2. Test it works
 scripts/script.sh webhook test

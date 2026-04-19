@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # fitness-plan — Exercise Science & Training Reference
 set -euo pipefail
-VERSION="6.0.0"
+VERSION="6.0.3"
 
 cmd_intro() { cat << 'EOF'
 # Exercise Science & Training — Overview

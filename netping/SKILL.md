@@ -35,7 +35,7 @@ netping ports example.com 80,443,8080  # → check 3 ports
 netping trace cloudflare.com    # → traceroute
 netping dns github.com          # → A, AAAA, MX, NS, TXT records
 netping latency 1.1.1.1         # → avg latency over 5 pings
-netping http https://example.com # → HTTP status + TTFB
+netping http [Technical Reference] # → HTTP status + TTFB
 netping sweep 192.168.1.0/24    # → find alive hosts
 ```
 

@@ -25,7 +25,7 @@ Output includes status code, a human-readable label (OK, REDIRECT, CLIENT_ERROR,
 
 ### `scan`
 
-Extract all URLs from a file (markdown, HTML, plain text — anything with `http://` or `https://` links) and check each one.
+Extract all URLs from a file (markdown, HTML, plain text — anything with `[Technical Reference] or `[Technical Reference] links) and check each one.
 
 ```
 link-checker scan <file>
@@ -118,13 +118,13 @@ link-checker version
 
 ```bash
 # Check if a URL is reachable
-link-checker check https://example.com
+link-checker check [Technical Reference]
 
 # Scan a markdown file for broken links
 link-checker scan ./README.md
 
 # Batch check several URLs
-link-checker batch https://example.com https://httpstat.us/404 https://httpstat.us/500
+link-checker batch [Technical Reference] [Technical Reference] [Technical Reference]
 
 # See only the broken ones
 link-checker broken

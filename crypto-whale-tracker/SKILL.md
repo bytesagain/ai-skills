@@ -1,5 +1,5 @@
 ---
-name: "crypto-whale-tracker"
+name: bytesagain-crypto-whale-tracker
 version: "4.0.2"
 description: "Reference tool for blockchain and crypto — covers intro, quickstart, patterns and more. Quick lookup for Crypto Whale Tracker concepts, best practices, and i..."
 author: "BytesAgain"

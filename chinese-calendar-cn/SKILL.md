@@ -1,5 +1,5 @@
 ---
-name: "chinese-calendar-cn"
+name: bytesagain-chinese-calendar-cn
 version: "5.0.1"
 description: "中国农历工具。节气查询、生肖年份、黄道吉日、传统节日、天干地支、农历转换。Chinese lunar calendar with solar terms, zodiac, auspicious dates, festivals, and Heavenly Stems."
 author: "BytesAgain"

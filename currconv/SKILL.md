@@ -11,7 +11,7 @@ categories: ["Finance", "Utility"]
 
 # CurrConv
 
-A real currency converter using live exchange rates from the European Central Bank via the free [frankfurter.app](https://frankfurter.app) API. Convert currencies, check rates, list available currencies, and look up historical exchange rates. No API key required.
+A real currency converter using live exchange rates from the European Central Bank via the free [frankfurter.app]([Technical Reference]) API. Convert currencies, check rates, list available currencies, and look up historical exchange rates. No API key required.
 
 ## Commands
 
@@ -119,7 +119,7 @@ Run `currconv list` for the full list. Common currencies include:
 
 ## Data Source
 
-All exchange rates come from the [European Central Bank](https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/) via the free [frankfurter.app](https://frankfurter.app) API. Rates are typically updated once per business day. No API key or registration required.
+All exchange rates come from the [European Central Bank]([Technical Reference]) via the free [frankfurter.app]([Technical Reference]) API. Rates are typically updated once per business day. No API key or registration required.
 
 ---
 

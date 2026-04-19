@@ -1,47 +1,49 @@
 ---
-version: "2.0.0"
-name: NDA Generator
-description: "Generate NDA templates — mutual, unilateral, employee — with clause review. Use when drafting NDAs, reviewing confidentiality terms, creating templates."
-author: BytesAgain
-homepage: https://bytesagain.com
-source: https://github.com/bytesagain/ai-skills
+name: "nda-generator"
+description: "Generate and review Non-Disclosure Agreements. Use when creating mutual or one-way NDAs, reviewing existing NDAs for missing clauses, customizing penalty and scope terms, or generating bilingual versions."
 ---
-# NDA Generator
 
-保密协议生成器。双向/单向NDA、员工保密、审查、模板库。NDA generator with mutual, unilateral, employee versions. 保密协议、NDA。
+# Nda Generator
 
-## 推荐工作流
+## Triggers on
+NDA, non-disclosure agreement, confidentiality agreement, generate NDA, review NDA, bilateral NDA, mutual NDA
 
-```
-需求分析 → 选择命令 → 输入描述 → 获取结果 → 调整优化
-```
-
-## 可用命令
-
-- **create** — create
-- **mutual** — mutual
-- **unilateral** — unilateral
-- **employee** — employee
-- **review** — review
-- **template** — template
-
----
-*NDA Generator by BytesAgain*
----
-💬 Feedback & Feature Requests: https://bytesagain.com/feedback
-Powered by BytesAgain | bytesagain.com
-
-- Run `nda-generator help` for all commands
+## What This Skill Does
+Generate and review Non-Disclosure Agreements. Use when creating mutual or one-way NDAs, reviewing existing NDAs for missing clauses, customizing penalty and scope terms, or generating bilingual versions.
 
 ## Commands
+### generate
+```bash
+bash scripts/script.sh generate [args]
+```
 
-Run `nda-generator help` to see all available commands.
+### review
+```bash
+bash scripts/script.sh review [args]
+```
 
-## When to Use
+### customize
+```bash
+bash scripts/script.sh customize [args]
+```
 
-- when you need quick nda generator from the command line
-- to automate nda tasks in your workflow
+### export
+```bash
+bash scripts/script.sh export [args]
+```
 
-## Output
+### translate
+```bash
+bash scripts/script.sh translate [args]
+```
 
-Returns formatted output to stdout. Redirect to a file with `nda-generator run > output.txt`.
+### help
+```bash
+bash scripts/script.sh help
+```
+
+## Requirements
+- bash 4+
+- python3 (standard library)
+
+Powered by BytesAgain | bytesagain.com

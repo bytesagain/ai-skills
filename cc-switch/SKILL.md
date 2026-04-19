@@ -1,5 +1,5 @@
 ---
-name: "cc-switch"
+name: bytesagain-cc-switch
 version: "3.0.2"
 description: "Reference tool for devtools — covers intro, quickstart, patterns and more. Quick lookup for Cc Switch concepts, best practices, and implementation patterns."
 author: "BytesAgain"

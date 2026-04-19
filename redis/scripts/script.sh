@@ -1,168 +1,196 @@
 #!/usr/bin/env bash
-# redis -- Connect, query, and monitor Redis instances. Use when checking key health, validating data types, generating backups, formatting results, linting configs.
-# Powered by BytesAgain | bytesagain.com | hello@bytesagain.com
+# redis — Redis command reference and connection tester
 set -euo pipefail
 
-VERSION="1.0.0"
-DATA_DIR="${REDIS_DIR:-$HOME/.redis}"
-
-_ensure_dirs() { mkdir -p "$DATA_DIR"; }
-
-_save_entry() {
-    _ensure_dirs
-    local cmd="$1" val="$2"
-    local ts=$(date '+%Y-%m-%d %H:%M:%S')
-    printf '{"ts":"%s","cmd":"%s","val":"%s"}\n' "$ts" "$cmd" "$val" >> "$DATA_DIR/data.jsonl"
-}
+CMD="${1:-help}"
+shift || true
+ARG1="${1:-localhost}"
+ARG2="${2:-6379}"
 
 show_help() {
-    cat << EOF
-redis v$VERSION -- Connect, query, and monitor Redis instances. Use when checking key health, validating data types, generating backups, formatting results, linting configs.
-
-Usage: redis <command> [args]
-
-Commands:
-  status          Show current status
-  add             Add new entry
-  list            List all entries
-  search          Search entries
-  remove          Remove entry by number
-  export          Export data to file
-  stats           Show statistics
-  config          View or set config
-  help              Show this help
-  version           Show version
-
-Data: $DATA_DIR
-Powered by BytesAgain | bytesagain.com
-EOF
+    echo "redis — Redis command reference and connection tester"
+    echo ""
+    echo "Usage:"
+    echo "  redis cheatsheet [category]     Browse Redis commands"
+    echo "  redis test [host] [port]        Test Redis connection"
+    echo "  redis monitor [host] [port]     Show instance statistics"
+    echo ""
+    echo "Categories: string list hash set zset key server scripting"
 }
 
-cmd_status() {
-    echo "=== redis Status ==="
-    echo "  Version: $VERSION"
-    echo "  Data dir: $DATA_DIR"
-    local entries=$(cat "$DATA_DIR"/*.jsonl 2>/dev/null | wc -l || echo 0)
-    echo "  Entries: $entries"
-    echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1 || echo empty)"
-}
-
-cmd_add() {
-    local value="${1:?Usage: redis add <entry>}"
-    shift || true
-    _save_entry "add" "$value $*"
-    local count=$(wc -l < "$DATA_DIR/data.jsonl" 2>/dev/null || echo 0)
-    echo "Added: $value (entry #$count)"
-}
-
-cmd_list() {
-    echo "=== Redis Entries ==="
-    if [ -f "$DATA_DIR/data.jsonl" ]; then
-        local count=$(wc -l < "$DATA_DIR/data.jsonl")
-        echo "Total: $count"
-        echo "---"
-        tail -20 "$DATA_DIR/data.jsonl" | while IFS= read -r line; do
-            local ts=$(echo "$line" | grep -o '"ts":"[^"]*' | cut -d'"' -f4)
-            local cmd=$(echo "$line" | grep -o '"cmd":"[^"]*' | cut -d'"' -f4)
-            local val=$(echo "$line" | grep -o '"val":"[^"]*' | cut -d'"' -f4)
-            echo "  [$ts] $cmd: $val"
-        done
-    else
-        echo "No entries yet."
-    fi
-}
-
-cmd_search() {
-    local term="${1:?Usage: redis search <term>}"
-    if [ -f "$DATA_DIR/data.jsonl" ]; then
-        local matches=$(grep -ic "$term" "$DATA_DIR/data.jsonl" 2>/dev/null || echo 0)
-        echo "Found: $matches matches"
-        grep -i "$term" "$DATA_DIR/data.jsonl" 2>/dev/null | head -20 | while IFS= read -r line; do
-            local val=$(echo "$line" | grep -o '"val":"[^"]*' | cut -d'"' -f4)
-            local ts=$(echo "$line" | grep -o '"ts":"[^"]*' | cut -d'"' -f4)
-            echo "  [$ts] $val"
-        done
-    else
-        echo "No data to search."
-    fi
-}
-
-cmd_remove() {
-    local num="${1:?Usage: redis remove <line-number>}"
-    if [ -f "$DATA_DIR/data.jsonl" ]; then
-        local total=$(wc -l < "$DATA_DIR/data.jsonl")
-        if [ "$num" -ge 1 ] 2>/dev/null && [ "$num" -le "$total" ] 2>/dev/null; then
-            sed -i "${num}d" "$DATA_DIR/data.jsonl"
-            echo "Removed #$num ($((total-1)) remaining)"
-        else echo "Invalid: $num (total: $total)"; fi
-    else echo "No data."; fi
-}
-
-cmd_export() {
-    local fmt="${1:-json}"
-    local out="redis-export.$fmt"
-    if [ ! -f "$DATA_DIR/data.jsonl" ]; then echo "No data."; return 0; fi
-    case "$fmt" in
-        json) cp "$DATA_DIR/data.jsonl" "$out" ;;
-        csv)
-            echo "timestamp,command,value" > "$out"
-            while IFS= read -r line; do
-                ts=$(echo "$line" | grep -o '"ts":"[^"]*' | cut -d'"' -f4)
-                c2=$(echo "$line" | grep -o '"cmd":"[^"]*' | cut -d'"' -f4)
-                vl=$(echo "$line" | grep -o '"val":"[^"]*' | cut -d'"' -f4)
-                echo "$ts,$c2,$vl" >> "$out"
-            done < "$DATA_DIR/data.jsonl"
+cmd_cheatsheet() {
+    local cat="${1:-all}"
+    case "$cat" in
+        string|str)
+            echo "=== String Commands ==="
+            echo "  SET key value [EX seconds]   Set key with optional expiry"
+            echo "  GET key                      Get value"
+            echo "  MSET k1 v1 k2 v2            Set multiple keys"
+            echo "  MGET k1 k2                  Get multiple values"
+            echo "  INCR key                     Increment integer value"
+            echo "  INCRBY key n                 Increment by n"
+            echo "  APPEND key value             Append to string"
+            echo "  STRLEN key                   Get string length"
+            echo "  GETSET key value             Set and return old value"
+            echo "  SETNX key value              Set only if not exists"
             ;;
-        *) echo "Formats: json, csv"; return 1 ;;
+        list)
+            echo "=== List Commands ==="
+            echo "  LPUSH key val [val...]       Push to head"
+            echo "  RPUSH key val [val...]       Push to tail"
+            echo "  LPOP key [count]             Pop from head"
+            echo "  RPOP key [count]             Pop from tail"
+            echo "  LRANGE key start stop        Get range (0 -1 = all)"
+            echo "  LLEN key                     Get list length"
+            echo "  LINDEX key index             Get element at index"
+            echo "  LINSERT key BEFORE|AFTER p v Insert relative to pivot"
+            echo "  BLPOP key timeout            Blocking pop"
+            ;;
+        hash)
+            echo "=== Hash Commands ==="
+            echo "  HSET key field value         Set field"
+            echo "  HGET key field               Get field"
+            echo "  HMSET key f1 v1 f2 v2        Set multiple fields"
+            echo "  HMGET key f1 f2              Get multiple fields"
+            echo "  HGETALL key                  Get all fields and values"
+            echo "  HDEL key field [field...]    Delete fields"
+            echo "  HEXISTS key field            Check if field exists"
+            echo "  HKEYS key                    Get all field names"
+            echo "  HVALS key                    Get all values"
+            echo "  HLEN key                     Count fields"
+            echo "  HINCRBY key field n          Increment field by n"
+            ;;
+        set)
+            echo "=== Set Commands ==="
+            echo "  SADD key member [member...]  Add members"
+            echo "  SREM key member [member...]  Remove members"
+            echo "  SMEMBERS key                 Get all members"
+            echo "  SISMEMBER key member         Check membership"
+            echo "  SCARD key                    Count members"
+            echo "  SUNION k1 k2                 Union of sets"
+            echo "  SINTER k1 k2                 Intersection"
+            echo "  SDIFF k1 k2                  Difference"
+            echo "  SPOP key [count]             Remove random member"
+            ;;
+        zset|sorted)
+            echo "=== Sorted Set Commands ==="
+            echo "  ZADD key score member        Add with score"
+            echo "  ZRANGE key start stop [WITHSCORES]  Get range by rank"
+            echo "  ZRANGEBYSCORE key min max    Get range by score"
+            echo "  ZRANK key member             Get rank"
+            echo "  ZSCORE key member            Get score"
+            echo "  ZREM key member [member...]  Remove members"
+            echo "  ZCARD key                    Count members"
+            echo "  ZINCRBY key n member         Increment score"
+            echo "  ZREVRANGE key start stop     Get range reversed"
+            ;;
+        key|keys)
+            echo "=== Key Commands ==="
+            echo "  KEYS pattern                 Find keys (use SCAN in prod)"
+            echo "  SCAN cursor [MATCH p] [COUNT n]  Iterate keys safely"
+            echo "  EXISTS key [key...]          Check existence"
+            echo "  DEL key [key...]             Delete keys"
+            echo "  UNLINK key [key...]          Async delete"
+            echo "  EXPIRE key seconds           Set TTL"
+            echo "  EXPIREAT key timestamp       Expire at Unix time"
+            echo "  TTL key                      Remaining TTL in seconds"
+            echo "  PERSIST key                  Remove TTL"
+            echo "  TYPE key                     Get value type"
+            echo "  RENAME key newkey            Rename key"
+            ;;
+        server)
+            echo "=== Server Commands ==="
+            echo "  INFO [section]               Server information"
+            echo "  DBSIZE                       Number of keys in db"
+            echo "  FLUSHDB                      Delete all keys in db"
+            echo "  FLUSHALL                     Delete all keys all dbs"
+            echo "  SELECT index                 Switch database (0-15)"
+            echo "  CONFIG GET parameter         Get config value"
+            echo "  CONFIG SET param value       Set config value"
+            echo "  BGSAVE                       Save snapshot async"
+            echo "  LASTSAVE                     Timestamp of last save"
+            echo "  MONITOR                      Stream commands (debug)"
+            echo "  SLOWLOG GET [n]              Get slow queries"
+            ;;
+        scripting|lua)
+            echo "=== Scripting Commands ==="
+            echo "  EVAL script numkeys k.. a.. Execute Lua script"
+            echo "  EVALSHA sha numkeys k.. a.. Execute cached script"
+            echo "  SCRIPT LOAD script           Cache script, return SHA"
+            echo "  SCRIPT EXISTS sha [sha..]    Check if scripts cached"
+            echo "  SCRIPT FLUSH                 Clear script cache"
+            echo ""
+            echo "  Lua example:"
+            echo "    EVAL \"return redis.call('get', KEYS[1])\" 1 mykey"
+            ;;
+        all|*)
+            echo "Redis Command Categories — use: redis cheatsheet <category>"
+            echo ""
+            echo "  string    SET GET INCR APPEND STRLEN SETNX"
+            echo "  list      LPUSH RPUSH LPOP RPOP LRANGE LLEN"
+            echo "  hash      HSET HGET HMSET HGETALL HDEL HKEYS"
+            echo "  set       SADD SMEMBERS SINTER SUNION SDIFF"
+            echo "  zset      ZADD ZRANGE ZRANK ZSCORE ZINCRBY"
+            echo "  key       KEYS SCAN EXISTS DEL EXPIRE TTL TYPE"
+            echo "  server    INFO DBSIZE CONFIG BGSAVE SLOWLOG"
+            echo "  scripting EVAL EVALSHA SCRIPT"
+            echo ""
+            echo "Run 'redis cheatsheet <category>' for detailed commands"
+            ;;
     esac
-    echo "Exported: $out ($(wc -c < "$out") bytes)"
 }
 
-cmd_stats() {
-    echo "=== Redis Stats ==="
-    if [ -f "$DATA_DIR/data.jsonl" ]; then
-        local total=$(wc -l < "$DATA_DIR/data.jsonl")
-        local bytes=$(wc -c < "$DATA_DIR/data.jsonl")
-        echo "  Entries: $total"
-        echo "  Size: $bytes bytes"
-        echo "  Disk: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
-    else echo "  No data yet."; fi
-}
-
-cmd_config() {
-    local key="${1:-}" val="${2:-}"
-    local cfg="$DATA_DIR/config.txt"
-    if [ -z "$key" ]; then
-        echo "=== Config ==="
-        if [ -f "$cfg" ]; then
-            while IFS="=" read -r k v; do echo "  $k=$v"; done < "$cfg"
-        else echo "  (empty — use config <key> <value>)"; fi
-    elif [ -z "$val" ]; then
-        grep "^${key}=" "$cfg" 2>/dev/null | cut -d= -f2- || echo "(not set)"
+cmd_test() {
+    local host="$ARG1"
+    local port="$ARG2"
+    echo "Testing Redis connection: $host:$port"
+    echo ""
+    if ! command -v redis-cli &>/dev/null; then
+        echo "⚠️  redis-cli not found. Install: apt-get install redis-tools"
+        echo "   Connection test skipped. Use 'redis cheatsheet' for command reference."
+        exit 0
+    fi
+    if redis-cli -h "$host" -p "$port" PING 2>/dev/null | grep -q PONG; then
+        echo "✅ Connected successfully"
+        echo ""
+        redis-cli -h "$host" -p "$port" INFO server 2>/dev/null | grep -E "redis_version|uptime_in_days|os:" || true
     else
-        if [ -f "$cfg" ] && grep -q "^${key}=" "$cfg" 2>/dev/null; then
-            sed -i "s|^${key}=.*|${key}=${val}|" "$cfg"
-        else
-            echo "${key}=${val}" >> "$cfg"
-        fi
-        echo "Set: $key=$val"
+        echo "❌ Connection failed to $host:$port"
+        echo "   Check: is Redis running? (systemctl status redis)"
+        echo "   Check: firewall rules, bind address in redis.conf"
     fi
 }
 
-CMD="${1:-help}"
-shift 2>/dev/null || true
-_ensure_dirs
+cmd_monitor() {
+    local host="$ARG1"
+    local port="$ARG2"
+    echo "Redis Stats: $host:$port"
+    echo ""
+    if ! command -v redis-cli &>/dev/null; then
+        echo "⚠️  redis-cli not found. Install: apt-get install redis-tools"
+        exit 0
+    fi
+    if ! redis-cli -h "$host" -p "$port" PING 2>/dev/null | grep -q PONG; then
+        echo "❌ Cannot connect to $host:$port"
+        exit 1
+    fi
+    echo "📊 Key Statistics:"
+    redis-cli -h "$host" -p "$port" DBSIZE 2>/dev/null | awk '{print "  Total keys: " $1}'
+    echo ""
+    echo "💾 Memory:"
+    redis-cli -h "$host" -p "$port" INFO memory 2>/dev/null | grep -E "used_memory_human|maxmemory_human" | sed 's/^/  /'
+    echo ""
+    echo "🔌 Clients:"
+    redis-cli -h "$host" -p "$port" INFO clients 2>/dev/null | grep "connected_clients" | sed 's/^/  /'
+    echo ""
+    echo "⚡ Stats:"
+    redis-cli -h "$host" -p "$port" INFO stats 2>/dev/null | grep -E "total_commands_processed|instantaneous_ops_per_sec" | sed 's/^/  /'
+}
 
 case "$CMD" in
-    status) cmd_status "$@" ;;
-    add) cmd_add "$@" ;;
-    list) cmd_list "$@" ;;
-    search) cmd_search "$@" ;;
-    remove) cmd_remove "$@" ;;
-    export) cmd_export "$@" ;;
-    stats) cmd_stats "$@" ;;
-    config) cmd_config "$@" ;;
+    cheatsheet|cs|ref) cmd_cheatsheet "${1:-all}" ;;
+    test|ping|connect) cmd_test ;;
+    monitor|stats|info) cmd_monitor ;;
     help|--help|-h) show_help ;;
-    version|--version|-v) echo "redis v$VERSION -- Powered by BytesAgain" ;;
-    *) echo "Unknown: $CMD"; echo "Run: redis help"; exit 1 ;;
+    *) echo "Unknown command: $CMD"; show_help; exit 1 ;;
 esac
